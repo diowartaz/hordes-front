@@ -1,0 +1,46 @@
+<button
+  *ngIf="typeButton"
+  class="action-button"
+  type="button"
+  mat-raised-button
+  [disabled]="disabled"
+  [style.width.px]="widthpx"
+  [style.height.px]="heightpx"
+  (click)="clicked()"
+>
+  <div class="row-wrapper" style="display: flex; justify-content: space-around">
+    <div *ngIf="isLoading" class="row-align">
+      <div class="loader">
+        <mat-spinner diameter="20" class="icon"></mat-spinner>
+      </div>
+      {{ textLoading }}
+    </div>
+    <div *ngIf="!isLoading" class="row-align">
+      <mat-icon class="icon" *ngIf="icon">{{ icon }}</mat-icon>
+      {{ text }}
+    </div>
+  </div>
+</button>
+
+<button
+  *ngIf="!typeButton"
+  class="action-button"
+  mat-raised-button
+  [disabled]="disabled"
+  [style.width.px]="widthpx"
+  [style.height.px]="heightpx"
+  (click)="clicked()"
+>
+  <div class="row-wrapper" style="display: flex; justify-content: space-around">
+    <div *ngIf="isLoading" class="row-align">
+      <div class="loader">
+        <mat-spinner diameter="20" class="icon"></mat-spinner>
+      </div>
+      {{ textLoading }}
+    </div>
+    <div *ngIf="!isLoading" class="row-align">
+      <mat-icon class="icon" *ngIf="icon">{{ icon }}</mat-icon>
+      {{ text }}
+    </div>
+  </div>
+</button>
