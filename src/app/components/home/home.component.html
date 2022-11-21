@@ -1,4 +1,14 @@
-<div class="content">
-  <div class="home">Home</div>
-  <div (click)="logOut()">LogOut</div>
+<div class="boundary">
+  <div class="menu">
+    <div class="menu-left"></div>
+    <div class="menu-right">
+      <div class="button-wrapper" (click)="logOut()">
+        <i class="material-icons login-icon">logout</i>
+        <div class="login-text">Log Out</div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="home">Hello {{ userInfos.username }} !</div>
+  </div>
 </div>

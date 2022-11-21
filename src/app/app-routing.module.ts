@@ -4,15 +4,18 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
 
 const routes: Routes = [
   {
     path: 'signin',
     component: LoginComponent,
+    canActivate: [NotauthGuard],
   },
   {
     path: 'signup',
     component: SignUpComponent,
+    canActivate: [NotauthGuard],
   },
   {
     path: 'home',

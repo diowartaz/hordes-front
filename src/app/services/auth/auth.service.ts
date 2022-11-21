@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable } from 'rxjs';
 import { handleError } from 'src/app/general-functions';
 import { environment } from 'src/environments/environment';
+import decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,16 @@ export class AuthService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  getUserInfos() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenPayload = decode(token);
+      return tokenPayload;
+    } else {
+      return null;
     }
   }
 
