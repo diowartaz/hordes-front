@@ -1,0 +1,43 @@
+<div class="content">
+  <form class="login-form" [formGroup]="formgroup">
+    <h1>User Login</h1>
+    <div class="input-wrapper">
+      <i class="material-icons icon-input-field">mail</i>
+      <input
+        type="email"
+        class="input-field"
+        required
+        placeholder="Email"
+        autocomplete="off"
+        formControlName="email"
+      />
+    </div>
+
+    <div class="input-wrapper">
+      <i class="material-icons icon-input-field">lock</i>
+      <!-- <i
+        class="material-icons"
+        style="margin-left: 198px; font-size: 16px; position: absolute"
+        >info</i
+      > -->
+      <input
+        type="password"
+        class="input-field"
+        required
+        placeholder="Password"
+        autocomplete="off"
+        formControlName="password"
+      />
+    </div>
+
+    <div class="button-wrapper" (click)="login()">
+      <i class="material-icons login-icon">login</i>
+      <div class="login-text">Login</div>
+    </div>
+
+    <div class="text-button forgot-password" (click)="forgotPassword()">
+      Forgot Password ?
+    </div>
+    <div class="text-button" (click)="signUp()">No account yet ? Sign Up</div>
+  </form>
+</div>

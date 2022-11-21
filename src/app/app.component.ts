@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { TestService } from './services/test/test.service';
 
 @Component({
   selector: 'app-root',
@@ -9,26 +9,15 @@ import { TestService } from './services/test/test.service';
 })
 export class AppComponent {
   title = 'website2';
-  constructor(private testService: TestService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.getCatFacts();
+    // if (!this.userIsLoggedIn()) {
+    //   this.router.navigate(['home']);
+    // }
   }
 
-  getCatFacts() {
-    console.log('getCatFacts');
-    this.testService
-      .getCatFacts()
-      .pipe(
-        take(1),
-        catchError(() => of({ error: 'error' }))
-      )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log(result);
-        } else {
-          console.log(result);
-        }
-      });
+  userIsLoggedIn() {
+    return false;
   }
 }

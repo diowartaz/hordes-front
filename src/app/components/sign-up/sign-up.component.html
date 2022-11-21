@@ -1,0 +1,80 @@
+<div class="content">
+  <form class="login-form" [formGroup]="formgroup">
+    <h1>User Sign Up</h1>
+
+    <div
+      class="input-wrapper"
+      [ngStyle]="fieldHasError('email') && { 'border-color': 'red' }"
+    >
+      <i class="material-icons icon-input-field">mail</i>
+      <input
+        type="email"
+        class="input-field"
+        required
+        placeholder="Email"
+        autocomplete="off"
+        formControlName="email"
+      />
+    </div>
+
+    <div
+      class="input-wrapper"
+      [ngStyle]="fieldHasError('username') && { 'border-color': 'red' }"
+    >
+      <i class="material-icons icon-input-field">person</i>
+      <input
+        type="text"
+        class="input-field"
+        required
+        placeholder="Username"
+        autocomplete="off"
+        formControlName="username"
+      />
+    </div>
+
+    <div
+      class="input-wrapper"
+      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }"
+    >
+      <i class="material-icons icon-input-field">lock</i>
+      <input
+        type="password"
+        class="input-field"
+        required
+        placeholder="Password"
+        autocomplete="off"
+        formControlName="password"
+      />
+    </div>
+
+    <div
+      class="input-wrapper"
+      [ngStyle]="fieldHasError('confirmPassword') && { 'border-color': 'red' }"
+    >
+      <i class="material-icons icon-input-field">lock</i>
+      <input
+        type="password"
+        class="input-field"
+        required
+        placeholder="Confirm Password"
+        autocomplete="off"
+        formControlName="confirmPassword"
+      />
+    </div>
+
+    <div class="button-wrapper" (click)="signUp()">
+      <i *ngIf="!signUpLoading" class="material-icons login-icon">login</i>
+      <div *ngIf="!signUpLoading" class="login-text">Sign Up</div>
+
+      <mat-spinner *ngIf="signUpLoading" diameter="24" class="spinner"></mat-spinner>
+      <div *ngIf="signUpLoading" class="login-text">Signing Up...</div>
+    </div>
+
+    <div class="text-button" (click)="signIn()">
+      Already have an account ? Sign In
+    </div>
+    <div class="text-button" (click)="test()">
+      test
+    </div>
+  </form>
+</div>
