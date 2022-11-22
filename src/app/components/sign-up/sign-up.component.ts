@@ -20,6 +20,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class SignUpComponent implements OnInit {
   formgroup: any = null;
   signUpLoading: boolean = false;
+  invalidSignUp: boolean = false;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -34,29 +35,36 @@ export class SignUpComponent implements OnInit {
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
       username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        this.strongPasswordValidator(),
+      ]),
       confirmPassword: new FormControl('', [
         Validators.required,
-        this.confirmPasswordMatch(),
+        this.confirmPasswordMatchValidator(),
       ]),
+    });
+
+    this.formgroup.valueChanges.subscribe(() => {
+      this.invalidSignUp = false;
     });
   }
 
-  test(){
-    this.signUpLoading = !this.signUpLoading
+  test() {
+    this.signUpLoading = !this.signUpLoading;
   }
 
   signUp() {
-    if(this.signUpLoading){
+    if (this.signUpLoading) {
       return;
     }
+    this.formgroup.markAllAsTouched();
     this.signUpLoading = true;
     const params = {
       email: this.formgroup.controls.email.value,
       username: this.formgroup.controls.username.value,
       password: this.formgroup.controls.password.value,
     };
-    console.log('signUp', params);
     this.authService
       .signUp(params)
       .pipe(
@@ -65,9 +73,9 @@ export class SignUpComponent implements OnInit {
       )
       .subscribe((result: any) => {
         if (result.error) {
-          console.log(result);
+          this.invalidSignUp = true;
         } else {
-          console.log(result);
+          this.invalidSignUp = false;
           this.router.navigate(['home']);
         }
         this.signUpLoading = false;
@@ -85,27 +93,26 @@ export class SignUpComponent implements OnInit {
     );
   }
 
-  // createPasswordStrengthValidator(): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const value = control.value;
+  strongPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.value;
+      if (!password) {
+        return null;
+      }
 
-  //     if (!value) {
-  //       return null;
-  //     }
+      const has8Characters = password.length >= 8;
+      // const hasUpperCase = /[A-Z]+/.test(password);
+      // const hasLowerCase = /[a-z]+/.test(password);
+      // const hasNumeric = /[0-9]+/.test(password);
+      // const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && has8Characters;
 
-  //     const hasUpperCase = /[A-Z]+/.test(value);
+      const passwordValid = has8Characters;
 
-  //     const hasLowerCase = /[a-z]+/.test(value);
+      return !passwordValid ? { noStrong: true } : null;
+    };
+  }
 
-  //     const hasNumeric = /[0-9]+/.test(value);
-
-  //     const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
-
-  //     return !passwordValid ? { passwordStrength: true } : null;
-  //   };
-  // }
-
-  confirmPasswordMatch(): ValidatorFn {
+  confirmPasswordMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const confirmPassword = control.value;
       if (!confirmPassword) {

@@ -11,7 +11,16 @@
     padding: 0px 16px 16px 16px;
     background-color: white;
     border-radius: 12px;
-
+    .invalid-authen {
+      color: red;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+    .valid-authen {
+      height: 26px;
+    }
     .input-wrapper {
       display: flex;
       align-items: center;
@@ -47,7 +56,7 @@
       width: 100%;
       margin-bottom: 16px;
       padding: 16px;
-      background-color: #3388FF;
+      background-color: #3388ff;
       border-radius: 12px;
       color: white;
       font-weight: bold;
@@ -55,6 +64,16 @@
       transition: all 0.5s;
       .login-icon {
         margin-right: 8px;
+      }
+      .login-text {
+        margin-top: 1px;
+      }
+      .spinner {
+        margin-right: 8px;
+      }
+      ::ng-deep.mat-progress-spinner circle,
+      .mat-spinner circle {
+        stroke: white;
       }
     }
     .button-wrapper:hover {
@@ -66,7 +85,7 @@
       cursor: pointer;
       transition: all 0.5s;
     }
-    .text-button:hover{
+    .text-button:hover {
       color: black;
     }
 

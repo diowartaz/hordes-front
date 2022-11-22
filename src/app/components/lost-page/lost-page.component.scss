@@ -1,18 +1,34 @@
 .boundary {
+  width: 100%;
+  height: 100%;
   display: flex;
-  // justify-content: center;
-  // align-items: center;
   flex-direction: column;
-  .menu {
+  align-items: center;
+  justify-content: center;
+  .img-wrapper {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    background-position: center;
+    max-height: 600px;
+    max-width: 800px;
+    height: 100%;
+    width: 100%;
+    border-radius: 16px;
+    border: 2px solid;
+
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    padding: 16px;
+    align-items: center;
+    .error {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 16px;
+    }
     .button-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      margin-bottom: 16px;
       padding: 16px;
       background-color: #3388ff;
       border-radius: 12px;
@@ -25,27 +41,8 @@
       }
     }
     .button-wrapper:hover {
-      // opacity: 0.8;
       background-color: #3f7ed5;
     }
-    .menu-left {
-      display: flex;
-      flex-direction: row;
-    }
-    .menu-right {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-  }
-  .content {
-    height: calc(100% - 88px);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    font-size: 30px;
   }
 }
 

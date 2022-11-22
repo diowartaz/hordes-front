@@ -1,7 +1,10 @@
 <div class="content">
   <form class="login-form" [formGroup]="formgroup">
     <h1>User Login</h1>
-    <div class="input-wrapper">
+    <div
+      class="input-wrapper"
+      [ngStyle]="fieldHasError('email') && { 'border-color': 'red' }"
+    >
       <i class="material-icons icon-input-field">mail</i>
       <input
         type="email"
@@ -13,7 +16,11 @@
       />
     </div>
 
-    <div class="input-wrapper">
+    <div
+      class="input-wrapper"
+      style="margin-bottom: 0px !important"
+      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }"
+    >
       <i class="material-icons icon-input-field">lock</i>
       <!-- <i
         class="material-icons"
@@ -30,9 +37,21 @@
       />
     </div>
 
+    <div *ngIf="invalidAuthentification" class="invalid-authen">
+      Invalid authentification
+    </div>
+    <div *ngIf="!invalidAuthentification" class="valid-authen"></div>
+
     <div class="button-wrapper" (click)="login()">
-      <i class="material-icons login-icon">login</i>
-      <div class="login-text">Login</div>
+      <i *ngIf="!loginLoading" class="material-icons login-icon">login</i>
+      <div *ngIf="!loginLoading" class="login-text">Login</div>
+
+      <mat-spinner
+        *ngIf="loginLoading"
+        diameter="24"
+        class="spinner"
+      ></mat-spinner>
+      <div *ngIf="loginLoading" class="login-text">Login...</div>
     </div>
 
     <div class="text-button forgot-password" (click)="forgotPassword()">

@@ -18,6 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
+import { LostPageComponent } from './components/lost-page/lost-page.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HomeComponent } from './components/home/home.component';
     LoginComponent,
     SignUpComponent,
     HomeComponent,
+    LostPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -50,6 +50,7 @@
     <div
       class="input-wrapper"
       [ngStyle]="fieldHasError('confirmPassword') && { 'border-color': 'red' }"
+      style="margin-bottom: 0px !important"
     >
       <i class="material-icons icon-input-field">lock</i>
       <input
@@ -62,19 +63,28 @@
       />
     </div>
 
-    <div class="button-wrapper" (click)="signUp()">
+    <div *ngIf="invalidSignUp" class="invalid-authen">
+      Invalid authentification
+    </div>
+    <div *ngIf="!invalidSignUp" class="valid-authen"></div>
+
+    <div class="button-wrapper" type="submit" (click)="signUp()">
       <i *ngIf="!signUpLoading" class="material-icons login-icon">login</i>
       <div *ngIf="!signUpLoading" class="login-text">Sign Up</div>
 
-      <mat-spinner *ngIf="signUpLoading" diameter="24" class="spinner"></mat-spinner>
+      <mat-spinner
+        *ngIf="signUpLoading"
+        diameter="24"
+        class="spinner"
+      ></mat-spinner>
       <div *ngIf="signUpLoading" class="login-text">Signing Up...</div>
     </div>
 
     <div class="text-button" (click)="signIn()">
       Already have an account ? Sign In
     </div>
-    <div class="text-button" (click)="test()">
+    <!-- <div class="text-button" (click)="test()">
       test
-    </div>
+    </div> -->
   </form>
 </div>
