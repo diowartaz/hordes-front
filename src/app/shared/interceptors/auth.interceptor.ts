@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    console.log('AuthInterceptor');
     if (
       request.url.includes(environment.API_URL) &&
       localStorage.getItem('token')
@@ -26,7 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
           'Bearer ' + localStorage.getItem('token')
         ),
       });
+      return next.handle(modifiedReq);
+    } else {
+      return next.handle(request);
     }
-    return next.handle(request);
   }
 }

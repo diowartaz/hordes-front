@@ -40,6 +40,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.formgroup.markAllAsTouched();
+    if(this.formgroup.invalid){
+      this.invalidAuthentification = true;
+      return;
+    }
     this.loginLoading = true;
     const params = {
       email: this.formgroup.controls.email.value,

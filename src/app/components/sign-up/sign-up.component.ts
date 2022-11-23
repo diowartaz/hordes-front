@@ -59,6 +59,10 @@ export class SignUpComponent implements OnInit {
       return;
     }
     this.formgroup.markAllAsTouched();
+    if (this.formgroup.invalid) {
+      this.invalidSignUp = true;
+      return;
+    }
     this.signUpLoading = true;
     const params = {
       email: this.formgroup.controls.email.value,

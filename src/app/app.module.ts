@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Validators } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
+import { XpComponent } from './components/xp/xp.component';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { LostPageComponent } from './components/lost-page/lost-page.component';
     SignUpComponent,
     HomeComponent,
     LostPageComponent,
+    XpComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,9 @@ import { LostPageComponent } from './components/lost-page/lost-page.component';
     BrowserAnimationsModule,
   ],
   exports: [], //MatProgressSpinnerModule
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

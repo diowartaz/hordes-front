@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { XpComponent } from './components/xp/xp.component';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
 import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
 
@@ -21,6 +22,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'xp',
+    component: XpComponent,
     canActivate: [AuthGuard],
   },
   {
