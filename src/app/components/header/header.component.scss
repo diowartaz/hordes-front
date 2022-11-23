@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  .header-item:hover {
+    color: #96a702;
+    cursor: pointer;
+  }
+  .middle-header {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    .my-website-span {
+      margin-top: 4px;
+      margin-left: 8px;
+    }
+  }
+}

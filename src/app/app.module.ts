@@ -21,6 +21,9 @@ import { HomeComponent } from './components/home/home.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
 import { XpComponent } from './components/xp/xp.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { MenuComponent } from './components/menu/menu.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
     HomeComponent,
     LostPageComponent,
     XpComponent,
+    MenuComponent,
+    HeaderComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,

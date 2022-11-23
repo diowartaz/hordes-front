@@ -13,6 +13,7 @@
         placeholder="Email"
         autocomplete="off"
         formControlName="email"
+        (keyup.enter)="login()"
       />
     </div>
 
@@ -34,6 +35,7 @@
         placeholder="Password"
         autocomplete="off"
         formControlName="password"
+        (keyup.enter)="login()"
       />
     </div>
 

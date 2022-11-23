@@ -1,0 +1,28 @@
+.boundary {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  // align-items: center;
+  .leaderboard-wrapper {
+    display: flex;
+    gap: clamp(32px, 4vw, 64px);
+    margin-top: 32px;
+    font-size: clamp(16px, 4vw, 32px);
+    .leaderboard-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      .leaderboard-row-element {
+        display: flex;
+        color: white;
+        justify-content: center;
+      }
+      .leaderboard-row-element:first-child {
+        margin-bottom: 12px;
+        border-bottom: 2px solid white;
+      }
+    }
+  }
+}

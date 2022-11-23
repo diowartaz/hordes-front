@@ -8,7 +8,7 @@ import { TestService } from 'src/app/services/test/test.service';
   styleUrls: ['./xp.component.scss'],
 })
 export class XpComponent implements OnInit {
-  userXP: number = 0;
+  userXP: any = null;
   constructor(private testService: TestService) {}
 
   ngOnInit(): void {
@@ -23,8 +23,7 @@ export class XpComponent implements OnInit {
         catchError(() => of({ error: 'error' }))
       )
       .subscribe((result: any) => {
-        console.log(result);
-        this.userXP = 1;
+        this.userXP = result.user.xp;
       });
   }
 }

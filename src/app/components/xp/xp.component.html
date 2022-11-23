@@ -1,6 +1,16 @@
 <div class="boundary">
   <div class="button-wrapper" (click)="getXP()">
-    <i class="material-icons login-icon">science</i>
+    <i class="material-symbols-outlined login-icon">
+      science
+    </i>
     <div class="login-text">Get Experience</div>
+  </div>
+  <div class="user-xp">
+    <div
+      style="height: 20px; width: 40px; display: flex; justify-content: center"
+    >
+      <span>{{ userXP }}</span>
+      <mat-spinner *ngIf="!userXP" diameter="20"></mat-spinner>
+    </div>
   </div>
 </div>

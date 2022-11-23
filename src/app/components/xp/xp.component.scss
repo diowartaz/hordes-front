@@ -5,6 +5,7 @@
   align-content: center;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   .button-wrapper {
     display: flex;
     align-items: center;
@@ -24,5 +25,16 @@
   }
   .button-wrapper:hover {
     background-color: #3f7ed5;
+  }
+
+  .user-xp {
+    color: white;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 16px;
+    ::ng-deep.mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: white;
+    }
   }
 }

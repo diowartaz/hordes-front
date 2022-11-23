@@ -30,4 +30,14 @@ export class TestService {
       catchError(handleError('getXP', url))
     );
   }
+
+  getLeaderboard(): Observable<any> {
+    let url: string = this.API_URL + 'leaderboard';
+    return this.httpClient.get<any>(url).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('getLeaderboard', url))
+    );
+  }
 }

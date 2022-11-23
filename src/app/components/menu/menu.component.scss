@@ -1,0 +1,31 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: #1c1c1c;
+  width: 240px;
+  height: calc(100% - 60px);
+  border-right: 1px solid #2a2a2a;
+  transition-duration: 0.3s;
+  .menu-item {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    border-bottom: 1px solid #2a2a2a;
+    align-items: center;
+    cursor: pointer;
+    .icon {
+      margin-right: 8px;
+    }
+  }
+  .menu-item:hover {
+    color: #96a702;
+  }
+}
+
+.menu-not-displayed {
+  margin-left: -240px;
+}

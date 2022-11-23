@@ -1,0 +1,26 @@
+<div
+  class="menu"
+  [ngClass]="{
+    'menu-not-displayed': !menuIsDisplayed || !userIsLoggedIn()
+  }"
+>
+  <div class="menu-item" (click)="navigate('xp')">
+    <i class="material-symbols-outlined icon"> science </i>
+    <div>Get Experience</div>
+  </div>
+
+  <div class="menu-item" (click)="navigate('leaderboard')">
+    <i class="material-symbols-outlined icon"> leaderboard </i>
+    <div>Leaderboard</div>
+  </div>
+
+  <div class="menu-item">
+    <i class="material-symbols-outlined icon"> chat </i>
+    <div>Chat</div>
+  </div>
+
+  <div class="menu-item">
+    <i class="material-symbols-outlined icon"> stadia_controller </i>
+    <div>Agar.io</div>
+  </div>
+</div>

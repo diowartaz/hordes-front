@@ -1,0 +1,23 @@
+<div *ngIf="userIsLoggedIn()" class="header">
+  <div class="left-header header-item">
+    <i
+      *ngIf="!menuIsDisplayed"
+      class="material-icons icon-header"
+      (click)="changeMenuIsDisplayed()"
+      >menu</i
+    >
+    <i
+      *ngIf="menuIsDisplayed"
+      class="material-icons icon-header"
+      (click)="changeMenuIsDisplayed()"
+      >close</i
+    >
+  </div>
+  <div class="middle-header header-item" (click)="navigate('home')">
+    <i class="material-icons icon-header">home</i>
+    <div class="my-website-span">My Website</div>
+  </div>
+  <div class="right-header header-item">
+    <i class="material-icons icon-header" (click)="logOut()">logout</i>
+  </div>
+</div>

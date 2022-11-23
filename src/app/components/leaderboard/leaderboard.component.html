@@ -1,0 +1,19 @@
+<div class="boundary">
+  <div class="leaderboard-wrapper">
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+        <div>{{ user.rank }}</div>
+      </div>
+    </div>
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+        <div>{{ user.username }}</div>
+      </div>
+    </div>
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+        <div>{{ user.xp }}</div>
+      </div>
+    </div>
+  </div>
+</div>
