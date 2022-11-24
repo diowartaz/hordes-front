@@ -1,52 +1,13 @@
-// .menu {
-//   display: flex;
-//   flex-direction: column;
-//   position: absolute;
-//   background-color: #1c1c1c;
-//   width: 240px;
-//   height: calc(100% - 60px);
-//   border-right: 1px solid #2a2a2a;
-//   transition-duration: 0.3s;
-//   .menu-item {
-//     padding: 16px;
-//     color: white;
-//     font-size: 16px;
-//     font-weight: 400;
-//     border-bottom: 1px solid #2a2a2a;
-//     cursor: pointer;
-//   }
-//   .menu-item:hover {
-//     color: #96a702;
-//   }
-// }
-
-// .menu-not-displayed {
-//   margin-left: -240px;
-// }
+.page {
+  // flex: 1;
+  height: calc(100% - 60px);
+}
 .menu-wrapper {
   width: 240px;
+  // flex: 1;
   height: calc(100% - 60px);
 }
 
-.header-wrapper{
+.header-wrapper {
   width: 100%;
-}
-
-.page {
-  height: calc(100vh - 60px);
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }

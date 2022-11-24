@@ -5,6 +5,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { TestComponent } from './components/test/test.component';
 import { XpComponent } from './components/xp/xp.component';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
 import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'test',
+    component: TestComponent,
     canActivate: [AuthGuard],
   },
   {

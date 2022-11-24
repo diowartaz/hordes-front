@@ -1,0 +1,11 @@
+<div class="boundary-wrapper">
+  <div class="boundary">
+    <div class="messages-wrapper">
+      <div class="message" *ngFor="let message of messages">
+        <div class="timestamp">[{{ message.timestamp }}]&nbsp;</div>
+        <div class="username">{{ message.username }}:&nbsp;</div>
+        <div class="content">{{ message.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>

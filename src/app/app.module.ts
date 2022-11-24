@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Validators } from '@angular/forms';
+import 'web-animations-js';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,8 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { MenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { TestComponent } from './components/test/test.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     MenuComponent,
     HeaderComponent,
     LeaderboardComponent,
+    ChatComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
