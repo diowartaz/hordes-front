@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { WsChatService } from 'src/app/services/ws-chat/ws-chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -9,6 +10,8 @@ export class ChatComponent implements OnInit {
   // var m = document.getElementById('move');
   // m.addEventListener('mousedown', mouseDown, false);
   // window.addEventListener('mouseup', mouseUp, false);
+
+  // client: any = new WebSocketClient();
 
   mystring: any = 'zazefazfeazeffeazefazefazefazefazefazef\n';
 
@@ -31,13 +34,18 @@ export class ChatComponent implements OnInit {
     },
   ];
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private wsChatService: WsChatService
+  ) {}
 
   ngOnInit(): void {
     for (let i = 0; i < 4; i++) {
       this.messages = [...this.messages, ...this.messages];
       this.mystring = this.mystring + this.mystring;
     }
+
+    // this.wsChatService.connect();
 
     // this.elementRef.nativeElement
     //   .querySelector('my-element')
@@ -65,4 +73,8 @@ export class ChatComponent implements OnInit {
   // onClick(event: Event) {
   //   console.log(event);
   // }
+
+  sendMessage() {
+    this.wsChatService.sendMessage('my message omg');
+  }
 }

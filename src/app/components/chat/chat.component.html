@@ -1,11 +1,15 @@
-<div class="boundary-wrapper">
-  <div class="boundary">
-    <div class="messages-wrapper">
-      <div class="message" *ngFor="let message of messages">
-        <div class="timestamp">[{{ message.timestamp }}]&nbsp;</div>
-        <div class="username">{{ message.username }}:&nbsp;</div>
-        <div class="content">{{ message.content }}</div>
-      </div>
+<div class="boundary">
+  <div class="messages-wrapper">
+    <div class="message" *ngFor="let message of messages">
+      <div class="timestamp">[{{ message.timestamp }}]&nbsp;</div>
+      <div class="username">{{ message.username }}:&nbsp;</div>
+      <div class="content">{{ message.content }}</div>
     </div>
+  </div>
+  <div class="input-wrapper">
+    <input class="input" type="text" />
+    <span class="material-symbols-outlined icon-send" (click)="sendMessage()">
+      send
+    </span>
   </div>
 </div>
