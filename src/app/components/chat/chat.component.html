@@ -1,15 +1,21 @@
-<div class="boundary">
+<div class="boundary" [formGroup]="formgroup">
   <div class="messages-wrapper">
     <div class="message" *ngFor="let message of messages">
-      <div class="timestamp">[{{ message.timestamp }}]&nbsp;</div>
+      <div class="timestamp">[{{ getTime(message.timestamp) }}]&nbsp;</div>
       <div class="username">{{ message.username }}:&nbsp;</div>
-      <div class="content">{{ message.content }}</div>
+      <div class="content">{{ message.message }}</div>
     </div>
   </div>
   <div class="input-wrapper">
-    <input class="input" type="text" />
+    <input
+      formControlName="inputValue"
+      class="input"
+      type="text"
+      (keyup.enter)="sendMessage()"
+    />
     <span class="material-symbols-outlined icon-send" (click)="sendMessage()">
       send
     </span>
+    <div class="is-typing">{{ getIsTypingString() }}</div>
   </div>
 </div>

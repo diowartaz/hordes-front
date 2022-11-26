@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { WsChatService } from 'src/app/services/ws-chat/ws-chat.service';
 
 @Component({
@@ -7,32 +8,11 @@ import { WsChatService } from 'src/app/services/ws-chat/ws-chat.service';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
-  // var m = document.getElementById('move');
-  // m.addEventListener('mousedown', mouseDown, false);
-  // window.addEventListener('mouseup', mouseUp, false);
+  formgroup: any = null;
+  isTyping: boolean = false;
 
-  // client: any = new WebSocketClient();
-
-  mystring: any = 'zazefazfeazeffeazefazefazefazefazefazef\n';
-
-  messages: any = [
-    {
-      username: 'Paul',
-      content: 'Yo',
-      timestamp: '22:11',
-    },
-    {
-      username: 'Vic',
-      content:
-        'Salut, ezfa"ezf ef efzazefafzefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee fezfzefazef ezfazefzef fzafazefaze ezfazfe',
-      timestamp: '22:12',
-    },
-    {
-      username: 'Paul',
-      content: 'Ca va?',
-      timestamp: '22:13',
-    },
-  ];
+  messages: any = [];
+  listTypingUser: any = [];
 
   constructor(
     private elementRef: ElementRef,
@@ -40,21 +20,81 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    for (let i = 0; i < 4; i++) {
-      this.messages = [...this.messages, ...this.messages];
-      this.mystring = this.mystring + this.mystring;
-    }
+    this.formgroup = new FormGroup({
+      inputValue: new FormControl(''),
+    });
+    this.wsChatService.listMessages$.subscribe((res) => {
+      this.messages = res;
+      console.log('this.messages', this.messages);
+    });
 
-    // this.wsChatService.connect();
+    this.wsChatService.listTypingUser$.subscribe((res) => {
+      this.listTypingUser = res;
+    });
 
-    // this.elementRef.nativeElement
-    //   .querySelector('my-element')
-    //   .addEventListener('mouseup', this.mouseUp.bind(this));
-
-    // this.elementRef.nativeElement
-    //   .querySelector('my-element')
-    //   .addEventListener('mouseup', this.mouseUp.bind(this));
+    this.formgroup.controls.inputValue.valueChanges.subscribe(
+      (inputValue: any) => {
+        if (
+          (inputValue.length > 0 && !this.isTyping) ||
+          (inputValue.length === 0 && this.isTyping)
+        ) {
+          this.isTyping = !this.isTyping;
+          this.wsChatService.sendIsTyping();
+        }
+      }
+    );
   }
+
+  sendMessage() {
+    this.wsChatService.sendMessage(this.formgroup.controls.inputValue.value);
+    this.formgroup.get('inputValue').patchValue('');
+  }
+
+  getTime(timestamp: any) {
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  getIsTypingString() {
+    if (this.listTypingUser.length == 0) {
+      return '';
+    } else if (this.listTypingUser.length == 1) {
+      return this.listTypingUser[0] + ' is typing...';
+    } else if (this.listTypingUser.length > 3) {
+      return 'Multiple users are typing...';
+    } else {
+      return (
+        this.listTypingUser
+          .map((user: any) => {
+            if (user.length > 15) {
+              return user.slice(0, 12) + '...';
+            } else {
+              return user;
+            }
+          })
+          .join(', ') + ' are typing...'
+      );
+    }
+  }
+
+  // var m = document.getElementById('move');
+  // m.addEventListener('mousedown', mouseDown, false);
+  // window.addEventListener('mouseup', mouseUp, false);
+
+  // client: any = new WebSocketClient();
+
+  // this.wsChatService.connect();
+
+  // this.elementRef.nativeElement
+  //   .querySelector('my-element')
+  //   .addEventListener('mouseup', this.mouseUp.bind(this));
+
+  // this.elementRef.nativeElement
+  //   .querySelector('my-element')
+  //   .addEventListener('mouseup', this.mouseUp.bind(this));
+  // }
 
   // mouseUp() {
   //   this.elementRef.nativeElement
@@ -73,8 +113,4 @@ export class ChatComponent implements OnInit {
   // onClick(event: Event) {
   //   console.log(event);
   // }
-
-  sendMessage() {
-    this.wsChatService.sendMessage('my message omg');
-  }
 }
