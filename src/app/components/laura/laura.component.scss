@@ -1,0 +1,104 @@
+.boundary {
+  // padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .questions-wrapper {
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+    .first-container {
+      background: #e8b8f1;
+      border-radius: 16px 16px 0px 0px;
+      input {
+        border: 2px solid #76096e;
+        border-radius: 8px;
+      }
+    }
+    .second-container {
+      background-color: #eaceef75;
+      border-radius: 0px 0px 16px 16px;
+      input {
+        border: 1px solid #e8b8f1;
+      }
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      width: 100%;
+      .btn {
+        background: #e8b8f1;
+        border: none;
+        padding: 8px;
+        border-radius: 16px;
+        color: #76096e;
+        font-weight: bold;
+      }
+      .question {
+        margin-bottom: 0px;
+      }
+      input {
+        padding: 5px 8px;
+        margin-bottom: 16px;
+      }
+    }
+    input:last-child {
+      margin-bottom: 0px;
+    }
+    .option {
+      outline: none;
+      border: none !important;
+      background-image: repeating-linear-gradient(
+          14deg,
+          #e8b8f1,
+          #e8b8f1 6px,
+          transparent 6px,
+          transparent 11px,
+          #e8b8f1 11px
+        ),
+        repeating-linear-gradient(
+          104deg,
+          #e8b8f1,
+          #e8b8f1 6px,
+          transparent 6px,
+          transparent 11px,
+          #e8b8f1 11px
+        ),
+        repeating-linear-gradient(
+          194deg,
+          #e8b8f1,
+          #e8b8f1 6px,
+          transparent 6px,
+          transparent 11px,
+          #e8b8f1 11px
+        ),
+        repeating-linear-gradient(
+          284deg,
+          #e8b8f1,
+          #e8b8f1 6px,
+          transparent 6px,
+          transparent 11px,
+          #e8b8f1 11px
+        );
+      background-size: 1px calc(100% + 11.34px), calc(100% + 11.34px) 1px,
+        1px calc(100% + 11.34px), calc(100% + 11.34px) 1px;
+      background-position: 0 0, 0 0, 100% 0, 0 100%;
+      background-repeat: no-repeat;
+      animation: borderAnimation 1s infinite linear;
+    }
+  }
+}
+
+@keyframes borderAnimation {
+  from {
+    background-position: 0 0, -11.34px 0, 100% -11.34px, 0 100%;
+  }
+  to {
+    background-position: 0 -11.34px, 0 0, 100% 0, -11.34px 100%;
+  }
+}

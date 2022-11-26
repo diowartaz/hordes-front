@@ -27,6 +27,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { TestComponent } from './components/test/test.component';
+import { LauraComponent } from './components/laura/laura.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TestComponent } from './components/test/test.component';
     LeaderboardComponent,
     ChatComponent,
     TestComponent,
+    LauraComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import { TestComponent } from './components/test/test.component';
   ],
   exports: [], //MatProgressSpinnerModule
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

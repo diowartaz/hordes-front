@@ -6,9 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 })
 export class WsChatService {
   subject: WebSocketSubject<any> = webSocket(
-    'ws://localhost:3000/' + 'rehtrhrethrthhtr'
+    'ws://localhost:3000/' + localStorage.getItem('token')
   );
-  // localStorage.getItem('token')
 
   constructor() {
     this.subject.subscribe({
