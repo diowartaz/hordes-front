@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { environment } from 'src/environments/environment';
 import _ from 'lodash';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class WsChatService {
   open = new Subject();
   close = new Subject();
   subject: WebSocketSubject<any> = webSocket({
-    url: 'ws://localhost:3000/' + localStorage.getItem('token'),
+    url: environment.API_URL_WS + localStorage.getItem('token'),
     openObserver: this.open,
     closeObserver: this.close,
   });

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   formgroup: any = null;
   loginLoading: boolean = false;
   invalidAuthentification = false;
+  email: any = '';
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -22,8 +23,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('email')) {
+      this.email = localStorage.getItem('email');
+    }
     this.formgroup = new FormGroup({
-      email: new FormControl('', [
+      email: new FormControl(this.email, [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
@@ -40,7 +44,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.formgroup.markAllAsTouched();
-    if(this.formgroup.invalid){
+    if (this.formgroup.invalid) {
       this.invalidAuthentification = true;
       return;
     }
@@ -61,6 +65,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.invalidAuthentification = false;
           localStorage.setItem('token', result.token);
+          localStorage.setItem('email', params.email);
           this.router.navigate(['home']);
         }
         this.loginLoading = false;
