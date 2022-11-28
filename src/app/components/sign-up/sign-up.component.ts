@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   ValidatorFn,
   AbstractControl,
@@ -29,17 +29,17 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formgroup = new FormGroup({
-      email: new FormControl('', [
+    this.formgroup = new UntypedFormGroup({
+      email: new UntypedFormControl('', [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
+      username: new UntypedFormControl('', [Validators.required]),
+      password: new UntypedFormControl('', [
         Validators.required,
         this.strongPasswordValidator(),
       ]),
-      confirmPassword: new FormControl('', [
+      confirmPassword: new UntypedFormControl('', [
         Validators.required,
         this.confirmPasswordMatchValidator(),
       ]),

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
@@ -26,12 +26,12 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('email')) {
       this.email = localStorage.getItem('email');
     }
-    this.formgroup = new FormGroup({
-      email: new FormControl(this.email, [
+    this.formgroup = new UntypedFormGroup({
+      email: new UntypedFormControl(this.email, [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      password: new FormControl('', [Validators.required]),
+      password: new UntypedFormControl('', [Validators.required]),
     });
 
     this.formgroup.valueChanges.subscribe(() => {

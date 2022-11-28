@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-laura',
@@ -13,11 +13,11 @@ export class LauraComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.formgroup = new FormGroup({
-      question: new FormControl(''),
-      firstAnswer: new FormControl(''),
-      secondsAnswer: new FormControl(''),
-      addOptionQuestion: new FormControl(''),
+    this.formgroup = new UntypedFormGroup({
+      question: new UntypedFormControl(''),
+      firstAnswer: new UntypedFormControl(''),
+      secondsAnswer: new UntypedFormControl(''),
+      addOptionQuestion: new UntypedFormControl(''),
     });
   }
 
