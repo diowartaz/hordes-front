@@ -10,6 +10,7 @@ import _ from 'lodash';
 export class WsChatService {
   open = new Subject();
   close = new Subject();
+  // + localStorage.getItem('token')
   subject: WebSocketSubject<any> = webSocket({
     url: environment.API_URL_WS + localStorage.getItem('token'),
     openObserver: this.open,

@@ -6,7 +6,7 @@
     "start": "node server.js",
     "start1": "ng serve",
     "build": "ng build",
-    "heroku-postbuild": "ng build --prod",
+    "heroku-postbuild": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
