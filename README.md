@@ -28,3 +28,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 npm install -g @angular/cli
+
+
+
+npm dev check
+    // "jasmine-core": "~3.10.0",
+    // "karma": "~6.3.0",
+    // "karma-chrome-launcher": "~3.1.0",
+    // "karma-coverage": "~2.1.0",
+    // "karma-jasmine": "~4.0.0",
+    // "karma-jasmine-html-reporter": "~1.7.0"

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormControl,
+  FormGroup,
+  FormControl,
   Validators,
   ValidatorFn,
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -23,23 +22,22 @@ export class SignUpComponent implements OnInit {
   invalidSignUp: boolean = false;
 
   constructor(
-    private _snackBar: MatSnackBar,
     private router: Router,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.formgroup = new UntypedFormGroup({
-      email: new UntypedFormControl('', [
+    this.formgroup = new FormGroup({
+      email: new FormControl('', [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      username: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
         Validators.required,
         this.strongPasswordValidator(),
       ]),
-      confirmPassword: new UntypedFormControl('', [
+      confirmPassword: new FormControl('', [
         Validators.required,
         this.confirmPasswordMatchValidator(),
       ]),

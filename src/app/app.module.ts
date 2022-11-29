@@ -10,12 +10,9 @@ import { MyButtonComponent } from './components/general-components/my-button/my-
 // import { OuathService } from 'angular-oauth2-oidc';
 
 //Angular components
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
@@ -28,6 +25,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
 import { ChatComponent } from './components/chat/chat.component';
 import { TestComponent } from './components/test/test.component';
 import { LauraComponent } from './components/laura/laura.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -46,16 +44,14 @@ import { LauraComponent } from './components/laura/laura.component';
     LauraComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
-    MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
   ],
   exports: [], //MatProgressSpinnerModule
   providers: [

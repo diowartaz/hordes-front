@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -17,7 +16,6 @@ export class LoginComponent implements OnInit {
   email: any = '';
 
   constructor(
-    private _snackBar: MatSnackBar,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -26,12 +24,12 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('email')) {
       this.email = localStorage.getItem('email');
     }
-    this.formgroup = new UntypedFormGroup({
-      email: new UntypedFormControl(this.email, [
+    this.formgroup = new FormGroup({
+      email: new FormControl(this.email, [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      password: new UntypedFormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
     });
 
     this.formgroup.valueChanges.subscribe(() => {

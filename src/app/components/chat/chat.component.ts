@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { WsChatService } from 'src/app/services/ws-chat/ws-chat.service';
 
 @Component({
@@ -20,8 +20,8 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formgroup = new UntypedFormGroup({
-      inputValue: new UntypedFormControl(''),
+    this.formgroup = new FormGroup({
+      inputValue: new FormControl(''),
     });
     this.wsChatService.listMessages$.subscribe((res) => {
       this.messages = res;
