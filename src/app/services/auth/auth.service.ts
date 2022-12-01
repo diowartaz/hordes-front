@@ -13,17 +13,25 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
   userIsLoggedIn() {
-    if (localStorage.getItem('token')) {
+    let parsedJWT: any = this.parseJwt();
+    if (parsedJWT) {
+      // console.log(Date.now() >= parsedJWT.exp * 1000);
+      if (Date.now() >= parsedJWT.exp * 1000) {
+        return false;
+      } else {
+        return true;
+      }
       return true;
     } else {
       return false;
     }
   }
 
-  getUserInfos() {
+  parseJwt() {
     const token = localStorage.getItem('token');
     if (token) {
       const tokenPayload = decode(token);
+      // console.log("tokenPayload", tokenPayload)
       return tokenPayload;
     } else {
       return null;

@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userInfos = this.authService.getUserInfos();
+    this.userInfos = this.authService.parseJwt();
   }
 
   logOut() {
