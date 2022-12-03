@@ -40,6 +40,7 @@ export class AuthService {
 
   signIn(params: any): Observable<any> {
     let url: string = this.API_URL + 'signin';
+    console.log(url)
     return this.httpClient.post<any>(url, params).pipe(
       map((response: any) => {
         return response;

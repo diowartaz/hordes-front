@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { HordesPageComponent } from './components/hordes-page/hordes-page.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
@@ -39,6 +40,11 @@ const routes: Routes = [
   {
     path: 'test',
     component: TestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'hordes-page',
+    component: HordesPageComponent,
     canActivate: [AuthGuard],
   },
   {

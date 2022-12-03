@@ -26,6 +26,11 @@ import { ChatComponent } from './components/chat/chat.component';
 import { TestComponent } from './components/test/test.component';
 import { LauraComponent } from './components/laura/laura.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HordesComponent } from './components/hordes/hordes.component';
+import { HordesPageComponent } from './components/hordes-page/hordes-page.component';
+import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
+import { SkillsComponent } from './components/hordes/skills/skills.component';
+import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ChatComponent,
     TestComponent,
     LauraComponent,
+    HordesComponent,
+    HordesPageComponent,
+    BuildingsComponent,
+    SkillsComponent,
+    DiggingsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
