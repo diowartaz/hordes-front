@@ -10,11 +10,7 @@
 
     <div class="header-right">
       <button class="icon-btn">
-        <img
-          style="height: 16px; margin: 0px 4px"
-          class="xp-icon"
-          src="../../../assets/icons/sac.webp"
-        />
+        <span class="material-symbols-outlined icon"> mail </span>
       </button>
       <button class="icon-btn">
         <span class="material-symbols-outlined icon"> leaderboard </span>
@@ -26,30 +22,39 @@
   </div>
 
   <div class="second-header">
-    <div class="second-header-element">
-      <!-- <span class="material-symbols-outlined icon-google"> calendar_today </span> -->
-      <img class="icon" src="../../../assets/icons/calendar.ico" />
-      <span class="text-span">{{ jour }}</span>
+    <div class="second-header-left">
+      <div class="second-header-element">
+        <img class="icon" src="../../../assets/icons/calendar.ico" />
+        <span class="text-span">{{ jour }}</span>
+      </div>
+
+      <div class="second-header-element">
+        <img
+          class="icon"
+          style="mix-blend-mode: color-burn"
+          src="../../../assets/icons/clock2.png"
+        />
+        <span class="text-span">10h38</span>
+      </div>
+
+      <div class="second-header-element">
+        <img class="icon" src="../../../assets/icons/defense.gif" />
+        <span class="text-span">356</span>
+      </div>
+
+      <div class="second-header-element">
+        <img class="icon" style="margin-left: 0px;" src="../../../assets/icons/zb.gif" />
+        <span class="text-span">278-324</span>
+      </div>
     </div>
 
-    <div class="second-header-element">
+    <button class="icon-btn" style="margin-left: 8px">
       <img
-        class="icon"
-        style="mix-blend-mode: color-burn"
-        src="../../../assets/icons/clock2.png"
+        style="height: 24px"
+        class="xp-icon"
+        src="../../../assets/icons/sac.webp"
       />
-      <span class="text-span">10h38</span>
-    </div>
-
-    <div class="second-header-element">
-      <img class="icon" src="../../../assets/icons/defense.gif" />
-      <span class="text-span">356</span>
-    </div>
-
-    <div class="second-header-element">
-      <img class="icon" src="../../../assets/icons/zb.gif" />
-      <span class="text-span">278-324</span>
-    </div>
+    </button>
   </div>
 
   <div class="content-wrapper">
@@ -73,8 +78,5 @@
       <img class="icon" src="../../../assets/icons/sleep.gif" />
       <span class="span">Sleep</span>
     </button>
-    <!-- <button class="footer-btn">
-      <img class="icon" src="../../../assets/icons/builder.gif" />
-    </button> -->
   </div>
 </div>
