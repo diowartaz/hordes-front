@@ -31,6 +31,7 @@ import { HordesPageComponent } from './components/hordes-page/hordes-page.compon
 import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 import { SkillsComponent } from './components/hordes/skills/skills.component';
 import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
+import { InventoryComponent } from './components/hordes/inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DiggingsComponent } from './components/hordes/diggings/diggings.compone
     BuildingsComponent,
     SkillsComponent,
     DiggingsComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

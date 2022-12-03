@@ -29,11 +29,7 @@
       </div>
 
       <div class="second-header-element">
-        <img
-          class="icon"
-          style="mix-blend-mode: color-burn"
-          src="../../../assets/icons/clock2.png"
-        />
+        <span class="material-symbols-outlined icon"> schedule </span>
         <span class="text-span">10h38</span>
       </div>
 
@@ -43,8 +39,8 @@
       </div>
 
       <div class="second-header-element">
-        <img class="icon" style="margin-left: 0px;" src="../../../assets/icons/zb.gif" />
-        <span class="text-span">278-324</span>
+        <img class="icon" src="../../../assets/icons/zb.gif" />
+        <span style="margin-left: 0px" class="text-span">278-324</span>
       </div>
     </div>
 
@@ -58,19 +54,23 @@
   </div>
 
   <div class="content-wrapper">
-    <div class="content-header"></div>
-    <div class="content"></div>
+    <div class="content">
+      <app-diggings></app-diggings>
+    </div>
   </div>
   <div class="footer">
     <button class="footer-btn">
-      <img class="icon" src="../../../assets/icons/builder.gif" />
+      <img class="icon" src="../../../assets/icons/building.webp" />
       <span class="span">Buildings</span>
     </button>
     <button class="footer-btn">
       <img class="icon" src="../../../assets/icons/livre.gif" />
       <span class="span">Skills</span>
     </button>
-    <button class="footer-btn">
+    <button
+      class="footer-btn"
+      style="background: var(--background-black-opacity-zero-six)"
+    >
       <img class="icon" src="../../../assets/icons/pelle.gif" />
       <span class="span">Diggings</span>
     </button>

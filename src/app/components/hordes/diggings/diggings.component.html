@@ -1,1 +1,31 @@
-<p>diggings works!</p>
+<div class="boundary">
+  <div class="header">
+    <img class="icon" src="../../../assets/icons/pelle.gif" />
+    <div>Diggings</div>
+  </div>
+  <div class="content">
+    <div class="diggings">
+      <div class="select-nb-digs">
+        <button class="btn element add-digs-btn" (click)="addDigs(-1)">
+          <span class="material-symbols-outlined"> arrow_left </span>
+        </button>
+        <div class="nb-digs element">{{ nbDigs }}</div>
+        <!-- <input type="number" disabled value="1" /> -->
+        <button class="btn element add-digs-btn" (click)="addDigs(1)">
+          <span class="material-symbols-outlined"> arrow_right </span>
+        </button>
+      </div>
+      <button class="btn dig-btn">
+        <img class="icon" src="../../../assets/icons/pelle.gif" />
+        <div class="dig-text">Dig for the items</div>
+
+      </button>
+    </div>
+    <div class="inventory">
+      <div class="item" *ngFor="let item of inventory">
+        <img src="{{ item.src }}" />
+        <div class="nb">{{ item.nb }}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+.boundary {
+  // border-top: var(--border-white-transparent);
+  height: 100%;
+  .btn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding: 0px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    padding: 8px;
+    .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+  .content {
+    padding: 8px;
+    .diggings {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+      .select-nb-digs {
+        display: flex;
+        color: white;
+        border: 1px solid white;
+        border-radius: 4px;
+        height: fit-content;
+        width: 50%;
+        .nb-digs {
+          border-right: 1px solid white;
+          border-left: 1px solid white;
+          width: 100%;
+        }
+        .element {
+          // width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .add-digs-btn {
+          background: var(--primary-yellow);
+          // background-color: #3361ac;
+          color: white;
+        }
+      }
+      .dig-btn {
+        display: flex;
+        border: 1px solid white;
+        padding: 4px;
+        border-radius: 4px;
+        background: var(--primary-yellow);
+        width: 50%;
+        margin-top: 16px;
+        justify-content: center;
+        .dig-text {
+          margin-left: 4px;
+        }
+      }
+    }
+    .inventory {
+      display: flex;
+      flex-direction: column;
+      .item {
+        display: flex;
+        margin-bottom: 4px;
+        .nb {
+          color: white;
+          margin-left: 4px;
+          font-size: 14px;
+        }
+      }
+      .item:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
