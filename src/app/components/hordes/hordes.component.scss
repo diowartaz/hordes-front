@@ -55,16 +55,16 @@
         .xp-bar {
           width: 100%;
           border-left: none !important;
-          border-top-left-radius: 0px;
-          border-bottom-left-radius: 0px;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
           border: var(--border-white-transparent);
-          border-radius: 2px;
         }
         .xp-string {
           position: absolute;
           font-size: 12px;
           color: white;
           font-weight: 600;
+          // margin-bottom: 1px;
         }
       }
     }

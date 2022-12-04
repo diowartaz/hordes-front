@@ -32,9 +32,8 @@
     border: 2px solid white;
     border-radius: 12px;
     padding: 16px;
-    ::ng-deep.mat-progress-spinner circle,
-    .mat-spinner circle {
-      stroke: white;
+    ::ng-deep.mat-mdc-progress-spinner {
+      --mdc-circular-progress-active-indicator-color: white;
     }
   }
 }

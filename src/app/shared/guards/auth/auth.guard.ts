@@ -25,7 +25,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | boolean
     | UrlTree {
     if (this.authService.userIsLoggedIn()) {
-      console.log('is logged in');
       return true;
     } else {
       this.router.navigate(['signin']);

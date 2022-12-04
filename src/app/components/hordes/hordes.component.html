@@ -1,8 +1,9 @@
 <div class="boundary">
   <div class="header">
     <div class="xp-wrapper">
-      <div class="xp-icon">3</div>
+      <div class="xp-icon">{{ lvl }}</div>
       <div class="xp-bar-wrapper">
+        <!-- <div></div> -->
         <progress class="xp-bar" max="100" value="70"></progress>
         <div class="xp-string">{{ xpString }}</div>
       </div>
@@ -25,22 +26,26 @@
     <div class="second-header-left">
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/calendar.ico" />
-        <span class="text-span">{{ jour }}</span>
+        <span class="text-span">{{ city.day }}</span>
       </div>
 
       <div class="second-header-element">
         <span class="material-symbols-outlined icon"> schedule </span>
-        <span class="text-span">10h38</span>
+        <span class="text-span">{{ getHourString(city.time) }}</span>
       </div>
 
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/defense.gif" />
-        <span class="text-span">356</span>
+        <span class="text-span">{{ city.defense }}</span>
       </div>
 
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/zb.gif" />
-        <span style="margin-left: 0px" class="text-span">278-324</span>
+        <span style="margin-left: 0px" class="text-span"
+          >{{ city.nb_zb_next_attack_min }}-{{
+            city.nb_zb_next_attack_max
+          }}</span
+        >
       </div>
     </div>
 

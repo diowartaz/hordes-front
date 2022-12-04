@@ -20,9 +20,8 @@
         margin-right: 8px;
       }
       .loader {
-        ::ng-deep .mat-progress-spinner circle,
-        .mat-spinner circle {
-          stroke: white !important;
+        ::ng-deep.mat-mdc-progress-spinner {
+          --mdc-circular-progress-active-indicator-color: white;
         }
       }
     }

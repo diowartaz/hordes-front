@@ -56,7 +56,7 @@ import { InventoryComponent } from './components/hordes/inventory/inventory.comp
     InventoryComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MatIconModule,
@@ -65,7 +65,7 @@ import { InventoryComponent } from './components/hordes/inventory/inventory.comp
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
   ],
-  exports: [], //MatProgressSpinnerModule
+  exports: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
