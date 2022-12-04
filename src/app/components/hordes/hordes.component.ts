@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
@@ -12,6 +13,8 @@ export class HordesComponent {
   city: any = null;
   xp: number = 0;
   lvl: number = 1;
+  goToSleepLoading: boolean = false;
+  content: string = 'diggings';
 
   constructor(private cityService: CityService) {}
 
@@ -42,5 +45,34 @@ export class HordesComponent {
       nbMinutesString = '0' + nbMinutes;
     }
     return nbHeures + 'h' + nbMinutesString;
+  }
+
+  goToSleep() {
+    console.log('dig');
+    if (this.goToSleepLoading) {
+      return;
+    }
+    this.goToSleepLoading = true;
+    this.cityService
+      .goToSleep()
+      .pipe(
+        take(1),
+        catchError(() => of({ error: 'error' }))
+      )
+      .subscribe((result: any) => {
+        this.goToSleepLoading = false;
+      });
+  }
+
+  changeContent(content: string) {
+    console.log(content);
+    this.content = content;
+  }
+
+  getStyle(content: string) {
+    if (content == this.content) {
+      return { background: 'var(--background-black-opacity-zero-six)' };
+    }
+    return {};
   }
 }

@@ -46,3 +46,6 @@ When I start my app with "ng serve", the routing system is working properly. (Fo
 For example i can access this url: http://localhost:3000/xp
 
 The problem : When i launch my angular app with an express server, I can't access a specific url of my app (
+
+
+    https://www.fabmood.com/prussian-blue-and-yellow-color-scheme/

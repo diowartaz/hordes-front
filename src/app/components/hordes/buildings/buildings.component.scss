@@ -1,0 +1,21 @@
+.boundary {
+  height: 100%;
+  .btn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding: 0px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    padding: 8px;
+    .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+}

@@ -3,7 +3,6 @@
     <div class="xp-wrapper">
       <div class="xp-icon">{{ lvl }}</div>
       <div class="xp-bar-wrapper">
-        <!-- <div></div> -->
         <progress class="xp-bar" max="100" value="70"></progress>
         <div class="xp-string">{{ xpString }}</div>
       </div>
@@ -60,26 +59,38 @@
 
   <div class="content-wrapper">
     <div class="content">
-      <app-diggings></app-diggings>
+      <app-diggings *ngIf="content == 'diggings'"></app-diggings>
+      <app-buildings *ngIf="content == 'buildings'"></app-buildings>
+      <app-skills *ngIf="content == 'skills'"></app-skills>
     </div>
   </div>
   <div class="footer">
-    <button class="footer-btn">
+    <button
+      class="footer-btn"
+      (click)="changeContent('buildings')"
+      [ngStyle]="getStyle('buildings')"
+    >
       <img class="icon" src="../../../assets/icons/building.webp" />
-      <span class="span">Buildings</span>
-    </button>
-    <button class="footer-btn">
-      <img class="icon" src="../../../assets/icons/livre.gif" />
-      <span class="span">Skills</span>
+      <span class="span">Build</span>
     </button>
     <button
       class="footer-btn"
-      style="background: var(--background-black-opacity-zero-six)"
+      (click)="changeContent('skills')"
+      [ngStyle]="getStyle('skills')"
     >
-      <img class="icon" src="../../../assets/icons/pelle.gif" />
-      <span class="span">Diggings</span>
+      <img class="icon" src="../../../assets/icons/livre.gif" />
+      <span class="span">Learn</span>
     </button>
-    <button class="footer-btn">
+    <button
+      [ngStyle]="getStyle('diggings')"
+      class="footer-btn"
+      (click)="changeContent('diggings')"
+    >
+      <!-- style="background: var(--background-black-opacity-zero-six)" -->
+      <img class="icon" src="../../../assets/icons/pelle.gif" />
+      <span class="span">Dig</span>
+    </button>
+    <button class="footer-btn" (click)="goToSleep()">
       <img class="icon" src="../../../assets/icons/sleep.gif" />
       <span class="span">Sleep</span>
     </button>

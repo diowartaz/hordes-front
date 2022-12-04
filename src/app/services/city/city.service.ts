@@ -62,16 +62,19 @@ export class CityService {
     let url: string = this.API_URL + 'city/item/find/' + nb;
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
+        this.userGameCity$.next(response.city);
         return response;
       }),
       catchError(handleError('findItems', url))
     );
   }
 
-  goToSleep(nb: number): Observable<any> {
+  goToSleep(): Observable<any> {
     let url: string = this.API_URL + 'city/wait';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
+        this.userGameCity$.next(response.city);
+        this.userGameXp$.next(response.xp);
         return response;
       }),
       catchError(handleError('goToSleep', url))

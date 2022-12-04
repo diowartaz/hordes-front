@@ -107,7 +107,7 @@
       .text-span {
         margin-top: 3px;
         margin-left: 4px;
-        margin-top: 0px;
+        margin-top: 2px;
         font-size: 14px;
         font-weight: 600;
       }
@@ -145,6 +145,7 @@
       padding: 8px 0px;
       background-color: var(--background-black-opacity-zero-trois);
       border-right: var(--border-white-transparent);
+      transition: background-color 0.5s ease;
       .icon {
         width: 24px;
         height: 24px;
