@@ -24,7 +24,7 @@ export class DiggingsComponent implements OnInit {
     },
     {
       name: 'stone',
-      src: '../../../assets/icons/stone.webp',
+      src: '../../../assets/icons/caillou.webp',
       nb: 0,
       found: 0,
     },
