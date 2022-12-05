@@ -25,7 +25,6 @@ export class ChatComponent implements OnInit {
     });
     this.wsChatService.listMessages$.subscribe((res) => {
       this.messages = res;
-      console.log('this.messages', this.messages);
     });
 
     this.wsChatService.listTypingUser$.subscribe((res) => {
@@ -78,39 +77,4 @@ export class ChatComponent implements OnInit {
       );
     }
   }
-
-  // var m = document.getElementById('move');
-  // m.addEventListener('mousedown', mouseDown, false);
-  // window.addEventListener('mouseup', mouseUp, false);
-
-  // client: any = new WebSocketClient();
-
-  // this.wsChatService.connect();
-
-  // this.elementRef.nativeElement
-  //   .querySelector('my-element')
-  //   .addEventListener('mouseup', this.mouseUp.bind(this));
-
-  // this.elementRef.nativeElement
-  //   .querySelector('my-element')
-  //   .addEventListener('mouseup', this.mouseUp.bind(this));
-  // }
-
-  // mouseUp() {
-  //   this.elementRef.nativeElement
-  //     .querySelector('my-element')
-  //     .removeEventListener('mousemove', true);
-  // }
-
-  // mouseDown() {
-  //   window.addEventListener('mousemove', move, true);
-  // }
-
-  // move(e: Event) {
-  //   m.style.top = e.clientY + 'px';
-  //   m.style.left = e.clientX + 'px';
-  // }
-  // onClick(event: Event) {
-  //   console.log(event);
-  // }
 }

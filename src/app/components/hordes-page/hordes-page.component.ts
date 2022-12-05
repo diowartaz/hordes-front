@@ -10,12 +10,27 @@ import { CityService } from 'src/app/services/city/city.service';
 export class HordesPageComponent {
   getGameCityLoading: boolean = false;
   getGameXPLoading: boolean = false;
+  getDefaultValuesLoading: boolean = false;
 
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
     this.getGameCity();
     this.getGameXP();
+    this.getDefaultValues();
+  }
+
+  getDefaultValues() {
+    this.getDefaultValuesLoading = true;
+    this.cityService
+      .getDefaultValues()
+      .pipe(
+        take(1),
+        catchError(() => of({ error: 'error' }))
+      )
+      .subscribe((result: any) => {
+        this.getDefaultValuesLoading = false;
+      });
   }
 
   getGameCity() {

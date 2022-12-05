@@ -15,7 +15,6 @@ export class AuthService {
   userIsLoggedIn() {
     let parsedJWT: any = this.parseJwt();
     if (parsedJWT) {
-      // console.log(Date.now() >= parsedJWT.exp * 1000);
       if (Date.now() >= parsedJWT.exp * 1000) {
         return false;
       } else {
@@ -31,7 +30,6 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (token) {
       const tokenPayload = decode(token);
-      // console.log("tokenPayload", tokenPayload)
       return tokenPayload;
     } else {
       return null;
@@ -40,7 +38,6 @@ export class AuthService {
 
   signIn(params: any): Observable<any> {
     let url: string = this.API_URL + 'signin';
-    console.log(url)
     return this.httpClient.post<any>(url, params).pipe(
       map((response: any) => {
         return response;

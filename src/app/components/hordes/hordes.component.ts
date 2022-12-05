@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
+import { getTimeString } from 'src/app/shared/utils/time';
 
 @Component({
   selector: 'app-hordes',
@@ -9,17 +10,19 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class HordesComponent {
   xpString: string = '';
-  jour: number = 21;
+  jour: number = 1;
   city: any = null;
   xp: number = 0;
   lvl: number = 1;
   goToSleepLoading: boolean = false;
-  content: string = 'diggings';
+  content: string = 'buildings';
 
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userGameCity$.subscribe((city: any) => (this.city = city));
+    this.cityService.userGameCity$.subscribe((city: any) => {
+      this.city = city;
+    });
     this.cityService.userGameXp$.subscribe((xp: any) => {
       let { lvl, xpString } = this.getLVLandXPString(xp);
       this.lvl = lvl;
@@ -36,19 +39,11 @@ export class HordesComponent {
     };
   }
 
-  getHourString(seconds: number): any {
-    let nbHeures = Math.floor(seconds / 3600);
-    let nbMinutesInSeconds: number = (seconds - nbHeures * 3600) % 3600;
-    let nbMinutes: number = Math.floor(nbMinutesInSeconds / 36);
-    let nbMinutesString: string = nbMinutes + '';
-    if (nbMinutes < 10) {
-      nbMinutesString = '0' + nbMinutes;
-    }
-    return nbHeures + 'h' + nbMinutesString;
+  getTimeString(seconds: number): any {
+    return getTimeString(seconds)
   }
 
   goToSleep() {
-    console.log('dig');
     if (this.goToSleepLoading) {
       return;
     }
@@ -65,7 +60,6 @@ export class HordesComponent {
   }
 
   changeContent(content: string) {
-    console.log(content);
     this.content = content;
   }
 

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
+import {
+  updateCustomInventory,
+  getCustomInventoryDefault,
+} from 'src/app/shared/utils/inventory';
+import { getTimeString } from 'src/app/shared/utils/time';
 
 @Component({
   selector: 'app-diggings',
@@ -9,79 +14,53 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class DiggingsComponent implements OnInit {
   nbDigs: number = 1;
-  inventory: any = [
-    {
-      name: 'wood',
-      src: '../../../assets/icons/wood.gif',
-      nb: 0,
-      found: 0,
-    },
-    {
-      name: 'metal',
-      src: '../../../assets/icons/metal.gif',
-      nb: 0,
-      found: 0,
-    },
-    {
-      name: 'stone',
-      src: '../../../assets/icons/caillou.webp',
-      nb: 0,
-      found: 0,
-    },
-    {
-      name: 'screw',
-      src: '../../../assets/icons/screw.webp',
-      nb: 0,
-      found: 0,
-    },
-    {
-      name: 'patch',
-      src: '../../../assets/icons/patch.webp',
-      nb: 0,
-      found: 0,
-    },
-  ];
+  inventory: any = getCustomInventoryDefault();
   city: any = null;
   digLoading: boolean = false;
+  initDone: boolean = false;
 
   constructor(private cityService: CityService) {}
   ngOnInit(): void {
     this.cityService.userGameCity$.subscribe((city: any) => {
       this.city = city;
-      this.buildCustomCityInventory();
+      if (!this.initDone) {
+        updateCustomInventory(this.inventory, this.city.inventory);
+      }
     });
   }
 
   addDigs(nb: number) {
-    console.log("addDigs")
     this.nbDigs = Math.max(this.nbDigs + nb, 1);
   }
 
-  disableMinusDigs() {
+  disableMinusDigs(): boolean {
     return this.nbDigs - 1 < 1;
   }
 
-  getHourString(seconds: number): any {
-    let nbHeures = Math.floor(seconds / 3600);
-    let nbMinutesInSeconds: number = (seconds - nbHeures * 3600) % 3600;
-    let nbMinutes: number = Math.floor(nbMinutesInSeconds / 36);
-    let nbMinutesString: string = nbMinutes + '';
-    if (nbMinutes < 10) {
-      nbMinutesString = '0' + nbMinutes;
-    }
-    return nbHeures + 'h' + nbMinutesString;
-  }
-
-  getDiggingsTime() {
-    return this.nbDigs + 'h';
+  getDiggingsTime(): number {
+    return (
+      this.nbDigs *
+      this.cityService.defaultValues$.getValue().digging_time *
+      this.city.speeds.dig
+    );
   }
 
   getDiggingsTimeString() {
-    return this.nbDigs + 'h';
+    return getTimeString(this.getDiggingsTime());
+  }
+
+  digDisabled(): boolean {
+    return (
+      this.getDiggingsTime() + this.city.time >
+      this.cityService.defaultValues$.getValue().day_end_time
+    );
   }
 
   dig() {
     if (this.digLoading) {
+      return;
+    }
+    if (this.digDisabled()) {
       return;
     }
     this.digLoading = true;
@@ -96,27 +75,21 @@ export class DiggingsComponent implements OnInit {
           console.log('error');
         } else {
           this.nbDigs = 1;
-          for (let item of this.inventory) {
-            item.found = 0;
-          }
-          for (let itemName in result.items_found_inventory) {
-            for (let item2 of this.inventory) {
-              if (itemName == item2.name) {
-                item2.found = result.items_found_inventory[itemName];
-                break;
-              }
-            }
-          }
+          updateCustomInventory(this.inventory, this.city.inventory);
+          this.addItemsFound(result.items_found_inventory);
         }
         this.digLoading = false;
       });
   }
 
-  buildCustomCityInventory() {
-    for (let itemName in this.city.inventory) {
+  addItemsFound(items_found_inventory: any) {
+    for (let item of this.inventory) {
+      item.found = 0;
+    }
+    for (let itemName in items_found_inventory) {
       for (let item2 of this.inventory) {
         if (itemName == item2.name) {
-          item2.nb = this.city.inventory[itemName];
+          item2.found = items_found_inventory[itemName];
           break;
         }
       }

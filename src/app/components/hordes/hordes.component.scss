@@ -121,12 +121,12 @@
 
   .content-wrapper {
     height: calc(100% - 156px);
-    padding: 8px;
+    padding: 0px 8px 8px 8px;
     .content {
-      border: var(--border-white-transparent);
+      // border: var(--border-white-transparent);
       border-radius: 4px;
       height: 100%;
-      background-color: var(--background-black-opacity-zero-trois);
+      // background-color: var(--background-black-opacity-zero-trois);
     }
   }
 

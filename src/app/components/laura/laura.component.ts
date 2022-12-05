@@ -37,6 +37,5 @@ export class LauraComponent implements OnInit {
         ...this.listQuestionOption,
       ],
     };
-    console.log('result', result);
   }
 }

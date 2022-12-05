@@ -3,5 +3,83 @@
     <img class="icon" src="../../../../assets/icons/building.webp" />
     <div>Build Defenses</div>
   </div>
-  <div class="content"></div>
+  <div class="content">
+    <div class="building" *ngFor="let building of buildings">
+      <div class="line">
+        <div class="element-wrapper">
+          <img class="icon" src="../../../../assets/icons/building.webp" />
+          <div class="text" style="margin-top: 2px; font-weight: bold">
+            {{ building.name }}
+          </div>
+        </div>
+
+        <div class="line-right">
+          <div class="element-wrapper">
+            <img class="icon" src="../../../../assets/icons/defense.gif" />
+            <div class="text">{{ building.defense }}</div>
+          </div>
+
+          <div class="element-wrapper">
+            <span class="material-symbols-outlined icon"> schedule </span>
+            <div class="text">{{ getTimeString(building.time) }}</div>
+          </div>
+
+          <div class="element-wrapper">
+            <span class="material-symbols-outlined icon"> trending_up </span>
+            <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="line">
+        <div class="inventory">
+          <div
+            class="item-wrapper"
+            *ngFor="let item of building.customInventory"
+          >
+            <!-- display: none; -->
+            <!-- [ngStyle]="{
+              display: item.nb > 0 ? 'flex' : 'none'
+            }" -->
+            <div class="item" *ngIf="item.nb > 0">
+              <img
+                [ngStyle]="{
+                  'margin-top': item.name == 'stone' ? '-2px' : '0px'
+                }"
+                class="icon"
+                src="{{ item.src }}"
+              />
+
+              <div class="nb">
+                <span
+                  class="alert-nb-item"
+                  *ngIf="city.inventory[item.name] < item.nb"
+                  >{{ city.inventory[item.name] }}</span
+                >
+                <span
+                  class="ok-nb-item"
+                  *ngIf="city.inventory[item.name] >= item.nb"
+                  >{{ city.inventory[item.name] }}</span
+                >
+                <span>/{{ item.nb }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="btn-build"
+          (click)="build(building)"
+          [ngStyle]="{
+            background: isBuildable(building)
+              ? 'var(--primary-yellow)'
+              : 'var(--primary-yellow-disabled)'
+          }"
+        >
+          <img src="../../../../assets/icons/build.webp" />
+          <div class="text">Build</div>
+        </button>
+      </div>
+    </div>
+    <div style="height: 8px; width: 100%"></div>
+  </div>
 </div>
