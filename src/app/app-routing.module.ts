@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateCityComponent } from './components/create-city/create-city.component';
 import { HomeComponent } from './components/home/home.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
-import { LoadGameComponent } from './components/load-game/load-game.component';
+import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
-import { NoCityStartedComponent } from './components/no-city-started/no-city-started.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { TestComponent } from './components/test/test.component';
@@ -28,17 +28,17 @@ const routes: Routes = [
     canActivate: [NotauthGuard],
   },
   {
-    path: 'load-game',
-    component: LoadGameComponent,
+    path: 'load-player',
+    component: LoadPlayerComponent,
     canActivate: [AuthGuard],
   },
   {
     path: 'create-city',
-    component: NoCityStartedComponent,
+    component: CreateCityComponent,
     canActivate: [AuthGuard, GameLoadedGuard],
   },
   {
-    path: 'game',
+    path: 'play',
     component: HordesComponent,
     canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
   },

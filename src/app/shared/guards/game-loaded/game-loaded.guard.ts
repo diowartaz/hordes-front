@@ -24,8 +24,8 @@ export class GameLoadedGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.cityService.gameLoaded$.getValue()) {
-      this.router.navigate(['load-game']);
+    if (!this.cityService.playerLoaded$.getValue()) {
+      this.router.navigate(['load-player']);
       return false
     }
     return true;
@@ -38,8 +38,8 @@ export class GameLoadedGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.cityService.gameLoaded$.getValue()) {
-      this.router.navigate(['load-game']);
+    if (!this.cityService.playerLoaded$.getValue()) {
+      this.router.navigate(['load-player']);
       return false
     }
     return true;

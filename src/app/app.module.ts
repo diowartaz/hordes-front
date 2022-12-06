@@ -31,9 +31,9 @@ import { BuildingsComponent } from './components/hordes/buildings/buildings.comp
 import { SkillsComponent } from './components/hordes/skills/skills.component';
 import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
 import { InventoryComponent } from './components/hordes/inventory/inventory.component';
-import { LoadGameComponent } from './components/load-game/load-game.component';
-import { NoCityStartedComponent } from './components/no-city-started/no-city-started.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { LoadPlayerComponent } from './components/load-player/load-player.component';
+import { CreateCityComponent } from './components/create-city/create-city.component';
 
 @NgModule({
   declarations: [
@@ -55,9 +55,9 @@ import { SettingsComponent } from './components/settings/settings.component';
     SkillsComponent,
     DiggingsComponent,
     InventoryComponent,
-    LoadGameComponent,
-    NoCityStartedComponent,
     SettingsComponent,
+    LoadPlayerComponent,
+    CreateCityComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,22 +4,27 @@ import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
-  selector: 'app-load-game',
-  templateUrl: './load-game.component.html',
-  styleUrls: ['./load-game.component.scss'],
+  selector: 'app-create-city',
+  templateUrl: './create-city.component.html',
+  styleUrls: ['./create-city.component.scss'],
 })
-export class LoadGameComponent {
-  loadGameLoading: boolean = false;
+export class CreateCityComponent {
+  createCityLoading: boolean = false;
   constructor(private router: Router, private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.loadGame();
+    if (this.cityService.userPlayerCity$.getValue()) {
+      this.router.navigate(['play']);
+    }
   }
 
-  loadGame() {
-    this.loadGameLoading = true;
+  createCity() {
+    if (this.createCityLoading) {
+      return;
+    }
+    this.createCityLoading = true;
     this.cityService
-      .loadGame()
+      .new()
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' }))
@@ -27,12 +32,10 @@ export class LoadGameComponent {
       .subscribe((result: any) => {
         if (result.error) {
           console.log('error load game');
-          //sleep an retry
-          this.loadGame();
         } else {
-          this.router.navigate(['game']);
-          this.loadGameLoading = false;
+          this.router.navigate(['play']);
         }
+        this.createCityLoading = false;
       });
   }
 }

@@ -35,7 +35,7 @@
         align-items: center;
         border: var(--border-white-transparent);
         border-radius: 4px;
-        font-weight: bold;
+        font-weight: 500;
         color: white;
         background: var(--primary-yellow);
       }
@@ -63,7 +63,7 @@
           position: absolute;
           font-size: 12px;
           color: white;
-          font-weight: 600;
+          font-weight: 500;
           // margin-bottom: 1px;
         }
       }
@@ -109,7 +109,7 @@
         margin-left: 4px;
         margin-top: 2px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 500;
       }
       .icon {
         height: 16px;
@@ -123,10 +123,8 @@
     height: calc(100% - 156px);
     padding: 0px 8px 8px 8px;
     .content {
-      // border: var(--border-white-transparent);
       border-radius: 4px;
       height: 100%;
-      // background-color: var(--background-black-opacity-zero-trois);
     }
   }
 

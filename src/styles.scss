@@ -46,12 +46,28 @@ $website2-theme: mat.define-light-theme(
 
 body {
   margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 500;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-  box-sizing: border-box;
-  font-family: Arial;
+  margin: 0;
+  padding: 0px;
+  font: inherit;
 }
+
+// input,
+// textarea,
+// button,
+// select {
+//   font: inherit;
+// }
 
 button {
   cursor: pointer;

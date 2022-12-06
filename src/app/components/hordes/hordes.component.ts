@@ -21,11 +21,11 @@ export class HordesComponent {
   constructor(private cityService: CityService, private router: Router) {}
 
   ngOnInit(): void {
-    this.cityService.userGameCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: any) => {
       this.city = city;
     });
-    this.cityService.userGameXp$.subscribe((xp: any) => {
-      let { lvl, xpString } = this.getLVLandXPString(xp);
+    this.cityService.userPlayerData$.subscribe((data: any) => {
+      let { lvl, xpString } = this.getLVLandXPString(data.xp);
       this.lvl = lvl;
       this.xpString = xpString;
     });

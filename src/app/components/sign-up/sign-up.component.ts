@@ -78,7 +78,7 @@ export class SignUpComponent implements OnInit {
           this.invalidSignUp = true;
         } else {
           this.invalidSignUp = false;
-          this.router.navigate(['home']);
+          this.router.navigate(['signin']);
         }
         this.signUpLoading = false;
       });

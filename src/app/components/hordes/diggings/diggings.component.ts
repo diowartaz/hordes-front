@@ -21,9 +21,9 @@ export class DiggingsComponent implements OnInit {
 
   constructor(private cityService: CityService) {}
   ngOnInit(): void {
-    this.cityService.userGameCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: any) => {
       this.city = city;
-      if (!this.initDone) {
+      if (!this.initDone && this.city) {
         updateCustomInventory(this.inventory, this.city.inventory);
       }
     });

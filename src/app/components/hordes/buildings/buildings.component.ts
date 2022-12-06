@@ -20,7 +20,7 @@ export class BuildingsComponent {
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userGameCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: any) => {
       if (city) {
         this.city = city;
         this.initCustomCityBuildings();

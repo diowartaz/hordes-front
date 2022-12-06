@@ -54,3 +54,4 @@ The problem : When i launch my angular app with an express server, I can't acces
 TODO:
 error load game
 bouton reutilisable parametrable avec une string de style
+speed build front et back

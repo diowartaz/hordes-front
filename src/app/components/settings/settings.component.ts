@@ -19,11 +19,11 @@ export class SettingsComponent {
     this.router.navigate(['signin']);
   }
 
-  goBackGame() {
-    this.router.navigate(['game']);
+  goBackCityView() {
+    this.router.navigate(['play']);
   }
 
-  quitGame() {
+  surrendCity() {
     this.quitGameLoading = true;
     this.cityService
       .delete()
@@ -39,5 +39,9 @@ export class SettingsComponent {
           this.quitGameLoading = false;
         }
       });
+  }
+
+  logCity() {
+    console.log('city', this.cityService.userPlayerCity$.getValue());
   }
 }
