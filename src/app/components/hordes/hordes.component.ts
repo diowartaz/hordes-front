@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
@@ -17,7 +18,7 @@ export class HordesComponent {
   goToSleepLoading: boolean = false;
   content: string = 'buildings';
 
-  constructor(private cityService: CityService) {}
+  constructor(private cityService: CityService, private router: Router) {}
 
   ngOnInit(): void {
     this.cityService.userGameCity$.subscribe((city: any) => {
@@ -40,7 +41,7 @@ export class HordesComponent {
   }
 
   getTimeString(seconds: number): any {
-    return getTimeString(seconds)
+    return getTimeString(seconds);
   }
 
   goToSleep() {
@@ -68,5 +69,9 @@ export class HordesComponent {
       return { background: 'var(--background-black-opacity-zero-six)' };
     }
     return {};
+  }
+
+  goToSettings() {
+    this.router.navigate(['settings']);
   }
 }

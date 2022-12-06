@@ -11,8 +11,10 @@ import { updateCustomInventory } from 'src/app/shared/utils/inventory';
 export class CityService {
   API_URL = environment.API_URL;
   userGameCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userGameXp$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  userGameXp$: BehaviorSubject<number> = new BehaviorSubject<any>(0);
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  gameLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private httpClient: HttpClient) {}
 
   getDefaultValues(): Observable<any> {
@@ -23,6 +25,20 @@ export class CityService {
         return response;
       }),
       catchError(handleError('getGameXP', url))
+    );
+  }
+
+  loadGame(): Observable<any> {
+    let url: string = this.API_URL + 'game';
+    return this.httpClient.get<any>(url).pipe(
+      map((response: any) => {
+        this.userGameXp$.next(response.game.xp);
+        this.userGameCity$.next(response.game.city);
+        this.defaultValues$.next(response.default_values);
+        this.gameLoaded$.next(true);
+        return response;
+      }),
+      catchError(handleError('loadGame', url))
     );
   }
 
@@ -52,6 +68,7 @@ export class CityService {
     let url: string = this.API_URL + 'city/new';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
+        this.userGameCity$.next(response.game.city);
         return response;
       }),
       catchError(handleError('new', url))

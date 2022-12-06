@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
           this.invalidAuthentification = false;
           localStorage.setItem('token', result.token);
           localStorage.setItem('email', params.email);
-          this.router.navigate(['home']);
+          this.router.navigate(['load-game']);
         }
         this.loginLoading = false;
       });

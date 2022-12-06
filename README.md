@@ -49,3 +49,8 @@ The problem : When i launch my angular app with an express server, I can't acces
 
 
     https://www.fabmood.com/prussian-blue-and-yellow-color-scheme/
+
+
+TODO:
+error load game
+bouton reutilisable parametrable avec une string de style

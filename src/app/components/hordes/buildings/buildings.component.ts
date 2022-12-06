@@ -21,8 +21,10 @@ export class BuildingsComponent {
 
   ngOnInit(): void {
     this.cityService.userGameCity$.subscribe((city: any) => {
-      this.city = city;
-      this.initCustomCityBuildings();
+      if (city) {
+        this.city = city;
+        this.initCustomCityBuildings();
+      }
     });
   }
 
@@ -87,7 +89,6 @@ export class BuildingsComponent {
       this.city.time + building.time <=
         this.cityService.defaultValues$.getValue().day_end_time &&
       building.lvl < building.lvl_max;
-    console.log('isBuildable', isBuildable);
     return isBuildable;
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HordesPageComponent } from './hordes-page.component';
+import { LoadGameComponent } from './load-game.component';
 
-describe('HordesPageComponent', () => {
-  let component: HordesPageComponent;
-  let fixture: ComponentFixture<HordesPageComponent>;
+describe('LoadGameComponent', () => {
+  let component: LoadGameComponent;
+  let fixture: ComponentFixture<LoadGameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HordesPageComponent ]
+      declarations: [ LoadGameComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HordesPageComponent);
+    fixture = TestBed.createComponent(LoadGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

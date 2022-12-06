@@ -27,11 +27,13 @@ import { TestComponent } from './components/test/test.component';
 import { LauraComponent } from './components/laura/laura.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HordesComponent } from './components/hordes/hordes.component';
-import { HordesPageComponent } from './components/hordes-page/hordes-page.component';
 import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 import { SkillsComponent } from './components/hordes/skills/skills.component';
 import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
 import { InventoryComponent } from './components/hordes/inventory/inventory.component';
+import { LoadGameComponent } from './components/load-game/load-game.component';
+import { NoCityStartedComponent } from './components/no-city-started/no-city-started.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -49,11 +51,13 @@ import { InventoryComponent } from './components/hordes/inventory/inventory.comp
     TestComponent,
     LauraComponent,
     HordesComponent,
-    HordesPageComponent,
     BuildingsComponent,
     SkillsComponent,
     DiggingsComponent,
     InventoryComponent,
+    LoadGameComponent,
+    NoCityStartedComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
