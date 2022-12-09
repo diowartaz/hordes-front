@@ -6,6 +6,7 @@ import {
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
 import { getTimeString } from 'src/app/shared/utils/time';
+import { BuildingModel, CityModel, DataModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-buildings',
@@ -20,7 +21,7 @@ export class BuildingsComponent {
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
       if (city) {
         this.city = city;
         this.initCustomCityBuildings();
@@ -29,22 +30,27 @@ export class BuildingsComponent {
   }
 
   initCustomCityBuildings() {
-    this.buildings = [...this.city.buildings];
-    for (let i = 0; i < this.buildings.length; i++) {
-      this.buildings[i].customInventory = [
-        ...updateCustomInventory(
-          getCustomInventoryDefault(),
-          this.buildings[i].inventory
-        ),
-      ];
+    if (this.city) {
+      this.buildings = [...this.city.buildings];
+      for (let i = 0; i < this.buildings.length; i++) {
+        this.buildings[i].customInventory = [
+          ...updateCustomInventory(
+            getCustomInventoryDefault(),
+            this.buildings[i].inventory
+          ),
+        ];
+      }
     }
   }
 
-  getTimeString(seconds: number) {
-    return getTimeString(seconds);
+  getTimeBuildingString(building: BuildingModel): string {
+    if (!this.city) {
+      return '__h__';
+    }
+    return getTimeString(building.time * this.city.speeds.build);
   }
 
-  build(building: any) {
+  build(building: BuildingModel) {
     if (this.buildLoading) {
       return;
     }
@@ -80,15 +86,19 @@ export class BuildingsComponent {
     return true;
   }
 
-  isBuildable(building: any): boolean {
+  isBuildable(building: BuildingModel): boolean {
     //has ressource
     //has time
     //lvl < lvl_max
-    let isBuildable: boolean =
-      this.contains(this.city.inventory, building.inventory) &&
-      this.city.time + building.time <=
-        this.cityService.defaultValues$.getValue().day_end_time &&
-      building.lvl < building.lvl_max;
-    return isBuildable;
+    if (this.city) {
+      let isBuildable: boolean =
+        this.contains(this.city.inventory, building.inventory) &&
+        this.city.time + building.time <=
+          this.cityService.defaultValues$.getValue().day_end_time &&
+        building.lvl < building.lvl_max;
+      return isBuildable;
+    } else {
+      return false;
+    }
   }
 }

@@ -4,14 +4,17 @@ import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { handleError } from 'src/app/general-functions';
 import { environment } from 'src/environments/environment';
 import { updateCustomInventory } from 'src/app/shared/utils/inventory';
+import { CityModel, DataModel } from 'src/app/models/hordes';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CityService {
   API_URL = environment.API_URL;
-  userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerData$: BehaviorSubject<number> = new BehaviorSubject<any>(0);
+  userPlayerCity$: BehaviorSubject<CityModel | null> =
+    new BehaviorSubject<CityModel | null>(null);
+  userPlayerData$: BehaviorSubject<DataModel | null> =
+    new BehaviorSubject<DataModel | null>(null);
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -23,7 +26,7 @@ export class CityService {
       map((response: any) => {
         this.log('getDefaultValues', response);
         this.defaultValues$.next(response.default_values);
-        return response;
+        // return response;
       }),
       catchError(handleError('getGameXP', url))
     );
@@ -128,7 +131,7 @@ export class CityService {
     );
   }
 
-  log(functionName: any, response: any) {
+  log(functionName: string, response: any) {
     // return;
     console.log(functionName, 'response', response);
   }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
+import { CityModel, DataModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-hordes',
@@ -12,7 +13,7 @@ import { getTimeString } from 'src/app/shared/utils/time';
 export class HordesComponent {
   xpString: string = '';
   jour: number = 1;
-  city: any = null;
+  city: CityModel | null = null;
   xp: number = 0;
   lvl: number = 1;
   goToSleepLoading: boolean = false;
@@ -21,13 +22,15 @@ export class HordesComponent {
   constructor(private cityService: CityService, private router: Router) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
       this.city = city;
     });
-    this.cityService.userPlayerData$.subscribe((data: any) => {
-      let { lvl, xpString } = this.getLVLandXPString(data.xp);
-      this.lvl = lvl;
-      this.xpString = xpString;
+    this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
+      if (data != null) {
+        let { lvl, xpString } = this.getLVLandXPString(data.xp);
+        this.lvl = lvl;
+        this.xpString = xpString;
+      }
     });
   }
 
@@ -40,7 +43,10 @@ export class HordesComponent {
     };
   }
 
-  getTimeString(seconds: number): any {
+  getTimeString(seconds: number | undefined): string {
+    if (!seconds) {
+      return '__h__';
+    }
     return getTimeString(seconds);
   }
 

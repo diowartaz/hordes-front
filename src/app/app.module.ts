@@ -30,7 +30,6 @@ import { HordesComponent } from './components/hordes/hordes.component';
 import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 import { SkillsComponent } from './components/hordes/skills/skills.component';
 import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
-import { InventoryComponent } from './components/hordes/inventory/inventory.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { CreateCityComponent } from './components/create-city/create-city.component';
@@ -54,7 +53,6 @@ import { CreateCityComponent } from './components/create-city/create-city.compon
     BuildingsComponent,
     SkillsComponent,
     DiggingsComponent,
-    InventoryComponent,
     SettingsComponent,
     LoadPlayerComponent,
     CreateCityComponent,

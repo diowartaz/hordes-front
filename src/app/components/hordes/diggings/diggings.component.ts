@@ -6,6 +6,7 @@ import {
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
 import { getTimeString } from 'src/app/shared/utils/time';
+import { CityModel, DataModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-diggings',
@@ -15,13 +16,13 @@ import { getTimeString } from 'src/app/shared/utils/time';
 export class DiggingsComponent implements OnInit {
   nbDigs: number = 1;
   inventory: any = getCustomInventoryDefault();
-  city: any = null;
+  city: CityModel | null = null;
   digLoading: boolean = false;
   initDone: boolean = false;
 
   constructor(private cityService: CityService) {}
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
+    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
       this.city = city;
       if (!this.initDone && this.city) {
         updateCustomInventory(this.inventory, this.city.inventory);
@@ -38,6 +39,10 @@ export class DiggingsComponent implements OnInit {
   }
 
   getDiggingsTime(): number {
+    if (!this.city) {
+      return 2 * 60 * 60;
+    }
+
     return (
       this.nbDigs *
       this.cityService.defaultValues$.getValue().digging_time *
@@ -50,6 +55,9 @@ export class DiggingsComponent implements OnInit {
   }
 
   digDisabled(): boolean {
+    if (!this.city) {
+      return true;
+    }
     return (
       this.getDiggingsTime() + this.city.time >
       this.cityService.defaultValues$.getValue().day_end_time
@@ -57,10 +65,7 @@ export class DiggingsComponent implements OnInit {
   }
 
   dig() {
-    if (this.digLoading) {
-      return;
-    }
-    if (this.digDisabled()) {
+    if (this.digLoading || this.digDisabled()) {
       return;
     }
     this.digLoading = true;
@@ -75,8 +80,10 @@ export class DiggingsComponent implements OnInit {
           console.log('error');
         } else {
           this.nbDigs = 1;
-          updateCustomInventory(this.inventory, this.city.inventory);
-          this.addItemsFound(result.items_found_inventory);
+          if (this.city) {
+            updateCustomInventory(this.inventory, this.city.inventory);
+            this.addItemsFound(result.items_found_inventory);
+          }
         }
         this.digLoading = false;
       });
