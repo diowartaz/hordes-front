@@ -131,6 +131,18 @@ export class CityService {
     );
   }
 
+  learn(id: number): Observable<any> {
+    let url: string = this.API_URL + 'city/learn/' + id;
+    return this.httpClient.post<any>(url, {}).pipe(
+      map((response: any) => {
+        this.log('learn', response);
+        this.userPlayerCity$.next(response.city);
+        return response;
+      }),
+      catchError(handleError('learn', url))
+    );
+  }
+
   log(functionName: string, response: any) {
     // return;
     console.log(functionName, 'response', response);

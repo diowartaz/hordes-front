@@ -3,5 +3,45 @@
     <img class="icon" src="../../../../assets/icons/livre.gif" />
     <div>Learn Skills</div>
   </div>
-  <div class="content">Coming soon!</div>
+  <div class="content">
+    <div class="building" *ngFor="let skill of skills">
+      <div class="line">
+        <div class="element-wrapper">
+          <!-- <img class="icon" src="../../../../assets/icons/livre.gif" /> -->
+          <div class="text" style="margin-bottom: -3px; font-weight: 500">
+            {{ skill.name }}
+          </div>
+        </div>
+
+        <div class="line-right">
+          <div class="element-wrapper">
+            <span class="material-symbols-outlined icon"> schedule </span>
+            <div class="text">{{ getTimeLearnString(skill) }}</div>
+          </div>
+
+          <div class="element-wrapper">
+            <span class="material-symbols-outlined icon"> trending_up </span>
+            <div class="text">{{ skill.lvl }}/{{ skill.lvl_max }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="line">
+        <div class="inventory"></div>
+        <button
+          class="btn-build"
+          (click)="learn(skill)"
+          [ngStyle]="{
+            background: isLearnable(skill)
+              ? 'var(--primary-yellow)'
+              : 'var(--primary-yellow-disabled)'
+          }"
+        >
+          <img src="../../../../assets/icons/livre.gif" />
+          <div class="text">Learn</div>
+        </button>
+      </div>
+    </div>
+    <div style="height: 8px; width: 100%"></div>
+  </div>
 </div>

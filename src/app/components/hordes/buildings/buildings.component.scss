@@ -3,12 +3,6 @@
 .boundary {
   height: 100%;
   font-size: 14px;
-  .btn {
-    border: none;
-    background-color: transparent;
-    color: white;
-    padding: 0px;
-  }
   .header {
     display: flex;
     justify-content: center;
@@ -107,11 +101,11 @@
             .nb {
               height: fit-content;
               line-height: 16px;
-              .alert-nb-item{
+              .alert-nb-item {
                 color: #dc1a1a;
                 font-weight: 500;
               }
-              .ok-nb-item{
+              .ok-nb-item {
                 color: #31c531;
                 font-weight: 500;
               }

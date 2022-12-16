@@ -17,6 +17,7 @@ export interface CityModel {
   nb_zb_next_attack_min: number;
   nb_zb_previous_attack: number;
   buildings: Array<BuildingModel>;
+  skills: any;
   nb_zb_history: Array<number>;
   inventory: object;
   speeds: SpeedsModel;
