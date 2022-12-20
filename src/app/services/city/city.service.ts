@@ -5,18 +5,25 @@ import { handleError } from 'src/app/general-functions';
 import { environment } from 'src/environments/environment';
 import { updateCustomInventory } from 'src/app/shared/utils/inventory';
 import { CityModel, DataModel } from 'src/app/models/hordes';
+import { getTimeString } from 'src/app/shared/utils/time';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CityService {
   API_URL = environment.API_URL;
-  userPlayerCity$: BehaviorSubject<CityModel | null> =
-    new BehaviorSubject<CityModel | null>(null);
+  userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerData$: BehaviorSubject<DataModel | null> =
     new BehaviorSubject<DataModel | null>(null);
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
+    string: '8h00',
+    seconds: 8 * 60 * 60,
+  });
+
+  setInterval: any = null;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -41,6 +48,7 @@ export class CityService {
         this.userPlayerCity$.next(response.player.city);
         this.defaultValues$.next(response.default_values);
         this.playerLoaded$.next(true);
+        this.updateTime(response.player.city);
         return response;
       }),
       catchError(handleError('loadPlayer', url))
@@ -59,23 +67,13 @@ export class CityService {
     );
   }
 
-  // getPlayerCity(): Observable<any> {
-  //   let url: string = this.API_URL + 'player/city';
-  //   return this.httpClient.get<any>(url).pipe(
-  //     map((response: any) => {
-  //       this.userPlayerCity$.next(response.city);
-  //       return response;
-  //     }),
-  //     catchError(handleError('getPlayerCity', url))
-  //   );
-  // }
-
   new(): Observable<any> {
     let url: string = this.API_URL + 'city/new';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('new', response);
         this.userPlayerCity$.next(response.player.city);
+        this.updateTime(response.player.city);
         return response;
       }),
       catchError(handleError('new', url))
@@ -100,6 +98,7 @@ export class CityService {
       map((response: any) => {
         this.log('findItems', response);
         this.userPlayerCity$.next(response.city);
+        this.updateTime(response.city);
         return response;
       }),
       catchError(handleError('findItems', url))
@@ -113,6 +112,7 @@ export class CityService {
         this.log('goToSleep', response);
         this.userPlayerCity$.next(response.player.city);
         this.userPlayerData$.next(response.player.data);
+        this.updateTime(response.player.city);
         return response;
       }),
       catchError(handleError('goToSleep', url))
@@ -125,6 +125,7 @@ export class CityService {
       map((response: any) => {
         this.log('build', response);
         this.userPlayerCity$.next(response.city);
+        this.updateTime(response.city);
         return response;
       }),
       catchError(handleError('build', url))
@@ -137,6 +138,7 @@ export class CityService {
       map((response: any) => {
         this.log('learn', response);
         this.userPlayerCity$.next(response.city);
+        this.updateTime(response.city);
         return response;
       }),
       catchError(handleError('learn', url))
@@ -146,5 +148,57 @@ export class CityService {
   log(functionName: string, response: any) {
     // return;
     console.log(functionName, 'response', response);
+  }
+
+  updateTime(city: any) {
+    console.log('city', city);
+    if (!this.userPlayerCity$.getValue()) {
+      if (this.setInterval) {
+        clearInterval(this.setInterval);
+      }
+      return;
+    }
+    let timeToAdd = Math.floor(
+      ((new Date().getTime() -
+        this.userPlayerCity$.getValue().last_timestamp_request) *
+        192) /
+        1000
+    );
+    if (city.time + timeToAdd > this.defaultValues$.getValue().day_end_time) {
+      //fin de journee
+      if (this.setInterval) {
+        clearInterval(this.setInterval);
+      }
+      this.userPlayerCityTime$.next({
+        string: getTimeString(this.defaultValues$.getValue().day_end_time),
+        seconds: this.defaultValues$.getValue().day_end_time,
+      });
+      return;
+    }
+    this.userPlayerCityTime$.next({
+      string: getTimeString(city.time + timeToAdd),
+      seconds: city.time + timeToAdd,
+    });
+    if (this.setInterval) {
+      clearInterval(this.setInterval);
+    }
+    this.setInterval = setInterval(() => {
+      this.addTime();
+    }, Math.floor((60 * 1000) / 192));
+  }
+
+  addTime() {
+    let x = this.userPlayerCityTime$.getValue().seconds + 60;
+    if (x >= this.defaultValues$.getValue().day_end_time) {
+      if (this.setInterval) {
+        clearInterval(this.setInterval);
+      }
+      //fin de journee
+    } else {
+      this.userPlayerCityTime$.next({
+        string: getTimeString(x),
+        seconds: x,
+      });
+    }
   }
 }

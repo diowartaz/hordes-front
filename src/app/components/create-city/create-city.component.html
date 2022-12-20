@@ -1,14 +1,15 @@
 <div class="boundary">
-    <div class="header">Survival Instinct</div>
-    <div class="content">
-      <button (click)="createCity()">
-        <mat-spinner
-          *ngIf="createCityLoading"
-          diameter="48"
-          class="spinner"
-        ></mat-spinner
-        >Ready to die?
-      </button>
-    </div>
+  <div class="header">Survival Instinct</div>
+  <div class="content">
+    <button (click)="createCity()">
+      <mat-spinner
+        *ngIf="createCityLoading"
+        diameter="24"
+        class="spinner"
+      ></mat-spinner>
+      <div style="height: 24px; display: flex; align-items: center">
+        Ready to die?
+      </div>
+    </button>
   </div>
-  
+</div>

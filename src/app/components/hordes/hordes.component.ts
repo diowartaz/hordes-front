@@ -18,10 +18,14 @@ export class HordesComponent {
   lvl: number = 1;
   goToSleepLoading: boolean = false;
   content: string = 'buildings';
+  time: any = { string: '8h00', seconds: 8 * 60 * 60 };
 
   constructor(private cityService: CityService, private router: Router) {}
 
   ngOnInit(): void {
+    this.cityService.userPlayerCityTime$.subscribe((time) => {
+      this.time = time;
+    });
     this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
       this.city = city;
     });

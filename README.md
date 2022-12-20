@@ -26,37 +26,33 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-
 npm install -g @angular/cli
 
-
-
 npm dev check
-    // "jasmine-core": "~3.10.0",
-    // "karma": "~6.3.0",
-    // "karma-chrome-launcher": "~3.1.0",
-    // "karma-coverage": "~2.1.0",
-    // "karma-jasmine": "~4.0.0",
-    // "karma-jasmine-html-reporter": "~1.7.0"
+// "jasmine-core": "~3.10.0",
+// "karma": "~6.3.0",
+// "karma-chrome-launcher": "~3.1.0",
+// "karma-coverage": "~2.1.0",
+// "karma-jasmine": "~4.0.0",
+// "karma-jasmine-html-reporter": "~1.7.0"
 
-
-I have an angular app which has a routing system. 
+I have an angular app which has a routing system.
 When I start my app with "ng serve", the routing system is working properly. (For example, I can access the url such as "http://localhost:3000/xp")
 
 For example i can access this url: http://localhost:3000/xp
 
 The problem : When i launch my angular app with an express server, I can't access a specific url of my app (
 
-
     https://www.fabmood.com/prussian-blue-and-yellow-color-scheme/
-
 
 TODO:
 isLearnable
 rapport attaque
-temps réel
-fonction evaluer dans le html
+fonction evaluées dans le html
+random item intelligent en prenant en compte les ressources des batiments
+unsubscribe
 
+- de batiments
 
-+ batiments
-+ skills
+ok - ready to die loader
+ok - temps réel

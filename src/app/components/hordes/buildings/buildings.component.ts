@@ -17,6 +17,7 @@ export class BuildingsComponent {
   city: any = null;
   buildings: any = [];
   buildLoading: boolean = false;
+  nbAppels: number = 0;
 
   constructor(private cityService: CityService) {}
 
@@ -87,6 +88,8 @@ export class BuildingsComponent {
   }
 
   isBuildable(building: BuildingModel): boolean {
+    this.nbAppels++;
+    console.log(this.nbAppels);
     //has ressource
     //has time
     //lvl < lvl_max

@@ -50,6 +50,16 @@ export class SkillsComponent {
   }
 
   isLearnable(skill: any) {
+    if (this.city) {
+      let isLearnable: boolean =
+        this.cityService.userPlayerCityTime$.getValue().seconds +
+          skill.time * this.city.speeds.learn <=
+          this.cityService.defaultValues$.getValue().day_end_time &&
+        skill.lvl < skill.lvl_max;
+      return isLearnable;
+    } else {
+      return false;
+    }
     return true;
   }
 
