@@ -8,6 +8,11 @@
       <div class="line">
         <div class="element-wrapper">
           <img
+            *ngIf="building.rarity == 'base'"
+            class="icon"
+            src="../../../../assets/icons/base_plan.webp"
+          />
+          <img
             *ngIf="building.rarity == 'common'"
             class="icon"
             src="../../../../assets/icons/common_plan_c.gif"
