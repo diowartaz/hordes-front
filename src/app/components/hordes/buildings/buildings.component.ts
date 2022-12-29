@@ -5,7 +5,10 @@ import {
   updateCustomInventory,
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
-import { getTimeString } from 'src/app/shared/utils/time';
+import {
+  getTimeRequiredString,
+  getTimeString,
+} from 'src/app/shared/utils/time';
 import { BuildingModel, CityModel, DataModel } from 'src/app/models/hordes';
 
 @Component({
@@ -48,7 +51,7 @@ export class BuildingsComponent {
     if (!this.city) {
       return '__h__';
     }
-    return getTimeString(building.time * this.city.speeds.build);
+    return getTimeRequiredString(building.time * this.city.speeds.build);
   }
 
   build(building: BuildingModel) {

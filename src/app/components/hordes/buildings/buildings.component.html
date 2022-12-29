@@ -8,8 +8,19 @@
       <div class="line">
         <div class="element-wrapper">
           <img
+            *ngIf="building.rarity == 'common'"
             class="icon"
-            src="../../../../assets/icons/Plan_de_chantier_29.webp"
+            src="../../../../assets/icons/common_plan_c.gif"
+          />
+          <img
+            *ngIf="building.rarity == 'rare'"
+            class="icon"
+            src="../../../../assets/icons/rare_plan.gif"
+          />
+          <img
+            *ngIf="building.rarity == 'epic'"
+            class="icon"
+            src="../../../../assets/icons/epic_plan.gif"
           />
           <div class="text" style="margin-bottom: -3px; font-weight: 500">
             {{ building.name }}

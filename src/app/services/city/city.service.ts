@@ -146,7 +146,7 @@ export class CityService {
     let timeToAdd = Math.floor(
       ((new Date().getTime() -
         this.userPlayerCity$.getValue().last_timestamp_request) *
-        192) /
+        this.defaultValues$.getValue().coef_realtime_to_ingametime) /
         1000
     );
     if (city.time + timeToAdd > this.defaultValues$.getValue().day_end_time) {
@@ -170,7 +170,7 @@ export class CityService {
     }
     this.setInterval = setInterval(() => {
       this.addTime();
-    }, Math.floor((60 * 1000) / 192));
+    }, Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime));
   }
 
   addTime() {
@@ -207,9 +207,8 @@ export class CityService {
       map((response: any) => {
         //city
         this.log('startDay', response);
-        // this.userPlayerCity$.next(response.player.city);
-        // this.userPlayerData$.next(response.player.data);
-        // this.updateTime(response.player.city);
+        this.userPlayerCity$.next(response.city);
+        this.updateTime(response.city);
         return response;
       }),
       catchError(handleError('startDay', url))
