@@ -132,12 +132,11 @@ export class CityService {
   }
 
   log(functionName: string, response: any) {
-    // return;
+    return;
     console.log(functionName, 'response', response);
   }
 
   updateTime(city: any) {
-    console.log('city', city);
     if (!this.userPlayerCity$.getValue()) {
       if (this.setInterval) {
         clearInterval(this.setInterval);
@@ -159,6 +158,7 @@ export class CityService {
         string: getTimeString(this.defaultValues$.getValue().day_end_time),
         seconds: this.defaultValues$.getValue().day_end_time,
       });
+      // this.endDay()
       return;
     }
     this.userPlayerCityTime$.next({
@@ -188,47 +188,31 @@ export class CityService {
     }
   }
 
-  goToSleep(): Observable<any> {
-    let url: string = this.API_URL + 'city/wait';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('goToSleep', response);
-        this.userPlayerCity$.next(response.player.city);
-        this.userPlayerData$.next(response.player.data);
-        this.updateTime(response.player.city);
-        return response;
-      }),
-      catchError(handleError('goToSleep', url))
-    );
-  }
-
   endDay(): Observable<any> {
     let url: string = this.API_URL + 'city/day/end';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
-        this.log('goToSleep', response);
-        // this.userPlayerCity$.next(response.player.city);
-        // this.userPlayerData$.next(response.player.data);
-        // this.updateTime(response.player.city);
-        // attackRecap,
-        //     player: userNextDay.player,
+        this.log('endDay', response);
+        this.userPlayerCity$.next(response.player.city);
+        this.userPlayerData$.next(response.player.data);
         return response;
       }),
-      catchError(handleError('goToSleep', url))
+      catchError(handleError('endDay', url))
     );
   }
 
   startDay(): Observable<any> {
     let url: string = this.API_URL + 'city/day/start';
     return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => { //city
-        this.log('goToSleep', response);
+      map((response: any) => {
+        //city
+        this.log('startDay', response);
         // this.userPlayerCity$.next(response.player.city);
         // this.userPlayerData$.next(response.player.data);
         // this.updateTime(response.player.city);
         return response;
       }),
-      catchError(handleError('goToSleep', url))
+      catchError(handleError('startDay', url))
     );
   }
 }

@@ -11,6 +11,7 @@ import { MyButtonComponent } from './components/general-components/my-button/my-
 
 //Angular components
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +34,7 @@ import { DiggingsComponent } from './components/hordes/diggings/diggings.compone
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { CreateCityComponent } from './components/create-city/create-city.component';
+import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,13 +58,14 @@ import { CreateCityComponent } from './components/create-city/create-city.compon
     SettingsComponent,
     LoadPlayerComponent,
     CreateCityComponent,
+    RecapDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MatIconModule,
-    MatIconModule,
+    MatDialogModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,

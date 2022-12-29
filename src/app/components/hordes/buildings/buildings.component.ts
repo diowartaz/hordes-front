@@ -89,7 +89,7 @@ export class BuildingsComponent {
 
   isBuildable(building: BuildingModel): boolean {
     this.nbAppels++;
-    console.log(this.nbAppels);
+    // console.log(this.nbAppels);
     //has ressource
     //has time
     //lvl < lvl_max

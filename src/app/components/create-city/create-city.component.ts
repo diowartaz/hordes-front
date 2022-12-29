@@ -13,6 +13,8 @@ export class CreateCityComponent {
   constructor(private router: Router, private cityService: CityService) {}
 
   ngOnInit(): void {
+    // &&
+    //   this.cityService.userPlayerCity$.getValue().alive
     if (this.cityService.userPlayerCity$.getValue()) {
       this.router.navigate(['play']);
     }

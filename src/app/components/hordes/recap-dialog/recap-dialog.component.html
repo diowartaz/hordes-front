@@ -1,0 +1,43 @@
+<div class="boundary">
+  <div class="header">Recap</div>
+  <div class="content">
+    <div class="item">Day: {{ city.day - 1 }}</div>
+    <div class="def-zb">
+      <div class="def-zb-el">
+        <img class="icon" src="../../../assets/icons/defense.gif" />
+        <span class="text-span" style="margin-left: 6px">{{
+          city.defense
+        }}</span>
+      </div>
+      <div *ngIf="city.nb_zb_previous_attack == city.defense">=</div>
+      <div *ngIf="city.nb_zb_previous_attack > city.defense"><</div>
+      <div *ngIf="city.nb_zb_previous_attack < city.defense">></div>
+      <div class="def-zb-el">
+        <img class="icon" src="../../../assets/icons/zb.gif" />
+        <span style="margin-left: 0px" class="text-span">{{
+          city.nb_zb_previous_attack
+        }}</span>
+      </div>
+    </div>
+    <div class="item" *ngIf="city.alive">
+      <div>You have enough defense.</div>
+      <div>You will be make it through the night...</div>
+    </div>
+
+    <div class="item" *ngIf="!city.alive">
+      <div>You died!</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button *ngIf="city.alive" (click)="startDay()">
+      <span class="material-symbols-outlined icon"> schedule </span
+      ><span>Wait for the attack to pass</span>
+    </button>
+
+    <button *ngIf="!city.alive" (click)="tryAgain()">
+      <span class="material-symbols-outlined icon"> schedule </span
+      ><span>Try Again!</span>
+    </button>
+  </div>
+</div>

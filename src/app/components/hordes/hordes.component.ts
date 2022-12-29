@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
+import { catchError, debounceTime, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
 import { CityModel, DataModel } from 'src/app/models/hordes';
+import { MatDialog } from '@angular/material/dialog';
+import { RecapDialogComponent } from './recap-dialog/recap-dialog.component';
 
 @Component({
   selector: 'app-hordes',
@@ -16,20 +18,37 @@ export class HordesComponent {
   city: any = null;
   xp: number = 0;
   lvl: number = 1;
-  goToSleepLoading: boolean = false;
+
+  endDayLoading: boolean = false;
   content: string = 'buildings';
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
+  dialogOpened: boolean = false;
 
-  constructor(private cityService: CityService, private router: Router) {}
+  constructor(
+    private cityService: CityService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.cityService.userPlayerCityTime$.subscribe((time) => {
       this.time = time;
+      if (
+        this.time.seconds ==
+        this.cityService.defaultValues$.getValue().day_end_time
+      ) {
+        // fin de journee
+        this.endDay();
+      }
     });
     this.cityService.userPlayerCity$.subscribe((city: any) => {
+      // if ((this.city = city)) {
+      //   return;
+      // }
+      console.log('city', city);
       this.city = city;
-      if (this.city.state == 'recap') {
-        
+      if (this.city && this.city.state == 'recap' && !this.dialogOpened) {
+        this.openDialogRecap();
       }
     });
     this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
@@ -57,19 +76,19 @@ export class HordesComponent {
     return getTimeString(seconds);
   }
 
-  goToSleep() {
-    if (this.goToSleepLoading) {
+  endDay() {
+    if (this.endDayLoading) {
       return;
     }
-    this.goToSleepLoading = true;
+    this.endDayLoading = true;
     this.cityService
-      .goToSleep()
+      .endDay()
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' }))
       )
       .subscribe((result: any) => {
-        this.goToSleepLoading = false;
+        this.endDayLoading = false;
       });
   }
 
@@ -86,5 +105,23 @@ export class HordesComponent {
 
   goToSettings() {
     this.router.navigate(['settings']);
+  }
+
+  openDialogRecap() {
+    if (this.dialogOpened) {
+      return;
+    }
+    this.dialogOpened = true;
+    console.log('this.openDialogRecap();');
+    let dialogRef = this.dialog.open(RecapDialogComponent, {
+      height: 'calc(100% - 16px)',
+      width: 'calc(100% - 16px)',
+      maxWidth: '585px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.dialogOpened = false;
+    });
   }
 }
