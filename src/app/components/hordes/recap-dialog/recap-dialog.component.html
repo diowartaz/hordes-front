@@ -20,6 +20,20 @@
       </div>
     </div>
     <div class="item" *ngIf="city.alive">
+      <div
+        class="buildings"
+        *ngIf="city.attackRecap.architect_shelter_buildings.length > 0"
+      >
+        Your architect shelter discovered
+        {{ city.attackRecap.architect_shelter_buildings.length }} building
+        sketch(es)
+        <div
+          class="building"
+          *ngFor="let building of city.attackRecap.architect_shelter_buildings"
+        >
+          <app-building [building]="building"></app-building>
+        </div>
+      </div>
       <div>You have enough defense.</div>
       <div>You will be make it through the night...</div>
     </div>
