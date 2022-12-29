@@ -13,7 +13,7 @@ import { CityModel, DataModel } from 'src/app/models/hordes';
 export class HordesComponent {
   xpString: string = '';
   jour: number = 1;
-  city: CityModel | null = null;
+  city: any = null;
   xp: number = 0;
   lvl: number = 1;
   goToSleepLoading: boolean = false;
@@ -26,8 +26,11 @@ export class HordesComponent {
     this.cityService.userPlayerCityTime$.subscribe((time) => {
       this.time = time;
     });
-    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
+    this.cityService.userPlayerCity$.subscribe((city: any) => {
       this.city = city;
+      if (this.city.state == 'recap') {
+        
+      }
     });
     this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
       if (data != null) {

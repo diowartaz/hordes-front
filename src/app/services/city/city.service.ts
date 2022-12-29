@@ -105,20 +105,6 @@ export class CityService {
     );
   }
 
-  goToSleep(): Observable<any> {
-    let url: string = this.API_URL + 'city/wait';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('goToSleep', response);
-        this.userPlayerCity$.next(response.player.city);
-        this.userPlayerData$.next(response.player.data);
-        this.updateTime(response.player.city);
-        return response;
-      }),
-      catchError(handleError('goToSleep', url))
-    );
-  }
-
   build(id: number): Observable<any> {
     let url: string = this.API_URL + 'city/build/' + id;
     return this.httpClient.post<any>(url, {}).pipe(
@@ -200,5 +186,49 @@ export class CityService {
         seconds: x,
       });
     }
+  }
+
+  goToSleep(): Observable<any> {
+    let url: string = this.API_URL + 'city/wait';
+    return this.httpClient.post<any>(url, {}).pipe(
+      map((response: any) => {
+        this.log('goToSleep', response);
+        this.userPlayerCity$.next(response.player.city);
+        this.userPlayerData$.next(response.player.data);
+        this.updateTime(response.player.city);
+        return response;
+      }),
+      catchError(handleError('goToSleep', url))
+    );
+  }
+
+  endDay(): Observable<any> {
+    let url: string = this.API_URL + 'city/day/end';
+    return this.httpClient.post<any>(url, {}).pipe(
+      map((response: any) => {
+        this.log('goToSleep', response);
+        // this.userPlayerCity$.next(response.player.city);
+        // this.userPlayerData$.next(response.player.data);
+        // this.updateTime(response.player.city);
+        // attackRecap,
+        //     player: userNextDay.player,
+        return response;
+      }),
+      catchError(handleError('goToSleep', url))
+    );
+  }
+
+  startDay(): Observable<any> {
+    let url: string = this.API_URL + 'city/day/start';
+    return this.httpClient.post<any>(url, {}).pipe(
+      map((response: any) => { //city
+        this.log('goToSleep', response);
+        // this.userPlayerCity$.next(response.player.city);
+        // this.userPlayerData$.next(response.player.data);
+        // this.updateTime(response.player.city);
+        return response;
+      }),
+      catchError(handleError('goToSleep', url))
+    );
   }
 }
