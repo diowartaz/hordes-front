@@ -62,6 +62,9 @@
           <div
             class="item-wrapper"
             *ngFor="let item of building.customInventory"
+            [ngStyle]="{
+              display: item.nb > 0 ? 'flex' : 'none'
+            }"
           >
             <div class="item" *ngIf="item.nb > 0">
               <img

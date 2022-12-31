@@ -79,7 +79,12 @@
         </div>
       </div>
 
-      <div class="container" *ngIf="!city.alive">
+      <div
+        class="container"
+        *ngIf="!city.alive"
+        style="border: 1px solid #dc1a1a"
+      >
+        <img class="icon" src="../../../assets/icons/small_death.gif" />
         <div>You died!</div>
       </div>
       <div class="container" *ngIf="city.alive">
