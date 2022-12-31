@@ -36,6 +36,7 @@ import { LoadPlayerComponent } from './components/load-player/load-player.compon
 import { CreateCityComponent } from './components/create-city/create-city.component';
 import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
 import { BuildingComponent } from './components/hordes/recap-dialog/building/building.component';
+import { SkillComponent } from './components/hordes/recap-dialog/skill/skill.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { BuildingComponent } from './components/hordes/recap-dialog/building/bui
     CreateCityComponent,
     RecapDialogComponent,
     BuildingComponent,
+    SkillComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateCityComponent } from './components/create-city/create-city.component';
 import { HomeComponent } from './components/home/home.component';
 import { HordesComponent } from './components/hordes/hordes.component';
+import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { LoginComponent } from './components/login/login.component';
@@ -45,6 +46,11 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
+  },
+  {
+    path: 'recap',
+    component: RecapDialogComponent,
     canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
   },
   {

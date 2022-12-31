@@ -42,13 +42,11 @@ export class HordesComponent {
       }
     });
     this.cityService.userPlayerCity$.subscribe((city: any) => {
-      // if ((this.city = city)) {
-      //   return;
-      // }
-      console.log('city', city);
       this.city = city;
-      if (this.city && this.city.state == 'recap' && !this.dialogOpened) {
-        this.openDialogRecap();
+      if (this.city && this.city.state == 'recap') {
+        this.router.navigate(['recap']);
+        // this.dialogOpened = true;
+        // this.openDialogRecap();
       }
     });
     this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
@@ -89,6 +87,10 @@ export class HordesComponent {
       )
       .subscribe((result: any) => {
         this.endDayLoading = false;
+        if (result.error) {
+        } else {
+          this.router.navigate(['recap']);
+        }
       });
   }
 
@@ -107,21 +109,23 @@ export class HordesComponent {
     this.router.navigate(['settings']);
   }
 
-  openDialogRecap() {
-    if (this.dialogOpened) {
-      return;
-    }
-    this.dialogOpened = true;
-    console.log('this.openDialogRecap();');
-    let dialogRef = this.dialog.open(RecapDialogComponent, {
-      height: 'calc(100% - 16px)',
-      width: 'calc(100% - 16px)',
-      maxWidth: '585px',
-      disableClose: true,
-    });
+  // openDialogRecap() {
+  //   this.router.navigate(['recap']);
+  //   // if (this.dialogOpened) {
+  //   //   return;
+  //   // }
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      this.dialogOpened = false;
-    });
-  }
+  //   // console.log('this.openDialogRecap();');
+  //   // let dialogRef = this.dialog.open(RecapDialogComponent, {
+  //   //   height: 'calc(100% - 16px)',
+  //   //   width: 'calc(100% - 16px)',
+  //   //   maxWidth: '585px',
+  //   //   disableClose: true,
+  //   // });
+  //   // console.log('dialogRef', dialogRef);
+
+  //   // dialogRef.afterClosed().subscribe((result: any) => {
+  //   //   this.dialogOpened = false;
+  //   // });
+  // }
 }

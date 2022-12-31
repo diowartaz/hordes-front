@@ -69,7 +69,6 @@
       }
       .element-wrapper {
         display: flex;
-        // padding: 8px;
         gap: 2px;
         align-items: center;
         .icon {
@@ -89,11 +88,7 @@
         justify-content: space-between;
         gap: 4px;
         margin-top: 5px;
-        // .item-wrapper:first-child{
-        //   margin-left: 0px;
-        // }
         .item-wrapper {
-          // margin-left: 4px;
           .item {
             display: flex;
             height: fit-content;

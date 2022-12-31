@@ -4,7 +4,14 @@
     <div>Build Defenses</div>
   </div>
   <div class="content">
-    <div class="building" *ngFor="let building of buildings">
+    <div
+      class="building"
+      *ngFor="let building of buildings"
+      [ngStyle]="{
+        background:
+          building.lvl == building.lvl_max ? '#00000061' : 'transparent'
+      }"
+    >
       <div class="line">
         <div class="element-wrapper">
           <img
@@ -50,16 +57,12 @@
         </div>
       </div>
 
-      <div class="line">
+      <div class="line" *ngIf="building.lvl != building.lvl_max">
         <div class="inventory">
           <div
             class="item-wrapper"
             *ngFor="let item of building.customInventory"
           >
-            <!-- display: none; -->
-            <!-- [ngStyle]="{
-              display: item.nb > 0 ? 'flex' : 'none'
-            }" -->
             <div class="item" *ngIf="item.nb > 0">
               <img
                 [ngStyle]="{

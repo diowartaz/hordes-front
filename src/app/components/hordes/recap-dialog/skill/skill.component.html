@@ -1,0 +1,23 @@
+<div class="building">
+  <div class="line">
+    <div class="element-wrapper">
+      <img class="icon" src="../../../../assets/icons/livre.gif" />
+      <div class="text" style="margin-bottom: -3px; font-weight: 500">
+        {{ skill.name }}
+      </div>
+    </div>
+    <div class="line-right">
+      <div class="element-wrapper">
+        <span class="material-symbols-outlined icon"> trending_up </span>
+        <div class="text">{{ skill.lvl }}/{{ skill.old_lvl_max }}</div>
+      </div>
+      <span class="material-symbols-outlined" style="font-size: 16px">
+        arrow_forward_ios
+      </span>
+      <div class="element-wrapper" style="color: #31c531">
+        <span class="material-symbols-outlined icon"> trending_up </span>
+        <div class="text">{{ skill.lvl }}/{{ skill.lvl_max }}</div>
+      </div>
+    </div>
+  </div>
+</div>
