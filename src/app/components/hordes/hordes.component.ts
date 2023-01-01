@@ -117,6 +117,10 @@ export class HordesComponent {
     this.router.navigate(['settings']);
   }
 
+  goToLeaderboard() {
+    this.router.navigate(['leaderboard']);
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();

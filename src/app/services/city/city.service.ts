@@ -214,4 +214,14 @@ export class CityService {
       catchError(handleError('startDay', url))
     );
   }
+
+  getLeaderboardBestDay() {
+    let url: string = this.API_URL + 'leaderboard/best-day';
+    return this.httpClient.get<any>(url).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('getLeaderboardBestDay', url))
+    );
+  }
 }

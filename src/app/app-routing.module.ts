@@ -4,6 +4,7 @@ import { CreateCityComponent } from './components/create-city/create-city.compon
 import { HomeComponent } from './components/home/home.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
+import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { LoginComponent } from './components/login/login.component';
@@ -47,6 +48,10 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
+  },
+  {
+    path: 'leaderboard',
+    component: LeaderboardHordesComponent,
   },
   {
     path: 'recap',

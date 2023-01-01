@@ -15,49 +15,8 @@
     color: white;
     font-size: 32px;
     padding: 32px;
-    margin-bottom: 32px;
     margin-top: 42px;
-  }
-  .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    gap: 32px;
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid white;
-      padding: 16px;
-      gap: 16px;
-      border-radius: 4px;
-      width: 100%;
-      // background: var(--primary-yellow);
-      box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
-      max-width: 400px;
-      background: linear-gradient(
-        45deg,
-        var(--primary-yellow) 40%,
-        #ee7752 50%,
-        var(--primary-yellow) 60%
-      );
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-
-      @keyframes gradient {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-    }
+    flex-direction: row;
   }
 }
 
@@ -92,5 +51,53 @@
   .icon {
     color: white;
     font-weight: 200;
+  }
+}
+
+.leaderboard-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+  border: 1px solid white;
+  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+  border-radius: 4px;
+  background: #0000005e;
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
+  justify-content: space-around;
+  .leaderboard-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .leaderboard-row-element {
+      display: flex;
+      color: white;
+      justify-content: center;
+      gap: 4px;
+    }
+    .leaderboard-row-element:first-child {
+      margin-bottom: 12px;
+      border-bottom: 2px solid white;
+    }
+  }
+}
+
+.perf-element {
+  display: flex;
+  align-items: center;
+  color: white;
+  border-radius: 4px;
+  .text-span {
+    margin-top: 3px;
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .icon {
+    height: 16px;
+    width: 16px;
+    font-size: 16px;
   }
 }

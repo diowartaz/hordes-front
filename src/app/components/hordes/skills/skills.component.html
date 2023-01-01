@@ -4,7 +4,14 @@
     <div>Learn Skills</div>
   </div>
   <div class="content">
-    <div class="building" *ngFor="let skill of skills">
+    <div
+      class="building"
+      *ngFor="let skill of skills"
+      [ngStyle]="{
+        background: skill.lvl == skill.lvl_max ? '#00000061' : 'transparent',
+        display: 0 == skill.lvl_max ? 'none' : 'flex'
+      }"
+    >
       <div class="line">
         <div class="element-wrapper">
           <img
@@ -28,6 +35,18 @@
         </div>
 
         <div class="line-right">
+          <div class="efficacity" *ngIf="skill.lvl == skill.lvl_max">
+            <span
+              class="material-symbols-outlined"
+              style="font-size: 16px; margin-top: -1px"
+            >
+              keyboard_double_arrow_up
+            </span>
+            <span style="color: #31c531">{{
+              getPercentageEfficacity(skill)
+            }}</span>
+          </div>
+
           <div class="element-wrapper">
             <span class="material-symbols-outlined icon"> schedule </span>
             <div class="text">{{ getTimeLearnString(skill) }}</div>
@@ -40,7 +59,7 @@
         </div>
       </div>
 
-      <div class="line">
+      <div class="line" *ngIf="skill.lvl != skill.lvl_max">
         <div class="efficacity">
           <span
             class="material-symbols-outlined"

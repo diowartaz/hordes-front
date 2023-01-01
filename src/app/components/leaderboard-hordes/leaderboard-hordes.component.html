@@ -1,0 +1,50 @@
+<div class="boundary">
+  <button class="icon-btn" (click)="goBackCityView()">
+    <span class="material-symbols-outlined icon"> keyboard_return </span>
+  </button>
+  <div class="header container">
+    <img
+      style="height: 24px; width: 24px; margin-right: 8px"
+      src="../../../assets/icons/leaderboard.gif"
+    />Leaderboard
+  </div>
+  <div class="leaderboard-wrapper">
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element">Rank</div>
+      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+        <div>{{ user.rank }}</div>
+      </div>
+    </div>
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element">Username</div>
+      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+        <div>{{ user.username }}</div>
+      </div>
+    </div>
+    <div class="leaderboard-col">
+      <div class="leaderboard-row-element">Performance</div>
+      <div
+        class="leaderboard-row-element"
+        *ngFor="let user of leaderboard"
+        style="justify-content: space-between; padding: 0px 4px"
+      >
+        <div class="perf-element">
+          <img class="icon" src="../../../assets/icons/calendar.ico" />
+          <span class="text-span">{{ user.personal_best_day }}</span>
+        </div>
+        <div class="perf-element">
+          <img class="icon" src="../../../assets/icons/zb.gif" />
+          <span class="text-span" style="margin-left: -1px">{{
+            user.personal_best_zb
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="content">
+
+    <div class="player" *ngFor="let player of leaderboard">
+      {{ player.username }}
+    </div>
+  </div> -->
+</div>
