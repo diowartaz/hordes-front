@@ -1,10 +1,13 @@
 <div class="boundary">
-  <div class="header">Settings</div>
+  <button class="icon-btn" (click)="goBackCityView()">
+    <span class="material-symbols-outlined icon"> keyboard_return </span>
+  </button>
+  <div class="header container">Settings</div>
   <div class="content">
-    <button (click)="goBackCityView()">
+    <!-- <button (click)="goBackCityView()">
       <span class="material-icons icon-header">logout</span
       ><span>Go back to your city view</span>
-    </button>
+    </button> -->
 
     <button (click)="surrendCity()">
       <span class="material-icons icon-header">logout</span
@@ -13,8 +16,8 @@
     <button (click)="logOut()">
       <span class="material-icons icon-header">logout</span><span>Log Out</span>
     </button>
-    <button (click)="logCity()">
+    <!-- <button (click)="logCity()">
       <span class="material-icons icon-header">info</span><span>log city</span>
-    </button>
+    </button> -->
   </div>
 </div>
