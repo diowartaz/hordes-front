@@ -36,13 +36,13 @@ export class HordesComponent {
     this.subscriptions.push(
       this.cityService.userPlayerCityTime$.subscribe((time) => {
         this.time = time;
-        if (
-          this.time.seconds ==
-          this.cityService.defaultValues$.getValue().day_end_time
-        ) {
-          // fin de journee
-          this.endDay();
-        }
+        // if (
+        //   this.time.seconds ==
+        //   this.cityService.defaultValues$.getValue().day_end_time
+        // ) {
+        //   // fin de journee
+        //   this.endDay();
+        // }
       })
     );
     this.subscriptions.push(

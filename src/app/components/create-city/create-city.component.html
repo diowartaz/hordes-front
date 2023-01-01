@@ -1,6 +1,39 @@
 <div class="boundary">
-  <div class="header">Survival Instinct</div>
+  <div class="header">Hordes</div>
+
   <div class="content">
+    <div class="item">
+      <img class="icon" src="../../../assets/icons/ame.gif" />
+      <p>Try your best to survive</p>
+    </div>
+
+    <div class="item" style="margin-top: 16px">
+      <img class="icon" src="../../../assets/icons/pelle.gif" />
+      <p>Search for resources</p>
+    </div>
+
+    <div class="item">
+      <img class="icon" src="../../../assets/icons/building.webp" />
+      <p>Build powerful defenses</p>
+    </div>
+
+    <div class="item" style="margin-bottom: 16px">
+      <img class="icon" src="../../../assets/icons/livre.gif" />
+      <p>Learn useful skills</p>
+    </div>
+
+    <div class="item">
+      <img class="icon" src="../../../assets/icons/zb.gif" />
+      <p>Defeat zombies every nights!</p>
+    </div>
+
+    <div class="item">
+      <img class="icon" src="../../../assets/icons/leaderboard.gif" />
+      <p>Conquer the leaderboard!</p>
+    </div>
+  </div>
+
+  <div class="footer">
     <button (click)="createCity()">
       <mat-spinner
         *ngIf="createCityLoading"

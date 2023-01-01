@@ -102,7 +102,7 @@ export class BuildingsComponent {
     if (this.city) {
       let isBuildable: boolean =
         this.contains(this.city.inventory, building.inventory) &&
-        this.city.time + building.time * this.city.speeds.build <=
+        this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build <=
           this.cityService.defaultValues$.getValue().day_end_time &&
         building.lvl < building.lvl_max;
       return isBuildable;
