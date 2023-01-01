@@ -21,6 +21,10 @@ export class SignUpComponent implements OnInit {
   signUpLoading: boolean = false;
   invalidSignUp: boolean = false;
   subscriptions: Subscription[] = [];
+  fieldAlreadyExist: any = {
+    email: false,
+    username: false,
+  };
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -44,6 +48,10 @@ export class SignUpComponent implements OnInit {
     this.subscriptions.push(
       this.formgroup.valueChanges.subscribe(() => {
         this.invalidSignUp = false;
+        this.fieldAlreadyExist = {
+          email: false,
+          username: false,
+        };
       })
     );
   }
@@ -75,6 +83,12 @@ export class SignUpComponent implements OnInit {
       )
       .subscribe((result: any) => {
         if (result.error) {
+          if (result.error.errors.email) {
+            this.fieldAlreadyExist.email = true;
+          }
+          if (result.error.errors.username) {
+            this.fieldAlreadyExist.username = true;
+          }
           this.invalidSignUp = true;
         } else {
           this.invalidSignUp = false;

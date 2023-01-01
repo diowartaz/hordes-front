@@ -52,7 +52,7 @@ export class AuthService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('signUp', url))
+      // catchError(handleError('signUp', url))
     );
   }
 }

@@ -4,7 +4,11 @@
 
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('email') && { 'border-color': 'red' }"
+      [ngStyle]="
+        (fieldHasError('email') || fieldAlreadyExist.email) && {
+          'border-color': 'red'
+        }
+      "
     >
       <i class="material-icons icon-input-field">mail</i>
       <input
@@ -20,7 +24,11 @@
 
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('username') && { 'border-color': 'red' }"
+      [ngStyle]="
+        (fieldHasError('username') || fieldAlreadyExist.username) && {
+          'border-color': 'red'
+        }
+      "
     >
       <i class="material-icons icon-input-field">person</i>
       <input
@@ -70,6 +78,61 @@
     <div *ngIf="invalidSignUp" class="invalid-authen">
       Invalid authentification
     </div>
+
+    <div
+      *ngIf="invalidSignUp && formgroup.controls.email.errors"
+      class="invalid-authen"
+    >
+      <span *ngIf="formgroup.controls.email.errors.required"
+        >Email is required</span
+      >
+      <span *ngIf="formgroup.controls.email.errors.pattern"
+        >Email must be valid</span
+      >
+    </div>
+
+    <div
+      *ngIf="invalidSignUp && formgroup.controls.username.errors"
+      class="invalid-authen"
+    >
+      <span *ngIf="formgroup.controls.username.errors.required"
+        >Username is required</span
+      >
+    </div>
+
+    <div
+      *ngIf="invalidSignUp && formgroup.controls.password.errors"
+      class="invalid-authen"
+    >
+      <span *ngIf="formgroup.controls.password.errors.required"
+        >Password is required</span
+      >
+
+      <span *ngIf="formgroup.controls.password.errors.noStrong"
+        >Password: 8 characters minimum</span
+      >
+    </div>
+
+    <div
+      *ngIf="invalidSignUp && formgroup.controls.confirmPassword.errors"
+      class="invalid-authen"
+    >
+      <span *ngIf="formgroup.controls.confirmPassword.errors.required"
+        >Confirm password is required</span
+      >
+      <span *ngIf="formgroup.controls.confirmPassword.errors.noMatchPassword"
+        >Password and Confirm password must match</span
+      >
+    </div>
+
+    <div *ngIf="fieldAlreadyExist.email" class="invalid-authen">
+      <span>Email already used</span>
+    </div>
+
+    <div *ngIf="fieldAlreadyExist.username" class="invalid-authen">
+      <span>Username already used</span>
+    </div>
+
     <div *ngIf="!invalidSignUp" class="valid-authen"></div>
 
     <div class="button-wrapper" type="submit" (click)="signUp()">
