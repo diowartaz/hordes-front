@@ -7,7 +7,21 @@
     <div class="building" *ngFor="let skill of skills">
       <div class="line">
         <div class="element-wrapper">
-          <!-- <img class="icon" src="../../../../assets/icons/livre.gif" /> -->
+          <img
+            *ngIf="skill.id == 1"
+            class="icon"
+            src="../../../../assets/icons/pelle.gif"
+          />
+          <img
+            *ngIf="skill.id == 2"
+            class="icon"
+            src="../../../../assets/icons/livre.gif"
+          />
+          <img
+            *ngIf="skill.id == 3"
+            class="icon"
+            src="../../../../assets/icons/build.webp"
+          />
           <div class="text" style="margin-bottom: -3px; font-weight: 500">
             {{ skill.name }}
           </div>
@@ -27,7 +41,25 @@
       </div>
 
       <div class="line">
-        <div class="inventory"></div>
+        <div class="efficacity">
+          <span
+            class="material-symbols-outlined"
+            style="font-size: 18px; margin-top: -2px"
+          >
+            keyboard_double_arrow_up
+          </span>
+          <span>{{ getPercentageEfficacity(skill) }}</span>
+          <span
+            class="material-symbols-outlined"
+            style="font-size: 13px; margin: 0px 4px"
+          >
+            arrow_forward_ios
+          </span>
+
+          <span style="color: #31c531">{{
+            getPercentageEfficacityNextLevel(skill)
+          }}</span>
+        </div>
         <button
           class="btn-build"
           (click)="learn(skill)"

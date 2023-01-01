@@ -69,4 +69,19 @@ export class SkillsComponent {
     }
     return getTimeString(skill.time * this.city.speeds.learn);
   }
+
+  getPercentageEfficacity(skill: any) {
+    return (
+      String(Math.round((1 / (1 - skill.avantage_per_lvl * skill.lvl)) * 100)) +
+      '%'
+    );
+  }
+
+  getPercentageEfficacityNextLevel(skill: any) {
+    return (
+      String(
+        Math.round((1 / (1 - skill.avantage_per_lvl * (skill.lvl + 1))) * 100)
+      ) + '%'
+    );
+  }
 }
