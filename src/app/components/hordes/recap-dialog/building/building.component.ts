@@ -8,6 +8,7 @@ import {
   updateCustomInventory,
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-building',
@@ -17,14 +18,17 @@ import {
 export class BuildingComponent {
   @Input() building: any = null;
   city: any = null;
+  subscriptions: Subscription[] = [];
 
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
-      this.city = city;
-      this.initBuildingCustomInventory();
-    });
+    this.subscriptions.push(
+      this.cityService.userPlayerCity$.subscribe((city: any) => {
+        this.city = city;
+        this.initBuildingCustomInventory();
+      })
+    );
   }
 
   getTimeBuildingString() {
@@ -41,5 +45,11 @@ export class BuildingComponent {
         this.building.inventory
       ),
     ];
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

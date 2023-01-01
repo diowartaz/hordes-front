@@ -8,7 +8,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
+import { catchError, of, Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -20,11 +20,9 @@ export class SignUpComponent implements OnInit {
   formgroup: any = null;
   signUpLoading: boolean = false;
   invalidSignUp: boolean = false;
+  subscriptions: Subscription[] = [];
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.formgroup = new FormGroup({
@@ -43,9 +41,11 @@ export class SignUpComponent implements OnInit {
       ]),
     });
 
-    this.formgroup.valueChanges.subscribe(() => {
-      this.invalidSignUp = false;
-    });
+    this.subscriptions.push(
+      this.formgroup.valueChanges.subscribe(() => {
+        this.invalidSignUp = false;
+      })
+    );
   }
 
   test() {
@@ -126,5 +126,11 @@ export class SignUpComponent implements OnInit {
 
       return !confirmPasswordValid ? { noMatchPassword: true } : null;
     };
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
+import { catchError, of, Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -14,11 +14,9 @@ export class LoginComponent implements OnInit {
   loginLoading: boolean = false;
   invalidAuthentification = false;
   email: any = '';
+  subscriptions: Subscription[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('email')) {
@@ -32,9 +30,11 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
     });
 
-    this.formgroup.valueChanges.subscribe(() => {
-      this.invalidAuthentification = false;
-    });
+    this.subscriptions.push(
+      this.formgroup.valueChanges.subscribe(() => {
+        this.invalidAuthentification = false;
+      })
+    );
   }
 
   login() {
@@ -83,5 +83,11 @@ export class LoginComponent implements OnInit {
       this.formgroup.controls[field].touched &&
       this.formgroup.controls[field].invalid
     );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

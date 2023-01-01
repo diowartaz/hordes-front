@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { catchError, of, take } from 'rxjs';
+import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import {
   updateCustomInventory,
@@ -21,16 +21,19 @@ export class BuildingsComponent {
   buildings: any = [];
   buildLoading: boolean = false;
   nbAppels: number = 0;
+  subscriptions: Subscription[] = [];
 
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
-      if (city) {
-        this.city = city;
-        this.initCustomCityBuildings();
-      }
-    });
+    this.subscriptions.push(
+      this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
+        if (city) {
+          this.city = city;
+          this.initCustomCityBuildings();
+        }
+      })
+    );
   }
 
   initCustomCityBuildings() {
@@ -99,12 +102,18 @@ export class BuildingsComponent {
     if (this.city) {
       let isBuildable: boolean =
         this.contains(this.city.inventory, building.inventory) &&
-        this.city.time + building.time <=
+        this.city.time + building.time * this.city.speeds.build <=
           this.cityService.defaultValues$.getValue().day_end_time &&
         building.lvl < building.lvl_max;
       return isBuildable;
     } else {
       return false;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

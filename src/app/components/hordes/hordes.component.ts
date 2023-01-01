@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, debounceTime, of, take } from 'rxjs';
+import { catchError, debounceTime, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
 import { CityModel, DataModel } from 'src/app/models/hordes';
@@ -24,6 +24,8 @@ export class HordesComponent {
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
   dialogOpened: boolean = false;
 
+  subscriptions: Subscription[] = [];
+
   constructor(
     private cityService: CityService,
     private router: Router,
@@ -31,31 +33,37 @@ export class HordesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCityTime$.subscribe((time) => {
-      this.time = time;
-      if (
-        this.time.seconds ==
-        this.cityService.defaultValues$.getValue().day_end_time
-      ) {
-        // fin de journee
-        this.endDay();
-      }
-    });
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
-      this.city = city;
-      if (this.city && this.city.state == 'recap') {
-        this.router.navigate(['recap']);
-        // this.dialogOpened = true;
-        // this.openDialogRecap();
-      }
-    });
-    this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
-      if (data != null) {
-        let { lvl, xpString } = this.getLVLandXPString(data.xp);
-        this.lvl = lvl;
-        this.xpString = xpString;
-      }
-    });
+    this.subscriptions.push(
+      this.cityService.userPlayerCityTime$.subscribe((time) => {
+        this.time = time;
+        if (
+          this.time.seconds ==
+          this.cityService.defaultValues$.getValue().day_end_time
+        ) {
+          // fin de journee
+          this.endDay();
+        }
+      })
+    );
+    this.subscriptions.push(
+      this.cityService.userPlayerCity$.subscribe((city: any) => {
+        this.city = city;
+        if (this.city && this.city.state == 'recap') {
+          this.router.navigate(['recap']);
+          // this.dialogOpened = true;
+          // this.openDialogRecap();
+        }
+      })
+    );
+    this.subscriptions.push(
+      this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
+        if (data != null) {
+          let { lvl, xpString } = this.getLVLandXPString(data.xp);
+          this.lvl = lvl;
+          this.xpString = xpString;
+        }
+      })
+    );
   }
 
   getLVLandXPString(xp: number): any {
@@ -109,23 +117,9 @@ export class HordesComponent {
     this.router.navigate(['settings']);
   }
 
-  // openDialogRecap() {
-  //   this.router.navigate(['recap']);
-  //   // if (this.dialogOpened) {
-  //   //   return;
-  //   // }
-
-  //   // console.log('this.openDialogRecap();');
-  //   // let dialogRef = this.dialog.open(RecapDialogComponent, {
-  //   //   height: 'calc(100% - 16px)',
-  //   //   width: 'calc(100% - 16px)',
-  //   //   maxWidth: '585px',
-  //   //   disableClose: true,
-  //   // });
-  //   // console.log('dialogRef', dialogRef);
-
-  //   // dialogRef.afterClosed().subscribe((result: any) => {
-  //   //   this.dialogOpened = false;
-  //   // });
-  // }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+  }
 }

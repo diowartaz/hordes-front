@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, of, take } from 'rxjs';
+import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import {
   updateCustomInventory,
@@ -19,15 +19,18 @@ export class DiggingsComponent implements OnInit {
   city: CityModel | null = null;
   digLoading: boolean = false;
   initDone: boolean = false;
+  subscriptions: Subscription[] = [];
 
   constructor(private cityService: CityService) {}
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
-      this.city = city;
-      if (!this.initDone && this.city) {
-        updateCustomInventory(this.inventory, this.city.inventory);
-      }
-    });
+    this.subscriptions.push(
+      this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
+        this.city = city;
+        if (!this.initDone && this.city) {
+          updateCustomInventory(this.inventory, this.city.inventory);
+        }
+      })
+    );
   }
 
   addDigs(nb: number) {
@@ -101,5 +104,11 @@ export class DiggingsComponent implements OnInit {
         }
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

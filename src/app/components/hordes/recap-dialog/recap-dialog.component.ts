@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
+import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
@@ -14,27 +14,27 @@ export class RecapDialogComponent {
   startDayLoading: boolean = false;
   tryAgainLoading: boolean = false;
   library_discoveriesFormatted: any[] = [];
+  subscriptions: Subscription[] = [];
 
-  //public dialogRef: MatDialogRef<RecapDialogComponent>,
-  constructor(
-    private router: Router,
-    private cityService: CityService // private router: Router, // public dialog: MatDialog
-  ) {}
+  constructor(private router: Router, private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerCity$.subscribe((city: any) => {
-      if (city) {
-        this.city = city;
-        if (
-          this.city &&
-          this.city.attackRecap &&
-          this.city.attackRecap.library_discoveries
-        ) {
-          this.init_library_discoveriesFormatted();
+    this.subscriptions.push(
+      this.cityService.userPlayerCity$.subscribe((city: any) => {
+        if (city) {
+          this.city = city;
+          if (
+            this.city &&
+            this.city.attackRecap &&
+            this.city.attackRecap.library_discoveries
+          ) {
+            this.init_library_discoveriesFormatted();
+          }
         }
-      }
-    });
+      })
+    );
   }
+
   init_library_discoveriesFormatted() {
     for (const discoverySkillId in this.city.attackRecap.library_discoveries) {
       for (let i = 0; i < this.city.skills.length; i++) {
@@ -90,5 +90,11 @@ export class RecapDialogComponent {
         }
         this.tryAgainLoading = false;
       });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }
