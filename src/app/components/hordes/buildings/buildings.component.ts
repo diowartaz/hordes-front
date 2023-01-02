@@ -22,6 +22,8 @@ export class BuildingsComponent {
   buildLoading: boolean = false;
   nbAppels: number = 0;
   subscriptions: Subscription[] = [];
+  dialogMessage: string = 'init';
+  snackBarOpened: boolean = false;
 
   constructor(private cityService: CityService) {}
 
@@ -34,6 +36,15 @@ export class BuildingsComponent {
         }
       })
     );
+  }
+
+  closeSnackBar() {
+    this.snackBarOpened = false;
+  }
+
+  openSnackBar(message: string) {
+    this.dialogMessage = message;
+    this.snackBarOpened = true;
   }
 
   initCustomCityBuildings() {
@@ -61,8 +72,20 @@ export class BuildingsComponent {
     if (this.buildLoading) {
       return;
     }
+    // let reason =
     if (!this.isBuildable(building)) {
-      console.log('not buildable');
+      if (
+        this.cityService.userPlayerCityTime$.getValue().seconds +
+          building.time * this.city.speeds.build >
+        this.cityService.defaultValues$.getValue().day_end_time
+      ) {
+        this.openSnackBar('Not enough time');
+      } else if (building.lvl == building.lvl_max) {
+        this.openSnackBar('Already at max level');
+      } else {
+        this.openSnackBar('Not enough items');
+      }
+
       return;
     }
     this.buildLoading = true;
@@ -102,7 +125,8 @@ export class BuildingsComponent {
     if (this.city) {
       let isBuildable: boolean =
         this.contains(this.city.inventory, building.inventory) &&
-        this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build <=
+        this.cityService.userPlayerCityTime$.getValue().seconds +
+          building.time * this.city.speeds.build <=
           this.cityService.defaultValues$.getValue().day_end_time &&
         building.lvl < building.lvl_max;
       return isBuildable;

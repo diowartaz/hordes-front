@@ -28,10 +28,10 @@ export class LoadPlayerComponent {
         if (result.error) {
           console.log('error load player');
           //sleep an retry
-          this.loadPlayer();
+          setTimeout(() => this.loadPlayer(), 1000);
         } else {
-          this.router.navigate(['play']);
           this.loadGameLoading = false;
+          this.router.navigate(['play']);
         }
       });
   }

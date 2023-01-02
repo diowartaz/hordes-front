@@ -1,3 +1,11 @@
+<dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
+  <div>{{ dialogMessage }}</div>
+
+  <span class="material-symbols-outlined" (click)="closeSnackBar()">
+    close
+  </span>
+</dialog>
+
 <div class="boundary">
   <div class="header">
     <img class="icon" src="../../../../assets/icons/building.webp" />

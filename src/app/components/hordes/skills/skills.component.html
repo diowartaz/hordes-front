@@ -1,3 +1,11 @@
+<dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
+  <div>{{ dialogMessage }}</div>
+
+  <span class="material-symbols-outlined" (click)="closeSnackBar()">
+    close
+  </span>
+</dialog>
+
 <div class="boundary">
   <div class="header">
     <img class="icon" src="../../../../assets/icons/livre.gif" />
@@ -35,16 +43,18 @@
         </div>
 
         <div class="line-right">
-          <div class="efficacity" *ngIf="skill.lvl == skill.lvl_max">
+          <div
+            class="efficacity"
+            style="color: #31c531"
+            *ngIf="skill.lvl == skill.lvl_max"
+          >
             <span
               class="material-symbols-outlined"
               style="font-size: 16px; margin-top: -1px"
             >
               keyboard_double_arrow_up
             </span>
-            <span style="color: #31c531">{{
-              getPercentageEfficacity(skill)
-            }}</span>
+            <span>{{ getPercentageEfficacity(skill) }}</span>
           </div>
 
           <div class="element-wrapper">

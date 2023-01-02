@@ -104,8 +104,11 @@
       align-items: center;
       color: white;
       border-radius: 4px;
+      .danger {
+        font-weight: 700 !important;
+        color: #e85e5e;
+      }
       .text-span {
-        margin-top: 3px;
         margin-left: 4px;
         margin-top: 2px;
         font-size: 14px;
@@ -121,7 +124,7 @@
 
   .content-wrapper {
     height: calc(100% - 156px);
-    padding: 0px 8px 8px 8px;
+    padding: 0px 8px 9px 8px;
     .content {
       border-radius: 4px;
       height: 100%;
@@ -167,3 +170,30 @@
 }
 
 // background-color: rgb(0 0 0 / 60%);
+
+@-webkit-keyframes borderBlink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+@keyframes borderBlink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  10% {
+    border-color: white;
+  }
+}
+.borderBlink {
+  border: 1px solid white;
+  /* add 'border-color: transparent' if you wish no border to show initially */
+}
+.borderBlink2 {
+  -webkit-animation: borderBlink 3s step-end infinite;
+  animation: borderBlink 3s step-end infinite;
+}

@@ -38,6 +38,8 @@ import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dia
 import { BuildingComponent } from './components/hordes/recap-dialog/building/building.component';
 import { SkillComponent } from './components/hordes/recap-dialog/skill/skill.component';
 import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { LeaderboardHordesComponent } from './components/leaderboard-hordes/lead
     BuildingComponent,
     SkillComponent,
     LeaderboardHordesComponent,
+    CustomSnackbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { LeaderboardHordesComponent } from './components/leaderboard-hordes/lead
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   exports: [],
   providers: [

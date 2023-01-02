@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, of, take } from 'rxjs';
 import { CityModel } from 'src/app/models/hordes';
 import { CityService } from 'src/app/services/city/city.service';
@@ -13,8 +14,13 @@ export class SkillsComponent {
   city: any = null;
   skills: any = [];
   learnLoading: boolean = false;
+  dialogMessage: string = 'init';
+  snackBarOpened: boolean = false;
 
-  constructor(private cityService: CityService) {}
+  constructor(
+    private cityService: CityService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
@@ -25,12 +31,31 @@ export class SkillsComponent {
     });
   }
 
+  closeSnackBar() {
+    this.snackBarOpened = false;
+  }
+
+  openSnackBar(message: string) {
+    this.dialogMessage = message;
+    this.snackBarOpened = true;
+  }
+
   learn(skill: any) {
     if (this.learnLoading) {
       return;
     }
     if (!this.isLearnable(skill)) {
-      console.log('not buildable');
+      if (
+        this.cityService.userPlayerCityTime$.getValue().seconds +
+          skill.time * this.city.speeds.learn >
+        this.cityService.defaultValues$.getValue().day_end_time
+      ) {
+        this.openSnackBar('Not enough time');
+      } else if (skill.lvl == skill.lvl_max) {
+        this.openSnackBar('Already at max level');
+      } else {
+        this.openSnackBar('Not enough items');
+      }
       return;
     }
     this.learnLoading = true;

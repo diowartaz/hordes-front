@@ -40,10 +40,15 @@
         <img class="icon" src="../../../assets/icons/defense.gif" />
         <span class="text-span">{{ city?.defense }}</span>
       </div>
-
+      <!-- font-weight:
+      city?.nb_zb_next_attack_max > city?.defense ? '500' : '700' -->
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/zb.gif" />
-        <span style="margin-left: 0px" class="text-span"
+
+        <span
+          style="margin-left: 0px"
+          class="text-span"
+          [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
           >{{ city?.nb_zb_next_attack_min }}-{{
             city?.nb_zb_next_attack_max
           }}</span
@@ -51,7 +56,12 @@
       </div>
     </div>
 
-    <button class="icon-btn" style="margin-left: 8px" (click)="endDay()">
+    <button
+      class="icon-btn borderBlink"
+      [ngClass]="{ borderBlink2: time.seconds > 79200 }"
+      style="margin-left: 8px"
+      (click)="endDay()"
+    >
       <img
         style="height: 24px"
         class="xp-icon"
