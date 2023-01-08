@@ -98,6 +98,9 @@
       <span *ngIf="formgroup.controls.username.errors.required"
         >Username is required</span
       >
+      <span *ngIf="formgroup.controls.username.errors.notValid"
+        >Username: 3 characters minimum</span
+      >
     </div>
 
     <div
@@ -150,8 +153,5 @@
     <div class="text-button" (click)="signIn()">
       Already have an account ? Sign In
     </div>
-    <!-- <div class="text-button" (click)="test()">
-      test
-    </div> -->
   </form>
 </div>

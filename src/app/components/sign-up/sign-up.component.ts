@@ -34,7 +34,10 @@ export class SignUpComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      username: new FormControl('', [Validators.required]),
+      username: new FormControl('', [
+        Validators.required,
+        this.usernameCustomValidator(),
+      ]),
       password: new FormControl('', [
         Validators.required,
         this.strongPasswordValidator(),
@@ -54,10 +57,6 @@ export class SignUpComponent implements OnInit {
         };
       })
     );
-  }
-
-  test() {
-    this.signUpLoading = !this.signUpLoading;
   }
 
   signUp() {
@@ -125,6 +124,18 @@ export class SignUpComponent implements OnInit {
       const passwordValid = has8Characters;
 
       return !passwordValid ? { noStrong: true } : null;
+    };
+  }
+
+  usernameCustomValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const username = control.value;
+      if (!username) {
+        return null;
+      }
+      const has3Characters = username.length >= 3;
+      const usernameValid = has3Characters;
+      return !usernameValid ? { notValid: true } : null;
     };
   }
 
