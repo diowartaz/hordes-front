@@ -37,6 +37,11 @@
             class="icon"
             src="../../../../assets/icons/build.webp"
           />
+          <img
+            *ngIf="skill.id == 4"
+            class="icon"
+            src="../../../assets/icons/sleep.gif"
+          />
           <div class="text" style="margin-bottom: -3px; font-weight: 500">
             {{ skill.name }}
           </div>
@@ -49,11 +54,20 @@
             *ngIf="skill.lvl == skill.lvl_max"
           >
             <span
+              *ngIf="skill.id != 4"
               class="material-symbols-outlined"
               style="font-size: 16px; margin-top: -1px"
             >
               keyboard_double_arrow_up
             </span>
+            <span
+              *ngIf="skill.id == 4"
+              class="material-symbols-outlined"
+              style="font-size: 16px; margin-top: -2px;"
+            >
+              schedule
+            </span>
+
             <span>{{ getPercentageEfficacity(skill) }}</span>
           </div>
 
@@ -72,10 +86,18 @@
       <div class="line" *ngIf="skill.lvl != skill.lvl_max">
         <div class="efficacity">
           <span
+            *ngIf="skill.id != 4"
             class="material-symbols-outlined"
             style="font-size: 18px; margin-top: -2px"
           >
             keyboard_double_arrow_up
+          </span>
+          <span
+            *ngIf="skill.id == 4"
+            class="material-symbols-outlined"
+            style="font-size: 16px; margin-right: 2px; margin-bottom: 2px"
+          >
+            schedule
           </span>
           <span>{{ getPercentageEfficacity(skill) }}</span>
           <span

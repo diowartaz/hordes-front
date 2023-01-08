@@ -16,6 +16,17 @@ export class SkillsComponent {
   learnLoading: boolean = false;
   dialogMessage: string = 'init';
   snackBarOpened: boolean = false;
+  string: any[] = [
+    '8h00',
+    '7h45',
+    '7h30',
+    '7h15',
+    '7h00',
+    '6h45',
+    '6h30',
+    '6h15',
+    '6h00',
+  ];
 
   constructor(
     private cityService: CityService,
@@ -96,6 +107,9 @@ export class SkillsComponent {
   }
 
   getPercentageEfficacity(skill: any) {
+    if (skill.id == 4) {
+      return this.string[skill.lvl];
+    }
     return (
       String(Math.round((1 / (1 - skill.avantage_per_lvl * skill.lvl)) * 100)) +
       '%'
@@ -103,6 +117,9 @@ export class SkillsComponent {
   }
 
   getPercentageEfficacityNextLevel(skill: any) {
+    if (skill.id == 4) {
+      return this.string[skill.lvl + 1];
+    }
     return (
       String(
         Math.round((1 / (1 - skill.avantage_per_lvl * (skill.lvl + 1))) * 100)

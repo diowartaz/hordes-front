@@ -17,9 +17,10 @@
       *ngFor="let building of buildings"
       [ngStyle]="{
         background:
-          building.lvl == building.lvl_max ? '#00000061' : 'transparent'
+        building.lvl == building.lvl_max ? '#00000061' : 'transparent'
       }"
     >
+    <!-- building.lvl == building.lvl_max ? 'rgba(0, 0, 0, 0.80)' : 'rgba(0, 0, 0, 0.40)' -->
       <div class="line">
         <div class="element-wrapper">
           <img
