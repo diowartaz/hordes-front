@@ -224,4 +224,14 @@ export class CityService {
       catchError(handleError('getLeaderboardBestDay', url))
     );
   }
+
+  getProfil(id: string) {
+    let url: string = this.API_URL + 'profil/' + id;
+    return this.httpClient.get<any>(url).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('getProfil', url))
+    );
+  }
 }

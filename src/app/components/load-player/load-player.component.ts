@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
@@ -10,7 +11,11 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class LoadPlayerComponent {
   loadGameLoading: boolean = false;
-  constructor(private router: Router, private cityService: CityService) {}
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadPlayer();

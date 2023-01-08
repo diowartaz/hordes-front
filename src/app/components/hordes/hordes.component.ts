@@ -6,6 +6,7 @@ import { getTimeString } from 'src/app/shared/utils/time';
 import { CityModel, DataModel } from 'src/app/models/hordes';
 import { MatDialog } from '@angular/material/dialog';
 import { RecapDialogComponent } from './recap-dialog/recap-dialog.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-hordes',
@@ -29,7 +30,8 @@ export class HordesComponent {
   constructor(
     private cityService: CityService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +48,6 @@ export class HordesComponent {
         this.city = city;
         if (this.city && this.city.state == 'recap') {
           this.router.navigate(['recap']);
-          // this.dialogOpened = true;
-          // this.openDialogRecap();
         }
       })
     );
@@ -115,6 +115,12 @@ export class HordesComponent {
 
   goToLeaderboard() {
     this.router.navigate(['leaderboard']);
+  }
+
+  goToProfil() {
+    this.router.navigate(['profil'], {
+      queryParams: { user_id: this.authService.getUserId() },
+    });
   }
 
   ngOnDestroy() {

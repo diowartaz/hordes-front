@@ -40,6 +40,7 @@ import { SkillComponent } from './components/hordes/recap-dialog/skill/skill.com
 import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
+import { ProfilComponent } from './components/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { CustomSnackbarComponent } from './components/custom-snackbar/custom-sna
     SkillComponent,
     LeaderboardHordesComponent,
     CustomSnackbarComponent,
+    ProfilComponent,
   ],
   imports: [
     BrowserModule,

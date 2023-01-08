@@ -9,6 +9,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
+import { ProfilComponent } from './components/profil/profil.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { TestComponent } from './components/test/test.component';
@@ -54,10 +55,15 @@ const routes: Routes = [
     component: LeaderboardHordesComponent,
   },
   {
+    path: 'profil',
+    component: ProfilComponent,
+  },
+  {
     path: 'recap',
     component: RecapDialogComponent,
     canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
   },
+
   {
     path: '',
     component: HordesComponent,

@@ -18,7 +18,12 @@
     <div class="leaderboard-col">
       <div class="leaderboard-row-element">Username</div>
       <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
-        <div>{{ user.username }}</div>
+        <div
+          style="cursor: pointer; text-decoration: underline"
+          (click)="goToProfil(user.user_id)"
+        >
+          {{ user.username }}
+        </div>
       </div>
     </div>
     <div class="leaderboard-col">
@@ -41,10 +46,4 @@
       </div>
     </div>
   </div>
-  <!-- <div class="content">
-
-    <div class="player" *ngFor="let player of leaderboard">
-      {{ player.username }}
-    </div>
-  </div> -->
 </div>

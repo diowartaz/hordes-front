@@ -30,7 +30,18 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (token) {
       const tokenPayload = decode(token);
+      console.log(tokenPayload);
       return tokenPayload;
+    } else {
+      return null;
+    }
+  }
+
+  getUserId() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenPayload: any = decode(token);
+      return tokenPayload.id;
     } else {
       return null;
     }
@@ -51,7 +62,7 @@ export class AuthService {
     return this.httpClient.post<any>(url, params).pipe(
       map((response: any) => {
         return response;
-      }),
+      })
       // catchError(handleError('signUp', url))
     );
   }

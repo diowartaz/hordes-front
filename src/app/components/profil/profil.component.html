@@ -1,0 +1,76 @@
+<div class="boundary">
+  <div class="ok-profil" *ngIf="profil">
+    <button class="icon-btn" (click)="goBack()">
+      <span class="material-symbols-outlined icon"> keyboard_return </span>
+    </button>
+    <div class="header container">
+      <span
+        class="material-symbols-outlined"
+        style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px"
+      >
+        person
+      </span>
+      {{ profil.username }}'s profil
+    </div>
+    <div class="content">
+      <div class="general-info">
+        <div class="line">
+          <div class="container2">
+            <img
+              style="height: 24px; width: 24px"
+              src="../../../assets/icons/leaderboard.gif"
+            />
+            <div>
+              {{ profil.rank }}
+            </div>
+          </div>
+          <div class="container2">
+            <!-- <img
+              style="height: 24px; width: 24px"
+              src="../../../assets/icons/leaderboard.gif"
+            /> -->
+            XP:
+            <div>
+              {{ profil.xp }}
+            </div>
+          </div>
+        </div>
+        <div class="line">
+          <div class="container2">
+            <img
+              style="height: 24px; width: 24px"
+              src="../../../assets/icons/calendar.ico"
+            />
+            <div>
+              {{ profil.personal_best_day }}
+            </div>
+          </div>
+          <div class="container2">
+            <img
+              style="height: 24px; width: 24px; margin-right: -8px"
+              src="../../../assets/icons/zb.gif"
+            />
+            <div>
+              {{ profil.personal_best_zb }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="history">
+        <!-- <div class="game" *ngFor="let game of profil.last_10_games">
+          <div>
+            <img
+              style="height: 24px; width: 24px"
+              src="../../../assets/icons/calendar.ico"
+            />
+            <div>{{ game.day }}</div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="no-profil" *ngIf="!profil">
+    <mat-spinner diameter="48" class="spinner"></mat-spinner>
+    <div class="text">Loading profil...</div>
+  </div>
+</div>
