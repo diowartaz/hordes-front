@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
-import { AuthService } from './services/auth/auth.service';
+import { take } from 'rxjs';
+import { TestService } from './services/test/test.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,9 @@ import { AuthService } from './services/auth/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private testService: TestService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.testService.getXP().pipe(take(1)); //ping the server to activate it because of free hosting (render.com)
+  }
 }

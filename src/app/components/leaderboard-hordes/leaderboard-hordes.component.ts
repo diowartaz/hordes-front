@@ -40,8 +40,6 @@ export class LeaderboardHordesComponent {
                 this.leaderboard[i].username.slice(0, 19) + '...';
             }
           }
-
-          console.log('this.leaderboard', this.leaderboard);
         }
       });
   }

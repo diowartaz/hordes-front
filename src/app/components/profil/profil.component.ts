@@ -48,7 +48,6 @@ export class ProfilComponent {
           console.log('Error getProfil', this.id);
         } else {
           this.profil = result.profil;
-          console.log('this.profil', this.profil);
         }
         this.getProfilLoading = false;
       });
