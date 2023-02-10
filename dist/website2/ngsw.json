@@ -1,0 +1,135 @@
+{
+  "configVersion": 1,
+  "timestamp": 1676046188685,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/index.html",
+        "/main.e4bf603bc678db53.js",
+        "/manifest.webmanifest",
+        "/polyfills.0b8d17fda4fd68e8.js",
+        "/runtime.07101765e4aec8d6.js",
+        "/styles.02cf69a7fdffa767.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/ame.gif",
+        "/assets/icons/background.webp",
+        "/assets/icons/background4.jpg",
+        "/assets/icons/base_plan.webp",
+        "/assets/icons/build.webp",
+        "/assets/icons/builder.gif",
+        "/assets/icons/building.webp",
+        "/assets/icons/caillou.webp",
+        "/assets/icons/calendar.ico",
+        "/assets/icons/common_plan_c.gif",
+        "/assets/icons/defense.gif",
+        "/assets/icons/eclaireur.gif",
+        "/assets/icons/epic_plan.gif",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/icons/leaderboard.gif",
+        "/assets/icons/livre.gif",
+        "/assets/icons/metal.gif",
+        "/assets/icons/patch.webp",
+        "/assets/icons/pelle.gif",
+        "/assets/icons/rare_plan.gif",
+        "/assets/icons/sac.webp",
+        "/assets/icons/screw.webp",
+        "/assets/icons/sleep.gif",
+        "/assets/icons/small_death.gif",
+        "/assets/icons/stone.webp",
+        "/assets/icons/wood.gif",
+        "/assets/icons/woodIconGenerated.png",
+        "/assets/icons/zb.gif",
+        "/background4.235d45cac718b4ba.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/icons/ame.gif": "7375c9fe67c2fd501d3e9f73d37310805beada20",
+    "/assets/icons/background.webp": "d505f8005c38cb526a124328e082e76d170ebfd1",
+    "/assets/icons/background4.jpg": "50dae5688e6073d2cf228686c0e50fc0c62677a1",
+    "/assets/icons/base_plan.webp": "0a1cb2802dfccbfd3ace3da1808e93764fdf5dd4",
+    "/assets/icons/build.webp": "e9781d8aea5dbe4664839d942964c9cf2e304fbd",
+    "/assets/icons/builder.gif": "3c18a923ff4db2000d5259bbb454275a97dd6e38",
+    "/assets/icons/building.webp": "e58b2e4903e8ec867ec10a814d041f5f9e81d97d",
+    "/assets/icons/caillou.webp": "f1ad2eb319cdb62d291dc20bdc4723633e7f6d3a",
+    "/assets/icons/calendar.ico": "236c2c2deba9d1da7cf69c5e74c61a9e1fd32881",
+    "/assets/icons/common_plan_c.gif": "21babedf628696f64843ae73b6d23afbf701aef7",
+    "/assets/icons/defense.gif": "d728b8d6ad105ac3895681312335a7a5ea228a06",
+    "/assets/icons/eclaireur.gif": "d44eacce3e96dbafec94f2f7c2712dab01fe5f6f",
+    "/assets/icons/epic_plan.gif": "a30e6ce232e445b6c34f4be814b7b0ce032face0",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/icons/leaderboard.gif": "5df2dd4704a2b06eb7ff950de2e4b44a9cfcf34f",
+    "/assets/icons/livre.gif": "acbf0578ebb9ecd91269fda23d06f9cea3f3aad8",
+    "/assets/icons/metal.gif": "49294120d010d013956dfc3f030b01063c2ee68a",
+    "/assets/icons/patch.webp": "0c044c4a2753685c42f1d1bd76e67a63d6de4548",
+    "/assets/icons/pelle.gif": "4a6fb39be91dd4e9188346d929b62cace420f1f3",
+    "/assets/icons/rare_plan.gif": "11acc9446c7282db888bfb51f58b6f456a7f33c0",
+    "/assets/icons/sac.webp": "45b37e6bd266431e2c992456d6fc94f0ffd263a8",
+    "/assets/icons/screw.webp": "c5cbff6da100fee85487984081b99ccf5bd42be6",
+    "/assets/icons/sleep.gif": "91a63fdb08e681c649f2b1f1a7c5542c8eb752b6",
+    "/assets/icons/small_death.gif": "31ba03ede6635a376be2c26bd739c0f6b422b5e5",
+    "/assets/icons/stone.webp": "1a5b85d209db7f279afa9938275b35f7b2f50ddf",
+    "/assets/icons/wood.gif": "e0ffc6b319424646d22513c1ff54559992b069a4",
+    "/assets/icons/woodIconGenerated.png": "49e4d6267e680b5f673912eefb20c749f6ddde72",
+    "/assets/icons/zb.gif": "4785563760f9373de239610d884e67d692a75fa0",
+    "/background4.235d45cac718b4ba.jpg": "50dae5688e6073d2cf228686c0e50fc0c62677a1",
+    "/index.html": "8cfdcd5773345822fda6dc9243ad2b7487148f67",
+    "/main.e4bf603bc678db53.js": "9f28d0364ecad4fc7405b92da2e2336572873251",
+    "/manifest.webmanifest": "c456012ec2dd73d917cf77cc906d22641df6ab35",
+    "/polyfills.0b8d17fda4fd68e8.js": "6962cb98114152d88ba479053c26ed2ed1585715",
+    "/runtime.07101765e4aec8d6.js": "5ce99655aa6dd435c3832e4f6905a4202191f904",
+    "/styles.02cf69a7fdffa767.css": "aad91d2886616624e51ce6e7e8bd93f4540b8ca7"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
