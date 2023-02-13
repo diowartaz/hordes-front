@@ -7,6 +7,7 @@ import { CityModel, DataModel } from 'src/app/models/hordes';
 import { MatDialog } from '@angular/material/dialog';
 import { RecapDialogComponent } from './recap-dialog/recap-dialog.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { getLvl, getXpForLvl } from 'src/app/shared/utils/lvl';
 
 @Component({
   selector: 'app-hordes',
@@ -63,11 +64,14 @@ export class HordesComponent {
   }
 
   getLVLandXPString(xp: number): any {
-    let reste = xp % 100;
-    let quotient = Math.floor(xp / 100);
+    let lvl = getLvl(xp);
+    let xpLvl = getXpForLvl(lvl);
+    let xpNextLvl = getXpForLvl(lvl + 1);
+    let xpForCurrentLvl = xpNextLvl - xpLvl;
+    let xpCurrentForNextLvl = xp - xpLvl;
     return {
-      lvl: quotient + 1,
-      xpString: reste + '/100 xp',
+      lvl: lvl,
+      xpString: xpCurrentForNextLvl + '/' + xpForCurrentLvl + 'xp',
     };
   }
 
