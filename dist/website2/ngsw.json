@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1676049292189,
+  "timestamp": 1676314574113,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "/index.html",
-        "/main.e4bf603bc678db53.js",
+        "/main.60c667e773a44fd9.js",
         "/manifest.webmanifest",
         "/polyfills.0b8d17fda4fd68e8.js",
         "/runtime.07101765e4aec8d6.js",
@@ -39,6 +39,7 @@
         "/assets/icons/calendar.ico",
         "/assets/icons/common_plan_c.gif",
         "/assets/icons/defense.gif",
+        "/assets/icons/discord_icon4.png",
         "/assets/icons/eclaireur.gif",
         "/assets/icons/epic_plan.gif",
         "/assets/icons/icon-128x128.png",
@@ -81,6 +82,7 @@
     "/assets/icons/calendar.ico": "236c2c2deba9d1da7cf69c5e74c61a9e1fd32881",
     "/assets/icons/common_plan_c.gif": "21babedf628696f64843ae73b6d23afbf701aef7",
     "/assets/icons/defense.gif": "d728b8d6ad105ac3895681312335a7a5ea228a06",
+    "/assets/icons/discord_icon4.png": "bd54e49d8140ec864dd0701c995082c75d3c1f1c",
     "/assets/icons/eclaireur.gif": "d44eacce3e96dbafec94f2f7c2712dab01fe5f6f",
     "/assets/icons/epic_plan.gif": "a30e6ce232e445b6c34f4be814b7b0ce032face0",
     "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
@@ -106,8 +108,8 @@
     "/assets/icons/woodIconGenerated.png": "49e4d6267e680b5f673912eefb20c749f6ddde72",
     "/assets/icons/zb.gif": "4785563760f9373de239610d884e67d692a75fa0",
     "/background4.235d45cac718b4ba.jpg": "50dae5688e6073d2cf228686c0e50fc0c62677a1",
-    "/index.html": "8cfdcd5773345822fda6dc9243ad2b7487148f67",
-    "/main.e4bf603bc678db53.js": "9f28d0364ecad4fc7405b92da2e2336572873251",
+    "/index.html": "52aa8ec12216b514eaf673b251c4466dfc7b1107",
+    "/main.60c667e773a44fd9.js": "6286596a542df3feb3318046adff37513ba19dc6",
     "/manifest.webmanifest": "c456012ec2dd73d917cf77cc906d22641df6ab35",
     "/polyfills.0b8d17fda4fd68e8.js": "6962cb98114152d88ba479053c26ed2ed1585715",
     "/runtime.07101765e4aec8d6.js": "5ce99655aa6dd435c3832e4f6905a4202191f904",

@@ -12,6 +12,6 @@ export class LostPageComponent implements OnInit {
   ngOnInit(): void {}
 
   goHome() {
-    this.router.navigate(['home']);
+    this.router.navigate(['play']);
   }
 }
