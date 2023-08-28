@@ -4,6 +4,7 @@ import { catchError, of, take } from 'rxjs';
 import { CityModel } from 'src/app/models/hordes';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
+import { xpToLvl } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-skills',
@@ -16,22 +17,20 @@ export class SkillsComponent {
   learnLoading: boolean = false;
   dialogMessage: string = 'init';
   snackBarOpened: boolean = false;
-  string: any[] = [
-    '8h00',
-    '7h45',
-    '7h30',
-    '7h15',
-    '7h00',
-    '6h45',
-    '6h30',
-    '6h15',
-    '6h00',
-  ];
+
+  mappingSkillIdToIcon: any = {
+    1: "../../../../assets/icons/pelle.gif",
+    2: "../../../../assets/icons/livre.gif",
+    3: "../../../../assets/icons/build.webp",
+    4: "../../../assets/icons/sleep.gif",
+  }
+
+  day_start_time: number = 0
 
   constructor(
     private cityService: CityService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
@@ -40,6 +39,8 @@ export class SkillsComponent {
         this.skills = [...this.city.skills];
       }
     });
+
+    this.day_start_time = this.cityService.defaultValues$.getValue().day_start_time - xpToLvl(this.cityService.userPlayerStats$.getValue().xp) * 60
   }
 
   closeSnackBar() {
@@ -58,7 +59,7 @@ export class SkillsComponent {
     if (!this.isLearnable(skill)) {
       if (
         this.cityService.userPlayerCityTime$.getValue().seconds +
-          skill.time * this.city.speeds.learn >
+        skill.time * this.city.speeds.learn >
         this.cityService.defaultValues$.getValue().day_end_time
       ) {
         this.openSnackBar('Not enough time');
@@ -89,8 +90,8 @@ export class SkillsComponent {
     if (this.city) {
       let isLearnable: boolean =
         this.cityService.userPlayerCityTime$.getValue().seconds +
-          skill.time * this.city.speeds.learn <=
-          this.cityService.defaultValues$.getValue().day_end_time &&
+        skill.time * this.city.speeds.learn <=
+        this.cityService.defaultValues$.getValue().day_end_time &&
         skill.lvl < skill.lvl_max;
       return isLearnable;
     } else {
@@ -106,23 +107,17 @@ export class SkillsComponent {
     return getTimeString(skill.time * this.city.speeds.learn);
   }
 
-  getPercentageEfficacity(skill: any) {
+  getPercentageEfficacity(skill: any, plusLevel: number) {
     if (skill.id == 4) {
-      return this.string[skill.lvl];
-    }
-    return (
-      String(Math.round((1 / (1 - skill.avantage_per_lvl * skill.lvl)) * 100)) +
-      '%'
-    );
-  }
-
-  getPercentageEfficacityNextLevel(skill: any) {
-    if (skill.id == 4) {
-      return this.string[skill.lvl + 1];
+      if (plusLevel === 0) {
+        return getTimeString(this.day_start_time - skill.reduce_time_seconds * skill.lvl)
+      } else {
+        return getTimeString(this.day_start_time - skill.reduce_time_seconds * (skill.lvl + 1))
+      }
     }
     return (
       String(
-        Math.round((1 / (1 - skill.avantage_per_lvl * (skill.lvl + 1))) * 100)
+        Math.round((1 / (1 - skill.avantage_per_lvl * (skill.lvl + plusLevel))) * 100)
       ) + '%'
     );
   }

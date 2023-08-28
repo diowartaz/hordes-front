@@ -6,6 +6,7 @@ import { getTimeString } from 'src/app/shared/utils/time';
 import { CityModel, StatsModel } from 'src/app/models/hordes';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { getLVLandXPString } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-hordes',
@@ -53,7 +54,7 @@ export class HordesComponent {
     this.subscriptions.push(
       this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
         if (stats != null) {
-          let { lvl, xpString } = this.getLVLandXPString(stats.xp);
+          let { lvl, xpString } = getLVLandXPString(stats.xp);
           this.lvl = lvl;
           this.xpString = xpString;
         }
@@ -61,14 +62,6 @@ export class HordesComponent {
     );
   }
 
-  getLVLandXPString(xp: number): any {
-    let reste = xp % 100;
-    let quotient = Math.floor(xp / 100);
-    return {
-      lvl: quotient + 1,
-      xpString: reste + '/100 xp',
-    };
-  }
 
   getTimeString(seconds: number | undefined): string {
     if (!seconds) {

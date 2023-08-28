@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   invalidAuthentification = false;
   subscriptions: Subscription[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.formgroup = new FormGroup({
@@ -59,6 +59,27 @@ export class LoginComponent implements OnInit {
           this.invalidAuthentification = false;
           localStorage.setItem('token', result.token);
           localStorage.setItem('emailOrUsername', params.login);
+          this.router.navigate(['load-player']);
+        }
+        this.loginLoading = false;
+      });
+  }
+
+  loginTemp() {
+    if (this.loginLoading) {
+      return;
+    }
+    this.authService
+      .signInTemp()
+      .pipe(
+        take(1),
+        catchError(() => of({ error: 'error' }))
+      )
+      .subscribe((result: any) => {
+        if (result.error) {
+        } else {
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('emailOrUsername', result.email);
           this.router.navigate(['load-player']);
         }
         this.loginLoading = false;

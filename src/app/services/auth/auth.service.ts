@@ -10,7 +10,7 @@ import decode from 'jwt-decode';
 })
 export class AuthService {
   API_URL = environment.API_URL;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   userIsLoggedIn() {
     let parsedJWT: any = this.parseJwt();
@@ -49,6 +49,16 @@ export class AuthService {
   signIn(params: any): Observable<any> {
     let url: string = this.API_URL + 'signin';
     return this.httpClient.post<any>(url, params).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('signIn', url))
+    );
+  }
+
+  signInTemp(): Observable<any> {
+    let url: string = this.API_URL + 'signin-temp';
+    return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         return response;
       }),

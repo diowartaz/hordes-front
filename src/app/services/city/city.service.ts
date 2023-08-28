@@ -13,8 +13,12 @@ import { getTimeString } from 'src/app/shared/utils/time';
 export class CityService {
   API_URL = environment.API_URL;
   userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerStats$: BehaviorSubject<StatsModel | null> =
-    new BehaviorSubject<StatsModel | null>(null);
+  userPlayerStats$: BehaviorSubject<StatsModel> =
+    new BehaviorSubject<StatsModel>({
+      personal_best_day: 0,
+      personal_best_zb: 0,
+      xp: 0
+    });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

@@ -2,130 +2,63 @@
   <form class="login-form" [formGroup]="formgroup">
     <h1 style="font-size: 32px; margin: 16px">User Sign Up</h1>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="
+    <div class="input-wrapper" [ngStyle]="
         (fieldHasError('email') || fieldAlreadyExist.email) && {
           'border-color': 'red'
         }
-      "
-    >
+      ">
       <i class="material-icons icon-input-field">mail</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="email"
-        class="input-field"
-        required
-        placeholder="Email"
-        autocomplete="off"
-        formControlName="email"
-      />
+      <input (keyup.enter)="signUp()" type="email" class="input-field" required placeholder="Email" autocomplete="off"
+        formControlName="email" />
     </div>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="
+    <div class="input-wrapper" [ngStyle]="
         (fieldHasError('username') || fieldAlreadyExist.username) && {
           'border-color': 'red'
         }
-      "
-    >
+      ">
       <i class="material-icons icon-input-field">person</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="text"
-        class="input-field"
-        required
-        placeholder="Username"
-        autocomplete="off"
-        formControlName="username"
-      />
+      <input (keyup.enter)="signUp()" type="text" class="input-field" required placeholder="Username" autocomplete="off"
+        formControlName="username" />
     </div>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }"
-    >
+    <div class="input-wrapper" [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }">
       <i class="material-icons icon-input-field">lock</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="password"
-        class="input-field"
-        required
-        placeholder="Password"
-        autocomplete="off"
-        formControlName="password"
-      />
+      <input (keyup.enter)="signUp()" type="password" class="input-field" required placeholder="Password"
+        autocomplete="off" formControlName="password" />
     </div>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('confirmPassword') && { 'border-color': 'red' }"
-      style="margin-bottom: 0px !important"
-    >
+    <div class="input-wrapper" [ngStyle]="fieldHasError('confirmPassword') && { 'border-color': 'red' }"
+      style="margin-bottom: 0px !important">
       <i class="material-icons icon-input-field">lock</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="password"
-        class="input-field"
-        required
-        placeholder="Confirm Password"
-        autocomplete="off"
-        formControlName="confirmPassword"
-      />
+      <input (keyup.enter)="signUp()" type="password" class="input-field" required placeholder="Confirm Password"
+        autocomplete="off" formControlName="confirmPassword" />
     </div>
 
     <div *ngIf="invalidSignUp" class="invalid-authen">
       Invalid authentification
     </div>
 
-    <div
-      *ngIf="invalidSignUp && formgroup.controls.email.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.email.errors.required"
-        >Email is required</span
-      >
-      <span *ngIf="formgroup.controls.email.errors.pattern"
-        >Email must be valid</span
-      >
+    <div *ngIf="invalidSignUp && formgroup.controls.email.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.email.errors.required">Email is required</span>
+      <span *ngIf="formgroup.controls.email.errors.pattern">Email must be valid</span>
     </div>
 
-    <div
-      *ngIf="invalidSignUp && formgroup.controls.username.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.username.errors.required"
-        >Username is required</span
-      >
-      <span *ngIf="formgroup.controls.username.errors.notValid"
-        >Username: 3 characters minimum</span
-      >
+    <div *ngIf="invalidSignUp && formgroup.controls.username.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.username.errors.required">Username is required</span>
+      <span *ngIf="formgroup.controls.username.errors.notValid">Username: 3 characters minimum</span>
     </div>
 
-    <div
-      *ngIf="invalidSignUp && formgroup.controls.password.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.password.errors.required"
-        >Password is required</span
-      >
+    <div *ngIf="invalidSignUp && formgroup.controls.password.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.password.errors.required">Password is required</span>
 
-      <span *ngIf="formgroup.controls.password.errors.noStrong"
-        >Password: 8 characters minimum</span
-      >
+      <span *ngIf="formgroup.controls.password.errors.noStrong">Password: 8 characters minimum</span>
     </div>
 
-    <div
-      *ngIf="invalidSignUp && formgroup.controls.confirmPassword.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.confirmPassword.errors.required"
-        >Confirm password is required</span
-      >
-      <span *ngIf="formgroup.controls.confirmPassword.errors.noMatchPassword"
-        >Password and Confirm password must match</span
-      >
+    <div *ngIf="invalidSignUp && formgroup.controls.confirmPassword.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.confirmPassword.errors.required">Confirm password is required</span>
+      <span *ngIf="formgroup.controls.confirmPassword.errors.noMatchPassword">Password and Confirm password must
+        match</span>
     </div>
 
     <div *ngIf="fieldAlreadyExist.email" class="invalid-authen">
@@ -142,16 +75,13 @@
       <i *ngIf="!signUpLoading" class="material-icons login-icon">login</i>
       <div *ngIf="!signUpLoading" class="login-text">Sign Up</div>
 
-      <mat-spinner
-        *ngIf="signUpLoading"
-        diameter="24"
-        class="spinner"
-      ></mat-spinner>
+      <mat-spinner *ngIf="signUpLoading" diameter="24" class="spinner"></mat-spinner>
       <div *ngIf="signUpLoading" class="login-text">Signing Up...</div>
     </div>
 
     <div class="text-button" (click)="signIn()">
       Already have an account ? Sign In
     </div>
+    <div class="text-button" style="margin-top: 4px;" (click)="loginTemp()">Play with a temporary account</div>
   </form>
 </div>

@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
     username: false,
   };
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.formgroup = new FormGroup({
@@ -151,6 +151,27 @@ export class SignUpComponent implements OnInit {
 
       return !confirmPasswordValid ? { noMatchPassword: true } : null;
     };
+  }
+
+  loginTemp() {
+    if (this.signUpLoading) {
+      return;
+    }
+    this.authService
+      .signInTemp()
+      .pipe(
+        take(1),
+        catchError(() => of({ error: 'error' }))
+      )
+      .subscribe((result: any) => {
+        if (result.error) {
+        } else {
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('emailOrUsername', result.email);
+          this.router.navigate(['load-player']);
+        }
+        this.signUpLoading = false;
+      });
   }
 
   ngOnDestroy() {

@@ -1,41 +1,22 @@
 <div class="content">
   <form class="login-form" [formGroup]="formgroup">
     <h1 style="font-size: 32px; margin: 16px">User Login</h1>
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('emailOrUsername') && { 'border-color': 'red' }"
-    >
+    <div class="input-wrapper" [ngStyle]="fieldHasError('emailOrUsername') && { 'border-color': 'red' }">
       <i class="material-icons icon-input-field">mail</i>
-      <input
-        class="input-field"
-        required
-        placeholder="Email or username"
-        autocomplete="off"
-        formControlName="emailOrUsername"
-        (keyup.enter)="login()"
-      />
+      <input class="input-field" required placeholder="Email or username" autocomplete="off"
+        formControlName="emailOrUsername" (keyup.enter)="login()" />
     </div>
 
-    <div
-      class="input-wrapper"
-      style="margin-bottom: 0px !important"
-      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }"
-    >
+    <div class="input-wrapper" style="margin-bottom: 0px !important"
+      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }">
       <i class="material-icons icon-input-field">lock</i>
       <!-- <i
         class="material-icons"
         style="margin-left: 198px; font-size: 16px; position: absolute"
         >info</i
       > -->
-      <input
-        type="password"
-        class="input-field"
-        required
-        placeholder="Password"
-        autocomplete="off"
-        formControlName="password"
-        (keyup.enter)="login()"
-      />
+      <input type="password" class="input-field" required placeholder="Password" autocomplete="off"
+        formControlName="password" (keyup.enter)="login()" />
     </div>
 
     <div *ngIf="invalidAuthentification" class="invalid-authen">
@@ -47,11 +28,7 @@
       <i *ngIf="!loginLoading" class="material-icons login-icon">login</i>
       <div *ngIf="!loginLoading" class="login-text">Login</div>
 
-      <mat-spinner
-        *ngIf="loginLoading"
-        diameter="24"
-        class="spinner"
-      ></mat-spinner>
+      <mat-spinner *ngIf="loginLoading" diameter="24" class="spinner"></mat-spinner>
       <div *ngIf="loginLoading" class="login-text">Login...</div>
     </div>
 
@@ -59,5 +36,6 @@
       Forgot Password ?
     </div> -->
     <div class="text-button" (click)="signUp()">No account yet ? Sign Up</div>
+    <div class="text-button" style="margin-top: 4px;" (click)="loginTemp()">Play with a temporary account</div>
   </form>
 </div>

@@ -42,14 +42,9 @@ export class StateGuard implements CanActivate, CanActivateChild {
         userPlayerState = key
       }
     }
-    console.log("----------")
-    console.log("try url", state.url.slice(1))
     if (this.cityService.userPlayerState$.getValue() === userPlayerState) {
-      console.log("ok")
       return true
     } else {
-      console.log("nok")
-      console.log(userPlayerState, this.cityService.userPlayerState$.getValue(), this.statesToRoutes[this.cityService.userPlayerState$.getValue()])
       this.router.navigate([this.statesToRoutes[this.cityService.userPlayerState$.getValue()]]);
       return false
     }
