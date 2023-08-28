@@ -34,13 +34,15 @@ import { DiggingsComponent } from './components/hordes/diggings/diggings.compone
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { CreateCityComponent } from './components/create-city/create-city.component';
-import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
-import { BuildingComponent } from './components/hordes/recap-dialog/building/building.component';
-import { SkillComponent } from './components/hordes/recap-dialog/skill/skill.component';
 import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
 import { ProfilComponent } from './components/profil/profil.component';
+import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
+import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
+import { RecapHeaderComponent } from './components/hordes/recap/recap-header/recap-header.component';
+import { BuildingRecapComponent } from './components/hordes/recap/alive-recap/building-recap/building-recap.component';
+import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill-recap/skill-recap.component';
 
 @NgModule({
   declarations: [
@@ -64,12 +66,14 @@ import { ProfilComponent } from './components/profil/profil.component';
     SettingsComponent,
     LoadPlayerComponent,
     CreateCityComponent,
-    RecapDialogComponent,
-    BuildingComponent,
-    SkillComponent,
     LeaderboardHordesComponent,
     CustomSnackbarComponent,
     ProfilComponent,
+    DeathRecapComponent,
+    AliveRecapComponent,
+    RecapHeaderComponent,
+    BuildingRecapComponent,
+    SkillRecapComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,71 @@
+<div class="building">
+    <div class="line">
+      <div class="element-wrapper">
+        <img
+          *ngIf="building.rarity == 'common'"
+          class="icon"
+          src="../../../../assets/icons/common_plan_c.gif"
+        />
+        <img
+          *ngIf="building.rarity == 'rare'"
+          class="icon"
+          src="../../../../assets/icons/rare_plan.gif"
+        />
+        <img
+          *ngIf="building.rarity == 'epic'"
+          class="icon"
+          src="../../../../assets/icons/epic_plan.gif"
+        />
+        <div class="text" style="margin-bottom: -3px; font-weight: 500">
+          {{ building.name }}
+        </div>
+      </div>
+      <div class="line-right">
+        <div class="element-wrapper">
+          <img class="icon" src="../../../../assets/icons/defense.gif" />
+          <div class="text">{{ building.defense }}</div>
+        </div>
+  
+        <div class="element-wrapper">
+          <span class="material-symbols-outlined icon"> schedule </span>
+          <div class="text">{{ getTimeBuildingString() }}</div>
+        </div>
+  
+        <div class="element-wrapper">
+          <span class="material-symbols-outlined icon"> trending_up </span>
+          <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- <div class="line">
+      <div class="inventory">
+        <div class="item-wrapper" *ngFor="let item of building.customInventory">
+          <div class="item" *ngIf="item.nb > 0">
+            <img
+              [ngStyle]="{
+                'margin-top': item.name == 'stone' ? '-2px' : '0px'
+              }"
+              class="icon"
+              src="{{ item.src }}"
+            />
+  
+            <div class="nb">
+              <span
+                class="alert-nb-item"
+                *ngIf="city.inventory[item.name] < item.nb"
+                >{{ city.inventory[item.name] }}</span
+              >
+              <span
+                class="ok-nb-item"
+                *ngIf="city.inventory[item.name] >= item.nb"
+                >{{ city.inventory[item.name] }}</span
+              >
+              <span>/{{ item.nb }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  

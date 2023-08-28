@@ -1,0 +1,18 @@
+<div class="boundary">
+  <div class="top">
+    <div class="header container">Attack Recap</div>
+    <div class="content">
+      <app-recap-header [city]="getUserPlayerCity$() | async" style="width: 100%;"></app-recap-header>
+      <div class="container" style="border: 1px solid #dc1a1a">
+        <img class="icon" src="../../../assets/icons/small_death.gif" />
+        <div>You died!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button (click)="tryAgain()">
+      <span class="material-symbols-outlined icon"> schedule </span><span>Try Again!</span>
+    </button>
+  </div>
+</div>

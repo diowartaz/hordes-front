@@ -27,7 +27,7 @@ export class NotauthGuard implements CanActivate, CanActivateChild {
     if (!this.authService.userIsLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(['home']);
+      this.router.navigate(['play']);
       return false;
     }
   }
@@ -42,7 +42,7 @@ export class NotauthGuard implements CanActivate, CanActivateChild {
     if (!this.authService.userIsLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(['home']);
+      this.router.navigate(['play']);
       return false;
     }
   }

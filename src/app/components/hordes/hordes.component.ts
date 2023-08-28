@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { catchError, debounceTime, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { getTimeString } from 'src/app/shared/utils/time';
-import { CityModel, DataModel } from 'src/app/models/hordes';
+import { CityModel, StatsModel } from 'src/app/models/hordes';
 import { MatDialog } from '@angular/material/dialog';
-import { RecapDialogComponent } from './recap-dialog/recap-dialog.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -32,7 +31,7 @@ export class HordesComponent {
     private router: Router,
     public dialog: MatDialog,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -46,15 +45,15 @@ export class HordesComponent {
     this.subscriptions.push(
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         this.city = city;
-        if (this.city && this.city.state == 'recap') {
-          this.router.navigate(['recap']);
-        }
+        // if (this.city && this.city.state == 'recap') {
+        //   this.router.navigate(['recap']);
+        // }
       })
     );
     this.subscriptions.push(
-      this.cityService.userPlayerData$.subscribe((data: DataModel | null) => {
-        if (data != null) {
-          let { lvl, xpString } = this.getLVLandXPString(data.xp);
+      this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
+        if (stats != null) {
+          let { lvl, xpString } = this.getLVLandXPString(stats.xp);
           this.lvl = lvl;
           this.xpString = xpString;
         }
@@ -93,7 +92,7 @@ export class HordesComponent {
         this.endDayLoading = false;
         if (result.error) {
         } else {
-          this.router.navigate(['recap']);
+          this.router.navigate(['recap']); //or death recap handler by state guard
         }
       });
   }

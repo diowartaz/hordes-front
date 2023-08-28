@@ -13,19 +13,14 @@ export class LoginComponent implements OnInit {
   formgroup: any = null;
   loginLoading: boolean = false;
   invalidAuthentification = false;
-  email: any = '';
   subscriptions: Subscription[] = [];
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('email')) {
-      this.email = localStorage.getItem('email');
-    }
     this.formgroup = new FormGroup({
-      email: new FormControl(this.email, [
+      emailOrUsername: new FormControl(localStorage.getItem('emailOrUsername'), [
         Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
       password: new FormControl('', [Validators.required]),
     });
@@ -48,7 +43,7 @@ export class LoginComponent implements OnInit {
     }
     this.loginLoading = true;
     const params = {
-      email: this.formgroup.controls.email.value,
+      login: this.formgroup.controls.emailOrUsername.value,
       password: this.formgroup.controls.password.value,
     };
     this.authService
@@ -63,7 +58,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.invalidAuthentification = false;
           localStorage.setItem('token', result.token);
-          localStorage.setItem('email', params.email);
+          localStorage.setItem('emailOrUsername', params.login);
           this.router.navigate(['load-player']);
         }
         this.loginLoading = false;

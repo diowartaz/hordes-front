@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 4px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+    border-radius: 4px;
+    padding: 8px 4px;
+    width: 100%;
+    align-items: center;
+    background: #0000005e;
+    .def-zb {
+        display: flex;
+        gap: 8px;
+
+        .def-zb-el {
+            display: flex;
+
+            .icon {
+                height: 16px;
+                width: 16px;
+                font-size: 16px;
+            }
+        }
+    }
+}

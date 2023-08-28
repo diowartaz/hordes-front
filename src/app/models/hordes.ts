@@ -1,9 +1,9 @@
 export interface PlayerModel {
   city: CityModel;
-  data: DataModel;
+  stats: StatsModel;
 }
 
-export interface DataModel {
+export interface StatsModel {
   personal_best_day: number;
   personal_best_zb: number;
   xp: number;

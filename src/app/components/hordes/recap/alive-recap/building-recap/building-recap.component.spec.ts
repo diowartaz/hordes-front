@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecapDialogComponent } from './recap-dialog.component';
+import { BuildingRecapComponent } from './building-recap.component';
 
-describe('RecapDialogComponent', () => {
-  let component: RecapDialogComponent;
-  let fixture: ComponentFixture<RecapDialogComponent>;
+describe('BuildingRecapComponent', () => {
+  let component: BuildingRecapComponent;
+  let fixture: ComponentFixture<BuildingRecapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecapDialogComponent ]
+      declarations: [ BuildingRecapComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RecapDialogComponent);
+    fixture = TestBed.createComponent(BuildingRecapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

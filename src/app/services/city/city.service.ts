@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { handleError } from 'src/app/general-functions';
 import { environment } from 'src/environments/environment';
 import { updateCustomInventory } from 'src/app/shared/utils/inventory';
-import { CityModel, DataModel } from 'src/app/models/hordes';
+import { CityModel, StatsModel } from 'src/app/models/hordes';
 import { getTimeString } from 'src/app/shared/utils/time';
 
 @Injectable({
@@ -13,9 +13,10 @@ import { getTimeString } from 'src/app/shared/utils/time';
 export class CityService {
   API_URL = environment.API_URL;
   userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerData$: BehaviorSubject<DataModel | null> =
-    new BehaviorSubject<DataModel | null>(null);
+  userPlayerStats$: BehaviorSubject<StatsModel | null> =
+    new BehaviorSubject<StatsModel | null>(null);
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
@@ -25,7 +26,7 @@ export class CityService {
 
   setInterval: any = null;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getDefaultValues(): Observable<any> {
     let url: string = this.API_URL + 'city/default-values';
@@ -43,8 +44,10 @@ export class CityService {
     let url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
+        //TODO: if erreur: vider le local storage
         this.log('loadPlayer', response);
-        this.userPlayerData$.next(response.player.data);
+        this.userPlayerState$.next(response.player.state);
+        this.userPlayerStats$.next(response.player.stats);
         this.userPlayerCity$.next(response.player.city);
         this.defaultValues$.next(response.default_values);
         this.playerLoaded$.next(true);
@@ -55,15 +58,15 @@ export class CityService {
     );
   }
 
-  getPlayerData(): Observable<any> {
-    let url: string = this.API_URL + 'player/data';
+  getPlayerStats(): Observable<any> {
+    let url: string = this.API_URL + 'player/stats';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
-        this.log('getPlayerData', response);
-        this.userPlayerData$.next(response.data);
+        this.log('getPlayerStats', response);
+        this.userPlayerStats$.next(response.stats);
         return response;
       }),
-      catchError(handleError('getPlayerData', url))
+      catchError(handleError('getPlayerStats', url))
     );
   }
 
@@ -73,6 +76,7 @@ export class CityService {
       map((response: any) => {
         this.log('new', response);
         this.userPlayerCity$.next(response.player.city);
+        this.userPlayerState$.next(response.player.state);
         this.updateTime(response.player.city);
         return response;
       }),
@@ -86,6 +90,7 @@ export class CityService {
       map((response: any) => {
         this.log('delete', response);
         this.userPlayerCity$.next(null);
+        this.userPlayerState$.next("noCity");
         return response;
       }),
       catchError(handleError('delete', url))
@@ -147,7 +152,7 @@ export class CityService {
       ((new Date().getTime() -
         this.userPlayerCity$.getValue().last_timestamp_request) *
         this.defaultValues$.getValue().coef_realtime_to_ingametime) /
-        1000
+      1000
     );
     if (city.time + timeToAdd > this.defaultValues$.getValue().day_end_time) {
       //fin de journee
@@ -194,7 +199,8 @@ export class CityService {
       map((response: any) => {
         this.log('endDay', response);
         this.userPlayerCity$.next(response.player.city);
-        this.userPlayerData$.next(response.player.data);
+        this.userPlayerStats$.next(response.player.stats);
+        this.userPlayerState$.next(response.player.state);
         return response;
       }),
       catchError(handleError('endDay', url))
@@ -208,6 +214,7 @@ export class CityService {
         //city
         this.log('startDay', response);
         this.userPlayerCity$.next(response.city);
+        this.userPlayerState$.next("playing");
         this.updateTime(response.city);
         return response;
       }),

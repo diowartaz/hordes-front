@@ -23,6 +23,7 @@ export class CityNotNullGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+      console.log(state.url.slice(1))
     if (!this.cityService.userPlayerCity$.getValue()) {
       this.router.navigate(['create-city']);
       return false;

@@ -9,7 +9,7 @@ import {
   getTimeRequiredString,
   getTimeString,
 } from 'src/app/shared/utils/time';
-import { BuildingModel, CityModel, DataModel } from 'src/app/models/hordes';
+import { BuildingModel, CityModel, StatsModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-buildings',

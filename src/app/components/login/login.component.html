@@ -3,16 +3,15 @@
     <h1 style="font-size: 32px; margin: 16px">User Login</h1>
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('email') && { 'border-color': 'red' }"
+      [ngStyle]="fieldHasError('emailOrUsername') && { 'border-color': 'red' }"
     >
       <i class="material-icons icon-input-field">mail</i>
       <input
-        type="email"
         class="input-field"
         required
-        placeholder="Email"
+        placeholder="Email or username"
         autocomplete="off"
-        formControlName="email"
+        formControlName="emailOrUsername"
         (keyup.enter)="login()"
       />
     </div>

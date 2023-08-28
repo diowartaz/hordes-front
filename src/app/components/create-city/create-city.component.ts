@@ -10,15 +10,7 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class CreateCityComponent {
   createCityLoading: boolean = false;
-  constructor(private router: Router, private cityService: CityService) {}
-
-  ngOnInit(): void {
-    // &&
-    //   this.cityService.userPlayerCity$.getValue().alive
-    if (this.cityService.userPlayerCity$.getValue()) {
-      this.router.navigate(['play']);
-    }
-  }
+  constructor(private router: Router, private cityService: CityService) { }
 
   createCity() {
     if (this.createCityLoading) {
@@ -33,7 +25,7 @@ export class CreateCityComponent {
       )
       .subscribe((result: any) => {
         if (result.error) {
-          console.log('error load game');
+          console.log('error create city');
         } else {
           this.router.navigate(['play']);
         }

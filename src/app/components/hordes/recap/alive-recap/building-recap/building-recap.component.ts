@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import {
   getTimeRequiredString,
-  getTimeString,
 } from 'src/app/shared/utils/time';
 import {
   updateCustomInventory,
@@ -11,16 +10,16 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-building',
-  templateUrl: './building.component.html',
-  styleUrls: ['./building.component.scss'],
+  selector: 'app-building-recap',
+  templateUrl: './building-recap.component.html',
+  styleUrls: ['./building-recap.component.scss']
 })
-export class BuildingComponent {
+export class BuildingRecapComponent {
   @Input() building: any = null;
   city: any = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private cityService: CityService) {}
+  constructor(private cityService: CityService) { }
 
   ngOnInit(): void {
     this.subscriptions.push(

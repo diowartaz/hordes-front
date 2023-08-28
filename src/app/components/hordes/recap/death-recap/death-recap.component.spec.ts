@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SkillComponent } from './skill.component';
+import { DeathRecapComponent } from './death-recap.component';
 
-describe('SkillComponent', () => {
-  let component: SkillComponent;
-  let fixture: ComponentFixture<SkillComponent>;
+describe('DeathRecapComponent', () => {
+  let component: DeathRecapComponent;
+  let fixture: ComponentFixture<DeathRecapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillComponent ]
+      declarations: [ DeathRecapComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SkillComponent);
+    fixture = TestBed.createComponent(DeathRecapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,7 +15,7 @@ export class LoadPlayerComponent {
     private router: Router,
     private cityService: CityService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadPlayer();
@@ -31,9 +31,8 @@ export class LoadPlayerComponent {
       )
       .subscribe((result: any) => {
         if (result.error) {
-          console.log('error load player');
-          //sleep an retry
-          setTimeout(() => this.loadPlayer(), 1000);
+          localStorage.setItem('token', '');
+          this.router.navigate(['signin']);
         } else {
           this.loadGameLoading = false;
           this.router.navigate(['play']);

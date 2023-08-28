@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateCityComponent } from './components/create-city/create-city.component';
 import { HomeComponent } from './components/home/home.component';
 import { HordesComponent } from './components/hordes/hordes.component';
-import { RecapDialogComponent } from './components/hordes/recap-dialog/recap-dialog.component';
 import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
@@ -18,6 +17,9 @@ import { AuthGuard } from './shared/guards/auth/auth.guard';
 import { CityNotNullGuard } from './shared/guards/city-not-null/city-not-null.guard';
 import { GameLoadedGuard } from './shared/guards/game-loaded/game-loaded.guard';
 import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
+import { StateGuard } from './shared/guards/state/state.guard';
+import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
+import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
 
 const routes: Routes = [
   {
@@ -43,7 +45,7 @@ const routes: Routes = [
   {
     path: 'play',
     component: HordesComponent,
-    canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
+    canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
   },
   {
     path: 'settings',
@@ -60,19 +62,16 @@ const routes: Routes = [
   },
   {
     path: 'recap',
-    component: RecapDialogComponent,
-    canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
-  },
-
-  {
-    path: '',
-    component: HordesComponent,
-    canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
+    component: AliveRecapComponent,
+    canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
   },
   {
-    path: '**',
-    component: LostPageComponent,
+    path: 'death-recap',
+    component: DeathRecapComponent,
+    canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
   },
+  { path: '', redirectTo: 'play', pathMatch: 'full' },
+  { path: '**', redirectTo: 'play' },
 ];
 
 // {
@@ -100,4 +99,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

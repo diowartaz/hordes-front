@@ -6,7 +6,7 @@ import {
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
 import { getTimeString } from 'src/app/shared/utils/time';
-import { CityModel, DataModel } from 'src/app/models/hordes';
+import { CityModel, StatsModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-diggings',

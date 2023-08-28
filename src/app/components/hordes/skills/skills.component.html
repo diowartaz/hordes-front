@@ -1,7 +1,7 @@
 <dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
   <div>{{ dialogMessage }}</div>
 
-  <span class="material-symbols-outlined" (click)="closeSnackBar()">
+  <span class="material-symbols-outlined" style="cursor: pointer;" (click)="closeSnackBar()">
     close
   </span>
 </dialog>
