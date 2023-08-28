@@ -12,6 +12,8 @@
       <!-- <button class="icon-btn">
         <span class="material-symbols-outlined icon"> mail </span>
       </button> -->
+      <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
+        <img style="height: 24px; width: 24px" src="../../../assets/icons/discord_icon.png" /></a>
       <button class="icon-btn" (click)="goToProfil()">
         <span class="material-symbols-outlined icon">
           person
@@ -42,8 +44,6 @@
         <img class="icon" src="../../../assets/icons/defense.gif" />
         <span class="text-span">{{ city?.defense }}</span>
       </div>
-      <!-- font-weight:
-      city?.nb_zb_next_attack_max > city?.defense ? '500' : '700' -->
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/zb.gif" />
 
@@ -69,7 +69,6 @@
   </div>
   <div class="footer">
     <button [ngStyle]="getStyle('diggings')" class="footer-btn" (click)="changeContent('diggings')">
-      <!-- style="background: var(--background-black-opacity-zero-six)" -->
       <img class="icon" src="../../../assets/icons/pelle.gif" />
       <span class="span">Dig</span>
     </button>
