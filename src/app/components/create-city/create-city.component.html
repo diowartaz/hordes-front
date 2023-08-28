@@ -1,9 +1,6 @@
 <div class="boundary">
   <div class="header container">
-    <img
-      style="height: 24px; width: 24px; margin-right: 8px"
-      src="../../../assets/icons/small_death.gif"
-    />Hordes
+    <img style="height: 24px; width: 24px; margin-right: 8px" src="../../../assets/icons/small_death.gif" />Hordes
   </div>
 
   <div class="content container">
@@ -29,7 +26,12 @@
 
     <div class="item">
       <img class="icon" src="../../../assets/icons/zb.gif" />
-      <p>Defeat zombies every nights!</p>
+      <p>Defeat zombies every nights</p>
+    </div>
+
+    <div class="item">
+      <img class="icon" src="../../../assets/icons/xpLogo.png" />
+      <p>Have your own progression</p>
     </div>
 
     <div class="item">
@@ -40,11 +42,7 @@
 
   <div class="footer">
     <button (click)="createCity()">
-      <mat-spinner
-        *ngIf="createCityLoading"
-        diameter="24"
-        class="spinner"
-      ></mat-spinner>
+      <mat-spinner *ngIf="createCityLoading" diameter="24" class="spinner"></mat-spinner>
       <div style="height: 24px; display: flex; align-items: center">
         Ready to die?
       </div>

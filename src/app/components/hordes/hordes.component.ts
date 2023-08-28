@@ -21,7 +21,7 @@ export class HordesComponent {
   lvl: number = 1;
 
   endDayLoading: boolean = false;
-  content: string = 'buildings';
+  content: string = 'diggings';
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
   dialogOpened: boolean = false;
 

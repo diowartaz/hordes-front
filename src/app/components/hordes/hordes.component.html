@@ -15,13 +15,10 @@
       <button class="icon-btn" (click)="goToProfil()">
         <span class="material-symbols-outlined icon">
           person
-          </span>
+        </span>
       </button>
       <button class="icon-btn" (click)="goToLeaderboard()">
-        <img
-          style="height: 24px; width: 24px"
-          src="../../../assets/icons/leaderboard.gif"
-        />
+        <img style="height: 24px; width: 24px" src="../../../assets/icons/leaderboard.gif" />
       </button>
       <button class="icon-btn" (click)="goToSettings()">
         <span class="material-symbols-outlined icon"> settings </span>
@@ -50,28 +47,16 @@
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/zb.gif" />
 
-        <span
-          style="margin-left: 0px"
-          class="text-span"
-          [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
-          >{{ city?.nb_zb_next_attack_min }}-{{
-            city?.nb_zb_next_attack_max
-          }}</span
-        >
+        <span style="margin-left: 0px" class="text-span"
+          [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }">{{ city?.nb_zb_next_attack_min }}-{{
+          city?.nb_zb_next_attack_max
+          }}</span>
       </div>
     </div>
 
-    <button
-      class="icon-btn borderBlink"
-      [ngClass]="{ borderBlink2: time.seconds > 79200 }"
-      style="margin-left: 8px"
-      (click)="endDay()"
-    >
-      <img
-        style="height: 24px"
-        class="xp-icon"
-        src="../../../assets/icons/sleep.gif"
-      />
+    <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: time.seconds > 79200 }" style="margin-left: 8px"
+      (click)="endDay()">
+      <img style="height: 24px" class="xp-icon" src="../../../assets/icons/sleep.gif" />
     </button>
   </div>
 
@@ -83,30 +68,18 @@
     </div>
   </div>
   <div class="footer">
-    <button
-      class="footer-btn"
-      (click)="changeContent('buildings')"
-      [ngStyle]="getStyle('buildings')"
-    >
-      <img class="icon" src="../../../assets/icons/building.webp" />
-      <span class="span">Build</span>
-    </button>
-    <button
-      class="footer-btn"
-      (click)="changeContent('skills')"
-      [ngStyle]="getStyle('skills')"
-    >
-      <img class="icon" src="../../../assets/icons/livre.gif" />
-      <span class="span">Learn</span>
-    </button>
-    <button
-      [ngStyle]="getStyle('diggings')"
-      class="footer-btn"
-      (click)="changeContent('diggings')"
-    >
+    <button [ngStyle]="getStyle('diggings')" class="footer-btn" (click)="changeContent('diggings')">
       <!-- style="background: var(--background-black-opacity-zero-six)" -->
       <img class="icon" src="../../../assets/icons/pelle.gif" />
       <span class="span">Dig</span>
+    </button>
+    <button class="footer-btn" (click)="changeContent('skills')" [ngStyle]="getStyle('skills')">
+      <img class="icon" src="../../../assets/icons/livre.gif" />
+      <span class="span">Learn</span>
+    </button>
+    <button class="footer-btn" (click)="changeContent('buildings')" [ngStyle]="getStyle('buildings')">
+      <img class="icon" src="../../../assets/icons/building.webp" />
+      <span class="span">Build</span>
     </button>
   </div>
 </div>
