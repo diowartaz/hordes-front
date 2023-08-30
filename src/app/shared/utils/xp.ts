@@ -8,12 +8,12 @@ export function getLVLandXPString(xp: number): any {
     };
 }
 export function xpToLvl(xp: number) {
-    let lvl = -5.9 + 3 * Math.log(xp + 10)
+    let lvl = 10.4067 * Math.log(6.62457 + 0.00043575 * xp) - 18.6718;
     return Math.floor(lvl);
 }
 
 export function lvlToXp(lvl: number) {
-    let xp = Math.E ** ((lvl + 5.9) / 3) - 10
+    let xp = (Math.exp((lvl + 18.6718) / 10.4067) - 6.62457) / 0.00043575
     return Math.floor(xp)
 }
 
