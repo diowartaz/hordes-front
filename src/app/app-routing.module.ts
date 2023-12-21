@@ -20,6 +20,9 @@ import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
 import { StateGuard } from './shared/guards/state/state.guard';
 import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
 import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
+import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
+import { SkillsComponent } from './components/hordes/skills/skills.component';
+import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 
 const routes: Routes = [
   {
@@ -46,6 +49,23 @@ const routes: Routes = [
     path: 'play',
     component: HordesComponent,
     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
+    children: [
+      {
+        path: '', redirectTo: 'dig', pathMatch: 'full'
+      },
+      {
+        path: 'dig',
+        component: DiggingsComponent,
+      },
+      {
+        path: 'learn',
+        component: SkillsComponent,
+      },
+      {
+        path: 'build',
+        component: BuildingsComponent,
+      },
+    ]
   },
   {
     path: 'settings',

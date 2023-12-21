@@ -69,6 +69,8 @@ export class LoginComponent implements OnInit {
     if (this.loginLoading) {
       return;
     }
+    this.loginLoading = true;
+    
     this.authService
       .signInTemp()
       .pipe(

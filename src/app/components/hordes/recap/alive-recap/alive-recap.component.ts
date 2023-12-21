@@ -66,7 +66,7 @@ export class AliveRecapComponent {
         this.startDayLoading = false;
         if (result.error) {
         } else {
-          this.router.navigate(['play']);
+          this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
         }
       });
   }

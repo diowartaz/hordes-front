@@ -27,6 +27,7 @@ export class CreateCityComponent {
         if (result.error) {
           console.log('error create city');
         } else {
+          localStorage.setItem('play-route', "dig")
           this.router.navigate(['play']);
         }
         this.createCityLoading = false;

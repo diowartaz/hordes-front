@@ -45,7 +45,7 @@ export class LeaderboardHordesComponent {
   }
 
   goBackCityView() {
-    this.router.navigate(['play']);
+    this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
   }
 
   goToProfil(user_id: string) {

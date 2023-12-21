@@ -21,7 +21,7 @@ export class HordesComponent {
   lvl: number = 1;
 
   endDayLoading: boolean = false;
-  content: string = 'diggings';
+  content: string = 'dig';
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
   dialogOpened: boolean = false;
 
@@ -35,6 +35,12 @@ export class HordesComponent {
   ) { }
 
   ngOnInit(): void {
+    let content = localStorage.getItem('play-route')
+    if (content) {
+      if (content.length > 0) {
+        this.content = content
+      }
+    }
     this.subscriptions.push(
       this.cityService.userPlayerCityTime$.subscribe((time) => {
         this.time = time;
@@ -92,6 +98,8 @@ export class HordesComponent {
 
   changeContent(content: string) {
     this.content = content;
+    localStorage.setItem('play-route', content);
+    this.router.navigate(['play/' + content])
   }
 
   getStyle(content: string) {

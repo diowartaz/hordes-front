@@ -117,7 +117,7 @@ export class SkillsComponent {
     }
     return (
       String(
-        Math.round((1 / (1 - skill.avantage_per_lvl * (skill.lvl + plusLevel))) * 100)
+        Math.round((1 - skill.avantage_per_lvl * (skill.lvl + plusLevel)) * 100)
       ) + '%'
     );
   }

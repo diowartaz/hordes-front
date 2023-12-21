@@ -35,7 +35,7 @@ export class LoadPlayerComponent {
           this.router.navigate(['signin']);
         } else {
           this.loadGameLoading = false;
-          this.router.navigate(['play']);
+          this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
         }
       });
   }

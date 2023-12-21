@@ -13,10 +13,9 @@ export class StateGuard implements CanActivate, CanActivateChild {
     deathRecap: "death-recap",
     recap: "recap",
   }
-  routesToStates: { [key: string]: string; } = {
 
-  }
   constructor(private cityService: CityService, private router: Router) { }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -38,7 +37,7 @@ export class StateGuard implements CanActivate, CanActivateChild {
     }
     let userPlayerState: string = ""
     for (const [key, value] of Object.entries(this.statesToRoutes)) {
-      if (value === state.url.slice(1)) {
+      if (value === state.url.slice(1).split("/")[0]) {
         userPlayerState = key
       }
     }

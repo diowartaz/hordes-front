@@ -20,7 +20,7 @@ export class SettingsComponent {
   }
 
   goBackCityView() {
-    this.router.navigate(['play']);
+    this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
   }
 
   surrendCity() {

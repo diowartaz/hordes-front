@@ -62,21 +62,19 @@
 
   <div class="content-wrapper">
     <div class="content">
-      <app-diggings *ngIf="content == 'diggings'"></app-diggings>
-      <app-buildings *ngIf="content == 'buildings'"></app-buildings>
-      <app-skills *ngIf="content == 'skills'"></app-skills>
+      <router-outlet></router-outlet>
     </div>
   </div>
   <div class="footer">
-    <button [ngStyle]="getStyle('diggings')" class="footer-btn" (click)="changeContent('diggings')">
+    <button [ngStyle]="getStyle('dig')" class="footer-btn" (click)="changeContent('dig')">
       <img class="icon" src="../../../assets/icons/pelle.gif" />
       <span class="span">Dig</span>
     </button>
-    <button class="footer-btn" (click)="changeContent('skills')" [ngStyle]="getStyle('skills')">
+    <button class="footer-btn" (click)="changeContent('learn')" [ngStyle]="getStyle('learn')">
       <img class="icon" src="../../../assets/icons/livre.gif" />
       <span class="span">Learn</span>
     </button>
-    <button class="footer-btn" (click)="changeContent('buildings')" [ngStyle]="getStyle('buildings')">
+    <button class="footer-btn" (click)="changeContent('build')" [ngStyle]="getStyle('build')">
       <img class="icon" src="../../../assets/icons/building.webp" />
       <span class="span">Build</span>
     </button>

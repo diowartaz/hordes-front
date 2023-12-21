@@ -14,30 +14,23 @@ import { CityService } from 'src/app/services/city/city.service';
   providedIn: 'root',
 })
 export class CityNotNullGuard implements CanActivate, CanActivateChild {
-  constructor(private cityService: CityService, private router: Router) {}
+  constructor(private cityService: CityService, private router: Router) { }
+
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-      console.log(state.url.slice(1))
-    if (!this.cityService.userPlayerCity$.getValue()) {
-      this.router.navigate(['create-city']);
-      return false;
-    }
-    return true;
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.guardFunction(route, state)
   }
+
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.guardFunction(childRoute, state)
+  }
+
+  guardFunction(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cityService.userPlayerCity$.getValue()) {
       this.router.navigate(['create-city']);
       return false;
