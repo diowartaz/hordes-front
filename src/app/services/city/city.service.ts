@@ -50,12 +50,12 @@ export class CityService {
       map((response: any) => {
         //TODO: if erreur: vider le local storage
         this.log('loadPlayer', response);
+        this.updateTime(response.player.city);
         this.userPlayerState$.next(response.player.state);
         this.userPlayerStats$.next(response.player.stats);
         this.userPlayerCity$.next(response.player.city);
         this.defaultValues$.next(response.default_values);
         this.playerLoaded$.next(true);
-        this.updateTime(response.player.city);
         return response;
       }),
       catchError(handleError('loadPlayer', url))
@@ -79,9 +79,9 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('new', response);
+        this.updateTime(response.player.city);
         this.userPlayerCity$.next(response.player.city);
         this.userPlayerState$.next(response.player.state);
-        this.updateTime(response.player.city);
         return response;
       }),
       catchError(handleError('new', url))
@@ -106,8 +106,8 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('findItems', response);
-        this.userPlayerCity$.next(response.city);
         this.updateTime(response.city);
+        this.userPlayerCity$.next(response.city);
         return response;
       }),
       catchError(handleError('findItems', url))
@@ -119,8 +119,8 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('build', response);
-        this.userPlayerCity$.next(response.city);
         this.updateTime(response.city);
+        this.userPlayerCity$.next(response.city);
         return response;
       }),
       catchError(handleError('build', url))
@@ -132,8 +132,8 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('learn', response);
-        this.userPlayerCity$.next(response.city);
         this.updateTime(response.city);
+        this.userPlayerCity$.next(response.city);
         return response;
       }),
       catchError(handleError('learn', url))
@@ -217,9 +217,9 @@ export class CityService {
       map((response: any) => {
         //city
         this.log('startDay', response);
+        this.updateTime(response.city);
         this.userPlayerCity$.next(response.city);
         this.userPlayerState$.next("playing");
-        this.updateTime(response.city);
         return response;
       }),
       catchError(handleError('startDay', url))

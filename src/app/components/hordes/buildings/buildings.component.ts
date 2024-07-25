@@ -29,6 +29,7 @@ export class BuildingsComponent {
       this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
         if (city) {
           this.city = city;
+          console.log("initCustomCityBuildings")
           this.initCustomCityBuildings();
         }
       })
@@ -47,46 +48,52 @@ export class BuildingsComponent {
   initCustomCityBuildings() {
     if (this.city) {
       this.buildings = [...this.city.buildings];
-      for (let i = 0; i < this.buildings.length; i++) {
-        this.buildings[i].customInventory = [
-          ...updateCustomInventory(
-            getCustomInventoryDefault(),
-            this.buildings[i].inventory
-          ),
-        ];
-      }
-      this.setEnoughRessourcesToBuildForAllBuildings();
+      this.buildings.forEach((building: any) => {
+        this.setCustomInventory(building);
+        this.setEnoughRessources(building);
+        this.setEnoughTime(building);
+        this.setBuildingTimeString(building);
+      });
     }
   }
 
-  setEnoughRessourcesToBuildForAllBuildings() {
-    for (let i = 0; i < this.buildings.length; i++) {
-      this.buildings[i].enoughRessourcesToBuild = this.contains(
-        this.city.inventory,
-        this.buildings[i].inventory
+  setCustomInventory(building: any) {
+    building.customInventory = [
+      ...updateCustomInventory(getCustomInventoryDefault(), building.inventory),
+    ];
+  }
+
+  setEnoughRessources(building: any) {
+    building.enoughRessources = this.contains(
+      this.city.inventory,
+      building.inventory
+    );
+  }
+
+  setEnoughTime(building: any) {
+    building.enoughTime =
+      this.cityService.userPlayerCityTime$.getValue().seconds +
+        building.time * this.city.speeds.build <=
+      this.cityService.defaultValues$.getValue().day_end_time;
+    if (building.enoughTime) {
+      let timeoutSeconds =
+        (this.cityService.defaultValues$.getValue().day_end_time -
+          building.time * this.city.speeds.build -
+          this.cityService.userPlayerCityTime$.getValue().seconds) /
+        this.cityService.defaultValues$.getValue().coef_realtime_to_ingametime;
+        console.log("timeoutSeconds", building.name, timeoutSeconds)
+      this.setTimeoutRefs.push(
+        setTimeout(() => {
+          building.enoughTime = false;
+        }, timeoutSeconds * 1000)
       );
-
-      this.buildings[i].enoughTime =
-        this.cityService.userPlayerCityTime$.getValue().seconds +
-          this.buildings[i].time * this.city.speeds.build <=
-        this.cityService.defaultValues$.getValue().day_end_time;
-
-      this.buildings[i].buildingTimeString =  getTimeRequiredString(this.buildings[i].time * this.city.speeds.build)
-
-      if (this.buildings[i].enoughTime) {
-        let timeoutSeconds =
-          (this.cityService.defaultValues$.getValue().day_end_time -
-            this.buildings[i].time * this.city.speeds.build -
-            this.cityService.userPlayerCityTime$.getValue().seconds) /
-          this.cityService.defaultValues$.getValue()
-            .coef_realtime_to_ingametime;
-        this.setTimeoutRefs.push(
-          setTimeout(() => {
-            this.buildings[i].enoughTime = false;
-          }, timeoutSeconds * 1000)
-        );
-      }
     }
+  }
+
+  setBuildingTimeString(building: any) {
+    building.buildingTimeString = getTimeRequiredString(
+      building.time * this.city.speeds.build
+    );
   }
 
   build(building: BuildingModel) {
@@ -140,7 +147,7 @@ export class BuildingsComponent {
   isBuildable(building: BuildingModel): boolean {
     if (this.city) {
       let isBuildable: boolean =
-        building.enoughRessourcesToBuild &&
+        building.enoughRessources &&
         building.enoughTime &&
         building.lvl < building.lvl_max;
       return isBuildable;

@@ -38,7 +38,7 @@ export interface BuildingModel {
   name: string;
   inventory: object;
   customInventory?: customInventoryModel;
-  enoughRessourcesToBuild: boolean;
+  enoughRessources: boolean;
   enoughTime: boolean;
   buildingTimeString: string;
 }

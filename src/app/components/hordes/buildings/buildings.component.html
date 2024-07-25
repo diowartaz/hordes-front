@@ -105,7 +105,7 @@
           (click)="build(building)"
           [ngStyle]="{
             background:
-              building.enoughRessourcesToBuild &&
+              building.enoughRessources &&
               building.enoughTime &&
               building.lvl < building.lvl_max
                 ? 'var(--primary-yellow)'
