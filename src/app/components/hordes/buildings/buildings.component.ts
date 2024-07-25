@@ -29,7 +29,6 @@ export class BuildingsComponent {
       this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
         if (city) {
           this.city = city;
-          console.log("initCustomCityBuildings")
           this.initCustomCityBuildings();
         }
       })
@@ -81,7 +80,6 @@ export class BuildingsComponent {
           building.time * this.city.speeds.build -
           this.cityService.userPlayerCityTime$.getValue().seconds) /
         this.cityService.defaultValues$.getValue().coef_realtime_to_ingametime;
-        console.log("timeoutSeconds", building.name, timeoutSeconds)
       this.setTimeoutRefs.push(
         setTimeout(() => {
           building.enoughTime = false;
