@@ -38,6 +38,9 @@ export interface BuildingModel {
   name: string;
   inventory: object;
   customInventory?: customInventoryModel;
+  enoughRessourcesToBuild: boolean;
+  enoughTime: boolean;
+  buildingTimeString: string;
 }
 
 export interface customInventoryModel {
