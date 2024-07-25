@@ -17,10 +17,10 @@
       *ngFor="let building of buildings"
       [ngStyle]="{
         background:
-        building.lvl == building.lvl_max ? '#00000061' : 'transparent'
+          building.lvl == building.lvl_max ? '#00000061' : 'transparent'
       }"
     >
-    <!-- building.lvl == building.lvl_max ? 'rgba(0, 0, 0, 0.80)' : 'rgba(0, 0, 0, 0.40)' -->
+      <!-- building.lvl == building.lvl_max ? 'rgba(0, 0, 0, 0.80)' : 'rgba(0, 0, 0, 0.40)' -->
       <div class="line">
         <div class="element-wrapper">
           <img
@@ -56,7 +56,7 @@
 
           <div class="element-wrapper">
             <span class="material-symbols-outlined icon"> schedule </span>
-            <div class="text">{{ getTimeBuildingString(building) }}</div>
+            <div class="text">{{ building.buildingTimeString }}</div>
           </div>
 
           <div class="element-wrapper">
@@ -104,9 +104,12 @@
           class="btn-build"
           (click)="build(building)"
           [ngStyle]="{
-            background: isBuildable(building)
-              ? 'var(--primary-yellow)'
-              : 'var(--primary-yellow-disabled)'
+            background:
+              building.enoughRessources &&
+              building.enoughTime &&
+              building.lvl < building.lvl_max
+                ? 'var(--primary-yellow)'
+                : 'var(--primary-yellow-disabled)'
           }"
         >
           <img src="../../../../assets/icons/build.webp" />

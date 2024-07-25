@@ -5,11 +5,8 @@ import {
   updateCustomInventory,
   getCustomInventoryDefault,
 } from 'src/app/shared/utils/inventory';
-import {
-  getTimeRequiredString,
-  getTimeString,
-} from 'src/app/shared/utils/time';
-import { BuildingModel, CityModel, StatsModel } from 'src/app/models/hordes';
+import { getTimeRequiredString } from 'src/app/shared/utils/time';
+import { BuildingModel, CityModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-buildings',
@@ -20,10 +17,10 @@ export class BuildingsComponent {
   city: any = null;
   buildings: any = [];
   buildLoading: boolean = false;
-  nbAppels: number = 0;
   subscriptions: Subscription[] = [];
   dialogMessage: string = 'init';
   snackBarOpened: boolean = false;
+  setTimeoutRefs: any = [];
 
   constructor(private cityService: CityService) {}
 
@@ -50,22 +47,51 @@ export class BuildingsComponent {
   initCustomCityBuildings() {
     if (this.city) {
       this.buildings = [...this.city.buildings];
-      for (let i = 0; i < this.buildings.length; i++) {
-        this.buildings[i].customInventory = [
-          ...updateCustomInventory(
-            getCustomInventoryDefault(),
-            this.buildings[i].inventory
-          ),
-        ];
-      }
+      this.buildings.forEach((building: any) => {
+        this.setCustomInventory(building);
+        this.setEnoughRessources(building);
+        this.setEnoughTime(building);
+        this.setBuildingTimeString(building);
+      });
     }
   }
 
-  getTimeBuildingString(building: BuildingModel): string {
-    if (!this.city) {
-      return '__h__';
+  setCustomInventory(building: any) {
+    building.customInventory = [
+      ...updateCustomInventory(getCustomInventoryDefault(), building.inventory),
+    ];
+  }
+
+  setEnoughRessources(building: any) {
+    building.enoughRessources = this.contains(
+      this.city.inventory,
+      building.inventory
+    );
+  }
+
+  setEnoughTime(building: any) {
+    building.enoughTime =
+      this.cityService.userPlayerCityTime$.getValue().seconds +
+        building.time * this.city.speeds.build <=
+      this.cityService.defaultValues$.getValue().day_end_time;
+    if (building.enoughTime) {
+      let timeoutSeconds =
+        (this.cityService.defaultValues$.getValue().day_end_time -
+          building.time * this.city.speeds.build -
+          this.cityService.userPlayerCityTime$.getValue().seconds) /
+        this.cityService.defaultValues$.getValue().coef_realtime_to_ingametime;
+      this.setTimeoutRefs.push(
+        setTimeout(() => {
+          building.enoughTime = false;
+        }, timeoutSeconds * 1000)
+      );
     }
-    return getTimeRequiredString(building.time * this.city.speeds.build);
+  }
+
+  setBuildingTimeString(building: any) {
+    building.buildingTimeString = getTimeRequiredString(
+      building.time * this.city.speeds.build
+    );
   }
 
   build(building: BuildingModel) {
@@ -117,17 +143,10 @@ export class BuildingsComponent {
   }
 
   isBuildable(building: BuildingModel): boolean {
-    this.nbAppels++;
-    // console.log(this.nbAppels);
-    //has ressource
-    //has time
-    //lvl < lvl_max
     if (this.city) {
       let isBuildable: boolean =
-        this.contains(this.city.inventory, building.inventory) &&
-        this.cityService.userPlayerCityTime$.getValue().seconds +
-          building.time * this.city.speeds.build <=
-          this.cityService.defaultValues$.getValue().day_end_time &&
+        building.enoughRessources &&
+        building.enoughTime &&
         building.lvl < building.lvl_max;
       return isBuildable;
     } else {
@@ -138,6 +157,9 @@ export class BuildingsComponent {
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
+    });
+    this.setTimeoutRefs.forEach((ref: any) => {
+      clearTimeout(ref);
     });
   }
 }
