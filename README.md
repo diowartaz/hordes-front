@@ -16,3 +16,5 @@
           console.log('is visible');
       }
   });
+
+- mutualiser les composant de leaderboard

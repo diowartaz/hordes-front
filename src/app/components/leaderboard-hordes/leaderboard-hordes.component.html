@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="leaderboard-col">
-      <div class="leaderboard-row-element">Performance</div>
+      <div class="leaderboard-row-element">{{ranked ? "Ranked Points": "Performance"}}</div>
       <div
         class="leaderboard-row-element"
         *ngFor="let user of leaderboard"

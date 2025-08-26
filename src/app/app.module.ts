@@ -18,13 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
-import { XpComponent } from './components/xp/xp.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { MenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { ChatComponent } from './components/chat/chat.component';
-import { TestComponent } from './components/test/test.component';
 import { LauraComponent } from './components/laura/laura.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HordesComponent } from './components/hordes/hordes.component';
@@ -52,12 +49,9 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     SignUpComponent,
     HomeComponent,
     LostPageComponent,
-    XpComponent,
     MenuComponent,
     HeaderComponent,
-    LeaderboardComponent,
     ChatComponent,
-    TestComponent,
     LauraComponent,
     HordesComponent,
     BuildingsComponent,
