@@ -57,14 +57,9 @@ export class WsChatService {
     console.log('typingReceivedHandler', event);
     //event.username
     if (this.listTypingUser$.getValue().includes(event.username)) {
-      this.listTypingUser$.next(
-        _.without(this.listTypingUser$.getValue(), event.username)
-      );
+      this.listTypingUser$.next(_.without(this.listTypingUser$.getValue(), event.username));
     } else {
-      this.listTypingUser$.next([
-        event.username,
-        ...this.listTypingUser$.getValue(),
-      ]);
+      this.listTypingUser$.next([event.username, ...this.listTypingUser$.getValue()]);
     }
     // console.log('typingReceivedHandler', fggzg);
   }

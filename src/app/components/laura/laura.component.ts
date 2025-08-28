@@ -22,9 +22,7 @@ export class LauraComponent implements OnInit {
   }
 
   addResponse() {
-    this.listQuestionOption.push(
-      this.formgroup.controls.addOptionQuestion.value
-    );
+    this.listQuestionOption.push(this.formgroup.controls.addOptionQuestion.value);
     this.formgroup.get('addOptionQuestion').patchValue('');
   }
 

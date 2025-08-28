@@ -13,11 +13,15 @@ export class LeaderboardHordesComponent {
   loading: boolean = false;
   leaderboard: any[] = [];
 
-  constructor(private router: Router, private cityService: CityService, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.ranked = this.route.snapshot.data['ranked'] ?? false;
-    console.log(this.ranked)
+    console.log(this.ranked);
     this.ranked ? this.getLeaderboardRanked() : this.getLeaderboardBestDay();
   }
 
@@ -27,11 +31,11 @@ export class LeaderboardHordesComponent {
     }
     this.loading = true;
 
-      this.cityService
+    this.cityService
       .getLeaderboardBestDay()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         this.loading = false;
@@ -40,14 +44,11 @@ export class LeaderboardHordesComponent {
           this.leaderboard = result.leaderboard;
           for (let i = 0; i < this.leaderboard.length; i++) {
             if (this.leaderboard[i].username.length > 22) {
-              this.leaderboard[i].username =
-                this.leaderboard[i].username.slice(0, 19) + '...';
+              this.leaderboard[i].username = this.leaderboard[i].username.slice(0, 19) + '...';
             }
           }
         }
       });
-    
-    
   }
 
   getLeaderboardRanked() {
@@ -55,11 +56,11 @@ export class LeaderboardHordesComponent {
       return;
     }
     this.loading = true;
-      this.cityService
+    this.cityService
       .getLeaderboardRanked()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         this.loading = false;
@@ -68,8 +69,7 @@ export class LeaderboardHordesComponent {
           this.leaderboard = result.leaderboard;
           for (let i = 0; i < this.leaderboard.length; i++) {
             if (this.leaderboard[i].username.length > 22) {
-              this.leaderboard[i].username =
-                this.leaderboard[i].username.slice(0, 19) + '...';
+              this.leaderboard[i].username = this.leaderboard[i].username.slice(0, 19) + '...';
             }
           }
         }
@@ -77,7 +77,7 @@ export class LeaderboardHordesComponent {
   }
 
   goBackCityView() {
-    this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
+    this.router.navigate(['play/' + localStorage.getItem('play-route')]);
   }
 
   goToProfil(user_id: string) {

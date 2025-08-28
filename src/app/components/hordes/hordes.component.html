@@ -13,17 +13,19 @@
         <span class="material-symbols-outlined icon"> mail </span>
       </button> -->
       <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-        <img style="height: 24px; width: 24px" src="../../../assets/icons/discord_icon.png" /></a>
+        <img style="height: 24px; width: 24px" src="../../../assets/icons/discord_icon.png"
+      /></a>
       <button class="icon-btn" (click)="goToProfil()">
-        <span class="material-symbols-outlined icon">
-          person
-        </span>
+        <span class="material-symbols-outlined icon"> person </span>
       </button>
       <button class="icon-btn" (click)="goToLeaderboard()">
         <img style="height: 24px; width: 24px" src="../../../assets/icons/normal.png" />
       </button>
       <button class="icon-btn" (click)="goToRankedLeaderboard()">
-        <img style="height: 24px; width: 24px; margin-bottom: -2px;" src="../../../assets/icons/ranked.png" />
+        <img
+          style="height: 24px; width: 24px; margin-bottom: -2px"
+          src="../../../assets/icons/ranked.png"
+        />
       </button>
       <button class="icon-btn" (click)="goToSettings()">
         <span class="material-symbols-outlined icon"> settings </span>
@@ -50,15 +52,21 @@
       <div class="second-header-element">
         <img class="icon" src="../../../assets/icons/zb.gif" />
 
-        <span style="margin-left: 0px" class="text-span"
-          [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }">{{ city?.nb_zb_next_attack_min }}-{{
-          city?.nb_zb_next_attack_max
-          }}</span>
+        <span
+          style="margin-left: 0px"
+          class="text-span"
+          [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
+          >{{ city?.nb_zb_next_attack_min }}-{{ city?.nb_zb_next_attack_max }}</span
+        >
       </div>
     </div>
 
-    <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: time.seconds > 79200 }" style="margin-left: 8px"
-      (click)="endDay()">
+    <button
+      class="icon-btn borderBlink"
+      [ngClass]="{ borderBlink2: time.seconds > 79200 }"
+      style="margin-left: 8px"
+      (click)="endDay()"
+    >
       <img style="height: 24px" class="xp-icon" src="../../../assets/icons/sleep.gif" />
     </button>
   </div>

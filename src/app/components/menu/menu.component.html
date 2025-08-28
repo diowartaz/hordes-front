@@ -1,7 +1,7 @@
 <div
   class="menu"
   [ngClass]="{
-    'menu-not-displayed': !menuIsDisplayed || !userIsLoggedIn()
+    'menu-not-displayed': !menuIsDisplayed || !userIsLoggedIn(),
   }"
 >
   <div class="menu-item" (click)="navigate('xp')">

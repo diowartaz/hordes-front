@@ -16,7 +16,7 @@ export class ChatComponent implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private wsChatService: WsChatService
+    private wsChatService: WsChatService,
   ) {}
 
   ngOnInit(): void {
@@ -31,17 +31,12 @@ export class ChatComponent implements OnInit {
       this.listTypingUser = res;
     });
 
-    this.formgroup.controls.inputValue.valueChanges.subscribe(
-      (inputValue: any) => {
-        if (
-          (inputValue.length > 0 && !this.isTyping) ||
-          (inputValue.length === 0 && this.isTyping)
-        ) {
-          this.isTyping = !this.isTyping;
-          this.wsChatService.sendIsTyping();
-        }
+    this.formgroup.controls.inputValue.valueChanges.subscribe((inputValue: any) => {
+      if ((inputValue.length > 0 && !this.isTyping) || (inputValue.length === 0 && this.isTyping)) {
+        this.isTyping = !this.isTyping;
+        this.wsChatService.sendIsTyping();
       }
-    );
+    });
   }
 
   sendMessage() {

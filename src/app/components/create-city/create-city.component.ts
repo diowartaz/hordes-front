@@ -10,7 +10,10 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class CreateCityComponent {
   createCityLoading: boolean = false;
-  constructor(private router: Router, private cityService: CityService) { }
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+  ) {}
 
   createCity(ranked: boolean) {
     if (this.createCityLoading) {
@@ -21,13 +24,13 @@ export class CreateCityComponent {
       .new(ranked)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
           console.log('error create city');
         } else {
-          localStorage.setItem('play-route', "dig")
+          localStorage.setItem('play-route', 'dig');
           this.router.navigate(['play']);
         }
         this.createCityLoading = false;

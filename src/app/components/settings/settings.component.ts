@@ -10,7 +10,10 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class SettingsComponent {
   quitGameLoading: boolean = true;
-  constructor(private router: Router, private cityService: CityService) {}
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -20,7 +23,7 @@ export class SettingsComponent {
   }
 
   goBackCityView() {
-    this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
+    this.router.navigate(['play/' + localStorage.getItem('play-route')]);
   }
 
   surrendCity() {
@@ -29,7 +32,7 @@ export class SettingsComponent {
       .delete()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {

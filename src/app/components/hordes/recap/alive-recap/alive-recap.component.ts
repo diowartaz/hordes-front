@@ -6,7 +6,7 @@ import { CityService } from 'src/app/services/city/city.service';
 @Component({
   selector: 'app-alive-recap',
   templateUrl: './alive-recap.component.html',
-  styleUrls: ['./alive-recap.component.scss']
+  styleUrls: ['./alive-recap.component.scss'],
 })
 export class AliveRecapComponent {
   city: any = null;
@@ -14,22 +14,21 @@ export class AliveRecapComponent {
   library_discoveriesFormatted: any[] = [];
   subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private cityService: CityService) { }
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         if (city) {
           this.city = city;
-          if (
-            this.city &&
-            this.city.attackRecap &&
-            this.city.attackRecap.library_discoveries
-          ) {
+          if (this.city && this.city.attackRecap && this.city.attackRecap.library_discoveries) {
             this.init_library_discoveriesFormatted();
           }
         }
-      })
+      }),
     );
   }
 
@@ -60,13 +59,13 @@ export class AliveRecapComponent {
       .startDay()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         this.startDayLoading = false;
         if (result.error) {
         } else {
-          this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
+          this.router.navigate(['play/' + localStorage.getItem('play-route')]);
         }
       });
   }

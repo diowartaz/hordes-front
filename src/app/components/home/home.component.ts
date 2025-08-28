@@ -10,7 +10,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class HomeComponent implements OnInit {
   userInfos: any = null;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.userInfos = this.authService.parseJwt();

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
-import {
-  updateCustomInventory,
-  getCustomInventoryDefault,
-} from 'src/app/shared/utils/inventory';
+import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
 import { getTimeString } from 'src/app/shared/utils/time';
 import { CityModel, StatsModel } from 'src/app/models/hordes';
 
@@ -29,7 +26,7 @@ export class DiggingsComponent implements OnInit {
         if (!this.initDone && this.city) {
           updateCustomInventory(this.inventory, this.city.inventory);
         }
-      })
+      }),
     );
   }
 
@@ -47,9 +44,7 @@ export class DiggingsComponent implements OnInit {
     }
 
     return (
-      this.nbDigs *
-      this.cityService.defaultValues$.getValue().digging_time *
-      this.city.speeds.dig
+      this.nbDigs * this.cityService.defaultValues$.getValue().digging_time * this.city.speeds.dig
     );
   }
 
@@ -76,7 +71,7 @@ export class DiggingsComponent implements OnInit {
       .findItems(this.nbDigs)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {

@@ -81,9 +81,7 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     MatSnackBarModule,
   ],
   exports: [],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

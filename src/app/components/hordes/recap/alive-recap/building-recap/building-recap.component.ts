@@ -1,32 +1,27 @@
 import { Component, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import {
-  getTimeRequiredString,
-} from 'src/app/shared/utils/time';
-import {
-  updateCustomInventory,
-  getCustomInventoryDefault,
-} from 'src/app/shared/utils/inventory';
+import { getTimeRequiredString } from 'src/app/shared/utils/time';
+import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-building-recap',
   templateUrl: './building-recap.component.html',
-  styleUrls: ['./building-recap.component.scss']
+  styleUrls: ['./building-recap.component.scss'],
 })
 export class BuildingRecapComponent {
   @Input() building: any = null;
   city: any = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private cityService: CityService) { }
+  constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         this.city = city;
         this.initBuildingCustomInventory();
-      })
+      }),
     );
   }
 
@@ -39,10 +34,7 @@ export class BuildingRecapComponent {
 
   initBuildingCustomInventory() {
     this.building.customInventory = [
-      ...updateCustomInventory(
-        getCustomInventoryDefault(),
-        this.building.inventory
-      ),
+      ...updateCustomInventory(getCustomInventoryDefault(), this.building.inventory),
     ];
   }
 

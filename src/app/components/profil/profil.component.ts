@@ -19,7 +19,7 @@ export class ProfilComponent {
     private cityService: CityService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class ProfilComponent {
       .getProfil(this.id)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {

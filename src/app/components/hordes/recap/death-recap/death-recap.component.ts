@@ -6,17 +6,20 @@ import { CityService } from 'src/app/services/city/city.service';
 @Component({
   selector: 'app-death-recap',
   templateUrl: './death-recap.component.html',
-  styleUrls: ['./death-recap.component.scss']
+  styleUrls: ['./death-recap.component.scss'],
 })
 export class DeathRecapComponent {
   tryAgainLoading: boolean = false;
 
-  constructor(private router: Router, private cityService: CityService) { }
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   getUserPlayerCity$() {
-    return this.cityService.userPlayerCity$
+    return this.cityService.userPlayerCity$;
   }
 
   tryAgain() {
@@ -25,7 +28,7 @@ export class DeathRecapComponent {
       .delete()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -37,4 +40,3 @@ export class DeathRecapComponent {
       });
   }
 }
-

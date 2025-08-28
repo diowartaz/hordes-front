@@ -47,7 +47,9 @@ const routes: Routes = [
     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
     children: [
       {
-        path: '', redirectTo: 'dig', pathMatch: 'full'
+        path: '',
+        redirectTo: 'dig',
+        pathMatch: 'full',
       },
       {
         path: 'dig',
@@ -61,7 +63,7 @@ const routes: Routes = [
         path: 'build',
         component: BuildingsComponent,
       },
-    ]
+    ],
   },
   {
     path: 'settings',
@@ -71,14 +73,14 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardHordesComponent,
-    data: { ranked: false }
+    data: { ranked: false },
   },
   {
     path: 'ranked-leaderboard',
     component: LeaderboardHordesComponent,
-    data: { ranked: true }
+    data: { ranked: true },
   },
-  
+
   {
     path: 'profil',
     component: ProfilComponent,
@@ -101,4 +103,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

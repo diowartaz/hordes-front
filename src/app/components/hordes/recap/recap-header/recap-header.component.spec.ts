@@ -8,9 +8,8 @@ describe('RecapHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecapHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [RecapHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RecapHeaderComponent);
     component = fixture.componentInstance;

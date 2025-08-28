@@ -17,7 +17,7 @@ export class TestService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getCatFacts', url))
+      catchError(handleError('getCatFacts', url)),
     );
   }
 
@@ -27,7 +27,7 @@ export class TestService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getXP', url))
+      catchError(handleError('getXP', url)),
     );
   }
 
@@ -37,7 +37,7 @@ export class TestService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getLeaderboard', url))
+      catchError(handleError('getLeaderboard', url)),
     );
   }
 }

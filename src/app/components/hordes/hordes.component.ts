@@ -31,14 +31,14 @@ export class HordesComponent {
     private cityService: CityService,
     private router: Router,
     public dialog: MatDialog,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    let content = localStorage.getItem('play-route')
+    let content = localStorage.getItem('play-route');
     if (content) {
       if (content.length > 0) {
-        this.content = content
+        this.content = content;
       }
     }
     this.subscriptions.push(
@@ -47,7 +47,7 @@ export class HordesComponent {
         if (this.time.string == '00h00' || this.time.string == '23h59') {
           this.endDay();
         }
-      })
+      }),
     );
     this.subscriptions.push(
       this.cityService.userPlayerCity$.subscribe((city: any) => {
@@ -55,7 +55,7 @@ export class HordesComponent {
         // if (this.city && this.city.state == 'recap') {
         //   this.router.navigate(['recap']);
         // }
-      })
+      }),
     );
     this.subscriptions.push(
       this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
@@ -64,10 +64,9 @@ export class HordesComponent {
           this.lvl = lvl;
           this.xpString = xpString;
         }
-      })
+      }),
     );
   }
-
 
   getTimeString(seconds: number | undefined): string {
     if (!seconds) {
@@ -85,7 +84,7 @@ export class HordesComponent {
       .endDay()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         this.endDayLoading = false;
@@ -99,7 +98,7 @@ export class HordesComponent {
   changeContent(content: string) {
     this.content = content;
     localStorage.setItem('play-route', content);
-    this.router.navigate(['play/' + content])
+    this.router.navigate(['play/' + content]);
   }
 
   getStyle(content: string) {
