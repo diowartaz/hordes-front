@@ -16,9 +16,9 @@ export class LeaderboardHordesComponent {
   constructor(private router: Router, private cityService: CityService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getLeaderboardBestDay();
     this.ranked = this.route.snapshot.data['ranked'] ?? false;
     console.log(this.ranked)
+    this.ranked ? this.getLeaderboardRanked() : this.getLeaderboardBestDay();
   }
 
   getLeaderboardBestDay() {
@@ -27,7 +27,6 @@ export class LeaderboardHordesComponent {
     }
     this.loading = true;
 
-    if(this.ranked){
       this.cityService
       .getLeaderboardBestDay()
       .pipe(
@@ -47,7 +46,15 @@ export class LeaderboardHordesComponent {
           }
         }
       });
-    } else {
+    
+    
+  }
+
+  getLeaderboardRanked() {
+    if (this.loading) {
+      return;
+    }
+    this.loading = true;
       this.cityService
       .getLeaderboardRanked()
       .pipe(
@@ -67,8 +74,6 @@ export class LeaderboardHordesComponent {
           }
         }
       });
-    }
-    
   }
 
   goBackCityView() {

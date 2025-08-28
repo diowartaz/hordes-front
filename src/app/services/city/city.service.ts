@@ -74,9 +74,9 @@ export class CityService {
     );
   }
 
-  new(): Observable<any> {
-    let url: string = this.API_URL + 'city/new';
-    return this.httpClient.post<any>(url, {}).pipe(
+  new(ranked: boolean): Observable<any> {
+    let url: string = this.API_URL + 'city/new/';
+    return this.httpClient.post<any>(url, {ranked}).pipe(
       map((response: any) => {
         this.log('new', response);
         this.userPlayerCity$.next(response.player.city);
@@ -237,12 +237,12 @@ export class CityService {
   }
 
   getLeaderboardRanked() {
-    let url: string = this.API_URL + 'leaderboard/best-day';
+    let url: string = this.API_URL + 'leaderboard/ranked';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getLeaderboardBestDay', url))
+      catchError(handleError('getLeaderboardRanked', url))
     );
   }
 

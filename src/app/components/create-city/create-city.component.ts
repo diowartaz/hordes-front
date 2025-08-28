@@ -12,13 +12,13 @@ export class CreateCityComponent {
   createCityLoading: boolean = false;
   constructor(private router: Router, private cityService: CityService) { }
 
-  createCity() {
+  createCity(ranked: boolean) {
     if (this.createCityLoading) {
       return;
     }
     this.createCityLoading = true;
     this.cityService
-      .new()
+      .new(ranked)
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' }))
