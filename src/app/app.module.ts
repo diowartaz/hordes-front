@@ -40,6 +40,8 @@ import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive
 import { RecapHeaderComponent } from './components/hordes/recap/recap-header/recap-header.component';
 import { BuildingRecapComponent } from './components/hordes/recap/alive-recap/building-recap/building-recap.component';
 import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill-recap/skill-recap.component';
+import { GameComponent } from './components/profil/game/game.component';
+import { SubgameComponent } from './components/profil/game/subgame/subgame.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     RecapHeaderComponent,
     BuildingRecapComponent,
     SkillRecapComponent,
+    GameComponent,
+    SubgameComponent,
   ],
   imports: [
     BrowserModule,

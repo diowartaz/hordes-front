@@ -22,10 +22,6 @@
             </div>
           </div>
           <div class="container2">
-            <!-- <img
-              style="height: 24px; width: 24px"
-              src="../../../assets/icons/leaderboard.gif"
-            /> -->
             <img style="height: 24px; width: 24px" src="../../../assets/icons/xpLogo.png" />
             <div>
               {{ profil.xp }}
@@ -51,15 +47,14 @@
         </div>
       </div>
       <div class="history">
-        <!-- <div class="game" *ngFor="let game of profil.match_history">
-          <div>
-            <img
-              style="height: 24px; width: 24px"
-              src="../../../assets/icons/calendar.ico"
-            />
-            <div>{{ game.day }}</div>
-          </div>
-        </div> -->
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
       </div>
     </div>
   </div>

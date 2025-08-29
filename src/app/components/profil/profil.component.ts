@@ -31,6 +31,16 @@ export class ProfilComponent {
     });
   }
 
+  player1Wins(player1: any, player2: any) {
+    if (!player2.defense) {
+      return null;
+    }
+    if (player1.defense >= player2.defense) {
+      return true;
+    }
+    return false;
+  }
+
   getProfil() {
     this.getProfilLoading = true;
     if (this.id == '') {
@@ -44,10 +54,14 @@ export class ProfilComponent {
         catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
+        console.log(result);
         if (result.error) {
           console.log('Error getProfil', this.id);
         } else {
           this.profil = result.profil;
+          this.profil.match_history.forEach((match: any) => {
+            match.win = this.player1Wins(match.player1, match.player2);
+          });
         }
         this.getProfilLoading = false;
       });
