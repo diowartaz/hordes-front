@@ -8,12 +8,12 @@
       <img class="icon" src="../../../assets/icons/defense.gif" />
       <span class="text-span" style="margin-left: 6px">{{ city.defense }}</span>
     </div>
-    <div *ngIf="city.nb_zb_previous_attack == city.defense">=</div>
-    <div *ngIf="city.nb_zb_previous_attack > city.defense"><</div>
-    <div *ngIf="city.nb_zb_previous_attack < city.defense">></div>
+    <div *ngIf="city.attackRecap.nb_zb == city.defense">=</div>
+    <div *ngIf="city.attackRecap.nb_zb > city.defense"><</div>
+    <div *ngIf="city.attackRecap.nb_zb < city.defense">></div>
     <div class="def-zb-el">
       <img class="icon" src="../../../assets/icons/zb.gif" />
-      <span style="margin-left: 0px" class="text-span">{{ city.nb_zb_previous_attack }}</span>
+      <span style="margin-left: 0px" class="text-span">{{ city.attackRecap.nb_zb }}</span>
     </div>
   </div>
 </div>
