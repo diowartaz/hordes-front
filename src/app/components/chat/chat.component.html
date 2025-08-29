@@ -7,15 +7,8 @@
     </div>
   </div>
   <div class="input-wrapper">
-    <input
-      formControlName="inputValue"
-      class="input"
-      type="text"
-      (keyup.enter)="sendMessage()"
-    />
-    <span class="material-symbols-outlined icon-send" (click)="sendMessage()">
-      send
-    </span>
+    <input formControlName="inputValue" class="input" type="text" (keyup.enter)="sendMessage()" />
+    <span class="material-symbols-outlined icon-send" (click)="sendMessage()"> send </span>
     <div class="is-typing">{{ getIsTypingString() }}</div>
   </div>
 </div>

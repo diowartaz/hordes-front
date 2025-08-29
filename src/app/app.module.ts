@@ -18,13 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
-import { XpComponent } from './components/xp/xp.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { MenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { ChatComponent } from './components/chat/chat.component';
-import { TestComponent } from './components/test/test.component';
 import { LauraComponent } from './components/laura/laura.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HordesComponent } from './components/hordes/hordes.component';
@@ -43,6 +40,8 @@ import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive
 import { RecapHeaderComponent } from './components/hordes/recap/recap-header/recap-header.component';
 import { BuildingRecapComponent } from './components/hordes/recap/alive-recap/building-recap/building-recap.component';
 import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill-recap/skill-recap.component';
+import { GameComponent } from './components/profil/game/game.component';
+import { SubgameComponent } from './components/profil/game/subgame/subgame.component';
 
 @NgModule({
   declarations: [
@@ -52,12 +51,9 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     SignUpComponent,
     HomeComponent,
     LostPageComponent,
-    XpComponent,
     MenuComponent,
     HeaderComponent,
-    LeaderboardComponent,
     ChatComponent,
-    TestComponent,
     LauraComponent,
     HordesComponent,
     BuildingsComponent,
@@ -74,6 +70,8 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     RecapHeaderComponent,
     BuildingRecapComponent,
     SkillRecapComponent,
+    GameComponent,
+    SubgameComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,9 +85,7 @@ import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill
     MatSnackBarModule,
   ],
   exports: [],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

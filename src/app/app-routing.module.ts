@@ -1,18 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateCityComponent } from './components/create-city/create-city.component';
-import { HomeComponent } from './components/home/home.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { LoginComponent } from './components/login/login.component';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { TestComponent } from './components/test/test.component';
-import { XpComponent } from './components/xp/xp.component';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
 import { CityNotNullGuard } from './shared/guards/city-not-null/city-not-null.guard';
 import { GameLoadedGuard } from './shared/guards/game-loaded/game-loaded.guard';
@@ -51,7 +47,9 @@ const routes: Routes = [
     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
     children: [
       {
-        path: '', redirectTo: 'dig', pathMatch: 'full'
+        path: '',
+        redirectTo: 'dig',
+        pathMatch: 'full',
       },
       {
         path: 'dig',
@@ -65,7 +63,7 @@ const routes: Routes = [
         path: 'build',
         component: BuildingsComponent,
       },
-    ]
+    ],
   },
   {
     path: 'settings',
@@ -75,7 +73,14 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardHordesComponent,
+    data: { ranked: false },
   },
+  {
+    path: 'ranked-leaderboard',
+    component: LeaderboardHordesComponent,
+    data: { ranked: true },
+  },
+
   {
     path: 'profil',
     component: ProfilComponent,
@@ -94,29 +99,8 @@ const routes: Routes = [
   { path: '**', redirectTo: 'play' },
 ];
 
-// {
-//   path: 'home',
-//   component: HomeComponent,
-//   canActivate: [AuthGuard],
-// },
-// {
-//   path: 'xp',
-//   component: XpComponent,
-//   canActivate: [AuthGuard],
-// },
-// {
-//   path: 'leaderboard',
-//   component: LeaderboardComponent,
-//   canActivate: [AuthGuard],
-// },
-// {
-//   path: 'test',
-//   component: TestComponent,
-//   canActivate: [AuthGuard],
-// },
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

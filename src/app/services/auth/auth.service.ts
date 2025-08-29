@@ -10,7 +10,7 @@ import decode from 'jwt-decode';
 })
 export class AuthService {
   API_URL = environment.API_URL;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   userIsLoggedIn() {
     let parsedJWT: any = this.parseJwt();
@@ -52,7 +52,7 @@ export class AuthService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('signIn', url))
+      catchError(handleError('signIn', url)),
     );
   }
 
@@ -62,7 +62,7 @@ export class AuthService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('signIn', url))
+      catchError(handleError('signIn', url)),
     );
   }
 
@@ -71,8 +71,18 @@ export class AuthService {
     return this.httpClient.post<any>(url, params).pipe(
       map((response: any) => {
         return response;
-      })
-      // catchError(handleError('signUp', url))
+      }),
+      catchError(handleError('signUp', url)),
+    );
+  }
+
+  deleteAccount(): Observable<any> {
+    let url: string = this.API_URL + 'delete';
+    return this.httpClient.post<any>(url, {}).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('signUp', url)),
     );
   }
 }

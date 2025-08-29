@@ -1,9 +1,7 @@
 <dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
   <div>{{ dialogMessage }}</div>
 
-  <span class="material-symbols-outlined" (click)="closeSnackBar()">
-    close
-  </span>
+  <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
 </dialog>
 
 <div class="boundary">
@@ -16,8 +14,7 @@
       class="building"
       *ngFor="let building of buildings"
       [ngStyle]="{
-        background:
-          building.lvl == building.lvl_max ? '#00000061' : 'transparent'
+        background: building.lvl == building.lvl_max ? '#00000061' : 'transparent',
       }"
     >
       <!-- building.lvl == building.lvl_max ? 'rgba(0, 0, 0, 0.80)' : 'rgba(0, 0, 0, 0.40)' -->
@@ -72,29 +69,25 @@
             class="item-wrapper"
             *ngFor="let item of building.customInventory"
             [ngStyle]="{
-              display: item.nb > 0 ? 'flex' : 'none'
+              display: item.nb > 0 ? 'flex' : 'none',
             }"
           >
             <div class="item" *ngIf="item.nb > 0">
               <img
                 [ngStyle]="{
-                  'margin-top': item.name == 'stone' ? '-2px' : '0px'
+                  'margin-top': item.name == 'stone' ? '-2px' : '0px',
                 }"
                 class="icon"
                 src="{{ item.src }}"
               />
 
               <div class="nb">
-                <span
-                  class="alert-nb-item"
-                  *ngIf="city.inventory[item.name] < item.nb"
-                  >{{ city.inventory[item.name] }}</span
-                >
-                <span
-                  class="ok-nb-item"
-                  *ngIf="city.inventory[item.name] >= item.nb"
-                  >{{ city.inventory[item.name] }}</span
-                >
+                <span class="alert-nb-item" *ngIf="city.inventory[item.name] < item.nb">{{
+                  city.inventory[item.name]
+                }}</span>
+                <span class="ok-nb-item" *ngIf="city.inventory[item.name] >= item.nb">{{
+                  city.inventory[item.name]
+                }}</span>
                 <span>/{{ item.nb }}</span>
               </div>
             </div>
@@ -105,11 +98,9 @@
           (click)="build(building)"
           [ngStyle]="{
             background:
-              building.enoughRessources &&
-              building.enoughTime &&
-              building.lvl < building.lvl_max
+              building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max
                 ? 'var(--primary-yellow)'
-                : 'var(--primary-yellow-disabled)'
+                : 'var(--primary-yellow-disabled)',
           }"
         >
           <img src="../../../../assets/icons/build.webp" />

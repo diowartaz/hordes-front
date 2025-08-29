@@ -1,6 +1,9 @@
 <div class="boundary">
   <div class="header container">
-    <img style="height: 24px; width: 24px; margin-right: 8px" src="../../../assets/icons/small_death.gif" />Hordes
+    <img
+      style="height: 24px; width: 24px; margin-right: 8px"
+      src="../../../assets/icons/small_death.gif"
+    />Hordes
   </div>
 
   <div class="content container">
@@ -41,11 +44,15 @@
   </div>
 
   <div class="footer">
-    <button (click)="createCity()">
+    <button (click)="createCity(false)">
       <mat-spinner *ngIf="createCityLoading" diameter="24" class="spinner"></mat-spinner>
-      <div style="height: 24px; display: flex; align-items: center">
-        Ready to die?
-      </div>
+      <img class="icon" src="../../../assets/icons/normal.png" />
+      <div style="height: 24px; display: flex; align-items: center">Play normal</div>
+    </button>
+    <button (click)="createCity(true)">
+      <mat-spinner *ngIf="createCityLoading" diameter="24" class="spinner"></mat-spinner>
+      <img class="icon" src="../../../assets/icons/ranked.png" />
+      <div style="height: 24px; display: flex; align-items: center">Play ranked</div>
     </button>
   </div>
 </div>

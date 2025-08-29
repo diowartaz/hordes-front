@@ -26,7 +26,10 @@ export class SignUpComponent implements OnInit {
     username: false,
   };
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.formgroup = new FormGroup({
@@ -34,14 +37,8 @@ export class SignUpComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      username: new FormControl('', [
-        Validators.required,
-        this.usernameCustomValidator(),
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        this.strongPasswordValidator(),
-      ]),
+      username: new FormControl('', [Validators.required, this.usernameCustomValidator()]),
+      password: new FormControl('', [Validators.required, this.strongPasswordValidator()]),
       confirmPassword: new FormControl('', [
         Validators.required,
         this.confirmPasswordMatchValidator(),
@@ -55,7 +52,7 @@ export class SignUpComponent implements OnInit {
           email: false,
           username: false,
         };
-      })
+      }),
     );
   }
 
@@ -78,7 +75,7 @@ export class SignUpComponent implements OnInit {
       .signUp(params)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -102,10 +99,7 @@ export class SignUpComponent implements OnInit {
   }
 
   fieldHasError(field: any) {
-    return (
-      this.formgroup.controls[field].touched &&
-      this.formgroup.controls[field].invalid
-    );
+    return this.formgroup.controls[field].touched && this.formgroup.controls[field].invalid;
   }
 
   strongPasswordValidator(): ValidatorFn {
@@ -146,8 +140,7 @@ export class SignUpComponent implements OnInit {
         return null;
       }
 
-      const confirmPasswordValid =
-        this.formgroup.controls.password.value == confirmPassword;
+      const confirmPasswordValid = this.formgroup.controls.password.value == confirmPassword;
 
       return !confirmPasswordValid ? { noMatchPassword: true } : null;
     };
@@ -161,7 +154,7 @@ export class SignUpComponent implements OnInit {
       .signInTemp()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {

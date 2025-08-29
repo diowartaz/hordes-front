@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="element">
+    <div
+      *ngIf="modifiedSubgame.id && otherPlayer"
+      style="cursor: pointer; text-decoration: underline"
+      (click)="goToProfil(modifiedSubgame.id)"
+    >
+      {{ modifiedSubgame.username }}
+    </div>
+    <div *ngIf="!modifiedSubgame.id || !otherPlayer">
+      {{ modifiedSubgame.username }}
+    </div>
+  </div>
+  <div class="elements-wrapper">
+    <div class="element">
+      <img
+        style="height: 24px; width: 24px; margin-right: -8px"
+        src="../../../assets/icons/calendar.ico"
+      />
+      <div>{{ modifiedSubgame.day }}</div>
+    </div>
+
+    <div class="element">
+      <img
+        style="height: 24px; width: 24px; margin-right: -8px"
+        src="../../../assets/icons/defense.gif"
+      />
+      <div>{{ modifiedSubgame.defense }}</div>
+    </div>
+
+    <div class="element">
+      <img
+        style="height: 24px; width: 24px; margin-right: -8px"
+        src="../../../assets/icons/ranked_points.png"
+      />
+      <div>
+        {{ modifiedSubgame.ranked_points }}
+      </div>
+    </div>
+  </div>
+</div>

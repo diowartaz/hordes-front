@@ -39,10 +39,7 @@ export function getCustomInventoryDefault() {
   return newCustomInventoryDefault;
 }
 
-export function updateCustomInventory(
-  customInventory: any,
-  inventory: any
-): any {
+export function updateCustomInventory(customInventory: any, inventory: any): any {
   //   let inventory = { wood: 2, stone: 2, patch: 4 };
   if (!inventory) {
     // buildings without inventory cause bugs without this

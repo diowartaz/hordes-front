@@ -14,29 +14,35 @@ import { CityService } from 'src/app/services/city/city.service';
   providedIn: 'root',
 })
 export class GameLoadedGuard implements CanActivate, CanActivateChild {
-  constructor(private cityService: CityService, private router: Router) { }
+  constructor(
+    private cityService: CityService,
+    private router: Router,
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.guardFunction(route, state)
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.guardFunction(route, state);
   }
 
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.guardFunction(childRoute, state)
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.guardFunction(childRoute, state);
   }
 
   guardFunction(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cityService.playerLoaded$.getValue()) {
-      if (state.url.split("/")[1] === "play") {
-        localStorage.setItem('play-route', state.url.split("/")[2])
+      if (state.url.split('/')[1] === 'play') {
+        localStorage.setItem('play-route', state.url.split('/')[2]);
       }
       this.router.navigate(['load-player']);
-      return false
+      return false;
     }
     return true;
   }

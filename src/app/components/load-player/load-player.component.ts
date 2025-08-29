@@ -14,8 +14,8 @@ export class LoadPlayerComponent {
   constructor(
     private router: Router,
     private cityService: CityService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.loadPlayer();
@@ -27,7 +27,7 @@ export class LoadPlayerComponent {
       .loadPlayer()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -35,7 +35,7 @@ export class LoadPlayerComponent {
           this.router.navigate(['signin']);
         } else {
           this.loadGameLoading = false;
-          this.router.navigate(['play/'+ localStorage.getItem('play-route')]);
+          this.router.navigate(['play/' + localStorage.getItem('play-route')]);
         }
       });
   }

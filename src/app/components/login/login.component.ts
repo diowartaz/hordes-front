@@ -15,7 +15,10 @@ export class LoginComponent implements OnInit {
   invalidAuthentification = false;
   subscriptions: Subscription[] = [];
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.formgroup = new FormGroup({
@@ -28,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.subscriptions.push(
       this.formgroup.valueChanges.subscribe(() => {
         this.invalidAuthentification = false;
-      })
+      }),
     );
   }
 
@@ -50,7 +53,7 @@ export class LoginComponent implements OnInit {
       .signIn(params)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -70,12 +73,12 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loginLoading = true;
-    
+
     this.authService
       .signInTemp()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -97,10 +100,7 @@ export class LoginComponent implements OnInit {
   }
 
   fieldHasError(field: any) {
-    return (
-      this.formgroup.controls[field].touched &&
-      this.formgroup.controls[field].invalid
-    );
+    return this.formgroup.controls[field].touched && this.formgroup.controls[field].invalid;
   }
 
   ngOnDestroy() {

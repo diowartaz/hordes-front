@@ -1,19 +1,11 @@
 <div class="boundary full-dim">
   <div class="questions-wrapper" [formGroup]="formgroup">
     <div class="container first-container">
-      <input
-        class="question"
-        formControlName="question"
-        placeholder="saisir une question"
-      />
+      <input class="question" formControlName="question" placeholder="saisir une question" />
     </div>
 
     <div class="container second-container">
-      <input
-        formControlName="firstAnswer"
-        class="first-anwser"
-        placeholder="saisir une reponse"
-      />
+      <input formControlName="firstAnswer" class="first-anwser" placeholder="saisir une reponse" />
       <input formControlName="secondsAnswer" placeholder="saisir une reponse" />
       <input
         *ngFor="let question of listQuestionOption"

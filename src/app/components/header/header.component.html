@@ -1,15 +1,9 @@
 <div *ngIf="userIsLoggedIn()" class="header">
   <div class="left-header header-item">
-    <i
-      *ngIf="!menuIsDisplayed"
-      class="material-icons icon-header"
-      (click)="changeMenuIsDisplayed()"
+    <i *ngIf="!menuIsDisplayed" class="material-icons icon-header" (click)="changeMenuIsDisplayed()"
       >menu</i
     >
-    <i
-      *ngIf="menuIsDisplayed"
-      class="material-icons icon-header"
-      (click)="changeMenuIsDisplayed()"
+    <i *ngIf="menuIsDisplayed" class="material-icons icon-header" (click)="changeMenuIsDisplayed()"
       >close</i
     >
   </div>

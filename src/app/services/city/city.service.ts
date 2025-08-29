@@ -13,12 +13,11 @@ import { getTimeString } from 'src/app/shared/utils/time';
 export class CityService {
   API_URL = environment.API_URL;
   userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerStats$: BehaviorSubject<StatsModel> =
-    new BehaviorSubject<StatsModel>({
-      personal_best_day: 0,
-      personal_best_zb: 0,
-      xp: 0
-    });
+  userPlayerStats$: BehaviorSubject<StatsModel> = new BehaviorSubject<StatsModel>({
+    personal_best_day: 0,
+    personal_best_zb: 0,
+    xp: 0,
+  });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -30,7 +29,7 @@ export class CityService {
 
   setInterval: any = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getDefaultValues(): Observable<any> {
     let url: string = this.API_URL + 'city/default-values';
@@ -40,7 +39,7 @@ export class CityService {
         this.defaultValues$.next(response.default_values);
         // return response;
       }),
-      catchError(handleError('getGameXP', url))
+      catchError(handleError('getGameXP', url)),
     );
   }
 
@@ -58,7 +57,7 @@ export class CityService {
         this.playerLoaded$.next(true);
         return response;
       }),
-      catchError(handleError('loadPlayer', url))
+      catchError(handleError('loadPlayer', url)),
     );
   }
 
@@ -70,13 +69,13 @@ export class CityService {
         this.userPlayerStats$.next(response.stats);
         return response;
       }),
-      catchError(handleError('getPlayerStats', url))
+      catchError(handleError('getPlayerStats', url)),
     );
   }
 
-  new(): Observable<any> {
-    let url: string = this.API_URL + 'city/new';
-    return this.httpClient.post<any>(url, {}).pipe(
+  new(ranked: boolean): Observable<any> {
+    let url: string = this.API_URL + 'city/new/';
+    return this.httpClient.post<any>(url, { ranked }).pipe(
       map((response: any) => {
         this.log('new', response);
         this.userPlayerCity$.next(response.player.city);
@@ -84,7 +83,7 @@ export class CityService {
         this.updateTime(response.player.city);
         return response;
       }),
-      catchError(handleError('new', url))
+      catchError(handleError('new', url)),
     );
   }
 
@@ -94,10 +93,10 @@ export class CityService {
       map((response: any) => {
         this.log('delete', response);
         this.userPlayerCity$.next(null);
-        this.userPlayerState$.next("noCity");
+        this.userPlayerState$.next('noCity');
         return response;
       }),
-      catchError(handleError('delete', url))
+      catchError(handleError('delete', url)),
     );
   }
 
@@ -110,7 +109,7 @@ export class CityService {
         this.updateTime(response.city);
         return response;
       }),
-      catchError(handleError('findItems', url))
+      catchError(handleError('findItems', url)),
     );
   }
 
@@ -123,7 +122,7 @@ export class CityService {
         this.userPlayerCity$.next(response.city);
         return response;
       }),
-      catchError(handleError('build', url))
+      catchError(handleError('build', url)),
     );
   }
 
@@ -136,7 +135,7 @@ export class CityService {
         this.updateTime(response.city);
         return response;
       }),
-      catchError(handleError('learn', url))
+      catchError(handleError('learn', url)),
     );
   }
 
@@ -153,10 +152,9 @@ export class CityService {
       return;
     }
     let timeToAdd = Math.floor(
-      ((new Date().getTime() -
-        this.userPlayerCity$.getValue().last_timestamp_request) *
+      ((new Date().getTime() - this.userPlayerCity$.getValue().last_timestamp_request) *
         this.defaultValues$.getValue().coef_realtime_to_ingametime) /
-      1000
+        1000,
     );
     if (city.time + timeToAdd > this.defaultValues$.getValue().day_end_time) {
       //fin de journee
@@ -177,9 +175,12 @@ export class CityService {
     if (this.setInterval) {
       clearInterval(this.setInterval);
     }
-    this.setInterval = setInterval(() => {
-      this.addTime();
-    }, Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime));
+    this.setInterval = setInterval(
+      () => {
+        this.addTime();
+      },
+      Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime),
+    );
   }
 
   addTime() {
@@ -207,7 +208,7 @@ export class CityService {
         this.userPlayerState$.next(response.player.state);
         return response;
       }),
-      catchError(handleError('endDay', url))
+      catchError(handleError('endDay', url)),
     );
   }
 
@@ -218,11 +219,11 @@ export class CityService {
         //city
         this.log('startDay', response);
         this.userPlayerCity$.next(response.city);
-        this.userPlayerState$.next("playing");
+        this.userPlayerState$.next('playing');
         this.updateTime(response.city);
         return response;
       }),
-      catchError(handleError('startDay', url))
+      catchError(handleError('startDay', url)),
     );
   }
 
@@ -232,7 +233,17 @@ export class CityService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getLeaderboardBestDay', url))
+      catchError(handleError('getLeaderboardBestDay', url)),
+    );
+  }
+
+  getLeaderboardRanked() {
+    let url: string = this.API_URL + 'leaderboard/ranked';
+    return this.httpClient.get<any>(url).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(handleError('getLeaderboardRanked', url)),
     );
   }
 
@@ -242,7 +253,7 @@ export class CityService {
       map((response: any) => {
         return response;
       }),
-      catchError(handleError('getProfil', url))
+      catchError(handleError('getProfil', url)),
     );
   }
 }

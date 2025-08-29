@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
-import {
-  updateCustomInventory,
-  getCustomInventoryDefault,
-} from 'src/app/shared/utils/inventory';
+import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
 import { getTimeRequiredString } from 'src/app/shared/utils/time';
 import { BuildingModel, CityModel } from 'src/app/models/hordes';
 
@@ -31,7 +28,7 @@ export class BuildingsComponent {
           this.city = city;
           this.initCustomCityBuildings();
         }
-      })
+      }),
     );
   }
 
@@ -63,10 +60,7 @@ export class BuildingsComponent {
   }
 
   setEnoughRessources(building: any) {
-    building.enoughRessources = this.contains(
-      this.city.inventory,
-      building.inventory
-    );
+    building.enoughRessources = this.contains(this.city.inventory, building.inventory);
   }
 
   setEnoughTime(building: any) {
@@ -83,15 +77,13 @@ export class BuildingsComponent {
       this.setTimeoutRefs.push(
         setTimeout(() => {
           building.enoughTime = false;
-        }, timeoutSeconds * 1000)
+        }, timeoutSeconds * 1000),
       );
     }
   }
 
   setBuildingTimeString(building: any) {
-    building.buildingTimeString = getTimeRequiredString(
-      building.time * this.city.speeds.build
-    );
+    building.buildingTimeString = getTimeRequiredString(building.time * this.city.speeds.build);
   }
 
   build(building: BuildingModel) {
@@ -119,7 +111,7 @@ export class BuildingsComponent {
       .build(building.id)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' }))
+        catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
         if (result.error) {
@@ -133,9 +125,7 @@ export class BuildingsComponent {
   contains(inv1: any, inv2: any) {
     //return inv1 >= inv2
     for (const itemName in inv2) {
-      if (
-        !(inv1.hasOwnProperty(itemName) && inv1[itemName] >= inv2[itemName])
-      ) {
+      if (!(inv1.hasOwnProperty(itemName) && inv1[itemName] >= inv2[itemName])) {
         return false;
       }
     }
@@ -145,9 +135,7 @@ export class BuildingsComponent {
   isBuildable(building: BuildingModel): boolean {
     if (this.city) {
       let isBuildable: boolean =
-        building.enoughRessources &&
-        building.enoughTime &&
-        building.lvl < building.lvl_max;
+        building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max;
       return isBuildable;
     } else {
       return false;

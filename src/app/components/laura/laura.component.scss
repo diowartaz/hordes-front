@@ -53,7 +53,8 @@
     .option {
       outline: none;
       border: none !important;
-      background-image: repeating-linear-gradient(
+      background-image:
+        repeating-linear-gradient(
           14deg,
           #e8b8f1,
           #e8b8f1 6px,
@@ -85,9 +86,16 @@
           transparent 11px,
           #e8b8f1 11px
         );
-      background-size: 1px calc(100% + 11.34px), calc(100% + 11.34px) 1px,
-        1px calc(100% + 11.34px), calc(100% + 11.34px) 1px;
-      background-position: 0 0, 0 0, 100% 0, 0 100%;
+      background-size:
+        1px calc(100% + 11.34px),
+        calc(100% + 11.34px) 1px,
+        1px calc(100% + 11.34px),
+        calc(100% + 11.34px) 1px;
+      background-position:
+        0 0,
+        0 0,
+        100% 0,
+        0 100%;
       background-repeat: no-repeat;
       animation: borderAnimation 1s infinite linear;
     }
@@ -96,9 +104,17 @@
 
 @keyframes borderAnimation {
   from {
-    background-position: 0 0, -11.34px 0, 100% -11.34px, 0 100%;
+    background-position:
+      0 0,
+      -11.34px 0,
+      100% -11.34px,
+      0 100%;
   }
   to {
-    background-position: 0 -11.34px, 0 0, 100% 0, -11.34px 100%;
+    background-position:
+      0 -11.34px,
+      0 0,
+      100% 0,
+      -11.34px 100%;
   }
 }

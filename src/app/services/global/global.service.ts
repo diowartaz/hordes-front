@@ -5,9 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class GlobalService {
-  menuIsDisplayed$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  menuIsDisplayed$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 }
