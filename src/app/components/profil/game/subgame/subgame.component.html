@@ -1,6 +1,15 @@
 <div class="container">
   <div class="element">
-    <div>{{ modifiedSubgame.username }}</div>
+    <div
+      *ngIf="modifiedSubgame.id && otherPlayer"
+      style="cursor: pointer; text-decoration: underline"
+      (click)="goToProfil(modifiedSubgame.id)"
+    >
+      {{ modifiedSubgame.username }}
+    </div>
+    <div *ngIf="!modifiedSubgame.id || !otherPlayer">
+      {{ modifiedSubgame.username }}
+    </div>
   </div>
   <div class="elements-wrapper">
     <div class="element">
