@@ -5,6 +5,7 @@ export function getLVLandXPString(xp: number): any {
   return {
     lvl: lvl,
     xpString: reste + '/' + xpToNextLvl + ' xp',
+    ratio: Math.floor(reste/xpToNextLvl*100)
   };
 }
 export function xpToLvl(xp: number) {

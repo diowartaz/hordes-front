@@ -19,6 +19,7 @@ export class HordesComponent {
   city: any = null;
   xp: number = 0;
   lvl: number = 1;
+  xpRatio: number = 50;
 
   endDayLoading: boolean = false;
   content: string = 'dig';
@@ -60,9 +61,11 @@ export class HordesComponent {
     this.subscriptions.push(
       this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
         if (stats != null) {
-          let { lvl, xpString } = getLVLandXPString(stats.xp);
+          let { lvl, xpString, ratio } = getLVLandXPString(stats.xp);
           this.lvl = lvl;
           this.xpString = xpString;
+          this.xpRatio = ratio;
+          this.xpRatio = 20;
         }
       }),
     );
@@ -115,7 +118,6 @@ export class HordesComponent {
   goToLeaderboard() {
     this.router.navigate(['leaderboard']);
   }
-
 
   goToProfil() {
     this.router.navigate(['profil'], {
