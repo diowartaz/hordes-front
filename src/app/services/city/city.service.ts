@@ -17,6 +17,8 @@ export class CityService {
     personal_best_day: 0,
     personal_best_zb: 0,
     xp: 0,
+    match_history: [],
+    ranked_points: 500
   });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');

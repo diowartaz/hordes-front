@@ -116,9 +116,6 @@ export class HordesComponent {
     this.router.navigate(['leaderboard']);
   }
 
-  goToRankedLeaderboard() {
-    this.router.navigate(['ranked-leaderboard']);
-  }
 
   goToProfil() {
     this.router.navigate(['profil'], {

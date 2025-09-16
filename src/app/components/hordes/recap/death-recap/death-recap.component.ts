@@ -22,6 +22,10 @@ export class DeathRecapComponent {
     return this.cityService.userPlayerCity$;
   }
 
+  getUserPlayerStats$() {
+    return this.cityService.userPlayerStats$;
+  }
+
   tryAgain() {
     this.tryAgainLoading = true;
     this.cityService

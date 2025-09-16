@@ -6,7 +6,25 @@
     <img
       style="height: 24px; width: 24px; margin-right: 8px"
       src="../../../assets/icons/leaderboard.gif"
-    />{{ ranked ? 'Ranked ' : '' }}Leaderboard
+    />Leaderboard
+  </div>
+  <div class="footer">
+    <button
+      class="footer-btn"
+      (click)="changeRanked(true)"
+      [ngClass]="{ 'has-background': ranked }"
+    >
+      <img class="icon" src="../../../assets/icons/ranked.png" />
+      <span class="span">Ranked</span>
+    </button>
+    <button
+      class="footer-btn"
+      (click)="changeRanked(false)"
+      [ngClass]="{ 'has-background': !ranked }"
+    >
+      <img class="icon" src="../../../assets/icons/normal.png" />
+      <span class="span">Normal</span>
+    </button>
   </div>
   <div class="leaderboard-wrapper">
     <div class="leaderboard-col">
@@ -17,9 +35,9 @@
     </div>
     <div class="leaderboard-col">
       <div class="leaderboard-row-element">Username</div>
-      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
-        <div style="cursor: pointer; text-decoration: underline" (click)="goToProfil(user.user_id)">
-          {{ user.username }}
+      <div class="leaderboard-row-element username-element" *ngFor="let user of leaderboard">
+        <div class="username" (click)="goToProfil(user.user_id)">
+          <span class="material-symbols-outlined icon-search"> search </span> {{ user.username }}
         </div>
       </div>
     </div>

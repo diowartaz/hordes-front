@@ -73,14 +73,7 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardHordesComponent,
-    data: { ranked: false },
   },
-  {
-    path: 'ranked-leaderboard',
-    component: LeaderboardHordesComponent,
-    data: { ranked: true },
-  },
-
   {
     path: 'profil',
     component: ProfilComponent,

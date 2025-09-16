@@ -26,12 +26,12 @@
   color: white;
   gap: 4px;
   border: 1px solid white;
-  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
   border-radius: 4px;
   padding: 8px 4px;
   width: 100%;
   align-items: center;
   background: #0000005e;
+  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
 }
 
 .icon-btn {
@@ -57,7 +57,6 @@
 .leaderboard-wrapper {
   display: flex;
   gap: 8px;
-  margin-top: 32px;
   border: 1px solid white;
   box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
   border-radius: 4px;
@@ -70,11 +69,23 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    .username-element {
+      justify-content: start !important;
+    }
     .leaderboard-row-element {
       display: flex;
       color: white;
       justify-content: center;
       gap: 4px;
+      .username {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        gap: 4px;
+        .icon-search {
+          font-size: 16px;
+        }
+      }
     }
     .leaderboard-row-element:first-child {
       margin-bottom: 12px;
@@ -99,5 +110,49 @@
     height: 16px;
     width: 16px;
     font-size: 16px;
+  }
+}
+
+.footer {
+  margin-top: 32px;
+  margin-bottom: 8px;
+  display: flex;
+  width: 100%;
+  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+  .has-background {
+    background: var(--background-black-opacity-zero-trois) !important;
+  }
+  .footer-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: transparent;
+    padding: 8px 0px;
+    border: 1px solid white;
+    transition: background-color 0.5s ease;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0.1px 0 0 black) drop-shadow(-0.1px 0 0 black)
+        drop-shadow(0 0.1px 0 black) drop-shadow(0 -0.1px 0 black);
+    }
+    .span {
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+  }
+  .footer-btn:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .footer-btn:last-child {
+    border-left: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }

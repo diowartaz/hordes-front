@@ -48,6 +48,8 @@
       width: 40px;
       height: 40px;
       margin: -8px;
+      filter: drop-shadow(0.1px 0 0 black) drop-shadow(-0.1px 0 0 black)
+        drop-shadow(0 0.1px 0 black) drop-shadow(0 -0.1px 0 black);
     }
     button {
       display: flex;

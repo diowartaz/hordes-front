@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="history">
-        <app-game *ngFor="let game of profil.match_history" [game]="game"></app-game>
+        <app-game *ngFor="let game of profil.match_history.slice().reverse()" [game]="game"></app-game>
       </div>
     </div>
   </div>

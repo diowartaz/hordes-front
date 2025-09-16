@@ -7,6 +7,8 @@ export interface StatsModel {
   personal_best_day: number;
   personal_best_zb: number;
   xp: number;
+  match_history: Array<any>;
+  ranked_points: number;
 }
 
 export interface CityModel {

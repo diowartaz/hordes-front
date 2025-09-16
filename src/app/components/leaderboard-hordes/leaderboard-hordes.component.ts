@@ -9,7 +9,7 @@ import { CityService } from 'src/app/services/city/city.service';
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })
 export class LeaderboardHordesComponent {
-  ranked: boolean = false;
+  ranked: boolean = true;
   loading: boolean = false;
   leaderboard: any[] = [];
 
@@ -20,9 +20,7 @@ export class LeaderboardHordesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.ranked = this.route.snapshot.data['ranked'] ?? false;
-    console.log(this.ranked);
-    this.ranked ? this.getLeaderboardRanked() : this.getLeaderboardBestDay();
+    this.getLeaderboardRanked()
   }
 
   getLeaderboardBestDay() {
@@ -82,5 +80,14 @@ export class LeaderboardHordesComponent {
 
   goToProfil(user_id: string) {
     this.router.navigate(['profil'], { queryParams: { user_id } });
+  }
+
+  changeRanked(ranked: boolean): void {
+    this.ranked = ranked;
+    if (ranked) {
+      this.getLeaderboardRanked(); //TDOO: ne pas refaire l'appel
+    } else {
+      this.getLeaderboardBestDay();
+    }
   }
 }

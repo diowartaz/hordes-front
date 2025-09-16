@@ -16,6 +16,14 @@
           <img style="width: 32px" src="../../../assets/icons/xpLogo.png" />
         </div>
       </div>
+      <app-game
+        style="width: 100%"
+        [game]="
+          getUserPlayerStats$().getValue().match_history[
+            getUserPlayerStats$().getValue().match_history.length - 1
+          ]
+        "
+      ></app-game>
     </div>
   </div>
 
