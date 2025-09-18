@@ -1,22 +1,22 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HeaderLoggedInComponent } from './header-logged-in.component';
 
-// import { RecapHeaderComponent } from './recap-header.component';
 
-// describe('RecapHeaderComponent', () => {
-//   let component: RecapHeaderComponent;
-//   let fixture: ComponentFixture<RecapHeaderComponent>;
+describe('HeaderLoggedInComponent', () => {
+  let component: HeaderLoggedInComponent;
+  let fixture: ComponentFixture<HeaderLoggedInComponent>;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [RecapHeaderComponent],
-//     }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [HeaderLoggedInComponent],
+    }).compileComponents();
 
-//     fixture = TestBed.createComponent(RecapHeaderComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+    fixture = TestBed.createComponent(HeaderLoggedInComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

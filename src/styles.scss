@@ -65,13 +65,6 @@ body {
   font: inherit;
 }
 
-// input,
-// textarea,
-// button,
-// select {
-//   font: inherit;
-// }
-
 button {
   cursor: pointer;
 }
@@ -87,7 +80,6 @@ body {
 }
 
 .dialog-class {
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -121,5 +113,39 @@ body {
   .icon {
     color: white;
     font-weight: 200;
+  }
+}
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   color: white;
+//   gap: 4px;
+//   border: 1px solid white;
+//   box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+//   border-radius: 4px;
+//   padding: 8px 4px;
+//   width: 100%;
+//   align-items: center;
+//   background: #0000005e;
+// }
+
+
+@-webkit-keyframes borderBlink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+@keyframes borderBlink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  10% {
+    border-color: white;
   }
 }

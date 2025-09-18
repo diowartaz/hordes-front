@@ -1,23 +1,23 @@
-<div class="header">
-  <div class="xp-wrapper">
+<div class="boundary">
+  <div class="left-part">
     <div class="lvl-wrapper">
       <img class="lvl-icon" src="../../../assets/icons/lvl_icon.png" />
       <div class="lvl">{{ lvl }}</div>
     </div>
     <div class="xp-bar-wrapper">
       <progress class="xp-bar" max="100" value="{{ xpRatio }}"></progress>
-      <div class="xp-string">{{ xpString }}</div>
+      <div class="xp-bar-string">{{ xpString }}</div>
     </div>
   </div>
-  <div class="header-right">
+  <div class="right-part">
     <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-      <img style="height: 24px; width: 24px" src="../../../assets/icons/discord_icon.png"
+      <img src="../../../assets/icons/discord_icon.png"
     /></a>
     <button class="icon-btn" (click)="goToProfil()">
       <span class="material-symbols-outlined icon"> person </span>
     </button>
     <button class="icon-btn" (click)="goToLeaderboard()">
-      <img style="height: 24px; width: 24px" src="../../../assets/icons/leaderboard.gif" />
+      <img src="../../../assets/icons/leaderboard.gif" />
     </button>
     <button class="icon-btn" (click)="goToSettings()">
       <span class="material-symbols-outlined icon"> settings </span>

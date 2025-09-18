@@ -1,26 +1,23 @@
-<div class="second-header">
-  <div class="second-header-left">
-    <div class="second-header-element">
+<div class="boundary">
+  <div class="left-part">
+    <div class="element">
       <img class="icon" src="../../../assets/icons/calendar.ico" />
       <span class="text-span">{{ city?.day }}</span>
     </div>
 
-    <div class="second-header-element">
+    <div class="element">
       <span class="material-symbols-outlined icon"> schedule </span>
       <span class="text-span">{{ time.string }}</span>
     </div>
 
-    <div class="second-header-element">
+    <div class="element">
       <img class="icon" src="../../../assets/icons/defense.gif" />
       <span class="text-span">{{ city?.defense }}</span>
     </div>
-    <div class="second-header-element">
+    <div class="element">
       <img class="icon" src="../../../assets/icons/zb.gif" />
 
-      <span
-        style="margin-left: 0px"
-        class="text-span"
-        [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
+      <span class="text-span" [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
         >{{ city?.nb_zb_next_attack_min }}-{{ city?.nb_zb_next_attack_max }}</span
       >
     </div>
@@ -29,9 +26,8 @@
   <button
     class="icon-btn borderBlink"
     [ngClass]="{ borderBlink2: time.seconds > 79200 }"
-    style="margin-left: 8px"
     (click)="endDay()"
   >
-    <img style="height: 24px" class="xp-icon" src="../../../assets/icons/sleep.gif" />
+    <img src="../../../assets/icons/sleep.gif" />
   </button>
 </div>

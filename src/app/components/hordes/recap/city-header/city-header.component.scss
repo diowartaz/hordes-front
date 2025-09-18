@@ -1,8 +1,9 @@
-.second-header {
+.boundary {
   display: flex;
   padding: 0px 8px 8px 8px;
   justify-content: space-between;
-  .second-header-left {
+  gap: 8px;
+  .left-part {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -10,12 +11,9 @@
     border-radius: 4px;
     padding: 0px 8px;
     background: var(--background-black-opacity-zero-trois);
-    .second-header-element:last-child {
-      margin-right: 0px;
-    }
   }
 
-  .second-header-element {
+  .element {
     display: flex;
     align-items: center;
     color: white;
@@ -35,5 +33,15 @@
       width: 16px;
       font-size: 16px;
     }
+  }
+  .borderBlink {
+    border: 1px solid white;
+    img {
+      height: 24px;
+    }
+  }
+  .borderBlink2 {
+    -webkit-animation: borderBlink 3s step-end infinite;
+    animation: borderBlink 3s step-end infinite;
   }
 }
