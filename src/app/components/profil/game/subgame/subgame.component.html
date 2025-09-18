@@ -2,10 +2,11 @@
   <div class="element">
     <div
       *ngIf="modifiedSubgame.id && otherPlayer"
-      style="cursor: pointer; text-decoration: underline"
+      class="second-player"
       (click)="goToProfil(modifiedSubgame.id)"
     >
       {{ modifiedSubgame.username }}
+      <span class="material-symbols-outlined icon-search"> search </span>
     </div>
     <div *ngIf="!modifiedSubgame.id || !otherPlayer">
       {{ modifiedSubgame.username }}
@@ -33,7 +34,7 @@
         style="height: 24px; width: 24px; margin-right: -8px"
         src="../../../assets/icons/ranked_points.png"
       />
-      <div>
+      <div style="width: 24px; text-align: end; margin-left: -4px">
         {{ modifiedSubgame.ranked_points }}
       </div>
     </div>

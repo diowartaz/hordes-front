@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-  // border: 1px solid white;
   width: 100%;
   padding: 4px;
 }
@@ -12,6 +11,15 @@
   gap: 16px;
   align-items: center;
   width: 100%;
+  .second-player {
+    display: flex;
+    cursor: pointer;
+    gap: 4px;
+    align-items: center;
+    .icon-search {
+      font-size: 16px;
+    }
+  }
 }
 
 .elements-wrapper {

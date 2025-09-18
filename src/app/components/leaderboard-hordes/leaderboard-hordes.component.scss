@@ -35,23 +35,9 @@
 }
 
 .icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  padding: 4px;
-  border-radius: 4px;
-  background-color: transparent;
-  border: var(--border-white-transparent);
-  transition: transform 0.2s;
-  background-color: var(--background-black-opacity-zero-trois);
   position: absolute;
   left: 8px;
   top: 8px;
-  .icon {
-    color: white;
-    font-weight: 200;
-  }
 }
 
 .leaderboard-wrapper {

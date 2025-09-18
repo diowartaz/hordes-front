@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Validators } from '@angular/forms';
 import 'web-animations-js';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MyButtonComponent } from './components/general-components/my-button/my-button.component';
-// import { OuathService } from 'angular-oauth2-oidc';
 
 //Angular components
 import { MatIconModule } from '@angular/material/icon';
@@ -42,6 +40,9 @@ import { BuildingRecapComponent } from './components/hordes/recap/alive-recap/bu
 import { SkillRecapComponent } from './components/hordes/recap/alive-recap/skill-recap/skill-recap.component';
 import { GameComponent } from './components/profil/game/game.component';
 import { SubgameComponent } from './components/profil/game/subgame/subgame.component';
+import { HeaderLoggedInComponent } from './components/hordes/recap/header-logged-in/header-logged-in.component';
+import { CityHeaderComponent } from './components/hordes/recap/city-header/city-header.component';
+import { CityFooterComponent } from './components/hordes/recap/city-footer/city-footer.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,9 @@ import { SubgameComponent } from './components/profil/game/subgame/subgame.compo
     SkillRecapComponent,
     GameComponent,
     SubgameComponent,
+    HeaderLoggedInComponent,
+    CityHeaderComponent,
+    CityFooterComponent
   ],
   imports: [
     BrowserModule,
