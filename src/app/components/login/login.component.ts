@@ -6,7 +6,7 @@ import { AuthResponse, SignInParams } from '../../models/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RoutesEnum } from '../../models/routes';
+import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 interface SignInForm {

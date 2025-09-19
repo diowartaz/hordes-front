@@ -48,6 +48,7 @@ export class CityService {
     let url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
+        //console.log('state', response.player.state);
         //TODO: if erreur: vider le local storage
         this.log('loadPlayer', response);
         this.userPlayerState$.next(response.player.state);

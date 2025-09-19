@@ -3,10 +3,13 @@ import { LoginComponent } from './components/login/login.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
-import { RoutesEnum } from './models/routes';
+import { RoutesEnum } from './models/router';
 import { notAuthenticatedGuard } from './shared/guards/not-authenticated.guard';
 import { authGuard } from './shared/guards/auth.guard';
 import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
+import { SettingsComponent } from './components/settings/settings.component';
+import { stateGuard } from './shared/guards/state.guard';
+import { CreateCityComponent } from './components/create-city/create-city.component';
 
 export const routes: Routes = [
   {
@@ -24,11 +27,21 @@ export const routes: Routes = [
     component: LoadPlayerComponent,
     canActivate: [authGuard],
   },
-
+  {
+    path: RoutesEnum.CREATE_CITY,
+    component: CreateCityComponent,
+    canActivate: [authGuard, gameLoadedGuard],
+  },
   {
     path: RoutesEnum.PLAY,
     component: HordesComponent,
-    canActivate: [authGuard, gameLoadedGuard], //, gameLoadedGuard, stateGuard
+    canActivate: [authGuard, gameLoadedGuard], //authGuard, gameLoadedGuard, stateGuard
+    children: [
+      {
+        path: RoutesEnum.SETTINGS,
+        component: SettingsComponent,
+      },
+    ],
   },
   { path: '', redirectTo: RoutesEnum.PLAY, pathMatch: 'full' },
   { path: '**', redirectTo: RoutesEnum.PLAY },

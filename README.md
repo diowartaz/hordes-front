@@ -6,3 +6,10 @@
 - faire la découverte de batiment choisir parmi 3
 
 - |formatTime
+
+
+- destroy les subscription
+
+ngif
+
+enelver les boundary

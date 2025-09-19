@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { catchError, finalize, of, Subscription, take } from 'rxjs';
 import { AuthResponse } from '../../models/auth';
-import { RoutesEnum } from '../../models/routes';
+import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 interface SignUpForm {

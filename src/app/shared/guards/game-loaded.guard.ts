@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { RoutesEnum } from '../../models/routes';
+import { RoutesEnum } from '../../models/router';
 import { CityService } from 'src/app/services/city/city.service';
 
 export const gameLoadedGuard: CanActivateFn = (_route, state) => {

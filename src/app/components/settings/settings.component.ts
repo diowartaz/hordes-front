@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
+import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 
@@ -17,15 +18,13 @@ export class SettingsComponent {
     private authService: AuthService,
   ) {}
 
-  ngOnInit(): void {}
-
   logOut() {
     localStorage.removeItem('token');
     this.router.navigate(['signin']);
   }
 
   goBackCityView() {
-    this.router.navigate(['play/' + localStorage.getItem('play-route')]);
+    this.router.navigate([RoutesEnum.PLAY, localStorage.getItem('play-route')]);
   }
 
   deleteAccount() {

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
+import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
@@ -37,15 +38,15 @@ export class HeaderLoggedInComponent {
   }
 
   goToSettings() {
-    this.router.navigate(['settings']);
+    this.router.navigate([RoutesEnum.PLAY, RoutesEnum.SETTINGS]);
   }
 
   goToLeaderboard() {
-    this.router.navigate(['leaderboard']);
+    this.router.navigate([RoutesEnum.LEADERBOARD]);
   }
 
   goToProfil() {
-    this.router.navigate(['profil'], {
+    this.router.navigate([RoutesEnum.PROFIL], {
       queryParams: { user_id: this.authService.getUserId() },
     });
   }
