@@ -8,8 +8,8 @@ describe('LeaderboardHordesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LeaderboardHordesComponent],
-    }).compileComponents();
+    imports: [LeaderboardHordesComponent],
+}).compileComponents();
 
     fixture = TestBed.createComponent(LeaderboardHordesComponent);
     component = fixture.componentInstance;

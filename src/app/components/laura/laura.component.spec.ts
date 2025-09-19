@@ -8,8 +8,8 @@ describe('LauraComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LauraComponent],
-    }).compileComponents();
+    imports: [LauraComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {
