@@ -36,14 +36,9 @@ button {
   cursor: pointer;
 }
 
-.full-dim {
-  height: 100%;
-  width: 100%;
-}
-
 html,
 body {
-  height: calc(100%);
+  min-height: 100vh;
 }
 
 .dialog-class {
