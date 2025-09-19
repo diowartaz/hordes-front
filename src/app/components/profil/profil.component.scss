@@ -25,24 +25,11 @@
   }
   .ok-profil {
     width: 100%;
-    height: calc(100% - -8px);
+    height: calc(100% + 8px);
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 16px;
-    .container {
-      display: flex;
-      flex-direction: column;
-      color: white;
-      gap: 4px;
-      border: 1px solid white;
-      box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-      border-radius: 4px;
-      padding: 8px 4px;
-      width: 100%;
-      align-items: center;
-      background: #0000005e;
-    }
     .header {
       display: flex;
       align-items: center;
@@ -69,19 +56,10 @@
           flex-direction: row;
           gap: 16px;
           width: 100%;
-          .container2 {
-            display: flex;
+          .surcharge-container {
             flex-direction: row;
             justify-content: center;
-            color: white;
             gap: 8px;
-            border: 1px solid white;
-            box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-            border-radius: 4px;
-            padding: 8px 4px;
-            width: 100%;
-            align-items: center;
-            background: #0000005e;
           }
         }
       }
