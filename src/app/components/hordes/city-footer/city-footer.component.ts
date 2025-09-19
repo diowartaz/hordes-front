@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-city-footer',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './city-footer.component.html',
   styleUrls: ['./city-footer.component.scss'],
 })

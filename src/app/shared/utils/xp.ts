@@ -7,7 +7,7 @@ export function XPToLVLandXP(xp: number): XPToLVL {
   return {
     lvl: lvl.toString(),
     xpString: `${remainder}/${xpToNextLvl} xp`,
-    ratio: Math.floor(remainder/xpToNextLvl*100)
+    ratio: Math.floor((remainder / xpToNextLvl) * 100),
   };
 }
 

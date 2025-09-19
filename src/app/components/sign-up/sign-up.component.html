@@ -5,9 +5,7 @@
     <div
       class="input-wrapper"
       [ngStyle]="
-        fieldHasError('email') || fieldAlreadyExist.email
-          ? { 'border-color': 'red' }
-          : null
+        fieldHasError('email') || fieldAlreadyExist.email ? { 'border-color': 'red' } : null
       "
     >
       <i class="material-icons icon-input-field">mail</i>
@@ -25,9 +23,7 @@
     <div
       class="input-wrapper"
       [ngStyle]="
-        fieldHasError('username') || fieldAlreadyExist.username
-          ? { 'border-color': 'red' }
-          : null
+        fieldHasError('username') || fieldAlreadyExist.username ? { 'border-color': 'red' } : null
       "
     >
       <i class="material-icons icon-input-field">person</i>
@@ -60,9 +56,7 @@
 
     <div
       class="input-wrapper"
-      [ngStyle]="
-        fieldHasError('confirmPassword') ? { 'border-color': 'red' } : null
-      "
+      [ngStyle]="fieldHasError('confirmPassword') ? { 'border-color': 'red' } : null"
       style="margin-bottom: 0px !important"
     >
       <i class="material-icons icon-input-field">lock</i>
@@ -79,47 +73,27 @@
 
     <div *ngIf="invalid()" class="invalid-authen">Invalid authentification</div>
 
-    <div
-      *ngIf="invalid() && formgroup.controls.email.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.email.errors['required']"
-        >Email is required</span
-      >
-      <span *ngIf="formgroup.controls.email.errors['pattern']"
-        >Email must be valid</span
-      >
+    <div *ngIf="invalid() && formgroup.controls.email.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.email.errors['required']">Email is required</span>
+      <span *ngIf="formgroup.controls.email.errors['pattern']">Email must be valid</span>
     </div>
 
-    <div
-      *ngIf="invalid() && formgroup.controls.username.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.username.errors['required']"
-        >Username is required</span
-      >
+    <div *ngIf="invalid() && formgroup.controls.username.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.username.errors['required']">Username is required</span>
       <span *ngIf="formgroup.controls.username.errors['notValid']"
         >Username: 3 characters minimum</span
       >
     </div>
 
-    <div
-      *ngIf="invalid() && formgroup.controls.password.errors"
-      class="invalid-authen"
-    >
-      <span *ngIf="formgroup.controls.password.errors['required']"
-        >Password is required</span
-      >
+    <div *ngIf="invalid() && formgroup.controls.password.errors" class="invalid-authen">
+      <span *ngIf="formgroup.controls.password.errors['required']">Password is required</span>
 
       <span *ngIf="formgroup.controls.password.errors['noStrong']"
         >Password: 8 characters minimum</span
       >
     </div>
 
-    <div
-      *ngIf="invalid() && formgroup.controls.confirmPassword.errors"
-      class="invalid-authen"
-    >
+    <div *ngIf="invalid() && formgroup.controls.confirmPassword.errors" class="invalid-authen">
       <span *ngIf="formgroup.controls.confirmPassword.errors['required']"
         >Confirm password is required</span
       >
@@ -142,17 +116,11 @@
       <i *ngIf="!loading()" class="material-icons login-icon">login</i>
       <div *ngIf="!loading()" class="login-text">Sign Up</div>
 
-      <mat-spinner
-        *ngIf="loading()"
-        diameter="24"
-        class="spinner"
-      ></mat-spinner>
+      <mat-spinner *ngIf="loading()" diameter="24" class="spinner"></mat-spinner>
       <div *ngIf="loading()" class="login-text">Signing Up...</div>
     </div>
 
-    <div class="text-button" (click)="signIn()">
-      Already have an account ? Sign In
-    </div>
+    <div class="text-button" (click)="signIn()">Already have an account ? Sign In</div>
     <div class="text-button" style="margin-top: 4px" (click)="loginTemp()">
       Play with a temporary account
     </div>

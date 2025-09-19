@@ -27,7 +27,10 @@ export class SkillsComponent {
 
   day_start_time: number = 0;
 
-  constructor(private cityService: CityService, private _snackBar: MatSnackBar) {}
+  constructor(
+    private cityService: CityService,
+    private _snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
     this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {

@@ -47,7 +47,10 @@ export class SignUpComponent implements OnInit {
     username: false,
   };
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.formgroup = new FormGroup<SignUpForm>({
@@ -79,7 +82,7 @@ export class SignUpComponent implements OnInit {
           email: false,
           username: false,
         };
-      })
+      }),
     );
   }
 
@@ -105,7 +108,7 @@ export class SignUpComponent implements OnInit {
         catchError(() => of({ error: 'error' })),
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
       )
       .subscribe((result: AuthResponse | { error: string }) => {
         //TODO: Gérer le cas où l'email ou le nom d'utilisateur existe déjà: voir ancien projet
@@ -165,8 +168,7 @@ export class SignUpComponent implements OnInit {
         return null;
       }
 
-      const confirmPasswordValid =
-        this.formgroup.controls.password.value == confirmPassword;
+      const confirmPasswordValid = this.formgroup.controls.password.value == confirmPassword;
 
       return !confirmPasswordValid ? { noMatchPassword: true } : null;
     };
@@ -182,7 +184,7 @@ export class SignUpComponent implements OnInit {
         take(1),
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
       )
       .subscribe((result: AuthResponse) => {
         localStorage.setItem('token', result.token);

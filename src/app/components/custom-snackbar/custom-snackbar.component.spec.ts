@@ -8,8 +8,8 @@ describe('CustomSnackbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [CustomSnackbarComponent],
-}).compileComponents();
+      imports: [CustomSnackbarComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomSnackbarComponent);
     component = fixture.componentInstance;

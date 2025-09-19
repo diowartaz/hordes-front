@@ -176,9 +176,12 @@ export class CityService {
     if (this.setInterval) {
       clearInterval(this.setInterval);
     }
-    this.setInterval = setInterval(() => {
-      this.addTime();
-    }, Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime));
+    this.setInterval = setInterval(
+      () => {
+        this.addTime();
+      },
+      Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime),
+    );
   }
 
   addTime() {

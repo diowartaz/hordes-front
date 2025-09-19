@@ -14,7 +14,7 @@ import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 export class HeaderLoggedInComponent {
   subscriptions: Subscription[] = [];
   xpString: string = '';
-  lvl: number = 1;
+  lvl: string = '1';
   xpRatio: number = 50;
 
   constructor(

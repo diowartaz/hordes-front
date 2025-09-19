@@ -8,8 +8,8 @@ describe('LostPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [LostPageComponent],
-}).compileComponents();
+      imports: [LostPageComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

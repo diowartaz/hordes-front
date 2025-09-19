@@ -14,7 +14,10 @@ import { CityService } from 'src/app/services/city/city.service';
 })
 export class LoadPlayerComponent implements OnInit {
   loading = signal(false);
-  constructor(private router: Router, private cityService: CityService) {}
+  constructor(
+    private router: Router,
+    private cityService: CityService,
+  ) {}
 
   ngOnInit(): void {
     this.loadPlayer();

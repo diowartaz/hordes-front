@@ -20,7 +20,7 @@ export class LeaderboardHordesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getLeaderboardRanked()
+    this.getLeaderboardRanked();
   }
 
   getLeaderboardBestDay() {

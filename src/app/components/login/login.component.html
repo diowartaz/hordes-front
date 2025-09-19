@@ -33,20 +33,14 @@
       />
     </div>
 
-    <div *ngIf="invalidAuthentification()" class="invalid-authen">
-      Invalid authentification
-    </div>
+    <div *ngIf="invalidAuthentification()" class="invalid-authen">Invalid authentification</div>
     <div *ngIf="!invalidAuthentification()" class="valid-authen"></div>
 
     <div class="button-wrapper" (click)="login()">
       <i *ngIf="!loading()" class="material-icons login-icon">login</i>
       <div *ngIf="!loading()" class="login-text">Login</div>
 
-      <mat-spinner
-        *ngIf="loading()"
-        diameter="24"
-        class="spinner"
-      ></mat-spinner>
+      <mat-spinner *ngIf="loading()" diameter="24" class="spinner"></mat-spinner>
       <div *ngIf="loading()" class="login-text">Login...</div>
     </div>
 

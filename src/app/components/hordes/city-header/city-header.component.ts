@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
@@ -7,6 +8,8 @@ import { formatTimeToString } from 'src/app/shared/utils/time';
 
 @Component({
   selector: 'app-city-header',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './city-header.component.html',
   styleUrls: ['./city-header.component.scss'],
 })

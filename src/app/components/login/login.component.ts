@@ -1,12 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { finalize, take } from 'rxjs';
 import { Router } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthResponse, SignInParams } from '../../models/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
@@ -32,7 +27,10 @@ export class LoginComponent implements OnInit {
   loading = signal(false);
   invalidAuthentification = signal(false);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -54,11 +52,9 @@ export class LoginComponent implements OnInit {
   }
 
   private subscribeToFormChanges(): void {
-    this.formgroup.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.invalidAuthentification.set(false);
-      });
+    this.formgroup.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.invalidAuthentification.set(false);
+    });
   }
 
   private handleAuthSuccess(result: AuthResponse): void {
@@ -87,7 +83,7 @@ export class LoginComponent implements OnInit {
         take(1),
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
       )
       .subscribe((result: AuthResponse) => {
         this.invalidAuthentification.set(false);
@@ -107,7 +103,7 @@ export class LoginComponent implements OnInit {
         take(1),
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
       )
       .subscribe((result: AuthResponse) => {
         this.handleAuthSuccess(result);
