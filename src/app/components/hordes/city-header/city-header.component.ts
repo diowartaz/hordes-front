@@ -1,11 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
-import { StatsModel } from 'src/app/models/hordes';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
-import { getTimeString } from 'src/app/shared/utils/time';
-import { getLVLandXPString } from 'src/app/shared/utils/xp';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 
 @Component({
   selector: 'app-city-header',
@@ -60,10 +58,10 @@ export class CityHeaderComponent {
       });
   }
 
-    getTimeString(seconds: number | undefined): string {
-      if (!seconds) {
-        return '__h__';
-      }
-      return getTimeString(seconds);
+  formatTimeToString(seconds: number | undefined): string {
+    if (!seconds) {
+      return '__h__';
     }
+    return formatTimeToString(seconds, true);
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
-import { getTimeString } from 'src/app/shared/utils/time';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 import { CityModel, StatsModel } from 'src/app/models/hordes';
 
 @Component({
@@ -49,7 +49,7 @@ export class DiggingsComponent implements OnInit {
   }
 
   getDiggingsTimeString() {
-    return getTimeString(this.getDiggingsTime());
+    return formatTimeToString(this.getDiggingsTime());
   }
 
   digDisabled(): boolean {

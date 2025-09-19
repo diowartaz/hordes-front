@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -6,66 +7,92 @@ import {
   ValidatorFn,
   AbstractControl,
   ValidationErrors,
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { catchError, of, Subscription, take } from 'rxjs';
+import { catchError, finalize, of, Subscription, take } from 'rxjs';
+import { AuthResponse } from '../../models/auth';
+import { RoutesEnum } from '../../models/routes';
 import { AuthService } from 'src/app/services/auth/auth.service';
+
+interface SignUpForm {
+  email: FormControl<string>;
+  username: FormControl<string>;
+  password: FormControl<string>;
+  confirmPassword: FormControl<string>;
+}
+
+interface FieldAlreadyExistModel {
+  email: boolean;
+  username: boolean;
+}
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
+  standalone: true,
+  styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent implements OnInit {
-  formgroup: any = null;
-  signUpLoading: boolean = false;
-  invalidSignUp: boolean = false;
+  formgroup!: FormGroup<SignUpForm>;
+
+  loading = signal(false);
+  invalid = signal(false);
+
   subscriptions: Subscription[] = [];
-  fieldAlreadyExist: any = {
+  fieldAlreadyExist: FieldAlreadyExistModel = {
     email: false,
     username: false,
   };
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.formgroup = new FormGroup({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-      ]),
-      username: new FormControl('', [Validators.required, this.usernameCustomValidator()]),
-      password: new FormControl('', [Validators.required, this.strongPasswordValidator()]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-        this.confirmPasswordMatchValidator(),
-      ]),
+    this.formgroup = new FormGroup<SignUpForm>({
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      }),
+      username: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, this.usernameCustomValidator()],
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, this.strongPasswordValidator()],
+      }),
+      confirmPassword: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, this.confirmPasswordMatchValidator()],
+      }),
     });
 
     this.subscriptions.push(
       this.formgroup.valueChanges.subscribe(() => {
-        this.invalidSignUp = false;
+        this.invalid.set(false);
         this.fieldAlreadyExist = {
           email: false,
           username: false,
         };
-      }),
+      })
     );
   }
 
   signUp() {
-    if (this.signUpLoading) {
+    if (this.loading()) {
       return;
     }
     this.formgroup.markAllAsTouched();
     if (this.formgroup.invalid) {
-      this.invalidSignUp = true;
+      this.invalid.set(true);
       return;
     }
-    this.signUpLoading = true;
+    this.loading.set(true);
     const params = {
       email: this.formgroup.controls.email.value,
       username: this.formgroup.controls.username.value,
@@ -76,30 +103,28 @@ export class SignUpComponent implements OnInit {
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        })
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          if (result.error.errors.email) {
-            this.fieldAlreadyExist.email = true;
-          }
-          if (result.error.errors.username) {
-            this.fieldAlreadyExist.username = true;
-          }
-          this.invalidSignUp = true;
+      .subscribe((result: AuthResponse | { error: string }) => {
+        //TODO: Gérer le cas où l'email ou le nom d'utilisateur existe déjà: voir ancien projet
+        if ('error' in result) {
+          this.invalid.set(true);
         } else {
-          this.invalidSignUp = false;
-          this.router.navigate(['signin']);
+          this.invalid.set(false);
+          this.router.navigate([RoutesEnum.SIGNIN]);
         }
-        this.signUpLoading = false;
       });
   }
 
   signIn() {
-    this.router.navigate(['signin']);
+    this.router.navigate([RoutesEnum.SIGNIN]);
   }
 
-  fieldHasError(field: any) {
-    return this.formgroup.controls[field].touched && this.formgroup.controls[field].invalid;
+  fieldHasError(field: keyof SignUpForm): boolean {
+    const control = this.formgroup.controls[field];
+    return control.touched && control.invalid;
   }
 
   strongPasswordValidator(): ValidatorFn {
@@ -109,7 +134,7 @@ export class SignUpComponent implements OnInit {
         return null;
       }
 
-      const has8Characters = password.length >= 8;
+      const has8Characters = password.length >= 4;
       // const hasUpperCase = /[A-Z]+/.test(password);
       // const hasLowerCase = /[a-z]+/.test(password);
       // const hasNumeric = /[0-9]+/.test(password);
@@ -140,36 +165,29 @@ export class SignUpComponent implements OnInit {
         return null;
       }
 
-      const confirmPasswordValid = this.formgroup.controls.password.value == confirmPassword;
+      const confirmPasswordValid =
+        this.formgroup.controls.password.value == confirmPassword;
 
       return !confirmPasswordValid ? { noMatchPassword: true } : null;
     };
   }
 
   loginTemp() {
-    if (this.signUpLoading) {
+    if (this.loading()) {
       return;
     }
     this.authService
       .signInTemp()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        })
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-        } else {
-          localStorage.setItem('token', result.token);
-          localStorage.setItem('emailOrUsername', result.email);
-          this.router.navigate(['load-player']);
-        }
-        this.signUpLoading = false;
+      .subscribe((result: AuthResponse) => {
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('emailOrUsername', result.email);
+        this.router.navigate(['load-player']);
       });
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
   }
 }

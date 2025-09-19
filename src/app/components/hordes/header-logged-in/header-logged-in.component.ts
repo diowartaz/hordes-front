@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
-import { getLVLandXPString } from 'src/app/shared/utils/xp';
+import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-header-logged-in',
@@ -17,25 +17,24 @@ export class HeaderLoggedInComponent {
   lvl: number = 1;
   xpRatio: number = 50;
 
-   constructor(
-      private cityService: CityService,
-      private router: Router,
-      private authService: AuthService,
-    ) {}
+  constructor(
+    private cityService: CityService,
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
-
-      ngOnInit(): void {
-        this.subscriptions.push(
-          this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
-            if (stats != null) {
-              let { lvl, xpString, ratio } = getLVLandXPString(stats.xp);
-              this.lvl = lvl;
-              this.xpString = xpString;
-              this.xpRatio = ratio;
-            }
-          }),
-        );
-      }
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
+        if (stats != null) {
+          let { lvl, xpString, ratio } = XPToLVLandXP(stats.xp);
+          this.lvl = lvl;
+          this.xpString = xpString;
+          this.xpRatio = ratio;
+        }
+      }),
+    );
+  }
 
   goToSettings() {
     this.router.navigate(['settings']);

@@ -3,7 +3,7 @@
     <h1 style="font-size: 32px; margin: 16px">User Login</h1>
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('emailOrUsername') && { 'border-color': 'red' }"
+      [ngStyle]="fieldHasError('login') ? { 'border-color': 'red' } : null"
     >
       <i class="material-icons icon-input-field">mail</i>
       <input
@@ -11,7 +11,7 @@
         required
         placeholder="Email or username"
         autocomplete="off"
-        formControlName="emailOrUsername"
+        formControlName="login"
         (keyup.enter)="login()"
       />
     </div>
@@ -19,14 +19,9 @@
     <div
       class="input-wrapper"
       style="margin-bottom: 0px !important"
-      [ngStyle]="fieldHasError('password') && { 'border-color': 'red' }"
+      [ngStyle]="fieldHasError('password') ? { 'border-color': 'red' } : null"
     >
       <i class="material-icons icon-input-field">lock</i>
-      <!-- <i
-        class="material-icons"
-        style="margin-left: 198px; font-size: 16px; position: absolute"
-        >info</i
-      > -->
       <input
         type="password"
         class="input-field"
@@ -38,26 +33,35 @@
       />
     </div>
 
-    <div *ngIf="invalidAuthentification" class="invalid-authen">Invalid authentification</div>
-    <div *ngIf="!invalidAuthentification" class="valid-authen"></div>
+    <div *ngIf="invalidAuthentification()" class="invalid-authen">
+      Invalid authentification
+    </div>
+    <div *ngIf="!invalidAuthentification()" class="valid-authen"></div>
 
     <div class="button-wrapper" (click)="login()">
-      <i *ngIf="!loginLoading" class="material-icons login-icon">login</i>
-      <div *ngIf="!loginLoading" class="login-text">Login</div>
+      <i *ngIf="!loading()" class="material-icons login-icon">login</i>
+      <div *ngIf="!loading()" class="login-text">Login</div>
 
-      <mat-spinner *ngIf="loginLoading" diameter="24" class="spinner"></mat-spinner>
-      <div *ngIf="loginLoading" class="login-text">Login...</div>
+      <mat-spinner
+        *ngIf="loading()"
+        diameter="24"
+        class="spinner"
+      ></mat-spinner>
+      <div *ngIf="loading()" class="login-text">Login...</div>
     </div>
 
     <!-- <div class="text-button forgot-password" (click)="forgotPassword()">
-      Forgot Password ?
-    </div> -->
+        Forgot Password ?
+      </div> -->
     <div class="text-button" (click)="signUp()">No account yet ? Sign Up</div>
     <div class="text-button" style="margin-top: 4px" (click)="loginTemp()">
       Play with a temporary account
     </div>
     <a href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-      <img style="height: 50px; margin-top: 12px" src="../../../assets/icons/discord_icon.png"
+      <img
+        alt="discord icon"
+        style="height: 50px; margin-top: 12px"
+        src="assets/icons/discord_icon.png"
     /></a>
   </form>
 </div>

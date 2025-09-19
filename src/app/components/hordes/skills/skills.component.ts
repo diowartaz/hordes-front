@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, of, take } from 'rxjs';
 import { CityModel } from 'src/app/models/hordes';
 import { CityService } from 'src/app/services/city/city.service';
-import { getTimeString } from 'src/app/shared/utils/time';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 import { xpToLvl } from 'src/app/shared/utils/xp';
 
 @Component({
@@ -27,10 +27,7 @@ export class SkillsComponent {
 
   day_start_time: number = 0;
 
-  constructor(
-    private cityService: CityService,
-    private _snackBar: MatSnackBar,
-  ) {}
+  constructor(private cityService: CityService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
@@ -105,15 +102,17 @@ export class SkillsComponent {
     if (!this.city) {
       return '__h__';
     }
-    return getTimeString(skill.time * this.city.speeds.learn);
+    return formatTimeToString(skill.time * this.city.speeds.learn);
   }
 
   getPercentageEfficacity(skill: any, plusLevel: number) {
     if (skill.id == 4) {
       if (plusLevel === 0) {
-        return getTimeString(this.day_start_time - skill.reduce_time_seconds * skill.lvl);
+        return formatTimeToString(this.day_start_time - skill.reduce_time_seconds * skill.lvl);
       } else {
-        return getTimeString(this.day_start_time - skill.reduce_time_seconds * (skill.lvl + 1));
+        return formatTimeToString(
+          this.day_start_time - skill.reduce_time_seconds * (skill.lvl + 1),
+        );
       }
     }
     return String(Math.round((1 - skill.avantage_per_lvl * (skill.lvl + plusLevel)) * 100)) + '%';

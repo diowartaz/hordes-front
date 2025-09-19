@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { handleError } from 'src/app/general-functions';
 import { environment } from 'src/environments/environment';
-import { updateCustomInventory } from 'src/app/shared/utils/inventory';
-import { CityModel, StatsModel } from 'src/app/models/hordes';
-import { getTimeString } from 'src/app/shared/utils/time';
+import { StatsModel } from 'src/app/models/hordes';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +17,7 @@ export class CityService {
     personal_best_zb: 0,
     xp: 0,
     match_history: [],
-    ranked_points: 500
+    ranked_points: 500,
   });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -164,25 +163,22 @@ export class CityService {
         clearInterval(this.setInterval);
       }
       this.userPlayerCityTime$.next({
-        string: getTimeString(this.defaultValues$.getValue().day_end_time),
+        string: formatTimeToString(this.defaultValues$.getValue().day_end_time, true),
         seconds: this.defaultValues$.getValue().day_end_time,
       });
       // this.endDay()
       return;
     }
     this.userPlayerCityTime$.next({
-      string: getTimeString(city.time + timeToAdd),
+      string: formatTimeToString(city.time + timeToAdd, true),
       seconds: city.time + timeToAdd,
     });
     if (this.setInterval) {
       clearInterval(this.setInterval);
     }
-    this.setInterval = setInterval(
-      () => {
-        this.addTime();
-      },
-      Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime),
-    );
+    this.setInterval = setInterval(() => {
+      this.addTime();
+    }, Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime));
   }
 
   addTime() {
@@ -194,7 +190,7 @@ export class CityService {
       //fin de journee
     } else {
       this.userPlayerCityTime$.next({
-        string: getTimeString(x),
+        string: formatTimeToString(x, true),
         seconds: x,
       });
     }
