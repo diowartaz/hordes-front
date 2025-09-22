@@ -3,7 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
-import { RoutesEnum } from './models/router';
+import { RoutesEnum, UserSate } from './models/router';
 import { notAuthenticatedGuard } from './shared/guards/not-authenticated.guard';
 import { authGuard } from './shared/guards/auth.guard';
 import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
@@ -31,11 +31,13 @@ export const routes: Routes = [
     path: RoutesEnum.CREATE_CITY,
     component: CreateCityComponent,
     canActivate: [authGuard, gameLoadedGuard],
+    data: { allowedStates: [UserSate.NO_CITY] },
   },
   {
     path: RoutesEnum.PLAY,
     component: HordesComponent,
-    canActivate: [authGuard, gameLoadedGuard], //authGuard, gameLoadedGuard, stateGuard
+    canActivate: [stateGuard], //authGuard, gameLoadedGuard, stateGuard
+    //data: { allowedStates: [UserSate.PLAYING] },
     children: [
       {
         path: RoutesEnum.SETTINGS,

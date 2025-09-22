@@ -4,7 +4,7 @@ import { finalize, take } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
-import { statesToRoutes } from 'src/app/models/router';
+import { statesToRoutes, UserSate } from 'src/app/models/router';
 
 @Component({
   selector: 'app-load-player',
@@ -37,7 +37,7 @@ export class LoadPlayerComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.loading.set(false);
-          this.router.navigate([statesToRoutes[response.player.state]]);
+          this.router.navigate([statesToRoutes[response.player.state as UserSate]]);
         },
         error: () => {
           localStorage.setItem('token', '');

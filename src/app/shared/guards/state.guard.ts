@@ -1,25 +1,38 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { getUserStateCorrespondingToTheUrlTheUserIsTryingToAccess, statesToRoutes } from 'src/app/models/router';
+import { statesToRoutes, UserSate } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 
-
-
-export const stateGuard: CanActivateFn = (_route, state) => {
+export const stateGuard: CanActivateFn = (route) => {
   const cityService = inject(CityService);
   const router = inject(Router);
 
-  const userState = cityService.userPlayerState$.getValue();
-  console.log('reg', userState);
+  const userState = cityService.userPlayerState$.getValue() as UserSate;
+  const allowedStates = route.data['allowedStates'] as string[] | undefined;
 
-  if (!userState || userState.length === 0) {
-    return router.parseUrl('/load-player');
+  if (!allowedStates || allowedStates.includes(userState)) {
+    return true; // ✅ allowed
   }
 
-  return userState === getUserStateCorrespondingToTheUrlTheUserIsTryingToAccess(state.url)
-    ? true
-    : router.parseUrl(`/${statesToRoutes[userState]}`);
+  const redirect = statesToRoutes[userState] ?? 'load-player';
+  return router.parseUrl('/' + redirect);
 };
+
+// export const stateGuard: CanActivateFn = (_route, state) => {
+//   const cityService = inject(CityService);
+//   const router = inject(Router);
+
+//   const userState = cityService.userPlayerState$.getValue();
+//   console.log('reg', userState);
+
+//   if (!userState || userState.length === 0) {
+//     return router.parseUrl('/load-player');
+//   }
+
+//   return userState === getUserStateCorrespondingToTheUrlTheUserIsTryingToAccess(state.url)
+//     ? true
+//     : router.parseUrl(`/${statesToRoutes[userState]}`);
+// };
 
 // if (!cityService.playerLoaded$.getValue()) {
 //   return router.createUrlTree([RoutesEnum.LOAD_PLAYER]);
