@@ -10,6 +10,9 @@ import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
 import { SettingsComponent } from './components/settings/settings.component';
 import { stateGuard } from './shared/guards/state.guard';
 import { CreateCityComponent } from './components/create-city/create-city.component';
+import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
+import { SkillsComponent } from './components/hordes/skills/skills.component';
+import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +42,23 @@ export const routes: Routes = [
     canActivate: [stateGuard], //authGuard, gameLoadedGuard, stateGuard
     //data: { allowedStates: [UserSate.PLAYING] },
     children: [
+      {
+        path: '',
+        redirectTo: 'dig',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dig',
+        component: DiggingsComponent,
+      },
+      {
+        path: 'learn',
+        component: SkillsComponent,
+      },
+      {
+        path: 'build',
+        component: BuildingsComponent,
+      },
       {
         path: RoutesEnum.SETTINGS,
         component: SettingsComponent,

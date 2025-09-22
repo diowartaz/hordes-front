@@ -13,3 +13,7 @@
 ngif
 
 enelver les boundary
+
+type any
+
+deplacer fonction utils (batiment, skills)

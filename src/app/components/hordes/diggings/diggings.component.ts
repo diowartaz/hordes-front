@@ -4,9 +4,12 @@ import { CityService } from 'src/app/services/city/city.service';
 import { buildingInventoryToUsableInventory, getNewInventory } from 'src/app/shared/utils/inventory';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { CityModel } from 'src/app/models/hordes';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-diggings',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './diggings.component.html',
   styleUrls: ['./diggings.component.scss'],
 })

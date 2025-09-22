@@ -6,6 +6,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-hordes',
+  standalone: true,
   templateUrl: './hordes.component.html',
   styleUrls: ['./hordes.component.scss'],
   imports: [CityFooterComponent, CityHeaderComponent, HeaderLoggedInComponent, RouterOutlet],

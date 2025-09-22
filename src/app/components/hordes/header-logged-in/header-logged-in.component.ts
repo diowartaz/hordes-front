@@ -9,6 +9,7 @@ import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-header-logged-in',
+  standalone: true,
   templateUrl: './header-logged-in.component.html',
   styleUrls: ['./header-logged-in.component.scss'],
 })

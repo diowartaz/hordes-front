@@ -1,5 +1,7 @@
-.boundary {
+:host {
   height: 100%;
+  display: flex;
+  flex-direction: column;
   .btn {
     border: none;
     background-color: transparent;
@@ -20,7 +22,7 @@
   }
   .content {
     padding: 8px;
-    height: calc(100% - 43px);
+    flex: 1;
     .diggings {
       display: flex;
       align-items: center;
