@@ -7,7 +7,6 @@
 
 - |formatTime
 
-
 - destroy les subscription
 
 ngif

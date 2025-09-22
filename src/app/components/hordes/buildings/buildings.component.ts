@@ -57,7 +57,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   setCustomInventory(building: any) {
-    building.customInventory = buildingInventoryToUsableInventory(building.inventory)
+    building.customInventory = buildingInventoryToUsableInventory(building.inventory);
   }
 
   setEnoughRessources(building: any) {
@@ -117,17 +117,19 @@ export class BuildingsComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if (result.error) {
           console.log('error');
-        } else { /* empty */ }
+        } else {
+          /* empty */
+        }
         this.buildLoading = false;
       });
   }
 
-  contains(inv1: any, inv2: any) { //TODO: verify code is good // utils file
+  contains(inv1: any, inv2: any) {
+    //TODO: verify code is good // utils file
     return Object.keys(inv2).every(
-      key => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key],
+      (key) => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key],
     );
   }
-  
 
   isBuildable(building: BuildingModel): boolean {
     if (this.city) {

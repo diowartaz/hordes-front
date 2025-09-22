@@ -17,7 +17,6 @@ export enum UserSate {
   PLAYING = 'playing',
   DEAH_RECAP = 'deathRecap',
   RECAP = 'recap',
-
 }
 
 export const statesToRoutes: Record<UserSate, RoutesEnum> = {

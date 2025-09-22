@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
-import { buildingInventoryToUsableInventory, getNewInventory } from 'src/app/shared/utils/inventory';
+import {
+  buildingInventoryToUsableInventory,
+  getNewInventory,
+} from 'src/app/shared/utils/inventory';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { CityModel } from 'src/app/models/hordes';
 import { CommonModule } from '@angular/common';
@@ -27,7 +30,9 @@ export class DiggingsComponent implements OnInit, OnDestroy {
       this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
         this.city = city;
         if (!this.initDone && this.city) {
-          this.inventory = buildingInventoryToUsableInventory(this.city.inventory as Record<string, number>)//TODO meilleur typage
+          this.inventory = buildingInventoryToUsableInventory(
+            this.city.inventory as Record<string, number>,
+          ); //TODO meilleur typage
         }
       }),
     );
@@ -82,7 +87,9 @@ export class DiggingsComponent implements OnInit, OnDestroy {
         } else {
           this.nbDigs = 1;
           if (this.city) {
-            this.inventory = buildingInventoryToUsableInventory(this.city.inventory as Record<string, number>)//TODO meilleur typage
+            this.inventory = buildingInventoryToUsableInventory(
+              this.city.inventory as Record<string, number>,
+            ); //TODO meilleur typage
             this.addItemsFound(result.items_found_inventory);
           }
         }

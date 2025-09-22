@@ -46,6 +46,6 @@ export class AuthService {
 
   deleteAccount(): Observable<any> {
     const url: string = this.API_URL + 'delete';
-    return this.httpClient.post<any>(url, {})
+    return this.httpClient.post<any>(url, {});
   }
 }

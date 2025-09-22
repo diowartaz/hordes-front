@@ -9,7 +9,7 @@
     "heroku-postbuild": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier:fix": "prettier --write .",
+    "prettier": "prettier --write .",
     "lint": "ng lint"
   },
   "private": true,
