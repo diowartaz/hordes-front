@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
@@ -12,11 +12,11 @@ import { XPToLVLandXP } from 'src/app/shared/utils/xp';
   templateUrl: './header-logged-in.component.html',
   styleUrls: ['./header-logged-in.component.scss'],
 })
-export class HeaderLoggedInComponent {
+export class HeaderLoggedInComponent implements OnInit {
   subscriptions: Subscription[] = [];
-  xpString: string = '';
-  lvl: string = '1';
-  xpRatio: number = 50;
+  xpString = '';
+  lvl = '1';
+  xpRatio = 50;
 
   constructor(
     private cityService: CityService,
@@ -28,7 +28,7 @@ export class HeaderLoggedInComponent {
     this.subscriptions.push(
       this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
         if (stats != null) {
-          let { lvl, xpString, ratio } = XPToLVLandXP(stats.xp);
+          const { lvl, xpString, ratio } = XPToLVLandXP(stats.xp);
           this.lvl = lvl;
           this.xpString = xpString;
           this.xpRatio = ratio;

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './subgame.component.html',
   styleUrls: ['./subgame.component.scss'],
 })
-export class SubgameComponent {
+export class SubgameComponent implements OnInit {
   @Input() subgame: any;
   @Input() win: boolean | null = false;
   @Input() ranked_points: any = null;
-  @Input() otherPlayer: boolean = false;
+  @Input() otherPlayer = false;
 
   modifiedSubgame: any;
 

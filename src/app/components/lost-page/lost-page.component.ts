@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,8 @@ import { Router } from '@angular/router';
   templateUrl: './lost-page.component.html',
   styleUrls: ['./lost-page.component.scss'],
 })
-export class LostPageComponent implements OnInit {
+export class LostPageComponent {
   constructor(private router: Router) {}
-
-  ngOnInit(): void {}
 
   goHome() {
     this.router.navigate(['home']);

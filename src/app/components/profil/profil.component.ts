@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
@@ -10,10 +10,10 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })
-export class ProfilComponent {
-  getProfilLoading: boolean = false;
+export class ProfilComponent implements OnInit {
+  getProfilLoading = false;
   profil: any = null;
-  id: string = '';
+  id = '';
 
   constructor(
     private cityService: CityService,

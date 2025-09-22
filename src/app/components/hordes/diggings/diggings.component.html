@@ -42,7 +42,7 @@
       <div class="item" *ngFor="let item of inventory">
         <img
           [ngStyle]="{
-            'margin-top': item.name == 'stone' ? '-2px' : '0px',
+            'margin-top': item.name === 'stone' ? '-2px' : '0px',
           }"
           class="icon"
           src="{{ item.src }}"

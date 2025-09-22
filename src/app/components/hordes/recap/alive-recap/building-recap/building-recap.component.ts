@@ -1,15 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import { getTimeRequiredString } from 'src/app/shared/utils/time';
-import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 import { Subscription } from 'rxjs';
+import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
 
 @Component({
   selector: 'app-building-recap',
+  standalone: true,
   templateUrl: './building-recap.component.html',
   styleUrls: ['./building-recap.component.scss'],
 })
-export class BuildingRecapComponent {
+export class BuildingRecapComponent implements OnInit, OnDestroy {
   @Input() building: any = null;
   city: any = null;
   subscriptions: Subscription[] = [];
@@ -29,13 +30,11 @@ export class BuildingRecapComponent {
     if (!this.city) {
       return '__h__';
     }
-    return getTimeRequiredString(this.building.time * this.city.speeds.build);
+    return formatTimeToString(this.building.time * this.city.speeds.build);
   }
 
   initBuildingCustomInventory() {
-    this.building.customInventory = [
-      ...updateCustomInventory(getCustomInventoryDefault(), this.building.inventory),
-    ];
+    this.building.customInventory = buildingInventoryToUsableInventory(this.building.inventory);
   }
 
   ngOnDestroy() {

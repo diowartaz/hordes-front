@@ -13,7 +13,7 @@ import { CityService } from 'src/app/services/city/city.service';
   styleUrls: ['./create-city.component.scss'],
 })
 export class CreateCityComponent {
-  createCityLoading: boolean = false;
+  createCityLoading = false;
   constructor(
     private router: Router,
     private cityService: CityService,

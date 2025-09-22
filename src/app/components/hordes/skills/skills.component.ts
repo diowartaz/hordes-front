@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, of, take } from 'rxjs';
 import { CityModel } from 'src/app/models/hordes';
@@ -8,15 +9,17 @@ import { xpToLvl } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-skills',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
-export class SkillsComponent {
+export class SkillsComponent implements OnInit {
   city: any = null;
   skills: any = [];
-  learnLoading: boolean = false;
-  dialogMessage: string = 'init';
-  snackBarOpened: boolean = false;
+  learnLoading = false;
+  dialogMessage = 'init';
+  snackBarOpened = false;
 
   mappingSkillIdToIcon: any = {
     1: '../../../../assets/icons/pelle.gif',
@@ -25,7 +28,7 @@ export class SkillsComponent {
     4: '../../../assets/icons/sleep.gif',
   };
 
-  day_start_time: number = 0;
+  day_start_time = 0;
 
   constructor(
     private cityService: CityService,
@@ -79,18 +82,14 @@ export class SkillsComponent {
         take(1),
         catchError(() => of({ error: 'error' })),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log('error');
-        } else {
-        }
+      .subscribe(() => {
         this.learnLoading = false;
       });
   }
 
   isLearnable(skill: any) {
     if (this.city) {
-      let isLearnable: boolean =
+      const isLearnable: boolean =
         this.cityService.userPlayerCityTime$.getValue().seconds +
           skill.time * this.city.speeds.learn <=
           this.cityService.defaultValues$.getValue().day_end_time && skill.lvl < skill.lvl_max;

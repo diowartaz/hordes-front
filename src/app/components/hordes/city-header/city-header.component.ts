@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 
@@ -13,16 +12,15 @@ import { formatTimeToString } from 'src/app/shared/utils/time';
   templateUrl: './city-header.component.html',
   styleUrls: ['./city-header.component.scss'],
 })
-export class CityHeaderComponent {
+export class CityHeaderComponent implements OnInit {
   subscriptions: Subscription[] = [];
-  endDayLoading: boolean = false;
+  endDayLoading = false;
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
   city: any = null;
 
   constructor(
     private cityService: CityService,
     private router: Router,
-    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +53,7 @@ export class CityHeaderComponent {
       .subscribe((result: any) => {
         this.endDayLoading = false;
         if (result.error) {
+          /* empty */
         } else {
           this.router.navigate(['recap']); //or death recap handler by state guard
         }

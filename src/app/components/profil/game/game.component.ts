@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   @Input() game!: {
     win: boolean | null;
     player1: any;
@@ -21,8 +21,6 @@ export class GameComponent {
   };
 
   win: 'true' | 'false' | 'null' = 'null';
-
-  constructor() {}
 
   ngOnInit(): void {
     this.win = String(this.game.win) as 'true' | 'false' | 'null';

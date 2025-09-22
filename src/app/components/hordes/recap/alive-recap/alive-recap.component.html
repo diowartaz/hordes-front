@@ -10,7 +10,7 @@
           <span *ngIf="city.attackRecap.architect_shelter_buildings.length > 1">
             building discoveries
           </span>
-          <span *ngIf="city.attackRecap.architect_shelter_buildings.length == 1">
+          <span *ngIf="city.attackRecap.architect_shelter_buildings.length === 1">
             building discovery
           </span>
         </div>
@@ -27,7 +27,7 @@
         <div class="container-header">
           {{ library_discoveriesFormatted.length }}
           <span *ngIf="library_discoveriesFormatted.length > 1"> skill discoveries </span>
-          <span *ngIf="library_discoveriesFormatted.length == 1"> skill discovery </span>
+          <span *ngIf="library_discoveriesFormatted.length === 1"> skill discovery </span>
         </div>
 
         <div class="container-content">

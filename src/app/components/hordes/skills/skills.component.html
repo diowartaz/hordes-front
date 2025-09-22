@@ -16,8 +16,8 @@
       class="building"
       *ngFor="let skill of skills"
       [ngStyle]="{
-        background: skill.lvl == skill.lvl_max ? '#00000061' : 'transparent',
-        display: 0 == skill.lvl_max ? 'none' : 'flex',
+        background: skill.lvl === skill.lvl_max ? '#00000061' : 'transparent',
+        display: 0 === skill.lvl_max ? 'none' : 'flex',
       }"
     >
       <div class="line">
@@ -29,16 +29,16 @@
         </div>
 
         <div class="line-right">
-          <div class="efficacity" style="color: #31c531" *ngIf="skill.lvl == skill.lvl_max">
+          <div class="efficacity" style="color: #31c531" *ngIf="skill.lvl === skill.lvl_max">
             <span
-              *ngIf="skill.id != 4"
+              *ngIf="skill.id !== 4"
               class="material-symbols-outlined"
               style="font-size: 16px; margin-top: -1px"
             >
               keyboard_double_arrow_up
             </span>
             <span
-              *ngIf="skill.id == 4"
+              *ngIf="skill.id === 4"
               class="material-symbols-outlined"
               style="font-size: 16px; margin-top: -2px"
             >
@@ -60,17 +60,17 @@
         </div>
       </div>
 
-      <div class="line" *ngIf="skill.lvl != skill.lvl_max">
+      <div class="line" *ngIf="skill.lvl !== skill.lvl_max">
         <div class="efficacity">
           <span
-            *ngIf="skill.id != 4"
+            *ngIf="skill.id !== 4"
             class="material-symbols-outlined"
             style="font-size: 18px; margin-top: -2px"
           >
             keyboard_double_arrow_up
           </span>
           <span
-            *ngIf="skill.id == 4"
+            *ngIf="skill.id === 4"
             class="material-symbols-outlined"
             style="font-size: 16px; margin-right: 2px; margin-bottom: 2px"
           >

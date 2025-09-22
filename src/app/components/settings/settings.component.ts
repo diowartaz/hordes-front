@@ -11,7 +11,7 @@ import { CityService } from 'src/app/services/city/city.service';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
-  loading: boolean = true;
+  loading = true;
   constructor(
     private router: Router,
     private cityService: CityService,

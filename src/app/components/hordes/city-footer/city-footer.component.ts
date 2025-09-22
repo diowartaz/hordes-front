@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,14 +10,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './city-footer.component.html',
   styleUrls: ['./city-footer.component.scss'],
 })
-export class CityFooterComponent {
-  content: string = 'dig';
+export class CityFooterComponent implements OnInit {
+  content = 'dig';
   subscriptions: Subscription[] = [];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    let content = localStorage.getItem('play-route');
+    const content = localStorage.getItem('play-route');
     if (content) {
       if (content.length > 0) {
         this.content = content;

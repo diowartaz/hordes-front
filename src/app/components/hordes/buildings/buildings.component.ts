@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
-import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
-import { getTimeRequiredString } from 'src/app/shared/utils/time';
 import { BuildingModel, CityModel } from 'src/app/models/hordes';
+import { CommonModule } from '@angular/common';
+import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
+import { formatTimeToString } from 'src/app/shared/utils/time';
 
 @Component({
   selector: 'app-buildings',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './buildings.component.html',
   styleUrls: ['./buildings.component.scss'],
 })
-export class BuildingsComponent {
+export class BuildingsComponent implements OnInit, OnDestroy {
   city: any = null;
   buildings: any = [];
-  buildLoading: boolean = false;
+  buildLoading = false;
   subscriptions: Subscription[] = [];
-  dialogMessage: string = 'init';
-  snackBarOpened: boolean = false;
+  dialogMessage = 'init';
+  snackBarOpened = false;
   setTimeoutRefs: any = [];
 
   constructor(private cityService: CityService) {}
@@ -54,9 +57,7 @@ export class BuildingsComponent {
   }
 
   setCustomInventory(building: any) {
-    building.customInventory = [
-      ...updateCustomInventory(getCustomInventoryDefault(), building.inventory),
-    ];
+    building.customInventory = buildingInventoryToUsableInventory(building.inventory)
   }
 
   setEnoughRessources(building: any) {
@@ -69,7 +70,7 @@ export class BuildingsComponent {
         building.time * this.city.speeds.build <=
       this.cityService.defaultValues$.getValue().day_end_time;
     if (building.enoughTime) {
-      let timeoutSeconds =
+      const timeoutSeconds =
         (this.cityService.defaultValues$.getValue().day_end_time -
           building.time * this.city.speeds.build -
           this.cityService.userPlayerCityTime$.getValue().seconds) /
@@ -83,7 +84,7 @@ export class BuildingsComponent {
   }
 
   setBuildingTimeString(building: any) {
-    building.buildingTimeString = getTimeRequiredString(building.time * this.city.speeds.build);
+    building.buildingTimeString = formatTimeToString(building.time * this.city.speeds.build);
   }
 
   build(building: BuildingModel) {
@@ -116,25 +117,21 @@ export class BuildingsComponent {
       .subscribe((result: any) => {
         if (result.error) {
           console.log('error');
-        } else {
-        }
+        } else { /* empty */ }
         this.buildLoading = false;
       });
   }
 
-  contains(inv1: any, inv2: any) {
-    //return inv1 >= inv2
-    for (const itemName in inv2) {
-      if (!(inv1.hasOwnProperty(itemName) && inv1[itemName] >= inv2[itemName])) {
-        return false;
-      }
-    }
-    return true;
+  contains(inv1: any, inv2: any) { //TODO: verify code is good // utils file
+    return Object.keys(inv2).every(
+      key => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key],
+    );
   }
+  
 
   isBuildable(building: BuildingModel): boolean {
     if (this.city) {
-      let isBuildable: boolean =
+      const isBuildable: boolean =
         building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max;
       return isBuildable;
     } else {

@@ -14,7 +14,7 @@ export const stateGuard: CanActivateFn = (route) => {
     return true; // ✅ allowed
   }
 
-  const redirect = statesToRoutes[userState] ?? 'load-player';
+  const redirect = statesToRoutes[userState];
   return router.parseUrl('/' + redirect);
 };
 

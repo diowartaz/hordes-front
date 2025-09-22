@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
-import { updateCustomInventory, getCustomInventoryDefault } from 'src/app/shared/utils/inventory';
+import { buildingInventoryToUsableInventory, getNewInventory } from 'src/app/shared/utils/inventory';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { CityModel, StatsModel } from 'src/app/models/hordes';
+import { CityModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-diggings',
   templateUrl: './diggings.component.html',
   styleUrls: ['./diggings.component.scss'],
 })
-export class DiggingsComponent implements OnInit {
-  nbDigs: number = 1;
-  inventory: any = getCustomInventoryDefault();
+export class DiggingsComponent implements OnInit, OnDestroy {
+  nbDigs = 1;
+  inventory: any = getNewInventory();
   city: CityModel | null = null;
-  digLoading: boolean = false;
-  initDone: boolean = false;
+  digLoading = false;
+  initDone = false;
   subscriptions: Subscription[] = [];
 
   constructor(private cityService: CityService) {}
@@ -24,7 +24,7 @@ export class DiggingsComponent implements OnInit {
       this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
         this.city = city;
         if (!this.initDone && this.city) {
-          updateCustomInventory(this.inventory, this.city.inventory);
+          this.inventory = buildingInventoryToUsableInventory(this.city.inventory as Record<string, number>)//TODO meilleur typage
         }
       }),
     );
@@ -79,7 +79,7 @@ export class DiggingsComponent implements OnInit {
         } else {
           this.nbDigs = 1;
           if (this.city) {
-            updateCustomInventory(this.inventory, this.city.inventory);
+            this.inventory = buildingInventoryToUsableInventory(this.city.inventory as Record<string, number>)//TODO meilleur typage
             this.addItemsFound(result.items_found_inventory);
           }
         }
@@ -88,11 +88,11 @@ export class DiggingsComponent implements OnInit {
   }
 
   addItemsFound(items_found_inventory: any) {
-    for (let item of this.inventory) {
+    for (const item of this.inventory) {
       item.found = 0;
     }
-    for (let itemName in items_found_inventory) {
-      for (let item2 of this.inventory) {
+    for (const itemName in items_found_inventory) {
+      for (const item2 of this.inventory) {
         if (itemName == item2.name) {
           item2.found = items_found_inventory[itemName];
           break;

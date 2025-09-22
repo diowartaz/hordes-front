@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -8,8 +8,8 @@ import { GlobalService } from 'src/app/services/global/global.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  menuIsDisplayed: boolean = false;
+export class HeaderComponent implements OnInit, OnDestroy {
+  menuIsDisplayed = false;
 
   constructor(
     private router: Router,
