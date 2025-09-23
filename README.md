@@ -18,3 +18,9 @@ deplacer fonction utils (batiment, skills)
 styles et color white
 
 compsant pour les buildings et skills
+
+padding du content sur toutes les pages
+
+page welcome
+
+historique xp affichée

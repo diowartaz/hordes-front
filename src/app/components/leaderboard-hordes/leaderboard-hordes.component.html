@@ -1,70 +1,64 @@
-<div class="boundary">
-  <button class="icon-btn" (click)="goBackCityView()">
-    <span class="material-symbols-outlined icon"> keyboard_return </span>
+<button class="back-btn icon-btn" (click)="goBackCityView()">
+  <span class="material-symbols-outlined icon"> keyboard_return </span>
+</button>
+<div class="header container">
+  <img
+    style="height: 24px; width: 24px; margin-right: 8px"
+    src="../../../assets/icons/leaderboard.gif"
+  />Leaderboard
+</div>
+<div class="select">
+  <button class="select-btn" (click)="changeRanked(true)" [ngClass]="{ 'has-background': ranked }">
+    <img class="icon" src="../../../assets/icons/ranked.png" />
+    <span class="span">Ranked</span>
   </button>
-  <div class="header container">
-    <img
-      style="height: 24px; width: 24px; margin-right: 8px"
-      src="../../../assets/icons/leaderboard.gif"
-    />Leaderboard
+  <button
+    class="select-btn"
+    (click)="changeRanked(false)"
+    [ngClass]="{ 'has-background': !ranked }"
+  >
+    <img class="icon" src="../../../assets/icons/normal.png" />
+    <span class="span">Normal</span>
+  </button>
+</div>
+<div class="leaderboard-wrapper">
+  <div class="leaderboard-col">
+    <div class="leaderboard-row-element">Rank</div>
+    <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+      <div>{{ user.rank }}</div>
+    </div>
   </div>
-  <div class="select">
-    <button
-      class="select-btn"
-      (click)="changeRanked(true)"
-      [ngClass]="{ 'has-background': ranked }"
-    >
-      <img class="icon" src="../../../assets/icons/ranked.png" />
-      <span class="span">Ranked</span>
-    </button>
-    <button
-      class="select-btn"
-      (click)="changeRanked(false)"
-      [ngClass]="{ 'has-background': !ranked }"
-    >
-      <img class="icon" src="../../../assets/icons/normal.png" />
-      <span class="span">Normal</span>
-    </button>
+  <div class="leaderboard-col">
+    <div class="leaderboard-row-element">Username</div>
+    <div class="leaderboard-row-element username-element" *ngFor="let user of leaderboard">
+      <div class="username" (click)="goToProfil(user.user_id)">
+        <span class="material-symbols-outlined icon-search"> search </span> {{ user.username }}
+      </div>
+    </div>
   </div>
-  <div class="leaderboard-wrapper">
-    <div class="leaderboard-col">
-      <div class="leaderboard-row-element">Rank</div>
-      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
-        <div>{{ user.rank }}</div>
+  <div *ngIf="!ranked" class="leaderboard-col">
+    <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
+    <div
+      class="leaderboard-row-element"
+      *ngFor="let user of leaderboard"
+      style="justify-content: space-between; padding: 0px 4px"
+    >
+      <div class="perf-element">
+        <img class="icon" src="../../../assets/icons/calendar.ico" />
+        <span class="text-span">{{ user.personal_best_day }}</span>
+      </div>
+      <div class="perf-element">
+        <img class="icon" src="../../../assets/icons/zb.gif" />
+        <span class="text-span" style="margin-left: -1px">{{ user.personal_best_zb }}</span>
       </div>
     </div>
-    <div class="leaderboard-col">
-      <div class="leaderboard-row-element">Username</div>
-      <div class="leaderboard-row-element username-element" *ngFor="let user of leaderboard">
-        <div class="username" (click)="goToProfil(user.user_id)">
-          <span class="material-symbols-outlined icon-search"> search </span> {{ user.username }}
-        </div>
-      </div>
-    </div>
-    <div *ngIf="!ranked" class="leaderboard-col">
-      <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-      <div
-        class="leaderboard-row-element"
-        *ngFor="let user of leaderboard"
-        style="justify-content: space-between; padding: 0px 4px"
-      >
-        <div class="perf-element">
-          <img class="icon" src="../../../assets/icons/calendar.ico" />
-          <span class="text-span">{{ user.personal_best_day }}</span>
-        </div>
-        <div class="perf-element">
-          <img class="icon" src="../../../assets/icons/zb.gif" />
-          <span class="text-span" style="margin-left: -1px">{{ user.personal_best_zb }}</span>
-        </div>
-      </div>
-    </div>
+  </div>
 
-    <div *ngIf="ranked" class="leaderboard-col">
-      <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-      <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
-        <div>{{ user.ranked_points }}</div>
-        <img style="width: 20px; height: 20px" src="../../../assets/icons/ranked_points.png" />
-      </div>
+  <div *ngIf="ranked" class="leaderboard-col">
+    <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
+    <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
+      <div>{{ user.ranked_points }}</div>
+      <img style="width: 20px; height: 20px" src="../../../assets/icons/ranked_points.png" />
     </div>
   </div>
 </div>

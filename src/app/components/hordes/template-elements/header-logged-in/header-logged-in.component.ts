@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
-import { RoutesEnum } from 'src/app/models/router';
+import { RoutesEnum, UserSate } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
@@ -21,6 +21,7 @@ export class HeaderLoggedInComponent implements OnInit {
   lvl = '1';
   xpRatio = 50;
   goBackButton = false;
+  headerIsDisplayed = false;
 
   constructor(
     private cityService: CityService,
@@ -42,6 +43,9 @@ export class HeaderLoggedInComponent implements OnInit {
           this.xpString = xpString;
           this.xpRatio = ratio;
         }
+      }),
+      this.cityService.userPlayerState$.subscribe((userSate: UserSate) => {
+        this.headerIsDisplayed = [UserSate.PLAYING, UserSate.NO_CITY].includes(userSate)
       }),
     );
   }

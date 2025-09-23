@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
+import { UserSate } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 
@@ -17,6 +18,7 @@ export class CityHeaderComponent implements OnInit {
   endDayLoading = false;
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
   city: any = null;
+  headerIsDisplayed = false;
 
   constructor(
     private cityService: CityService,
@@ -31,8 +33,9 @@ export class CityHeaderComponent implements OnInit {
           this.endDay();
         }
       }),
-    );
-    this.subscriptions.push(
+      this.cityService.userPlayerState$.subscribe((userSate: UserSate) => {
+        this.headerIsDisplayed = [UserSate.PLAYING].includes(userSate);
+      }),
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         this.city = city;
       }),

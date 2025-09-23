@@ -1,4 +1,4 @@
-.boundary {
+:host {
   width: 100%;
   height: 100%;
   display: flex;
@@ -16,12 +16,6 @@
     margin-top: 42px;
     flex-direction: row;
   }
-}
-
-.icon-btn {
-  position: absolute;
-  left: 8px;
-  top: 8px;
 }
 
 .leaderboard-wrapper {

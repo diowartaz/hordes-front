@@ -23,5 +23,13 @@
     width: 100%;
     max-width: 600px;
     background-image: url('../assets/icons/background4.jpg');
+    display: flex;
+    flex-direction: column;
+    .headers {
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      gap: 8px;
+    }
   }
 }

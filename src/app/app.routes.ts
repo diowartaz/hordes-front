@@ -55,6 +55,7 @@ export const routes: Routes = [
   {
     path: RoutesEnum.SETTINGS,
     component: SettingsComponent,
+    canActivate: [authGuard],
   },
   {
     path: RoutesEnum.LEADERBOARD,

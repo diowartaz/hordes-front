@@ -1,4 +1,4 @@
-<div class="boundary">
+<div *ngIf="headerIsDisplayed" class="boundary">
   <div class="left-part">
     <button *ngIf="goBackButton" class="icon-btn" (click)="goBack()">
       <span class="material-symbols-outlined icon"> keyboard_return </span>

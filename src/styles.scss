@@ -39,7 +39,7 @@ button {
 html,
 body {
   min-height: 100vh;
-  color: white;
+  //color: white;
 }
 
 .dialog-class {
@@ -117,6 +117,7 @@ body {
   justify-content: center;
   font-size: 24px;
   padding: 8px;
+  color: white;
   .icon {
     width: 24px;
     height: 24px;
@@ -142,4 +143,11 @@ body {
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
+}
+
+.back-btn {
+  position: absolute;
+  left: 8px;
+  top: 50px;
+  background-color: transparent !important;
 }
