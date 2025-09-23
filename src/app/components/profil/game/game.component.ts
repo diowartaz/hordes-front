@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports:[SubgameComponent],
+  imports:[SubgameComponent, CommonModule],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })

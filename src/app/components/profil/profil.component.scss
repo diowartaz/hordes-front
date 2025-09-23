@@ -23,7 +23,7 @@
   }
   .ok-profil {
     width: 100%;
-    height: calc(100% + 8px);
+    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -43,7 +43,7 @@
       flex-direction: column;
       gap: 16px;
       width: 100%;
-      height: calc(100% - 148px);
+      flex: 1;
       .general-info {
         display: flex;
         flex-direction: column;
@@ -65,7 +65,7 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
-        height: calc(100% - 111px);
+        flex: 1;
         overflow: auto;
         padding: 4px;
         margin: -4px;

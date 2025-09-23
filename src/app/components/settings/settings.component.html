@@ -1,5 +1,5 @@
 <div class="boundary">
-  <button class="icon-btn" (click)="goBackCityView()">
+  <button *ngIf="!goBackButton" class="icon-btn" (click)="goBackCityView()">
     <span class="material-symbols-outlined icon"> keyboard_return </span>
   </button>
   <div class="header container">Settings</div>

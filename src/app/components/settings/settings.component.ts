@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -7,16 +8,23 @@ import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-settings',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
   loading = true;
+  goBackButton = false;
   constructor(
     private router: Router,
     private cityService: CityService,
     private authService: AuthService,
-  ) {}
+    private route: ActivatedRoute
+  ) {
+    this.goBackButton = this.route.snapshot.data['goBackButton'] ?? false;
+    console.log(this.goBackButton)
+  }
 
   logOut() {
     localStorage.removeItem('token');

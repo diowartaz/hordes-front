@@ -15,6 +15,8 @@ import { SkillsComponent } from './components/hordes/actions/skills/skills.compo
 import { BuildingsComponent } from './components/hordes/actions/buildings/buildings.component';
 import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
 import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
+import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
+import { ProfilComponent } from './components/profil/profil.component';
 
 export const routes: Routes = [
   {
@@ -44,11 +46,23 @@ export const routes: Routes = [
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserSate.RECAP] },
   },
-    {
+  {
     path: RoutesEnum.DEATH_RECAP,
     component: DeathRecapComponent,
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserSate.DEAH_RECAP] },
+  },
+  {
+    path: RoutesEnum.SETTINGS,
+    component: SettingsComponent,
+  },
+  {
+    path: RoutesEnum.LEADERBOARD,
+    component: LeaderboardHordesComponent,
+  },
+  {
+    path: RoutesEnum.PROFIL,
+    component: ProfilComponent,
   },
   {
     path: RoutesEnum.PLAY,
@@ -56,11 +70,6 @@ export const routes: Routes = [
     canActivate: [authGuard, gameLoadedGuard, stateGuard], //authGuard, gameLoadedGuard, stateGuard
     data: { allowedStates: [UserSate.PLAYING] },
     children: [
-      {
-        path: '',
-        redirectTo: 'dig',
-        pathMatch: 'full',
-      },
       {
         path: 'dig',
         component: DiggingsComponent,
@@ -73,82 +82,18 @@ export const routes: Routes = [
         path: 'build',
         component: BuildingsComponent,
       },
+
       {
-        path: RoutesEnum.SETTINGS,
-        component: SettingsComponent,
+        path: '',
+        redirectTo: 'dig',
+        pathMatch: 'full',
       },
     ],
   },
   { path: '', redirectTo: RoutesEnum.PLAY, pathMatch: 'full' },
   { path: '**', redirectTo: RoutesEnum.PLAY },
 ];
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { CreateCityComponent } from './components/create-city/create-city.component';
-// import { HordesComponent } from './components/hordes/hordes.component';
-// import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
-// import { LoadPlayerComponent } from './components/load-player/load-player.component';
-// import { LoginComponent } from './components/login/login.component';
-// import { LostPageComponent } from './components/lost-page/lost-page.component';
-// import { ProfilComponent } from './components/profil/profil.component';
-// import { SettingsComponent } from './components/settings/settings.component';
-// import { SignUpComponent } from './components/sign-up/sign-up.component';
-// import { AuthGuard } from './shared/guards/auth/auth.guard';
-// import { CityNotNullGuard } from './shared/guards/city-not-null/city-not-null.guard';
-// import { GameLoadedGuard } from './shared/guards/game-loaded/game-loaded.guard';
-// import { NotauthGuard } from './shared/guards/notauth/notauth.guard';
-// import { StateGuard } from './shared/guards/state/state.guard';
-// import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
-// import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
-// import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
-// import { SkillsComponent } from './components/hordes/skills/skills.component';
-// import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
 
-// const routes: Routes = [
-//   {
-//     path: 'signin',
-//     component: LoginComponent,
-//     canActivate: [NotauthGuard],
-//   },
-//   {
-//     path: 'signup',
-//     component: SignUpComponent,
-//     canActivate: [NotauthGuard],
-//   },
-//   {
-//     path: 'load-player',
-//     component: LoadPlayerComponent,
-//     canActivate: [AuthGuard],
-//   },
-//   {
-//     path: 'create-city',
-//     component: CreateCityComponent,
-//     canActivate: [AuthGuard, GameLoadedGuard],
-//   },
-//   {
-//     path: 'play',
-//     component: HordesComponent,
-//     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
-//     children: [
-//       {
-//         path: '',
-//         redirectTo: 'dig',
-//         pathMatch: 'full',
-//       },
-//       {
-//         path: 'dig',
-//         component: DiggingsComponent,
-//       },
-//       {
-//         path: 'learn',
-//         component: SkillsComponent,
-//       },
-//       {
-//         path: 'build',
-//         component: BuildingsComponent,
-//       },
-//     ],
-//   },
 //   {
 //     path: 'settings',
 //     component: SettingsComponent,

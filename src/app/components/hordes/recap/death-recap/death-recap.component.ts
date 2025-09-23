@@ -19,7 +19,10 @@ export class DeathRecapComponent {
   constructor(
     private router: Router,
     private cityService: CityService,
-  ) {}
+  ) {
+
+    console.log(this.cityService.userPlayerStats$.getValue())
+  }
 
   getUserPlayerCity$() {
     return this.cityService.userPlayerCity$;
