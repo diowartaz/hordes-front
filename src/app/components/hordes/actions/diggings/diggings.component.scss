@@ -8,21 +8,7 @@
     color: white;
     padding: 0px;
   }
-  .header {
-    display: flex;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    padding: 8px;
-    .icon {
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
-    }
-  }
-  .content {
-    padding: 8px;
-    flex: 1;
+  .play-content {
     .diggings {
       display: flex;
       align-items: center;
@@ -78,9 +64,9 @@
     .inventory {
       display: flex;
       flex-direction: column;
-      height: calc(100% - 67px);
       align-items: center;
       justify-content: center;
+      flex:1;
       .item {
         display: flex;
         margin-bottom: 8px;

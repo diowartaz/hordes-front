@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CityFooterComponent } from './city-footer/city-footer.component';
-import { CityHeaderComponent } from './city-header/city-header.component';
-import { HeaderLoggedInComponent } from './header-logged-in/header-logged-in.component';
+import { CityFooterComponent } from './template-elements/city-footer/city-footer.component';
+import { CityHeaderComponent } from './template-elements/city-header/city-header.component';
+import { HeaderLoggedInComponent } from './template-elements/header-logged-in/header-logged-in.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

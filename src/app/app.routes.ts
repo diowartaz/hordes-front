@@ -10,9 +10,9 @@ import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
 import { SettingsComponent } from './components/settings/settings.component';
 import { stateGuard } from './shared/guards/state.guard';
 import { CreateCityComponent } from './components/create-city/create-city.component';
-import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
-import { SkillsComponent } from './components/hordes/skills/skills.component';
-import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
+import { DiggingsComponent } from './components/hordes/actions/diggings/diggings.component';
+import { SkillsComponent } from './components/hordes/actions/skills/skills.component';
+import { BuildingsComponent } from './components/hordes/actions/buildings/buildings.component';
 import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
 import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
 

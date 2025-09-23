@@ -16,3 +16,7 @@ enelver les boundary
 type any
 
 deplacer fonction utils (batiment, skills)
+
+styles et color white
+
+compsant pour les buildings et skills
