@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
@@ -5,6 +6,8 @@ import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-leaderboard-hordes',
+  standalone: true,
+  imports:[CommonModule],
   templateUrl: './leaderboard-hordes.component.html',
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })

@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { GameComponent } from './game/game.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-profil',
+  standalone: true,
+  imports: [CommonModule, GameComponent, MatProgressSpinnerModule],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })
@@ -44,7 +48,7 @@ export class ProfilComponent implements OnInit {
   getProfil() {
     this.getProfilLoading = true;
     if (this.id == '') {
-      this.id = this.authService.getUserId();
+      this.id = this.authService.getUserId() || "";
     }
 
     this.cityService

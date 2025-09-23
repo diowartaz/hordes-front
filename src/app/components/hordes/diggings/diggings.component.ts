@@ -85,7 +85,7 @@ export class DiggingsComponent implements OnInit, OnDestroy {
         if (result.error) {
           console.log('error');
         } else {
-          this.nbDigs = 1;
+          //this.nbDigs = 1;
           if (this.city) {
             this.inventory = buildingInventoryToUsableInventory(
               this.city.inventory as Record<string, number>,

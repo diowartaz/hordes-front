@@ -13,6 +13,8 @@ import { CreateCityComponent } from './components/create-city/create-city.compon
 import { DiggingsComponent } from './components/hordes/diggings/diggings.component';
 import { SkillsComponent } from './components/hordes/skills/skills.component';
 import { BuildingsComponent } from './components/hordes/buildings/buildings.component';
+import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
+import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
 
 export const routes: Routes = [
   {
@@ -37,10 +39,22 @@ export const routes: Routes = [
     data: { allowedStates: [UserSate.NO_CITY] },
   },
   {
+    path: RoutesEnum.RECAP,
+    component: AliveRecapComponent,
+    canActivate: [authGuard, gameLoadedGuard, stateGuard],
+    data: { allowedStates: [UserSate.RECAP] },
+  },
+    {
+    path: RoutesEnum.DEATH_RECAP,
+    component: DeathRecapComponent,
+    canActivate: [authGuard, gameLoadedGuard, stateGuard],
+    data: { allowedStates: [UserSate.DEAH_RECAP] },
+  },
+  {
     path: RoutesEnum.PLAY,
     component: HordesComponent,
-    canActivate: [stateGuard], //authGuard, gameLoadedGuard, stateGuard
-    //data: { allowedStates: [UserSate.PLAYING] },
+    canActivate: [authGuard, gameLoadedGuard, stateGuard], //authGuard, gameLoadedGuard, stateGuard
+    data: { allowedStates: [UserSate.PLAYING] },
     children: [
       {
         path: '',

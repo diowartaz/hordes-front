@@ -3,10 +3,12 @@ import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { Subscription } from 'rxjs';
 import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-building-recap',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './building-recap.component.html',
   styleUrls: ['./building-recap.component.scss'],
 })

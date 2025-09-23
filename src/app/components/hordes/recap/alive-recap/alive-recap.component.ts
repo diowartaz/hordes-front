@@ -5,11 +5,12 @@ import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
 import { SkillRecapComponent } from './skill-recap/skill-recap.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-alive-recap',
   standalone: true,
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, CommonModule],
   templateUrl: './alive-recap.component.html',
   styleUrls: ['./alive-recap.component.scss'],
 })

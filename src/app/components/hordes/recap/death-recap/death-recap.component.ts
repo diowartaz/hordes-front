@@ -2,9 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
+import { RecapHeaderComponent } from '../recap-header/recap-header.component';
+import { GameComponent } from 'src/app/components/profil/game/game.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-death-recap',
+  standalone: true,
+  imports: [RecapHeaderComponent, GameComponent, CommonModule],
   templateUrl: './death-recap.component.html',
   styleUrls: ['./death-recap.component.scss'],
 })

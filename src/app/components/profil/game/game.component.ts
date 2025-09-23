@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SubgameComponent } from './subgame/subgame.component';
 
 @Component({
   selector: 'app-game',
+  standalone: true,
+  imports:[SubgameComponent],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })

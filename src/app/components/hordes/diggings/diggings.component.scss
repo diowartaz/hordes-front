@@ -32,8 +32,7 @@
         height: 16px;
       }
       .select-nb-digs {
-        display: none;
-        // display: flex;
+        display: flex;
         color: white;
         height: fit-content;
         width: 50%;
@@ -67,7 +66,6 @@
         padding: 16px;
         border-radius: 4px;
         background: var(--primary-yellow);
-        // width: 50%;
         margin-top: 16px;
         justify-content: center;
         min-width: 160px;
@@ -86,7 +84,6 @@
       .item {
         display: flex;
         margin-bottom: 8px;
-        // position: relative;
         .nb {
           color: white;
           margin-left: 4px;
@@ -101,7 +98,6 @@
           font-size: 14px;
           font-weight: 700;
           width: 0px;
-          // position: absolute;
         }
       }
       .item:last-child {

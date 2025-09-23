@@ -15,6 +15,7 @@ export const stateGuard: CanActivateFn = (route) => {
   }
 
   const redirect = statesToRoutes[userState];
+  console.log(userState, allowedStates, redirect);
   return router.parseUrl('/' + redirect);
 };
 
