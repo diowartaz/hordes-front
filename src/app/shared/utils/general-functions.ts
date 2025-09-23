@@ -1,9 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-export function myLittleBoy() {
-  console.log('Hello World');
-}
-
 export function handleError(operation: string, apiURL: string) {
   return (err: any) => {
     const errMsg = `error in ${operation}() retreiving ${apiURL}`;
