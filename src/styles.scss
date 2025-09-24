@@ -148,6 +148,65 @@ body {
 .back-btn {
   position: absolute;
   left: 8px;
-  top: 50px;
+  top: 8px;
   background-color: transparent !important;
+}
+
+.classic-page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 8px;
+  position: relative;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    flex: 1;
+  }
+}
+
+.settings-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  padding: 16px;
+  gap: 16px;
+  border-radius: 4px;
+  width: 100%;
+  box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
+  max-width: 400px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-yellow) 40%,
+    #ee7752 50%,
+    var(--primary-yellow) 60%
+  );
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
