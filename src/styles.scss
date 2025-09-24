@@ -145,40 +145,9 @@ body {
   }
 }
 
-.back-btn {
-  position: absolute;
-  left: 8px;
-  top: 8px;
-  background-color: transparent !important;
-}
 
-.classic-page {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 8px;
-  position: relative;
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 32px;
-    padding: 32px;
-    margin-bottom: 16px;
-  }
-  .content {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    gap: 16px;
-    flex: 1;
-  }
-}
 
-.settings-button {
+.yellow-button {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
+import { ClassicPageComponent } from "../classic-page.component";
 
 @Component({
   selector: 'app-leaderboard-hordes',
   standalone: true,
-  imports:[CommonModule],
+  imports: [CommonModule, ClassicPageComponent],
   templateUrl: './leaderboard-hordes.component.html',
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })

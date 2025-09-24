@@ -43,12 +43,12 @@
 </div>
 
 <div class="footer">
-  <button (click)="createCity(false)">
+  <button class="yellow-button" (click)="createCity(false)">
     <mat-spinner *ngIf="createCityLoading" diameter="24" class="spinner"></mat-spinner>
     <img class="icon" src="../../../assets/icons/normal.png" />
     <div style="height: 24px; display: flex; align-items: center">Play normal</div>
   </button>
-  <button (click)="createCity(true)">
+  <button class="yellow-button" (click)="createCity(true)">
     <mat-spinner *ngIf="createCityLoading" diameter="24" class="spinner"></mat-spinner>
     <img class="icon" src="../../../assets/icons/ranked.png" />
     <div style="height: 24px; display: flex; align-items: center">Play ranked</div>

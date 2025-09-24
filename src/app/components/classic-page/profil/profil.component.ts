@@ -6,11 +6,12 @@ import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ClassicPageComponent } from "../classic-page.component";
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [CommonModule, GameComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, GameComponent, MatProgressSpinnerModule, ClassicPageComponent],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })

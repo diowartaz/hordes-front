@@ -7,7 +7,7 @@ import { RoutesEnum, UserSate } from './models/router';
 import { notAuthenticatedGuard } from './shared/guards/not-authenticated.guard';
 import { authGuard } from './shared/guards/auth.guard';
 import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
-import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsComponent } from './components/classic-page/settings/settings.component';
 import { stateGuard } from './shared/guards/state.guard';
 import { CreateCityComponent } from './components/create-city/create-city.component';
 import { DiggingsComponent } from './components/hordes/actions/diggings/diggings.component';
@@ -15,8 +15,8 @@ import { SkillsComponent } from './components/hordes/actions/skills/skills.compo
 import { BuildingsComponent } from './components/hordes/actions/buildings/buildings.component';
 import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
 import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
-import { LeaderboardHordesComponent } from './components/leaderboard-hordes/leaderboard-hordes.component';
-import { ProfilComponent } from './components/profil/profil.component';
+import { ProfilComponent } from './components/classic-page/profil/profil.component';
+import { LeaderboardHordesComponent } from './components/classic-page/leaderboard-hordes/leaderboard-hordes.component';
 
 export const routes: Routes = [
   {

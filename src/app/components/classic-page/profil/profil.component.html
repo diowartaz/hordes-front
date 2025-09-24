@@ -1,17 +1,13 @@
-<div class="classic-page">
-  <button class="back-btn icon-btn" (click)="goBack()">
-    <span class="material-symbols-outlined icon"> keyboard_return </span>
-  </button>
-  <div class="header container">
+<app-classic-page [title]="profil.username">
+  <ng-container icon>
     <span
       class="material-symbols-outlined"
       style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px"
     >
       person
     </span>
-    {{ profil.username }}
-  </div>
-  <div class="content">
+  </ng-container>
+  <ng-container content>
     <div class="general-info">
       <div class="line">
         <div class="container surcharge-container">
@@ -51,9 +47,5 @@
         [game]="game"
       ></app-game>
     </div>
-  </div>
-</div>
-<div class="no-profil" *ngIf="!profil">
-  <mat-spinner diameter="48" class="spinner"></mat-spinner>
-  <div class="text">Loading profil...</div>
-</div>
+  </ng-container>
+</app-classic-page>

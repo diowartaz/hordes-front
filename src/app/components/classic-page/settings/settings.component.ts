@@ -5,11 +5,12 @@ import { catchError, of, take } from 'rxjs';
 import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
+import { ClassicPageComponent } from '../classic-page.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ClassicPageComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
@@ -20,10 +21,10 @@ export class SettingsComponent {
     private router: Router,
     private cityService: CityService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.goBackButton = this.route.snapshot.data['goBackButton'] ?? false;
-    console.log(this.goBackButton)
+    console.log(this.goBackButton);
   }
 
   logOut() {
