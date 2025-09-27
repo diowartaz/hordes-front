@@ -18,5 +18,10 @@ trigger le loadplayer sur les classic pages
 que le permier header dans les recap
 refresh de la page qui passe du build à dig
 
+-----------------------------
+sign in with google
+https://www.youtube.com/watch?v=GEht4l4n4K8 (pas vraiment complet)
+console.cloud.google
+
 ------------ ok ------------------
 classic-page faire un composant qui prend un titre + icon et prend un ng-content
