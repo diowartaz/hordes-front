@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
-import { RoutesEnum, UserSate } from 'src/app/models/router';
+import { RoutesEnum, UserState } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
-import {  CommonModule, Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-header-logged-in',
   standalone: true,
-  imports:[CommonModule],
+  imports: [CommonModule],
   templateUrl: './header-logged-in.component.html',
   styleUrls: ['./header-logged-in.component.scss'],
 })
@@ -27,12 +27,8 @@ export class HeaderLoggedInComponent implements OnInit {
     private cityService: CityService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute,
     private location: Location,
-  ) {
-    this.goBackButton = this.route.snapshot.data['goBackButton'] ?? false;
-    console.log("HeaderLoggedInComponent", this.goBackButton, this.route)
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -44,8 +40,8 @@ export class HeaderLoggedInComponent implements OnInit {
           this.xpRatio = ratio;
         }
       }),
-      this.cityService.userPlayerState$.subscribe((userSate: UserSate) => {
-        this.headerIsDisplayed = [UserSate.PLAYING, UserSate.NO_CITY].includes(userSate)
+      this.cityService.userPlayerState$.subscribe((userState: UserState) => {
+        this.headerIsDisplayed = [UserState.PLAYING, UserState.NO_CITY].includes(userState);
       }),
     );
   }

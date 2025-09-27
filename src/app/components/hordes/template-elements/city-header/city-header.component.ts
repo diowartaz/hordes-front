@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
-import { UserSate } from 'src/app/models/router';
+import { UserState } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 
@@ -33,8 +33,8 @@ export class CityHeaderComponent implements OnInit {
           this.endDay();
         }
       }),
-      this.cityService.userPlayerState$.subscribe((userSate: UserSate) => {
-        this.headerIsDisplayed = [UserSate.PLAYING].includes(userSate);
+      this.cityService.userPlayerState$.subscribe((userState: UserState) => {
+        this.headerIsDisplayed = [UserState.PLAYING].includes(userState);
       }),
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         this.city = city;

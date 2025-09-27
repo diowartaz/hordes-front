@@ -1,47 +1,57 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { finalize, take } from 'rxjs';
+import { AuthResponse } from 'src/app/models/auth';
+import { RoutesEnum } from 'src/app/models/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class CreateCityComponent {
-  createCityLoading = {
-    normal: false,
-    ranked: false,
-  };
+export class HomeComponent {
+  loading = signal(false);
+
   constructor(
     private router: Router,
-    private cityService: CityService,
+    private authService: AuthService,
   ) {}
 
-  createCity(ranked: boolean) {
-    if (this.createCityLoading.normal || this.createCityLoading.ranked) {
+  loginTemp() {
+    if (this.loading()) {
       return;
     }
-    this.createCityLoading[ranked ? 'ranked' : 'normal'] = true;
-    this.cityService
-      .new(ranked)
+    this.loading.set(true);
+
+    this.authService
+      .signInTemp()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        }),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log('error create city');
-        } else {
-          localStorage.setItem('nb-dig', "1");
-          localStorage.setItem('play-route', 'dig');
-          this.router.navigate(['play']);
-        }
-        this.createCityLoading[ranked ? 'ranked' : 'normal'] = false;
+      .subscribe((result: AuthResponse) => {
+        this.handleAuthSuccess(result);
       });
+  }
+
+  private handleAuthSuccess(result: AuthResponse): void {
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('login', result.email);
+    this.router.navigate([RoutesEnum.LOAD_PLAYER]);
+  }
+
+  useYourAccount() {
+    this.router.navigate([RoutesEnum.SIGNIN]);
+  }
+  createAnAccount() {
+    this.router.navigate([RoutesEnum.SIGNUP]);
   }
 }

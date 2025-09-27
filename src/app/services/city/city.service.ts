@@ -5,7 +5,7 @@ import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
 import { StatsModel } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { UserSate } from 'src/app/models/router';
+import { UserState } from 'src/app/models/router';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ export class CityService {
     ranked_points: 500,
   });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerState$: BehaviorSubject<UserSate> = new BehaviorSubject<UserSate>(
-    UserSate.NOT_LOADED_PLAYER,
+  userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(
+    UserState.NOT_LOADED_PLAYER,
   );
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -98,7 +98,7 @@ export class CityService {
       map((response: any) => {
         this.log('delete', response);
         this.userPlayerCity$.next(null);
-        this.userPlayerState$.next(UserSate.NO_CITY);
+        this.userPlayerState$.next(UserState.NO_CITY);
         return response;
       }),
       catchError(handleError('delete', url)),
@@ -224,7 +224,7 @@ export class CityService {
         //city
         this.log('startDay', response);
         this.userPlayerCity$.next(response.city);
-        this.userPlayerState$.next(UserSate.PLAYING);
+        this.userPlayerState$.next(UserState.PLAYING);
         this.updateTime(response.city);
         return response;
       }),

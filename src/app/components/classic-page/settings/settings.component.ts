@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { RoutesEnum } from 'src/app/models/router';
+import { RoutesEnum, UserState } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { ClassicPageComponent } from '../classic-page.component';
@@ -21,19 +21,12 @@ export class SettingsComponent {
     private router: Router,
     private cityService: CityService,
     private authService: AuthService,
-    private route: ActivatedRoute,
-  ) {
-    this.goBackButton = this.route.snapshot.data['goBackButton'] ?? false;
-    console.log(this.goBackButton);
-  }
+  ) {}
 
   logOut() {
     localStorage.removeItem('token');
-    this.router.navigate(['signin']);
-  }
-
-  goBackCityView() {
-    this.router.navigate([RoutesEnum.PLAY, localStorage.getItem('play-route')]);
+    this.cityService.userPlayerState$.next(UserState.NOT_LOADED_PLAYER);
+    this.router.navigate([RoutesEnum.HOME]);
   }
 
   deleteAccount() {

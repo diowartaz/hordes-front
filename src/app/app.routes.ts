@@ -3,7 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HordesComponent } from './components/hordes/hordes.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoadPlayerComponent } from './components/load-player/load-player.component';
-import { RoutesEnum, UserSate } from './models/router';
+import { RoutesEnum, UserState } from './models/router';
 import { notAuthenticatedGuard } from './shared/guards/not-authenticated.guard';
 import { authGuard } from './shared/guards/auth.guard';
 import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
@@ -17,8 +17,14 @@ import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive
 import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
 import { ProfilComponent } from './components/classic-page/profil/profil.component';
 import { LeaderboardHordesComponent } from './components/classic-page/leaderboard-hordes/leaderboard-hordes.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
+  {
+    path: RoutesEnum.HOME,
+    component: HomeComponent,
+    canActivate: [notAuthenticatedGuard],
+  },
   {
     path: RoutesEnum.SIGNIN,
     component: LoginComponent,
@@ -38,19 +44,19 @@ export const routes: Routes = [
     path: RoutesEnum.CREATE_CITY,
     component: CreateCityComponent,
     canActivate: [authGuard, gameLoadedGuard],
-    data: { allowedStates: [UserSate.NO_CITY] },
+    data: { allowedStates: [UserState.NO_CITY] },
   },
   {
     path: RoutesEnum.RECAP,
     component: AliveRecapComponent,
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
-    data: { allowedStates: [UserSate.RECAP] },
+    data: { allowedStates: [UserState.RECAP] },
   },
   {
     path: RoutesEnum.DEATH_RECAP,
     component: DeathRecapComponent,
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
-    data: { allowedStates: [UserSate.DEAH_RECAP] },
+    data: { allowedStates: [UserState.DEAH_RECAP] },
   },
   {
     path: RoutesEnum.SETTINGS,
@@ -69,7 +75,7 @@ export const routes: Routes = [
     path: RoutesEnum.PLAY,
     component: HordesComponent,
     canActivate: [authGuard, gameLoadedGuard, stateGuard], //authGuard, gameLoadedGuard, stateGuard
-    data: { allowedStates: [UserSate.PLAYING] },
+    data: { allowedStates: [UserState.PLAYING] },
     children: [
       {
         path: 'dig',

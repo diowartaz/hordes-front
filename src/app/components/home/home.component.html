@@ -42,15 +42,16 @@
   </div>
 </div>
 
-<div class="footer">
-  <button class="yellow-button" (click)="createCity(false)">
-    <mat-spinner *ngIf="createCityLoading.normal" diameter="24" class="spinner"></mat-spinner>
-    <img class="icon" src="../../../assets/icons/normal.png" />
-    <div style="height: 24px; display: flex; align-items: center">Play normal</div>
+<div class="buttons">
+  <button class="yellow-button" (click)="loginTemp()">
+    <span>Play</span>
   </button>
-  <button class="yellow-button" (click)="createCity(true)">
-    <mat-spinner *ngIf="createCityLoading.ranked" diameter="24" class="spinner"></mat-spinner>
-    <img class="icon" src="../../../assets/icons/ranked.png" />
-    <div style="height: 24px; display: flex; align-items: center">Play ranked</div>
-  </button>
+  <div class="secondary-buttons">
+    <button class="yellow-button" (click)="useYourAccount()">
+      <span>Use your account</span>
+    </button>
+    <button class="yellow-button" (click)="createAnAccount()">
+      <span>Create an account</span>
+    </button>
+  </div>
 </div>

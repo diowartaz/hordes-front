@@ -6,7 +6,8 @@ import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ClassicPageComponent } from "../classic-page.component";
+import { ClassicPageComponent } from '../classic-page.component';
+import { UserState } from 'src/app/models/router';
 
 @Component({
   selector: 'app-profil',
@@ -28,6 +29,10 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.cityService.userPlayerState$.getValue());
+    if (this.cityService.userPlayerState$.getValue() === UserState.NOT_LOADED_PLAYER) {
+      this.cityService.loadPlayer();
+    }
     this.route.queryParams.subscribe((queryParams: any) => {
       if (queryParams.user_id) {
         this.id = queryParams.user_id;
@@ -49,7 +54,7 @@ export class ProfilComponent implements OnInit {
   getProfil() {
     this.getProfilLoading = true;
     if (this.id == '') {
-      this.id = this.authService.getUserId() || "";
+      this.id = this.authService.getUserId() || '';
     }
 
     this.cityService

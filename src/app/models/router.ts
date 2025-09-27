@@ -1,4 +1,5 @@
 export enum RoutesEnum {
+  HOME = 'home',
   PLAY = 'play',
   SIGNIN = 'signin',
   SIGNUP = 'signup',
@@ -11,7 +12,7 @@ export enum RoutesEnum {
   DEATH_RECAP = 'death-recap',
 }
 
-export enum UserSate {
+export enum UserState {
   NOT_LOADED_PLAYER = 'notLoadedPlayer',
   NO_CITY = 'noCity',
   PLAYING = 'playing',
@@ -19,12 +20,12 @@ export enum UserSate {
   RECAP = 'recap',
 }
 
-export const statesToRoutes: Record<UserSate, RoutesEnum> = {
-  [UserSate.NOT_LOADED_PLAYER]: RoutesEnum.LOAD_PLAYER,
-  [UserSate.NO_CITY]: RoutesEnum.CREATE_CITY,
-  [UserSate.PLAYING]: RoutesEnum.PLAY,
-  [UserSate.DEAH_RECAP]: RoutesEnum.DEATH_RECAP,
-  [UserSate.RECAP]: RoutesEnum.RECAP,
+export const statesToRoutes: Record<UserState, RoutesEnum> = {
+  [UserState.NOT_LOADED_PLAYER]: RoutesEnum.LOAD_PLAYER,
+  [UserState.NO_CITY]: RoutesEnum.CREATE_CITY,
+  [UserState.PLAYING]: RoutesEnum.PLAY,
+  [UserState.DEAH_RECAP]: RoutesEnum.DEATH_RECAP,
+  [UserState.RECAP]: RoutesEnum.RECAP,
 };
 
 export const getUserStateCorrespondingToTheUrlTheUserIsTryingToAccess = (url: string) => {
