@@ -6,11 +6,11 @@ import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
-  selector: 'app-create-city',
+  selector: 'app-home',
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
-  templateUrl: './create-city.component.html',
-  styleUrls: ['./create-city.component.scss'],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class CreateCityComponent {
   createCityLoading = {

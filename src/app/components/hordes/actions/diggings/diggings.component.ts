@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./diggings.component.scss'],
 })
 export class DiggingsComponent implements OnInit, OnDestroy {
-  nbDigs = 1;
+  nbDigs = Number(localStorage.getItem('nb-dig')) || 1;
   inventory: any = getNewInventory();
   city: CityModel | null = null;
   digLoading = false;
@@ -40,6 +40,7 @@ export class DiggingsComponent implements OnInit, OnDestroy {
 
   addDigs(nb: number) {
     this.nbDigs = Math.max(this.nbDigs + nb, 1);
+    localStorage.setItem('nb-dig', this.nbDigs.toString());
   }
 
   disableMinusDigs(): boolean {

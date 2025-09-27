@@ -8,11 +8,9 @@ destroy les subscription
 mot de passe oublié avec email
 
 ------------- prio ---------------
-create city dans classic page
-scrolls buggés
+ok - scrolls buggés
 page welcome (play, sign in, sign up, background4, leaderboard, )
 type any
-padding du content sur toutes les pages
 faire la découverte de batiment choisir parmi 3
 trigger le loadplayer sur les classic pages
 que le permier header dans les recap

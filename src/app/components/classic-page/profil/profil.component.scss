@@ -8,9 +8,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 16px;
-    ::ng-deep.mat-mdc-progress-spinner {
-      --mdc-circular-progress-active-indicator-color: white;
-    }
+    
     .text {
       color: white;
     }
@@ -38,7 +36,7 @@
     width: 100%;
     flex-direction: column;
     gap: 8px;
-    flex: 1;
-    overflow: auto;
+    //flex: 1;
+    //overflow: auto; // pas d overflow sinon les box shadow sont moches (coupées)
   }
 }

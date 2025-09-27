@@ -37,7 +37,11 @@ export class LoadPlayerComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.loading.set(false);
-          this.router.navigate([statesToRoutes[response.player.state as UserSate]]);
+          let url = statesToRoutes[response.player.state as UserSate].toString();
+          if (url === 'play') {
+            url += '/' + localStorage.getItem('play-route') || '';
+          }
+          this.router.navigate([url]);
         },
         error: () => {
           localStorage.setItem('token', '');
