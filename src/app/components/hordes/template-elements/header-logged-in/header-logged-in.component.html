@@ -1,5 +1,5 @@
 <div class="boundary">
-  <div *ngIf="headerIsDisplayed" class="left-part">
+  <div *ngIf="userIsLoggedIn" class="left-part">
     <button *ngIf="goBackButton" class="icon-btn" (click)="goBack()">
       <span class="material-symbols-outlined icon"> keyboard_return </span>
     </button>
@@ -16,13 +16,13 @@
     <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
       <img src="../../../assets/icons/discord_icon.png"
     /></a>
-    <button *ngIf="headerIsDisplayed" class="icon-btn" (click)="goToProfil()">
+    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToProfil()">
       <span class="material-symbols-outlined icon"> person </span>
     </button>
     <button class="icon-btn" (click)="goToLeaderboard()">
       <img src="../../../assets/icons/leaderboard.gif" />
     </button>
-    <button *ngIf="headerIsDisplayed" class="icon-btn" (click)="goToSettings()">
+    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToSettings()">
       <span class="material-symbols-outlined icon"> settings </span>
     </button>
   </div>

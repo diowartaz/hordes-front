@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports:[SubgameComponent, CommonModule],
+  imports: [SubgameComponent, CommonModule],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })

@@ -6,9 +6,7 @@ const angular = require('angular-eslint');
 module.exports = tseslint.config(
   {
     files: ['**/*.ts'],
-    extends: [
-      eslint.configs.recommended,
-    ],
+    extends: [eslint.configs.recommended],
     processor: angular.processInlineTemplates,
     rules: {
       '@angular-eslint/directive-selector': [

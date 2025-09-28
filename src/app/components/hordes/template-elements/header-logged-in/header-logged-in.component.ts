@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StatsModel } from 'src/app/models/hordes';
 import { RoutesEnum, UserState } from 'src/app/models/router';
@@ -21,7 +21,7 @@ export class HeaderLoggedInComponent implements OnInit {
   lvl = '1';
   xpRatio = 50;
   goBackButton = false;
-  headerIsDisplayed = false;
+  userIsLoggedIn = false;
 
   constructor(
     private cityService: CityService,
@@ -41,7 +41,7 @@ export class HeaderLoggedInComponent implements OnInit {
         }
       }),
       this.cityService.userPlayerState$.subscribe((userState: UserState) => {
-        this.headerIsDisplayed = [UserState.PLAYING, UserState.NO_CITY].includes(userState);
+        this.userIsLoggedIn = [UserState.PLAYING, UserState.NO_CITY].includes(userState);
       }),
     );
   }

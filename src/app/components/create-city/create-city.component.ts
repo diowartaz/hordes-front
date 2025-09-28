@@ -37,7 +37,7 @@ export class CreateCityComponent {
         if (result.error) {
           console.log('error create city');
         } else {
-          localStorage.setItem('nb-dig', "1");
+          localStorage.setItem('nb-dig', '1');
           localStorage.setItem('play-route', 'dig');
           this.router.navigate(['play']);
         }
