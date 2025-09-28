@@ -10,8 +10,8 @@ mot de passe oublié avec email
 ------------- prio ---------------
 ok - scrolls buggés
 ok - page home - accueil non connecté (play, sign in, sign up, background4, leaderboard, )
-header sur la page home (leaderboard, discord, patch note, )
-scroll degueux sur le profil d'anthony v2 à partir d'un autre compte
+ok - header sur la page home (leaderboard, discord, patch note, )
+ok - scroll degueux sur le profil d'anthony v2 à partir d'un autre compte
 type any
 faire la découverte de batiment choisir parmi 3
 trigger le loadplayer sur les classic pages
