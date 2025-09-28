@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { RoutesEnum, UserState } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';

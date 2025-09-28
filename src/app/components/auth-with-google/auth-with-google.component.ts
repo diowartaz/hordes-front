@@ -1,5 +1,4 @@
 import { Component, DestroyRef, inject, NgZone, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

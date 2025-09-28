@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { finalize, take } from 'rxjs';
 import { AuthResponse } from 'src/app/models/auth';
 import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-home',
