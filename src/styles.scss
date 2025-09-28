@@ -12,6 +12,7 @@
   --danger-red: #dc1a1a;
   --primary-blue: rgb(20, 96, 154);
   --primary-dark-blue: rgb(18, 83, 139);
+  --container-color: #0000005e;
 }
 
 body {
@@ -79,18 +80,11 @@ body {
   }
 }
 
-// .container {
-//   position: relative;
-// }
-// .container::after {
-//   box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-// }
-
 ::ng-deep.mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: white;
 }
 
-.container {  
+.container {
   display: flex;
   flex-direction: column;
   color: white;
@@ -141,19 +135,23 @@ body {
   gap: 8px;
   flex: 1;
   overflow: auto;
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  padding: 8px;
+}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--container-color);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 
 .yellow-button {
