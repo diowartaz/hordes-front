@@ -7,6 +7,7 @@ export enum RoutesEnum {
   RECAP = 'recap',
   LEADERBOARD = 'leaderboard',
   SETTINGS = 'settings',
+  WIKI = 'wiki',
   PROFIL = 'profil',
   CREATE_CITY = 'create-city',
   DEATH_RECAP = 'death-recap',

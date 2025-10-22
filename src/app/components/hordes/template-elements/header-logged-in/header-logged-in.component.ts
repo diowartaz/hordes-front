@@ -50,6 +50,10 @@ export class HeaderLoggedInComponent implements OnInit {
     this.router.navigate([RoutesEnum.SETTINGS]);
   }
 
+  goToWiki() {
+    this.router.navigate([RoutesEnum.WIKI]);
+  }
+
   goToLeaderboard() {
     this.router.navigate([RoutesEnum.LEADERBOARD]);
   }

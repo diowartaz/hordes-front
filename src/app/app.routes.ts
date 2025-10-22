@@ -18,6 +18,7 @@ import { DeathRecapComponent } from './components/hordes/recap/death-recap/death
 import { ProfilComponent } from './components/classic-page/profil/profil.component';
 import { LeaderboardHordesComponent } from './components/classic-page/leaderboard-hordes/leaderboard-hordes.component';
 import { HomeComponent } from './components/home/home.component';
+import { WikiComponent } from './components/classic-page/wiki/wiki.component';
 
 export const routes: Routes = [
   {
@@ -72,9 +73,13 @@ export const routes: Routes = [
     component: ProfilComponent,
   },
   {
+    path: RoutesEnum.WIKI,
+    component: WikiComponent,
+  },
+  {
     path: RoutesEnum.PLAY,
     component: HordesComponent,
-    canActivate: [authGuard, gameLoadedGuard, stateGuard], //authGuard, gameLoadedGuard, stateGuard
+    canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.PLAYING] },
     children: [
       {
@@ -100,36 +105,3 @@ export const routes: Routes = [
   { path: '', redirectTo: RoutesEnum.PLAY, pathMatch: 'full' },
   { path: '**', redirectTo: RoutesEnum.PLAY },
 ];
-
-//   {
-//     path: 'settings',
-//     component: SettingsComponent,
-//     canActivate: [AuthGuard, GameLoadedGuard, CityNotNullGuard],
-//   },
-//   {
-//     path: 'leaderboard',
-//     component: LeaderboardHordesComponent,
-//   },
-//   {
-//     path: 'profil',
-//     component: ProfilComponent,
-//   },
-//   {
-//     path: 'recap',
-//     component: AliveRecapComponent,
-//     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
-//   },
-//   {
-//     path: 'death-recap',
-//     component: DeathRecapComponent,
-//     canActivate: [AuthGuard, GameLoadedGuard, StateGuard],
-//   },
-//   { path: '', redirectTo: 'play', pathMatch: 'full' },
-//   { path: '**', redirectTo: 'play' },
-// ];
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}
