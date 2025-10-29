@@ -1,19 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { finalize, take } from 'rxjs';
 import { Router } from '@angular/router';
-import { catchError, of, Subscription, take } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthResponse, SignInParams } from '../../models/auth';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+
+interface SignInForm {
+  login: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-login',
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
+  standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  formgroup: any = null;
-  loginLoading: boolean = false;
-  invalidAuthentification = false;
-  subscriptions: Subscription[] = [];
+  private readonly destroyRef = inject(DestroyRef);
+  formgroup!: FormGroup<SignInForm>;
+  loading = signal(false);
+  invalidAuthentification = signal(false);
 
   constructor(
     private authService: AuthService,
@@ -21,91 +33,89 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formgroup = new FormGroup({
-      emailOrUsername: new FormControl(localStorage.getItem('emailOrUsername'), [
-        Validators.required,
-      ]),
-      password: new FormControl('', [Validators.required]),
-    });
+    this.initializeForm();
+    this.subscribeToFormChanges();
+  }
 
-    this.subscriptions.push(
-      this.formgroup.valueChanges.subscribe(() => {
-        this.invalidAuthentification = false;
+  private initializeForm(): void {
+    const savedLogin: string = localStorage.getItem('login') ?? '';
+    this.formgroup = new FormGroup<SignInForm>({
+      login: new FormControl(savedLogin, {
+        nonNullable: true,
+        validators: [Validators.required],
       }),
-    );
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+    });
+  }
+
+  private subscribeToFormChanges(): void {
+    this.formgroup.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.invalidAuthentification.set(false);
+    });
+  }
+
+  private handleAuthSuccess(result: AuthResponse): void {
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('login', result.email);
+    this.router.navigate([RoutesEnum.LOAD_PLAYER]);
   }
 
   login() {
-    if (this.loginLoading) {
+    if (this.loading()) {
       return;
     }
     this.formgroup.markAllAsTouched();
     if (this.formgroup.invalid) {
-      this.invalidAuthentification = true;
+      this.invalidAuthentification.set(true);
       return;
     }
-    this.loginLoading = true;
-    const params = {
-      login: this.formgroup.controls.emailOrUsername.value,
+    this.loading.set(true);
+    const params: SignInParams = {
+      login: this.formgroup.controls.login.value,
       password: this.formgroup.controls.password.value,
     };
     this.authService
       .signIn(params)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        }),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          this.invalidAuthentification = true;
-        } else {
-          this.invalidAuthentification = false;
-          localStorage.setItem('token', result.token);
-          localStorage.setItem('emailOrUsername', params.login);
-          this.router.navigate(['load-player']);
-        }
-        this.loginLoading = false;
+      .subscribe((result: AuthResponse) => {
+        this.invalidAuthentification.set(false);
+        this.handleAuthSuccess(result);
       });
   }
 
   loginTemp() {
-    if (this.loginLoading) {
+    if (this.loading()) {
       return;
     }
-    this.loginLoading = true;
+    this.loading.set(true);
 
     this.authService
       .signInTemp()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        }),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-        } else {
-          localStorage.setItem('token', result.token);
-          localStorage.setItem('emailOrUsername', result.email);
-          this.router.navigate(['load-player']);
-        }
-        this.loginLoading = false;
+      .subscribe((result: AuthResponse) => {
+        this.handleAuthSuccess(result);
       });
   }
 
   signUp() {
-    this.router.navigate(['signup']);
+    this.router.navigate([RoutesEnum.SIGNUP]);
   }
 
-  forgotPassword() {
-    console.log('TODO');
-  }
-
-  fieldHasError(field: any) {
-    return this.formgroup.controls[field].touched && this.formgroup.controls[field].invalid;
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+  fieldHasError(field: keyof SignInForm): boolean {
+    const control = this.formgroup.controls[field];
+    return control.touched && control.invalid;
   }
 }

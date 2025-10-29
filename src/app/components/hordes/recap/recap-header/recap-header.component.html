@@ -8,7 +8,7 @@
       <img class="icon" src="../../../assets/icons/defense.gif" />
       <span class="text-span" style="margin-left: 6px">{{ city.defense }}</span>
     </div>
-    <div *ngIf="city.attackRecap.nb_zb == city.defense">=</div>
+    <div *ngIf="city.attackRecap.nb_zb === city.defense">=</div>
     <div *ngIf="city.attackRecap.nb_zb > city.defense"><</div>
     <div *ngIf="city.attackRecap.nb_zb < city.defense">></div>
     <div class="def-zb-el">

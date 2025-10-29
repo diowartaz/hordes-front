@@ -8,7 +8,7 @@ describe('CustomSnackbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CustomSnackbarComponent],
+      imports: [CustomSnackbarComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CustomSnackbarComponent);

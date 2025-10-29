@@ -2,17 +2,17 @@
   <div class="line">
     <div class="element-wrapper">
       <img
-        *ngIf="building.rarity == 'common'"
+        *ngIf="building.rarity === 'common'"
         class="icon"
         src="../../../../assets/icons/common_plan_c.gif"
       />
       <img
-        *ngIf="building.rarity == 'rare'"
+        *ngIf="building.rarity === 'rare'"
         class="icon"
         src="../../../../assets/icons/rare_plan.gif"
       />
       <img
-        *ngIf="building.rarity == 'epic'"
+        *ngIf="building.rarity === 'epic'"
         class="icon"
         src="../../../../assets/icons/epic_plan.gif"
       />
@@ -26,7 +26,7 @@
           <div class="item" *ngIf="item.nb > 0">
             <img
               [ngStyle]="{
-                'margin-top': item.name == 'stone' ? '-2px' : '0px',
+                'margin-top': item.name === 'stone' ? '-2px' : '0px',
               }"
               class="icon"
               src="{{ item.src }}"

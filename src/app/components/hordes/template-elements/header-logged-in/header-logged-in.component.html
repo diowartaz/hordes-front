@@ -1,0 +1,32 @@
+<div class="boundary">
+  <div *ngIf="userIsLoggedIn" class="left-part">
+    <button *ngIf="goBackButton" class="icon-btn" (click)="goBack()">
+      <span class="material-symbols-outlined icon"> keyboard_return </span>
+    </button>
+    <div class="lvl-wrapper">
+      <img class="lvl-icon" src="../../../assets/icons/lvl_icon.png" />
+      <div class="lvl">{{ lvl }}</div>
+    </div>
+    <div class="xp-bar-wrapper">
+      <progress class="xp-bar" max="100" value="{{ xpRatio }}"></progress>
+      <div class="xp-bar-string">{{ xpString }}</div>
+    </div>
+  </div>
+  <div class="right-part">
+    <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
+      <img src="../../../assets/icons/discord_icon.png"
+    /></a>
+    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToProfil()">
+      <span class="material-symbols-outlined icon"> group </span>
+    </button>
+    <button class="icon-btn" (click)="goToLeaderboard()">
+      <img src="../../../assets/icons/leaderboard.gif" />
+    </button>
+    <button class="icon-btn" (click)="goToWiki()">
+      <span class="emoticon">📖</span>
+    </button>
+    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToSettings()">
+      <span class="emoticon">⚙️</span>
+    </button>
+  </div>
+</div>

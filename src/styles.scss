@@ -1,40 +1,7 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$website2-primary: mat.define-palette(mat.$indigo-palette);
-$website2-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$website2-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$website2-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $website2-primary,
-      accent: $website2-accent,
-      warn: $website2-warn,
-    ),
-  )
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($website2-theme);
-
-/* You can add global styles to this file, and also import other style files */
 :root {
   --basic-red: red;
   --border-white-transparent: 1px solid rgba(255, 255, 255, 0.8);
@@ -45,6 +12,7 @@ $website2-theme: mat.define-light-theme(
   --danger-red: #dc1a1a;
   --primary-blue: rgb(20, 96, 154);
   --primary-dark-blue: rgb(18, 83, 139);
+  --container-color: #0000005e;
 }
 
 body {
@@ -69,14 +37,10 @@ button {
   cursor: pointer;
 }
 
-.full-dim {
-  height: 100%;
-  width: 100%;
-}
-
 html,
 body {
-  height: calc(100%);
+  min-height: 100vh;
+  //color: white;
 }
 
 .dialog-class {
@@ -116,21 +80,23 @@ body {
   }
 }
 
+::ng-deep.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: white;
+}
 
 .container {
   display: flex;
   flex-direction: column;
   color: white;
   gap: 4px;
-  border: 1px solid white;
-  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-  border-radius: 4px;
   padding: 8px 4px;
   width: 100%;
   align-items: center;
+  border: 1px solid white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
   background: #0000005e;
 }
-
 
 @-webkit-keyframes borderBlink {
   from,
@@ -148,5 +114,74 @@ body {
   }
   10% {
     border-color: white;
+  }
+}
+
+.play-header {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  padding: 8px;
+  color: white;
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+}
+.play-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow: auto;
+  padding: 8px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--container-color);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.yellow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  padding: 16px;
+  gap: 16px;
+  border-radius: 4px;
+  width: 100%;
+  box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
+  background: linear-gradient(
+    45deg,
+    var(--primary-yellow) 40%,
+    #ee7752 50%,
+    var(--primary-yellow) 60%
+  );
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }

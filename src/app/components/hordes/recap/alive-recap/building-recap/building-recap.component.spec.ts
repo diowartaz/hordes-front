@@ -8,7 +8,7 @@ describe('BuildingRecapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BuildingRecapComponent],
+      imports: [BuildingRecapComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BuildingRecapComponent);

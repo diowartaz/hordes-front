@@ -1,30 +1,12 @@
-export function getTimeString(seconds: number): string {
-  // console.log("seconds", seconds)
-  let nbHeures = Math.floor(seconds / 3600);
-  let nbMinutesInSeconds: number = seconds - nbHeures * 3600;
-  let nbMinutes: number = Math.floor(nbMinutesInSeconds / 60);
-  let nbMinutesString: string = nbMinutes + '';
-  if (nbMinutes < 10) {
-    nbMinutesString = '0' + nbMinutes;
+export function formatTimeToString(seconds: number, reset24h = false): string {
+  let hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  if (reset24h && hours === 24) {
+    hours = 0;
   }
 
-  let nbHeuresString: string = nbHeures + '';
-  if (nbHeures == 24) {
-    nbHeuresString = '00';
-  }
-  return nbHeuresString + 'h' + nbMinutesString;
-}
+  const hourStr = hours.toString().padStart(2, '0');
+  const minuteStr = minutes.toString().padStart(2, '0');
 
-export function getTimeRequiredString(seconds: number): string {
-  // console.log("seconds", seconds)
-  let nbHeures = Math.floor(seconds / 3600);
-  let nbMinutesInSeconds: number = seconds - nbHeures * 3600;
-  let nbMinutes: number = Math.floor(nbMinutesInSeconds / 60);
-  let nbMinutesString: string = nbMinutes + '';
-  if (nbMinutes < 10) {
-    nbMinutesString = '0' + nbMinutes;
-  }
-
-  let nbHeuresString: string = nbHeures + '';
-  return nbHeuresString + 'h' + nbMinutesString;
+  return `${hourStr}h${minuteStr}`;
 }

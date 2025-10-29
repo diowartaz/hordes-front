@@ -8,5 +8,5 @@ import { MatSnackBarRef } from '@angular/material/snack-bar';
 })
 export class CustomSnackbarComponent {
   snackBarRef = inject(MatSnackBarRef);
-  message: string = 'my message';
+  message = 'my message';
 }

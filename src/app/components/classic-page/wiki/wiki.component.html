@@ -1,0 +1,207 @@
+<app-classic-page [title]="'Wiki'">
+  <ng-container content>
+    <div class="wiki-container">
+      <section class="summary">
+        <h2>🧾 Summary</h2>
+        <table>
+          <tr>
+            <th>Category</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>Game Name</td>
+            <td><strong>Hordes</strong></td>
+          </tr>
+          <tr>
+            <td>Genre</td>
+            <td>Single-player survival ( +asynchronous ranked)</td>
+          </tr>
+          <tr>
+            <td>Front-end</td>
+            <td>Angular 19</td>
+          </tr>
+          <tr>
+            <td>Back-end</td>
+            <td>Node.js + Express</td>
+          </tr>
+          <tr>
+            <td>Database</td>
+            <td>MongoDB</td>
+          </tr>
+          <tr>
+            <td>Target Distribution</td>
+            <td>Android (Google Play / APK)</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Overview</h2>
+        <p>
+          <strong>Hordes</strong> is a single-player survival strategy game where you are the last
+          human alive in a ruined city. Each night, waves of zombies attack your defenses. Each day,
+          you scavenge, build, and learn in an effort to survive one more night.
+        </p>
+      </section>
+
+      <section>
+        <h2>⚙️ Game Systems</h2>
+        <h3>🕐 The Daily Cycle</h3>
+        <ol>
+          <li>
+            <strong>Daytime</strong> — Search, build, or learn before midnight. Each action consumes
+            <strong>time</strong>.
+          </li>
+          <li>
+            <strong>Nighttime (Midnight Attack)</strong> — The horde attacks. Survive if defense ≥
+            zombie count.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🧱 Buildings</h2>
+        <p>
+          Buildings cost <strong>resources</strong> and <strong>time</strong> to construct. Most
+          increase your <strong>defense</strong>.
+        </p>
+        <table>
+          <tr>
+            <th>Building</th>
+            <th>Max Level</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>🏗 Architect Shelter</td>
+            <td>3</td>
+            <td>Increases discovery odds for new building plans.</td>
+          </tr>
+          <tr>
+            <td>📚 Library</td>
+            <td>3</td>
+            <td>Increases discovery odds for new skill levels.</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>🧠 Skills</h2>
+        <p>Each skill improves a specific aspect of survival. Effects are linear per level.</p>
+        <table>
+          <tr>
+            <th>Skill</th>
+            <th>Max Level</th>
+            <th>Effect per Level</th>
+            <th>Level 5 / 8 Effect</th>
+          </tr>
+          <tr>
+            <td>💤 Insomniac</td>
+            <td>8</td>
+            <td>Wake up 15 min earlier each day.</td>
+            <td>2 hours earlier wake-up.</td>
+          </tr>
+          <tr>
+            <td>⛏ Digger</td>
+            <td>5</td>
+            <td>Reduce search time linearly.</td>
+            <td>Action time ÷ 2.</td>
+          </tr>
+          <tr>
+            <td>🧱 Builder</td>
+            <td>5</td>
+            <td>Reduce building time linearly.</td>
+            <td>Action time ÷ 2.</td>
+          </tr>
+          <tr>
+            <td>📖 Fast Learner</td>
+            <td>5</td>
+            <td>Reduce learning time linearly.</td>
+            <td>Action time ÷ 2.</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>⚔️ Defense and Attacks</h2>
+        <ul>
+          <li>All buildings (except special ones) add defense points.</li>
+          <li>The zombie horde increases nightly.</li>
+          <li>Defense ≥ Zombies → Survive; otherwise you die.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>💡 Experience & Levels</h2>
+        <p>
+          Gain XP equal to zombies defeated. Player level uses a logarithmic curve. Each level
+          grants +1 minute earlier wake-up.
+        </p>
+      </section>
+
+      <section>
+        <h2>🧮 Ranked Mode</h2>
+        <p>
+          Asynchronous deterministic competition using seeded runs. Identical challenges for both
+          players.
+        </p>
+        <ul>
+          <li>Compare performance: days survived, defenses built.</li>
+          <li>Elo-like ranked point system.</li>
+          <li>Global & performance leaderboards.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📈 Example Progression</h2>
+        <table>
+          <tr>
+            <th>Day</th>
+            <th>Zombies</th>
+            <th>Defense</th>
+            <th>Result</th>
+            <th>XP</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>10</td>
+            <td>15</td>
+            <td>Survive</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>20</td>
+            <td>23</td>
+            <td>Survive</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>35</td>
+            <td>28</td>
+            <td>Die</td>
+            <td>—</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>🧩 Strategy Tips</h2>
+        <ul>
+          <li>Upgrade Libraries to unlock higher skill caps.</li>
+          <li>Architect Shelters unlock stronger defense plans.</li>
+          <li>In Ranked Mode, efficiency beats luck.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧱 Coming Soon</h2>
+        <p>Android release via Play Store (in progress).</p>
+      </section>
+
+      <footer>
+        <p>Made with 💀 by the Hordes Dev Team</p>
+      </footer>
+    </div>
+  </ng-container>
+</app-classic-page>

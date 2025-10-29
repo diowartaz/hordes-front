@@ -1,26 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { finalize, take } from 'rxjs';
+import { AuthResponse } from 'src/app/models/auth';
+import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  userInfos: any = null;
+export class HomeComponent {
+  loading = signal(false);
 
   constructor(
     private router: Router,
     private authService: AuthService,
   ) {}
 
-  ngOnInit(): void {
-    this.userInfos = this.authService.parseJwt();
+  loginTemp() {
+    if (this.loading()) {
+      return;
+    }
+    this.loading.set(true);
+
+    this.authService
+      .signInTemp()
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.loading.set(false);
+        }),
+      )
+      .subscribe((result: AuthResponse) => {
+        this.handleAuthSuccess(result);
+      });
   }
 
-  logOut() {
-    localStorage.removeItem('token');
-    this.router.navigate(['signin']);
+  private handleAuthSuccess(result: AuthResponse): void {
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('login', result.email);
+    this.router.navigate([RoutesEnum.LOAD_PLAYER]);
+  }
+
+  useYourAccount() {
+    this.router.navigate([RoutesEnum.SIGNIN]);
+  }
+  createAnAccount() {
+    this.router.navigate([RoutesEnum.SIGNUP]);
   }
 }

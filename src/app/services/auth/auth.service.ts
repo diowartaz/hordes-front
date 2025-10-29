@@ -1,88 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, Observable } from 'rxjs';
-import { handleError } from 'src/app/general-functions';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import decode from 'jwt-decode';
+import { AuthResponse, SignInParams, SignUpParams } from 'src/app/models/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  API_URL = environment.API_URL;
+  private jwtHelper = new JwtHelperService();
+  private readonly API_URL = environment.API_URL;
+
   constructor(private httpClient: HttpClient) {}
 
-  userIsLoggedIn() {
-    let parsedJWT: any = this.parseJwt();
-    if (parsedJWT) {
-      if (Date.now() >= parsedJWT.exp * 1000) {
-        return false;
-      } else {
-        return true;
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  parseJwt() {
+  userIsLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    if (token) {
-      const tokenPayload = decode(token);
-      return tokenPayload;
-    } else {
-      return null;
-    }
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
-  getUserId() {
+  parseJwt(): null | Record<string, string> {
     const token = localStorage.getItem('token');
-    if (token) {
-      const tokenPayload: any = decode(token);
-      return tokenPayload.id;
-    } else {
-      return null;
-    }
+    return token ? this.jwtHelper.decodeToken(token) : null;
   }
 
-  signIn(params: any): Observable<any> {
-    let url: string = this.API_URL + 'signin';
-    return this.httpClient.post<any>(url, params).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('signIn', url)),
-    );
+  getUserId(): string | null {
+    const payload = this.parseJwt();
+    return payload ? payload['id'] : null;
   }
 
-  signInTemp(): Observable<any> {
-    let url: string = this.API_URL + 'signin-temp';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('signIn', url)),
-    );
+  signIn(params: SignInParams): Observable<AuthResponse> {
+    const url = `${this.API_URL}signin`;
+    return this.httpClient.post<AuthResponse>(url, params);
   }
 
-  signUp(params: any): Observable<any> {
-    let url: string = this.API_URL + 'signup';
-    return this.httpClient.post<any>(url, params).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('signUp', url)),
-    );
+  signInTemp(): Observable<AuthResponse> {
+    const url = `${this.API_URL}signin-temp`;
+    return this.httpClient.post<AuthResponse>(url, {});
+  }
+
+  signUp(params: SignUpParams): Observable<AuthResponse> {
+    const url = `${this.API_URL}signup`;
+    return this.httpClient.post<AuthResponse>(url, params);
   }
 
   deleteAccount(): Observable<any> {
-    let url: string = this.API_URL + 'delete';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('signUp', url)),
-    );
+    const url: string = this.API_URL + 'delete';
+    return this.httpClient.post<any>(url, {});
   }
 }

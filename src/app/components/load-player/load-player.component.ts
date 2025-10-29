@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { finalize, take } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
+import { statesToRoutes, UserState } from 'src/app/models/router';
 
 @Component({
   selector: 'app-load-player',
+  imports: [CommonModule, MatProgressSpinnerModule],
+  standalone: true,
   templateUrl: './load-player.component.html',
-  styleUrls: ['./load-player.component.scss'],
+  styleUrl: './load-player.component.scss',
 })
-export class LoadPlayerComponent {
-  loadGameLoading: boolean = false;
+export class LoadPlayerComponent implements OnInit {
+  loading = signal(false);
   constructor(
     private router: Router,
     private cityService: CityService,
-    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -22,21 +25,28 @@ export class LoadPlayerComponent {
   }
 
   loadPlayer() {
-    this.loadGameLoading = true;
+    this.loading.set(true);
     this.cityService
       .loadPlayer()
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
+        finalize(() => {
+          this.loading.set(false);
+        }),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
+      .subscribe({
+        next: (response) => {
+          this.loading.set(false);
+          let url = statesToRoutes[response.player.state as UserState].toString();
+          if (url === 'play') {
+            url += '/' + localStorage.getItem('play-route') || '';
+          }
+          this.router.navigate([url]);
+        },
+        error: () => {
           localStorage.setItem('token', '');
           this.router.navigate(['signin']);
-        } else {
-          this.loadGameLoading = false;
-          this.router.navigate(['play/' + localStorage.getItem('play-route')]);
-        }
+        },
       });
   }
 }

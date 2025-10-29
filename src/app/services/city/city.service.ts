@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
-import { handleError } from 'src/app/general-functions';
+import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
-import { updateCustomInventory } from 'src/app/shared/utils/inventory';
-import { CityModel, StatsModel } from 'src/app/models/hordes';
-import { getTimeString } from 'src/app/shared/utils/time';
+import { StatsModel } from 'src/app/models/hordes';
+import { formatTimeToString } from 'src/app/shared/utils/time';
+import { UserState } from 'src/app/models/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +18,12 @@ export class CityService {
     personal_best_zb: 0,
     xp: 0,
     match_history: [],
-    ranked_points: 500
+    ranked_points: 500,
   });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerState$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(
+    UserState.NOT_LOADED_PLAYER,
+  );
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
@@ -34,7 +36,7 @@ export class CityService {
   constructor(private httpClient: HttpClient) {}
 
   getDefaultValues(): Observable<any> {
-    let url: string = this.API_URL + 'city/default-values';
+    const url: string = this.API_URL + 'city/default-values';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         this.log('getDefaultValues', response);
@@ -46,9 +48,10 @@ export class CityService {
   }
 
   loadPlayer(): Observable<any> {
-    let url: string = this.API_URL + 'player';
+    const url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
+        //console.log('state', response.player.state);
         //TODO: if erreur: vider le local storage
         this.log('loadPlayer', response);
         this.userPlayerState$.next(response.player.state);
@@ -64,7 +67,7 @@ export class CityService {
   }
 
   getPlayerStats(): Observable<any> {
-    let url: string = this.API_URL + 'player/stats';
+    const url: string = this.API_URL + 'player/stats';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         this.log('getPlayerStats', response);
@@ -76,7 +79,7 @@ export class CityService {
   }
 
   new(ranked: boolean): Observable<any> {
-    let url: string = this.API_URL + 'city/new/';
+    const url: string = this.API_URL + 'city/new/';
     return this.httpClient.post<any>(url, { ranked }).pipe(
       map((response: any) => {
         this.log('new', response);
@@ -90,12 +93,12 @@ export class CityService {
   }
 
   delete(): Observable<any> {
-    let url: string = this.API_URL + 'city/delete';
+    const url: string = this.API_URL + 'city/delete';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('delete', response);
         this.userPlayerCity$.next(null);
-        this.userPlayerState$.next('noCity');
+        this.userPlayerState$.next(UserState.NO_CITY);
         return response;
       }),
       catchError(handleError('delete', url)),
@@ -103,7 +106,7 @@ export class CityService {
   }
 
   findItems(nb: number): Observable<any> {
-    let url: string = this.API_URL + 'city/item/find/' + nb;
+    const url: string = this.API_URL + 'city/item/find/' + nb;
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('findItems', response);
@@ -116,7 +119,7 @@ export class CityService {
   }
 
   build(id: number): Observable<any> {
-    let url: string = this.API_URL + 'city/build/' + id;
+    const url: string = this.API_URL + 'city/build/' + id;
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('build', response);
@@ -129,7 +132,7 @@ export class CityService {
   }
 
   learn(id: number): Observable<any> {
-    let url: string = this.API_URL + 'city/learn/' + id;
+    const url: string = this.API_URL + 'city/learn/' + id;
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('learn', response);
@@ -153,7 +156,7 @@ export class CityService {
       }
       return;
     }
-    let timeToAdd = Math.floor(
+    const timeToAdd = Math.floor(
       ((new Date().getTime() - this.userPlayerCity$.getValue().last_timestamp_request) *
         this.defaultValues$.getValue().coef_realtime_to_ingametime) /
         1000,
@@ -164,14 +167,14 @@ export class CityService {
         clearInterval(this.setInterval);
       }
       this.userPlayerCityTime$.next({
-        string: getTimeString(this.defaultValues$.getValue().day_end_time),
+        string: formatTimeToString(this.defaultValues$.getValue().day_end_time, true),
         seconds: this.defaultValues$.getValue().day_end_time,
       });
       // this.endDay()
       return;
     }
     this.userPlayerCityTime$.next({
-      string: getTimeString(city.time + timeToAdd),
+      string: formatTimeToString(city.time + timeToAdd, true),
       seconds: city.time + timeToAdd,
     });
     if (this.setInterval) {
@@ -186,7 +189,7 @@ export class CityService {
   }
 
   addTime() {
-    let x = this.userPlayerCityTime$.getValue().seconds + 60;
+    const x = this.userPlayerCityTime$.getValue().seconds + 60;
     if (x >= this.defaultValues$.getValue().day_end_time) {
       if (this.setInterval) {
         clearInterval(this.setInterval);
@@ -194,14 +197,14 @@ export class CityService {
       //fin de journee
     } else {
       this.userPlayerCityTime$.next({
-        string: getTimeString(x),
+        string: formatTimeToString(x, true),
         seconds: x,
       });
     }
   }
 
   endDay(): Observable<any> {
-    let url: string = this.API_URL + 'city/day/end';
+    const url: string = this.API_URL + 'city/day/end';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('endDay', response);
@@ -215,13 +218,13 @@ export class CityService {
   }
 
   startDay(): Observable<any> {
-    let url: string = this.API_URL + 'city/day/start';
+    const url: string = this.API_URL + 'city/day/start';
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         //city
         this.log('startDay', response);
         this.userPlayerCity$.next(response.city);
-        this.userPlayerState$.next('playing');
+        this.userPlayerState$.next(UserState.PLAYING);
         this.updateTime(response.city);
         return response;
       }),
@@ -230,7 +233,7 @@ export class CityService {
   }
 
   getLeaderboardBestDay() {
-    let url: string = this.API_URL + 'leaderboard/best-day';
+    const url: string = this.API_URL + 'leaderboard/best-day';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         return response;
@@ -240,7 +243,7 @@ export class CityService {
   }
 
   getLeaderboardRanked() {
-    let url: string = this.API_URL + 'leaderboard/ranked';
+    const url: string = this.API_URL + 'leaderboard/ranked';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         return response;
@@ -250,7 +253,7 @@ export class CityService {
   }
 
   getProfil(id: string) {
-    let url: string = this.API_URL + 'profil/' + id;
+    const url: string = this.API_URL + 'profil/' + id;
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         return response;

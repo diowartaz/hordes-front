@@ -1,0 +1,47 @@
+.boundary {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  .left-part {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border: var(--border-white-transparent);
+    border-radius: 4px;
+    padding: 0px 8px;
+    background: var(--background-black-opacity-zero-trois);
+  }
+
+  .element {
+    display: flex;
+    align-items: center;
+    color: white;
+    border-radius: 4px;
+    .danger {
+      font-weight: 700 !important;
+      color: #e85e5e;
+    }
+    .text-span {
+      margin-left: 4px;
+      margin-top: 2px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .icon {
+      height: 16px;
+      width: 16px;
+      font-size: 16px;
+    }
+  }
+  .borderBlink {
+    border: 1px solid white;
+    img {
+      height: 24px;
+    }
+  }
+  .borderBlink2 {
+    -webkit-animation: borderBlink 3s step-end infinite;
+    animation: borderBlink 3s step-end infinite;
+  }
+}

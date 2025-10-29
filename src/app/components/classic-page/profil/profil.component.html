@@ -1,0 +1,51 @@
+<app-classic-page [title]="profil.username">
+  <ng-container icon>
+    <span
+      class="material-symbols-outlined"
+      style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px"
+    >
+      person
+    </span>
+  </ng-container>
+  <ng-container content>
+    <div class="general-info">
+      <div class="line">
+        <div class="container surcharge-container">
+          <img style="height: 24px; width: 24px" src="../../../assets/icons/leaderboard.gif" />
+          <div>
+            {{ profil.rank }}
+          </div>
+        </div>
+        <div class="container surcharge-container">
+          <img style="height: 24px; width: 24px" src="../../../assets/icons/xpLogo.png" />
+          <div>
+            {{ profil.xp }}
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <div class="container surcharge-container">
+          <img style="height: 24px; width: 24px" src="../../../assets/icons/calendar.ico" />
+          <div>
+            {{ profil.personal_best_day }}
+          </div>
+        </div>
+        <div class="container surcharge-container">
+          <img
+            style="height: 24px; width: 24px; margin-right: -8px"
+            src="../../../assets/icons/zb.gif"
+          />
+          <div>
+            {{ profil.personal_best_zb }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="history">
+      <app-game
+        *ngFor="let game of profil.match_history.slice().reverse()"
+        [game]="game"
+      ></app-game>
+    </div>
+  </ng-container>
+</app-classic-page>

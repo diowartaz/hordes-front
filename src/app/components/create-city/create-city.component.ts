@@ -1,25 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-create-city',
+  standalone: true,
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './create-city.component.html',
   styleUrls: ['./create-city.component.scss'],
 })
 export class CreateCityComponent {
-  createCityLoading: boolean = false;
+  createCityLoading = {
+    normal: false,
+    ranked: false,
+  };
   constructor(
     private router: Router,
     private cityService: CityService,
   ) {}
 
   createCity(ranked: boolean) {
-    if (this.createCityLoading) {
+    if (this.createCityLoading.normal || this.createCityLoading.ranked) {
       return;
     }
-    this.createCityLoading = true;
+    this.createCityLoading[ranked ? 'ranked' : 'normal'] = true;
     this.cityService
       .new(ranked)
       .pipe(
@@ -30,10 +37,11 @@ export class CreateCityComponent {
         if (result.error) {
           console.log('error create city');
         } else {
+          localStorage.setItem('nb-dig', '1');
           localStorage.setItem('play-route', 'dig');
           this.router.navigate(['play']);
         }
-        this.createCityLoading = false;
+        this.createCityLoading[ranked ? 'ranked' : 'normal'] = false;
       });
   }
 }

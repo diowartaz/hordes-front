@@ -8,7 +8,7 @@ describe('DeathRecapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DeathRecapComponent],
+      imports: [DeathRecapComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DeathRecapComponent);
