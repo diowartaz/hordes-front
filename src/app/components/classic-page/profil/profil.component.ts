@@ -29,7 +29,6 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.cityService.userPlayerState$.getValue());
     if (this.cityService.userPlayerState$.getValue() === UserState.NOT_LOADED_PLAYER) {
       this.cityService.loadPlayer();
     }
@@ -64,7 +63,6 @@ export class ProfilComponent implements OnInit {
         catchError(() => of({ error: 'error' })),
       )
       .subscribe((result: any) => {
-        console.log(result);
         if (result.error) {
           console.log('Error getProfil', this.id);
         } else {

@@ -55,7 +55,6 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     if (this.city) {
       this.buildings = [...this.city.buildings].sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
       this.buildings.forEach((building: any) => {
-        console.log('building init', building);
         this.setCustomInventory(building);
         this.setEnoughRessources(building);
         this.setEnoughTime(building);
@@ -65,14 +64,10 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   setCustomInventory(building: any) {
-    console.log({ ...building });
-    console.log(building.inventory);
     building.customInventory = buildingInventoryToUsableInventory(building.inventory);
-    console.log({ ...building });
   }
 
   setEnoughRessources(building: any) {
-    console.log('building', building.name);
     building.enoughRessources = this.contains(this.city.inventory, building.inventory);
   }
 
@@ -135,8 +130,6 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   contains(inv1: any, inv2: any) {
-    console.log('inv1, inv2', inv1, inv2);
-    //TODO: verify code is good // utils file
     return Object.keys(inv2).every((key) => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key]);
   }
 

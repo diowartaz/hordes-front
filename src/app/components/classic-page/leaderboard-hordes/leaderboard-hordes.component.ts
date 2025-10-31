@@ -25,7 +25,6 @@ export class LeaderboardHordesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLeaderboardRanked();
-    console.log(this.cityService.userPlayerState$.getValue(), UserState.NOT_LOADED_PLAYER);
     if (this.cityService.userPlayerState$.getValue() === UserState.NOT_LOADED_PLAYER) {
       this.cityService.loadPlayer();
     }
