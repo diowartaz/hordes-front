@@ -29,7 +29,10 @@ export class CityHeaderComponent implements OnInit {
     this.subscriptions.push(
       this.cityService.userPlayerCityTime$.subscribe((time) => {
         this.time = time;
-        if ((this.time.string == '00h00' || this.time.string == '23h59') && this.cityService.userPlayerState$.getValue() === UserState.PLAYING) {
+        if (
+          (this.time.string == '00h00' || this.time.string == '23h59') &&
+          this.cityService.userPlayerState$.getValue() === UserState.PLAYING
+        ) {
           this.endDay();
         }
       }),

@@ -2,7 +2,9 @@
   <button class="back-btn icon-btn" (click)="goBack()">
     <span class="material-symbols-outlined icon"> keyboard_return </span>
   </button>
-  <div class="header container"><ng-content select="[icon]"></ng-content>{{ title }}</div>
+  <div class="header container">
+    <span><ng-content select="[icon]"></ng-content></span>{{ title }}
+  </div>
 
   <div class="content"><ng-content select="[content]"></ng-content></div>
 </div>
