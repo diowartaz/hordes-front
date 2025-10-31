@@ -55,6 +55,10 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     if (this.city) {
       this.buildings = [...this.city.buildings].sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
       this.buildings.forEach((building: any) => {
+        if (!building.inventory) {
+          //TODO bug wtf
+          building.inventory = {};
+        }
         this.setCustomInventory(building);
         this.setEnoughRessources(building);
         this.setEnoughTime(building);
