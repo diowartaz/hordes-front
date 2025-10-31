@@ -81,8 +81,8 @@
       .icon {
         width: 24px;
         height: 24px;
-        filter: drop-shadow(0.1px 0 0 black) drop-shadow(-0.1px 0 0 black)
-          drop-shadow(0 0.1px 0 black) drop-shadow(0 -0.1px 0 black);
+        filter: drop-shadow(0.1px 0 0 black) drop-shadow(-0.1px 0 0 black) drop-shadow(0 0.1px 0 black)
+          drop-shadow(0 -0.1px 0 black);
       }
       .span {
         color: white;

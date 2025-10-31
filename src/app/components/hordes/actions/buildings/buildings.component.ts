@@ -6,6 +6,13 @@ import { CommonModule } from '@angular/common';
 import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 
+const rarityOrder: Record<string, number> = {
+  base: 1,
+  epic: 2,
+  rare: 3,
+  common: 4,
+};
+
 @Component({
   selector: 'app-buildings',
   standalone: true,
@@ -46,8 +53,9 @@ export class BuildingsComponent implements OnInit, OnDestroy {
 
   initCustomCityBuildings() {
     if (this.city) {
-      this.buildings = [...this.city.buildings];
+      this.buildings = [...this.city.buildings].sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
       this.buildings.forEach((building: any) => {
+        console.log('building init', building);
         this.setCustomInventory(building);
         this.setEnoughRessources(building);
         this.setEnoughTime(building);
@@ -57,17 +65,20 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   setCustomInventory(building: any) {
+    console.log({ ...building });
+    console.log(building.inventory);
     building.customInventory = buildingInventoryToUsableInventory(building.inventory);
+    console.log({ ...building });
   }
 
   setEnoughRessources(building: any) {
+    console.log('building', building.name);
     building.enoughRessources = this.contains(this.city.inventory, building.inventory);
   }
 
   setEnoughTime(building: any) {
     building.enoughTime =
-      this.cityService.userPlayerCityTime$.getValue().seconds +
-        building.time * this.city.speeds.build <=
+      this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build <=
       this.cityService.defaultValues$.getValue().day_end_time;
     if (building.enoughTime) {
       const timeoutSeconds =
@@ -94,8 +105,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     // let reason =
     if (!this.isBuildable(building)) {
       if (
-        this.cityService.userPlayerCityTime$.getValue().seconds +
-          building.time * this.city.speeds.build >
+        this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build >
         this.cityService.defaultValues$.getValue().day_end_time
       ) {
         this.openSnackBar('Not enough time');
@@ -125,16 +135,14 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   contains(inv1: any, inv2: any) {
+    console.log('inv1, inv2', inv1, inv2);
     //TODO: verify code is good // utils file
-    return Object.keys(inv2).every(
-      (key) => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key],
-    );
+    return Object.keys(inv2).every((key) => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key]);
   }
 
   isBuildable(building: BuildingModel): boolean {
     if (this.city) {
-      const isBuildable: boolean =
-        building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max;
+      const isBuildable: boolean = building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max;
       return isBuildable;
     } else {
       return false;

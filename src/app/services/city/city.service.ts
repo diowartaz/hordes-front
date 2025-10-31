@@ -21,9 +21,7 @@ export class CityService {
     ranked_points: 500,
   });
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(
-    UserState.NOT_LOADED_PLAYER,
-  );
+  userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(UserState.NOT_LOADED_PLAYER);
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
@@ -217,9 +215,9 @@ export class CityService {
     );
   }
 
-  startDay(): Observable<any> {
+  startDay(whatAreTheSelectedBuildings: number[]): Observable<any> {
     const url: string = this.API_URL + 'city/day/start';
-    return this.httpClient.post<any>(url, {}).pipe(
+    return this.httpClient.post<any>(url, { chosen_buildings: whatAreTheSelectedBuildings }).pipe(
       map((response: any) => {
         //city
         this.log('startDay', response);

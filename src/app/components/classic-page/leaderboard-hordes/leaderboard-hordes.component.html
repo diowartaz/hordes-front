@@ -1,25 +1,14 @@
 <app-classic-page [title]="'Leaderboard'">
   <ng-container icon>
-    <img
-      style="height: 24px; width: 24px; margin-right: 8px"
-      src="../../../assets/icons/leaderboard.gif"
-    />
+    <img style="height: 24px; width: 24px; margin-right: 8px" src="../../../assets/icons/leaderboard.gif" />
   </ng-container>
   <ng-container content>
     <div class="select">
-      <button
-        class="select-btn"
-        (click)="changeRanked(true)"
-        [ngClass]="{ 'has-background': ranked }"
-      >
+      <button class="select-btn" (click)="changeRanked(true)" [ngClass]="{ 'has-background': ranked }">
         <img class="icon" src="../../../assets/icons/ranked.png" />
         <span class="span">Ranked</span>
       </button>
-      <button
-        class="select-btn"
-        (click)="changeRanked(false)"
-        [ngClass]="{ 'has-background': !ranked }"
-      >
+      <button class="select-btn" (click)="changeRanked(false)" [ngClass]="{ 'has-background': !ranked }">
         <img class="icon" src="../../../assets/icons/normal.png" />
         <span class="span">Normal</span>
       </button>

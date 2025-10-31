@@ -21,5 +21,5 @@ destroy les subscription
 ------------ android ------------------
 
 mot de passe oublié avec email
-deployé sur andoid 
+deployé sur andoid
 faire ne sorte que le joueur soit obliger de jouer avec la derniere version

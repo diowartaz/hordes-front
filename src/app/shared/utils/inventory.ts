@@ -14,9 +14,7 @@ export function getNewInventory(): InventoryItem[] {
 }
 
 //updateCustomInventory
-export function buildingInventoryToUsableInventory(
-  inventory: Record<string, number> = {},
-): InventoryItem[] {
+export function buildingInventoryToUsableInventory(inventory: Record<string, number> = {}): InventoryItem[] {
   return getNewInventory().map((item) => ({
     ...item,
     nb: inventory[item.name] ?? 0,

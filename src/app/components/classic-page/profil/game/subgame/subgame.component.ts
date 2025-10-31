@@ -25,11 +25,7 @@ export class SubgameComponent implements OnInit {
       day: this.subgame.day || '--',
       defense: this.subgame.defense || '--',
       username: this.subgame.username || '--',
-      ranked_points: this.ranked_points
-        ? this.win
-          ? this.ranked_points
-          : '-' + this.ranked_points
-        : '--',
+      ranked_points: this.ranked_points ? (this.win ? this.ranked_points : '-' + this.ranked_points) : '--',
     };
   }
 

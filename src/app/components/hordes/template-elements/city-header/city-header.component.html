@@ -23,11 +23,7 @@
     </div>
   </div>
 
-  <button
-    class="icon-btn borderBlink"
-    [ngClass]="{ borderBlink2: time.seconds > 79200 }"
-    (click)="endDay()"
-  >
+  <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: time.seconds > 79200 }" (click)="endDay()">
     <img src="../../../assets/icons/sleep.gif" />
   </button>
 </div>

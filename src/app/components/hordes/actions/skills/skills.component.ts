@@ -63,8 +63,7 @@ export class SkillsComponent implements OnInit {
     }
     if (!this.isLearnable(skill)) {
       if (
-        this.cityService.userPlayerCityTime$.getValue().seconds +
-          skill.time * this.city.speeds.learn >
+        this.cityService.userPlayerCityTime$.getValue().seconds + skill.time * this.city.speeds.learn >
         this.cityService.defaultValues$.getValue().day_end_time
       ) {
         this.openSnackBar('Not enough time');
@@ -90,8 +89,7 @@ export class SkillsComponent implements OnInit {
   isLearnable(skill: any) {
     if (this.city) {
       const isLearnable: boolean =
-        this.cityService.userPlayerCityTime$.getValue().seconds +
-          skill.time * this.city.speeds.learn <=
+        this.cityService.userPlayerCityTime$.getValue().seconds + skill.time * this.city.speeds.learn <=
           this.cityService.defaultValues$.getValue().day_end_time && skill.lvl < skill.lvl_max;
       return isLearnable;
     } else {
@@ -112,9 +110,7 @@ export class SkillsComponent implements OnInit {
       if (plusLevel === 0) {
         return formatTimeToString(this.day_start_time - skill.reduce_time_seconds * skill.lvl);
       } else {
-        return formatTimeToString(
-          this.day_start_time - skill.reduce_time_seconds * (skill.lvl + 1),
-        );
+        return formatTimeToString(this.day_start_time - skill.reduce_time_seconds * (skill.lvl + 1));
       }
     }
     return String(Math.round((1 - skill.avantage_per_lvl * (skill.lvl + plusLevel)) * 100)) + '%';

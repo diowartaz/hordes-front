@@ -1,9 +1,6 @@
 <app-classic-page [title]="profil.username">
   <ng-container icon>
-    <span
-      class="material-symbols-outlined"
-      style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px"
-    >
+    <span class="material-symbols-outlined" style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px">
       person
     </span>
   </ng-container>
@@ -31,10 +28,7 @@
           </div>
         </div>
         <div class="container surcharge-container">
-          <img
-            style="height: 24px; width: 24px; margin-right: -8px"
-            src="../../../assets/icons/zb.gif"
-          />
+          <img style="height: 24px; width: 24px; margin-right: -8px" src="../../../assets/icons/zb.gif" />
           <div>
             {{ profil.personal_best_zb }}
           </div>
@@ -42,10 +36,7 @@
       </div>
     </div>
     <div class="history">
-      <app-game
-        *ngFor="let game of profil.match_history.slice().reverse()"
-        [game]="game"
-      ></app-game>
+      <app-game *ngFor="let game of profil.match_history.slice().reverse()" [game]="game"></app-game>
     </div>
   </ng-container>
 </app-classic-page>

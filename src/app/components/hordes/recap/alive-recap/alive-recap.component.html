@@ -4,22 +4,26 @@
     <div class="content">
       <app-recap-header [city]="city" style="width: 100%"></app-recap-header>
 
-      <div class="container" *ngIf="city.attackRecap.architect_shelter_buildings.length > 0">
+      <div class="container" *ngIf="nbChoicesAvailable > 0">
         <div class="container-header">
-          {{ city.attackRecap.architect_shelter_buildings.length }}
-          <span *ngIf="city.attackRecap.architect_shelter_buildings.length > 1">
-            building discoveries
-          </span>
-          <span *ngIf="city.attackRecap.architect_shelter_buildings.length === 1">
-            building discovery
-          </span>
+          {{
+            `Pick ${nbMaxChoices} building${nbMaxChoices - 2 > 1 ? 's' : ''} from the ${nbChoicesAvailable} available`
+          }}
         </div>
 
         <div class="container-content">
-          <app-building-recap
-            *ngFor="let building of city.attackRecap.architect_shelter_buildings"
-            [building]="building"
-          ></app-building-recap>
+          <div class="line" *ngFor="let building of city.attackRecap.architect_shelter_buildings; let i = index">
+            <div class="aaa">
+              <input
+                class="ckeckbox"
+                type="checkbox"
+                [(ngModel)]="building.selected"
+                (change)="onCheckboxChange($event, i)"
+              />
+            </div>
+
+            <app-building-recap class="building" [building]="building"></app-building-recap>
+          </div>
         </div>
       </div>
 
@@ -31,10 +35,7 @@
         </div>
 
         <div class="container-content">
-          <app-skill-recap
-            *ngFor="let skill of library_discoveriesFormatted"
-            [skill]="skill"
-          ></app-skill-recap>
+          <app-skill-recap *ngFor="let skill of library_discoveriesFormatted" [skill]="skill"></app-skill-recap>
         </div>
       </div>
 
@@ -46,8 +47,7 @@
 
   <div class="footer">
     <button (click)="startDay()">
-      <span class="material-symbols-outlined icon"> schedule </span
-      ><span>Wait for the attack to pass</span>
+      <span class="material-symbols-outlined icon"> schedule </span><span>Wait for the attack to pass</span>
     </button>
   </div>
 </div>

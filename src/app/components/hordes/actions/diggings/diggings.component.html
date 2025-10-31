@@ -7,9 +7,7 @@
     <div class="select-nb-digs">
       <button
         [ngStyle]="{
-          background: disableMinusDigs()
-            ? 'var(--primary-yellow-disabled)'
-            : 'var(--primary-yellow)',
+          background: disableMinusDigs() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
         }"
         class="btn element add-digs-btn add-digs-btn-right"
         (click)="addDigs(-1)"

@@ -6,11 +6,12 @@ import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
 import { SkillRecapComponent } from './skill-recap/skill-recap.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-alive-recap',
   standalone: true,
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, CommonModule],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, CommonModule, FormsModule],
   templateUrl: './alive-recap.component.html',
   styleUrls: ['./alive-recap.component.scss'],
 })
@@ -19,6 +20,9 @@ export class AliveRecapComponent implements OnInit, OnDestroy {
   startDayLoading = false;
   library_discoveriesFormatted: any[] = [];
   subscriptions: Subscription[] = [];
+
+  nbMaxChoices = 0;
+  nbChoicesAvailable = 0;
 
   constructor(
     private router: Router,
@@ -30,6 +34,8 @@ export class AliveRecapComponent implements OnInit, OnDestroy {
       this.cityService.userPlayerCity$.subscribe((city: any) => {
         if (city) {
           this.city = city;
+          this.nbMaxChoices = city.attackRecap.architect_shelter_buildings.length - 2;
+          this.nbChoicesAvailable = city.attackRecap.architect_shelter_buildings.length;
           if (this.city && this.city.attackRecap && this.city.attackRecap.library_discoveries) {
             this.init_library_discoveriesFormatted();
           }
@@ -45,8 +51,7 @@ export class AliveRecapComponent implements OnInit, OnDestroy {
           this.library_discoveriesFormatted.push({
             name: skill.name,
             lvl: skill.lvl,
-            old_lvl_max:
-              skill.lvl_max - this.city.attackRecap.library_discoveries[discoverySkillId],
+            old_lvl_max: skill.lvl_max - this.city.attackRecap.library_discoveries[discoverySkillId],
             lvl_max: skill.lvl_max,
           });
           break;
@@ -61,7 +66,7 @@ export class AliveRecapComponent implements OnInit, OnDestroy {
     }
     this.startDayLoading = true;
     this.cityService
-      .startDay()
+      .startDay(this.whatAreTheSelectedBuildings())
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' })),
@@ -74,6 +79,30 @@ export class AliveRecapComponent implements OnInit, OnDestroy {
           this.router.navigate(['play/' + localStorage.getItem('play-route')]);
         }
       });
+  }
+
+  whatAreTheSelectedBuildings() {
+    const buildingSelected: (undefined | boolean)[] = this.city.attackRecap.architect_shelter_buildings.map(
+      (b: any) => b.selected,
+    );
+    const result = [];
+    for (let i = 0; i < buildingSelected.length; i++) {
+      if (buildingSelected[i]) result.push(i);
+    }
+    return result;
+  }
+
+  onCheckboxChange(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    const buildings = this.city.attackRecap.architect_shelter_buildings;
+
+    if (input.checked) {
+      const selectedCount = buildings.filter((b: { selected: any }) => b.selected).length;
+      if (selectedCount > this.nbMaxChoices) {
+        input.checked = false; // revert checkbox in DOM
+        buildings[index].selected = false; // revert model
+      }
+    }
   }
 
   ngOnDestroy() {

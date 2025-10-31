@@ -65,12 +65,7 @@
       gap: 16px;
       border-radius: 4px;
       box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
-      background: linear-gradient(
-        45deg,
-        var(--primary-yellow) 40%,
-        #ee7752 50%,
-        var(--primary-yellow) 60%
-      );
+      background: linear-gradient(45deg, var(--primary-yellow) 40%, #ee7752 50%, var(--primary-yellow) 60%);
       background-size: 400% 400%;
       animation: gradient 10s ease infinite;
 

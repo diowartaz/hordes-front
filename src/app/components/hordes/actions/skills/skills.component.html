@@ -1,9 +1,7 @@
 <dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
   <div>{{ dialogMessage }}</div>
 
-  <span class="material-symbols-outlined" style="cursor: pointer" (click)="closeSnackBar()">
-    close
-  </span>
+  <span class="material-symbols-outlined" style="cursor: pointer" (click)="closeSnackBar()"> close </span>
 </dialog>
 
 <div class="boundary">
@@ -30,18 +28,10 @@
 
         <div class="line-right">
           <div class="efficacity" style="color: #31c531" *ngIf="skill.lvl === skill.lvl_max">
-            <span
-              *ngIf="skill.id !== 4"
-              class="material-symbols-outlined"
-              style="font-size: 16px; margin-top: -1px"
-            >
+            <span *ngIf="skill.id !== 4" class="material-symbols-outlined" style="font-size: 16px; margin-top: -1px">
               keyboard_double_arrow_up
             </span>
-            <span
-              *ngIf="skill.id === 4"
-              class="material-symbols-outlined"
-              style="font-size: 16px; margin-top: -2px"
-            >
+            <span *ngIf="skill.id === 4" class="material-symbols-outlined" style="font-size: 16px; margin-top: -2px">
               schedule
             </span>
 
@@ -62,11 +52,7 @@
 
       <div class="line" *ngIf="skill.lvl !== skill.lvl_max">
         <div class="efficacity">
-          <span
-            *ngIf="skill.id !== 4"
-            class="material-symbols-outlined"
-            style="font-size: 18px; margin-top: -2px"
-          >
+          <span *ngIf="skill.id !== 4" class="material-symbols-outlined" style="font-size: 18px; margin-top: -2px">
             keyboard_double_arrow_up
           </span>
           <span
@@ -77,9 +63,7 @@
             schedule
           </span>
           <span>{{ getPercentageEfficacity(skill, 0) }}</span>
-          <span class="material-symbols-outlined" style="font-size: 13px; margin: 0px 4px">
-            arrow_forward_ios
-          </span>
+          <span class="material-symbols-outlined" style="font-size: 13px; margin: 0px 4px"> arrow_forward_ios </span>
 
           <span style="color: #31c531">{{ getPercentageEfficacity(skill, 1) }}</span>
         </div>
@@ -87,9 +71,7 @@
           class="btn-build"
           (click)="learn(skill)"
           [ngStyle]="{
-            background: isLearnable(skill)
-              ? 'var(--primary-yellow)'
-              : 'var(--primary-yellow-disabled)',
+            background: isLearnable(skill) ? 'var(--primary-yellow)' : 'var(--primary-yellow-disabled)',
           }"
         >
           <img src="../../../../assets/icons/livre.gif" />
