@@ -3,7 +3,7 @@ import { XPToLVL } from '../../models/hordes';
 export function XPToLVLandXP(xp: number): XPToLVL {
   const lvl = xpToLvl(xp);
   const remainder = xp - lvlToXp(lvl);
-  const xpToNextLvl = lvlToXp(lvl + 1) - lvlToXp(lvl);
+  const xpToNextLvl = lvlToXp(lvl + 1) - lvlToXp(lvl) - 8;
   return {
     lvl: lvl.toString(),
     xpString: `${remainder}/${xpToNextLvl} xp`,
