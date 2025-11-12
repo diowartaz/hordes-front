@@ -266,4 +266,15 @@ export class CityService {
       )
       .subscribe();
   }
+
+  buyBonus(id: number): void {
+    const url: string = this.API_URL + 'player/bonuses/buy/' + id;
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        tap((response) => this.userPlayerStats$.next(response.stats)),
+        catchError(handleError('buyBonus', url)),
+      )
+      .subscribe();
+  }
 }

@@ -13,7 +13,7 @@
 
         <div class="shop-levels">
           <span
-            >Niveau : <strong>{{ item.lvl }}</strong> / {{ item.lvl_max }}</span
+            >Level : <strong>{{ item.lvl }}</strong> / {{ item.lvl_max }}</span
           >
           <div class="progress-bar">
             <div class="progress" [style.width.%]="(item.lvl / item.lvl_max) * 100"></div>
@@ -21,8 +21,15 @@
         </div>
 
         <div *ngIf="item.lvl < item.lvl_max" class="shop-footer">
-          <span class="shop-price">{{ item.price * (item.lvl + 1) }} 💰</span>
-          <button class="buy-button" (click)="buyItem(item)" [disabled]="item.lvl >= item.lvl_max">Acheter</button>
+          <span class="shop-price">{{ item.price * Math.pow(2, item.lvl) }} 💰</span>
+          <button
+            *ngIf="item.lvl < item.lvl_max && money >= item.price * Math.pow(2, item.lvl)"
+            class="buy-button"
+            (click)="buyItem(item)"
+            [disabled]="item.lvl >= item.lvl_max || money < item.price * Math.pow(2, item.lvl)"
+          >
+            Buy
+          </button>
         </div>
       </div>
     </div>

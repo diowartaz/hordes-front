@@ -13,10 +13,13 @@ import { Bonus } from 'src/app/models/hordes';
 })
 export class ShopComponent implements OnInit {
   bonuses: Bonus[] = [];
+  Math = Math;
+  money = 0;
   constructor(private cityService: CityService) {}
 
   ngOnInit(): void {
-    this.cityService.userPlayerStats$.subscribe(() => {
+    this.cityService.userPlayerStats$.subscribe((stats) => {
+      this.money = stats.money;
       this.calculateBonuses();
     });
     this.cityService.referencesBonuses$.subscribe(() => {
@@ -42,6 +45,6 @@ export class ShopComponent implements OnInit {
   }
 
   buyItem(item: Bonus) {
-    console.log('buyItem', item);
+    this.cityService.buyBonus(item.id);
   }
 }
