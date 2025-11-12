@@ -5,12 +5,14 @@ load des headers apres un refresh
 signaux et optimisation des rerender
 
 ------------ fonc ------------------
-taille button pas identique
-faire la découverte de batiment choisir parmi 3
+remettre la defense random des baitments
+avoir une money secondaire grace à la ranked / tournois pour avoir des batiments legendaire
 faire en sorte que les skills soit logaritmique
+afficher le % d'efficacite de chaque journee et gloable à la fin de la partie
 sign in with google (https://www.youtube.com/watch?v=GEht4l4n4K8 (pas vraiment complet))
 
 ------------ tech non prio ------------------
+typage
 ngIf
 type any
 optimize the bundle size. (angular.json bugdet )

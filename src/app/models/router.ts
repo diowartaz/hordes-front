@@ -11,6 +11,7 @@ export enum RoutesEnum {
   PROFIL = 'profil',
   CREATE_CITY = 'create-city',
   DEATH_RECAP = 'death-recap',
+  SHOP = 'shop',
 }
 
 export enum UserState {

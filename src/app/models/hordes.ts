@@ -24,6 +24,8 @@ export function createDefaultStatsModel(): StatsModel {
     personal_best_day: 0,
     personal_best_zb: 0,
     xp: 0,
+    money: 0,
+    bonuses: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, 0])),
     match_history: [],
     ranked_points: 500,
   };
@@ -33,6 +35,8 @@ export interface StatsModel {
   personal_best_day: number;
   personal_best_zb: number;
   xp: number;
+  money: number;
+  bonuses: Record<number, number>;
   ranked_points: number;
   match_history: any[];
 }
@@ -283,4 +287,23 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     probaSkillDiscovery: 0.5,
     randomPercentageDefBuilding: 20,
   };
+}
+
+export interface BonusWithoutLvl {
+  id: number;
+  name: string;
+  description: string;
+  icon: string;
+  price: number;
+  lvl_max: number;
+}
+
+export interface Bonus {
+  id: number;
+  name: string;
+  description: string;
+  icon: string;
+  price: number;
+  lvl: number;
+  lvl_max: number;
 }

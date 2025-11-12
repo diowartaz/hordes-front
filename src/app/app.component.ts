@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderLoggedInComponent } from './components/hordes/template-elements/header-logged-in/header-logged-in.component';
 import { CityHeaderComponent } from './components/hordes/template-elements/city-header/city-header.component';
+import { CityService } from './services/city/city.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,10 @@ import { CityHeaderComponent } from './components/hordes/template-elements/city-
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private cityService: CityService) {}
+
+  ngOnInit(): void {
+    this.cityService.loadReferencesBonuses();
+  }
+}

@@ -1,0 +1,84 @@
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.shop-card > * {
+  flex: 1;
+  width: 100%;
+}
+
+.shop-card {
+  padding: 8px !important;
+  &-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0;
+      color: #fff;
+    }
+
+    .icon {
+      color: white;
+      font-size: 1.8rem;
+      margin-top: 0.2rem;
+    }
+  }
+
+  .shop-description {
+    color: #aaa;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+
+  .shop-levels {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #ccc;
+
+    .progress-bar {
+      height: 8px;
+      width: 100%;
+      background: #d2d2d2;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 0.3rem;
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #b44cff, #6a00b5);
+        transition: width 0.3s ease;
+      }
+    }
+  }
+
+  .shop-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .shop-price {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+}
+
+.buy-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 2px 6px;
+  background-color: var(--primary-yellow);
+  border-radius: 4px;
+  border: var(--border-white-transparent);
+  font-weight: 500;
+  gap: 4px;
+  box-shadow: 0px 0px 7px 2px #000000a1;
+}

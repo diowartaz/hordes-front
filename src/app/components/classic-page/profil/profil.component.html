@@ -1,4 +1,4 @@
-<app-classic-page [title]="profil.username">
+<app-classic-page *ngIf="profil" [title]="profil.username">
   <ng-container icon>
     <span class="material-symbols-outlined" style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px">
       person

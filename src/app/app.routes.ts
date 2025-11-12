@@ -19,6 +19,7 @@ import { ProfilComponent } from './components/classic-page/profil/profil.compone
 import { LeaderboardHordesComponent } from './components/classic-page/leaderboard-hordes/leaderboard-hordes.component';
 import { HomeComponent } from './components/home/home.component';
 import { WikiComponent } from './components/classic-page/wiki/wiki.component';
+import { ShopComponent } from './components/classic-page/shop/shop.component';
 
 export const routes: Routes = [
   {
@@ -75,6 +76,11 @@ export const routes: Routes = [
   {
     path: RoutesEnum.WIKI,
     component: WikiComponent,
+  },
+  {
+    path: RoutesEnum.SHOP,
+    component: ShopComponent,
+    canActivate: [authGuard],
   },
   {
     path: RoutesEnum.PLAY,

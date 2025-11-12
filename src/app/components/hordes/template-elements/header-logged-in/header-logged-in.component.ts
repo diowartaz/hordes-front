@@ -22,6 +22,7 @@ export class HeaderLoggedInComponent implements OnInit {
   xpRatio = 50;
   goBackButton = false;
   userIsLoggedIn = false;
+  money = 0;
 
   constructor(
     private cityService: CityService,
@@ -38,6 +39,7 @@ export class HeaderLoggedInComponent implements OnInit {
           this.lvl = lvl;
           this.xpString = xpString;
           this.xpRatio = ratio;
+          this.money = stats.money;
         }
       }),
       this.cityService.userPlayerState$.subscribe((userState: UserState) => {
@@ -62,6 +64,9 @@ export class HeaderLoggedInComponent implements OnInit {
     this.router.navigate([RoutesEnum.PROFIL], {
       queryParams: { user_id: this.authService.getUserId() },
     });
+  }
+  goToShop() {
+    this.router.navigate([RoutesEnum.SHOP]);
   }
 
   goBack() {

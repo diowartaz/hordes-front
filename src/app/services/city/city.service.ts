@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
-import { StatsModel } from 'src/app/models/hordes';
+import { BonusWithoutLvl, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { UserState } from 'src/app/models/router';
 
@@ -13,13 +13,7 @@ import { UserState } from 'src/app/models/router';
 export class CityService {
   API_URL = environment.API_URL;
   userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerStats$: BehaviorSubject<StatsModel> = new BehaviorSubject<StatsModel>({
-    personal_best_day: 0,
-    personal_best_zb: 0,
-    xp: 0,
-    match_history: [],
-    ranked_points: 500,
-  });
+  userPlayerStats$: BehaviorSubject<StatsModel> = new BehaviorSubject<StatsModel>(createDefaultStatsModel());
   defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(UserState.NOT_LOADED_PLAYER);
   playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -28,6 +22,8 @@ export class CityService {
     string: '8h00',
     seconds: 8 * 60 * 60,
   });
+
+  referencesBonuses$: BehaviorSubject<BonusWithoutLvl[]> = new BehaviorSubject<BonusWithoutLvl[]>([]);
 
   setInterval: any = null;
 
@@ -258,5 +254,16 @@ export class CityService {
       }),
       catchError(handleError('getProfil', url)),
     );
+  }
+
+  loadReferencesBonuses(): void {
+    const url = this.API_URL + 'references/bonuses';
+    this.httpClient
+      .get<{ bonuses: BonusWithoutLvl[] }>(url)
+      .pipe(
+        tap((response) => this.referencesBonuses$.next(response.bonuses)),
+        catchError(handleError('loadReferencesBonuses', url)),
+      )
+      .subscribe();
   }
 }

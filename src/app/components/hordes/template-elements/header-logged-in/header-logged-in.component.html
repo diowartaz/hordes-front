@@ -8,11 +8,18 @@
       <div class="lvl">{{ lvl }}</div>
     </div>
     <div class="xp-bar-wrapper">
-      <progress class="xp-bar" max="100" value="{{ xpRatio }}"></progress>
       <div class="xp-bar-string">{{ xpString }}</div>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="xpRatio"></div>
+      </div>
     </div>
   </div>
   <div class="right-part">
+    <div class="icon-btn money">
+      <div class="plus">+</div>
+      <span>{{ money }}</span>
+      💰
+    </div>
     <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
       <img src="../../../assets/icons/discord_icon.png"
     /></a>
@@ -24,6 +31,9 @@
     </button>
     <button class="icon-btn" (click)="goToWiki()">
       <span class="emoticon">📖</span>
+    </button>
+    <button class="icon-btn" (click)="goToShop()">
+      <span class="emoticon">💰</span>
     </button>
     <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToSettings()">
       <span class="emoticon">⚙️</span>
