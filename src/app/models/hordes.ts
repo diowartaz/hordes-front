@@ -208,14 +208,19 @@ export interface DefaultValuesModel {
   day_end_time: number;
   digging_time: number;
   coef_realtime_to_ingametime: number;
-  nb_building_at_start: number;
   buildings: BuildingBackendModel[];
-  list_leveled_proba: LeveledProbaModel[];
+  LEVELED_PROBA_RESSOURCES: LeveledProbaModel[];
   nb_buildings_start: number;
   nb_skills_start: number;
   probaBuildingDiscovery: number;
   probaSkillDiscovery: number;
   randomPercentageDefBuilding: number;
+  bonuses: Record<string, BonusWithoutLvl>;
+  SKILL_TIME_MULTIPLIER: number;
+  BONUS_PRICE_MULTIPLIER: number;
+  ZOMBIE_COEF_MIN: number;
+  ZOMBIE_COEF_MAX: number;
+  ARCHITECT_DISCOVERY_CHOICES: number;
 }
 
 export interface LeveledProbaModel {
@@ -278,14 +283,19 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     day_end_time: 86459,
     digging_time: 7200,
     coef_realtime_to_ingametime: 192,
-    nb_building_at_start: 5,
     buildings: [],
-    list_leveled_proba: [],
     nb_buildings_start: 7,
     nb_skills_start: 9,
     probaBuildingDiscovery: 0.7,
     probaSkillDiscovery: 0.5,
     randomPercentageDefBuilding: 20,
+    LEVELED_PROBA_RESSOURCES: [],
+    bonuses: {},
+    SKILL_TIME_MULTIPLIER: 1.5,
+    BONUS_PRICE_MULTIPLIER: 1.5,
+    ZOMBIE_COEF_MIN: 2,
+    ZOMBIE_COEF_MAX: 4,
+    ARCHITECT_DISCOVERY_CHOICES: 2,
   };
 }
 
