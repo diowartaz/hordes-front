@@ -5,6 +5,8 @@ import { BuildingModel, CityModel } from 'src/app/models/hordes';
 import { CommonModule } from '@angular/common';
 import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
 import { formatTimeToString } from 'src/app/shared/utils/time';
+import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
+import { BuildingRarityToIconPipe } from '../../../../shared/pipes/building-rarity-to-icon';
 
 const rarityOrder: Record<string, number> = {
   base: 1,
@@ -16,13 +18,13 @@ const rarityOrder: Record<string, number> = {
 @Component({
   selector: 'app-buildings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ItemIconPipe, BuildingRarityToIconPipe],
   templateUrl: './buildings.component.html',
   styleUrls: ['./buildings.component.scss'],
 })
 export class BuildingsComponent implements OnInit, OnDestroy {
   city: any = null;
-  buildings: any = [];
+  buildings: BuildingModel[] = [];
   buildLoading = false;
   subscriptions: Subscription[] = [];
   dialogMessage = 'init';
@@ -67,7 +69,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  setCustomInventory(building: any) {
+  setCustomInventory(building: BuildingModel) {
     building.customInventory = buildingInventoryToUsableInventory(building.inventory);
   }
 
@@ -76,14 +78,17 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   setEnoughTime(building: any) {
+    const flatBonus = this.cityService.bonuses$.getValue()[4];
+    const percentBonus = this.cityService.bonuses$.getValue()[5];
+    const timeRequired =
+      building.time * this.city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
+      flatBonus.value * flatBonus.lvl * 60;
     building.enoughTime =
-      this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build <=
+      this.cityService.userPlayerCityTime$.getValue().seconds + timeRequired <=
       this.cityService.defaultValues$.getValue().day_end_time;
     if (building.enoughTime) {
       const timeoutSeconds =
-        (this.cityService.defaultValues$.getValue().day_end_time -
-          building.time * this.city.speeds.build -
-          this.cityService.userPlayerCityTime$.getValue().seconds) /
+        (timeRequired - this.cityService.userPlayerCityTime$.getValue().seconds) /
         this.cityService.defaultValues$.getValue().coef_realtime_to_ingametime;
       this.setTimeoutRefs.push(
         setTimeout(() => {
@@ -94,7 +99,12 @@ export class BuildingsComponent implements OnInit, OnDestroy {
   }
 
   setBuildingTimeString(building: any) {
-    building.buildingTimeString = formatTimeToString(building.time * this.city.speeds.build);
+    const flatBonus = this.cityService.bonuses$.getValue()[4];
+    const percentBonus = this.cityService.bonuses$.getValue()[5];
+    const timeRequired =
+      building.time * this.city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
+      flatBonus.value * flatBonus.lvl * 60;
+    building.buildingTimeString = formatTimeToString(timeRequired);
   }
 
   build(building: BuildingModel) {

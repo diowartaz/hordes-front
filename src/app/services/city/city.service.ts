@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
-import { Bonus, BonusWithoutLvl, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
+import { Bonus, BonusWithoutLvl, BuildingModel, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { UserState } from 'src/app/models/router';
 
@@ -26,7 +26,14 @@ export class CityService {
   referencesBonuses$: BehaviorSubject<BonusWithoutLvl[]> = new BehaviorSubject<BonusWithoutLvl[]>([]);
   bonuses$: BehaviorSubject<Record<number, Bonus>> = new BehaviorSubject<Record<number, Bonus>>({});
 
+  buildings = signal<BuildingModel[]>([]);
+
   setInterval: any = null;
+
+  setupBuildingsSignal(buildings: BuildingModel[]): void {
+    console.log(buildings);
+    this.buildings.set([]);
+  }
 
   constructor(private readonly httpClient: HttpClient) {
     this.setupBonusCalculation();

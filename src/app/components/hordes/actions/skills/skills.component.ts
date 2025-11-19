@@ -6,11 +6,12 @@ import { CityModel } from 'src/app/models/hordes';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { xpToLvl } from 'src/app/shared/utils/xp';
+import { SkillToIconPipe } from '../../../../shared/pipes/skill-to-icon';
 
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkillToIconPipe],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
@@ -20,14 +21,6 @@ export class SkillsComponent implements OnInit {
   learnLoading = false;
   dialogMessage = 'init';
   snackBarOpened = false;
-
-  mappingSkillIdToIcon: any = {
-    1: '../../../../assets/icons/pelle.gif',
-    2: '../../../../assets/icons/livre.gif',
-    3: '../../../../assets/icons/build.webp',
-    4: '../../../assets/icons/sleep.gif',
-  };
-
   day_start_time = 0;
 
   constructor(

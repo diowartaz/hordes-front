@@ -1,4 +1,7 @@
 TODO
+mettre des signals + typage
+
+faire le systeme de timeout pour les skills et la fouille
 
 ------------ tech ------------------
 load des headers apres un refresh

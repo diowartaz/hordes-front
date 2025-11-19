@@ -6,7 +6,7 @@
 
 <div class="boundary">
   <div class="play-header">
-    <img class="icon" src="../../../../assets/icons/livre.gif" />
+    <img class="icon" src="assets/icons/livre.gif" />
     <div>Learn Skills</div>
   </div>
   <div class="play-content">
@@ -20,7 +20,7 @@
     >
       <div class="line">
         <div class="element-wrapper">
-          <img class="icon" src="{{ mappingSkillIdToIcon[skill.id] }}" />
+          <img class="icon" [src]="skill.id | skillToIcon" />
           <div class="text" style="margin-bottom: -3px; font-weight: 500">
             {{ skill.name }}
           </div>
@@ -74,7 +74,7 @@
             background: isLearnable(skill) ? 'var(--primary-yellow)' : 'var(--primary-yellow-disabled)',
           }"
         >
-          <img src="../../../../assets/icons/livre.gif" />
+          <img src="assets/icons/livre.gif" />
           <div class="text">Learn</div>
         </button>
       </div>

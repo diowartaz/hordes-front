@@ -113,11 +113,12 @@ export interface BuildingModel {
   lvl: number;
   lvl_max: number;
   name: string;
-  inventory: object;
-  customInventory?: customInventoryModel;
+  inventory: Record<string, number>;
+  customInventory?: InventoryItem[];
   enoughRessources: boolean;
   enoughTime: boolean;
   buildingTimeString: string;
+  rarity: 'base' | 'common' | 'rare' | 'epic';
 }
 
 export interface SkillModel {
@@ -306,6 +307,7 @@ export interface BonusWithoutLvl {
   icon: string;
   price: number;
   lvl_max: number;
+  value: number;
 }
 
 export interface Bonus {
@@ -316,4 +318,5 @@ export interface Bonus {
   price: number;
   lvl: number;
   lvl_max: number;
+  value: number;
 }

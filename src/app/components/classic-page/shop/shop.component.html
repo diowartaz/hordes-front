@@ -2,7 +2,7 @@
   <ng-container icon> 💰 </ng-container>
   <ng-container content>
     <div class="shop-container">
-      <div class="shop-card container" *ngFor="let item of (cityService.bonuses$ | async) | keyvalue">
+      <div class="shop-card container" *ngFor="let item of cityService.bonuses$ | async | keyvalue">
         <div class="shop-card-header">
           <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
           <div>

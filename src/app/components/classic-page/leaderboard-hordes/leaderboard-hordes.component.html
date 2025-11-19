@@ -1,15 +1,15 @@
 <app-classic-page [title]="'Leaderboard'">
   <ng-container icon>
-    <img style="height: 24px; width: 24px; margin-right: 8px" src="../../../assets/icons/leaderboard.gif" />
+    <img style="height: 24px; width: 24px; margin-right: 8px" src="assets/icons/leaderboard.gif" />
   </ng-container>
   <ng-container content>
     <div class="select">
       <button class="select-btn" (click)="changeRanked(true)" [ngClass]="{ 'has-background': ranked }">
-        <img class="icon" src="../../../assets/icons/ranked.png" />
+        <img class="icon" src="assets/icons/ranked.png" />
         <span class="span">Ranked</span>
       </button>
       <button class="select-btn" (click)="changeRanked(false)" [ngClass]="{ 'has-background': !ranked }">
-        <img class="icon" src="../../../assets/icons/normal.png" />
+        <img class="icon" src="assets/icons/normal.png" />
         <span class="span">Normal</span>
       </button>
     </div>
@@ -36,11 +36,11 @@
           style="justify-content: space-between; padding: 0px 4px"
         >
           <div class="perf-element">
-            <img class="icon" src="../../../assets/icons/calendar.ico" />
+            <img class="icon" src="assets/icons/calendar.ico" />
             <span class="text-span">{{ user.personal_best_day }}</span>
           </div>
           <div class="perf-element">
-            <img class="icon" src="../../../assets/icons/zb.gif" />
+            <img class="icon" src="assets/icons/zb.gif" />
             <span class="text-span" style="margin-left: -1px">{{ user.personal_best_zb }}</span>
           </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
         <div class="leaderboard-row-element" *ngFor="let user of leaderboard">
           <div>{{ user.ranked_points }}</div>
-          <img style="width: 20px; height: 20px" src="../../../assets/icons/ranked_points.png" />
+          <img style="width: 20px; height: 20px" src="assets/icons/ranked_points.png" />
         </div>
       </div>
     </div>

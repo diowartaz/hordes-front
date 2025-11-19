@@ -1,18 +1,18 @@
 <div class="container">
   <div style="display: flex; gap: 4px">
-    <img style="width: 16px; height: 16px" src="../../../assets/icons/calendar.ico" />
+    <img style="width: 16px; height: 16px" src="assets/icons/calendar.ico" />
     <div>{{ city.day - 1 }}</div>
   </div>
   <div class="def-zb">
     <div class="def-zb-el">
-      <img class="icon" src="../../../assets/icons/defense.gif" />
+      <img class="icon" src="assets/icons/defense.gif" />
       <span class="text-span" style="margin-left: 6px">{{ city.defense }}</span>
     </div>
     <div *ngIf="city.attackRecap.nb_zb === city.defense">=</div>
     <div *ngIf="city.attackRecap.nb_zb > city.defense"><</div>
     <div *ngIf="city.attackRecap.nb_zb < city.defense">></div>
     <div class="def-zb-el">
-      <img class="icon" src="../../../assets/icons/zb.gif" />
+      <img class="icon" src="assets/icons/zb.gif" />
       <span style="margin-left: 0px" class="text-span">{{ city.attackRecap.nb_zb }}</span>
     </div>
   </div>

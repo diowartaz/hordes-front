@@ -43,11 +43,15 @@ export class DiggingsComponent implements OnInit, OnDestroy {
   }
 
   getDiggingsTime(): number {
-    if (!this.city) {
-      return 2 * 60 * 60;
-    }
-
-    return this.nbDigs * this.cityService.defaultValues$.getValue().digging_time * this.city.speeds.dig;
+    const flatBonus = this.cityService.bonuses$.getValue()[6];
+    const percentBonus = this.cityService.bonuses$.getValue()[7];
+    return this.city
+      ? this.nbDigs *
+          (this.cityService.defaultValues$.getValue().digging_time *
+            this.city.speeds.dig *
+            (1 - percentBonus.value * percentBonus.lvl) -
+            flatBonus.value * flatBonus.lvl * 60)
+      : 2 * 60 * 60;
   }
 
   getDiggingsTimeString() {
