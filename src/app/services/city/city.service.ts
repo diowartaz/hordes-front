@@ -29,18 +29,6 @@ export class CityService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getDefaultValues(): Observable<any> {
-    const url: string = this.API_URL + 'city/default-values';
-    return this.httpClient.get<any>(url).pipe(
-      map((response: any) => {
-        this.log('getDefaultValues', response);
-        this.defaultValues$.next(response.default_values);
-        // return response;
-      }),
-      catchError(handleError('getGameXP', url)),
-    );
-  }
-
   loadPlayer(): Observable<any> {
     const url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(

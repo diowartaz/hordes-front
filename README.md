@@ -188,4 +188,81 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 | Level Bonus                       | +1 min earlier wake-up per level         |
 | Platforms                         | Web, Android (planned)                   |
 
+
+
+### endpoints
+
+- **city/action/find-items/:nbItems**
+  - données requises
+    - city.lastRequestTimestamp
+    - city.inventory 
+    - city.skills (Map(skillId, skill))
+    - city.time
+    - player.bonuses
+  - données modifiées
+    - city.lastRequestTimestamp
+    - city.inventory
+    - city.time
+
+- **city/action/build/:buildingId**
+  - données requises
+    - city.lastRequestTimestamp
+    - city.inventory 
+    - city.defense
+    - city.skills
+    - city.time
+    - city.buildings
+    - player.bonuses
+  - données modifiées
+    - city.lastRequestTimestamp
+    - city.inventory
+    - city.time
+    - city.buildings
+    - city.defense
+
+- **city/action/learn/:skillId**
+  - données requises
+    - city.lastRequestTimestamp
+    - city.skills
+    - city.time
+    - player.bonuses
+  - données modifiées
+    - city.lastRequestTimestamp
+    - city.skills
+    - city.time
+
+- **city/new**
+  - données modifiées
+    - city
+    - player.state
+    - rankedGame
+
+- **day/end**
+  - données requises
+    - attackRecap.nbZombies
+    - attackRecap.money
+    - city.buildings
+  - données modifiées
+    - player.state
+    - attackRecap.nbZombies
+    - attackRecap.money
+    - attackRecap.buildingsDiscoveryChoices (liste de {buildingIds, defense})
+    - attackRecap.skillsDiscoveries MAP(skillId: nbLvlDiscovered)
+    - player.stats
+    - rankedGames (suppr si 2eme joueur)
+    - rankedGame (si user dead)
+
+- **day/start body: [buildingChosenId1, buildingChosenId2]**
+  - données requises
+    - attackRecap.buildingsDiscoveryChoices
+    - attackRecap.skillsDiscoveries
+  - données modifiées
+    - player.state
+    - city.day
+    - city.buildings
+    - city.skills
+
+
+
+
 ---
