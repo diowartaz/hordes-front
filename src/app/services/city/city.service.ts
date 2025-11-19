@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, map, Observable, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
-import { BonusWithoutLvl, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
+import { Bonus, BonusWithoutLvl, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { UserState } from 'src/app/models/router';
 
@@ -24,10 +24,38 @@ export class CityService {
   });
 
   referencesBonuses$: BehaviorSubject<BonusWithoutLvl[]> = new BehaviorSubject<BonusWithoutLvl[]>([]);
+  bonuses$: BehaviorSubject<Record<number, Bonus>> = new BehaviorSubject<Record<number, Bonus>>({});
 
   setInterval: any = null;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {
+    this.setupBonusCalculation();
+  }
+
+  private setupBonusCalculation(): void {
+    combineLatest([this.userPlayerStats$, this.referencesBonuses$])
+      .pipe(map(([stats, references]) => this.computeBonuses(stats, references)))
+      .subscribe((bonuses) => this.bonuses$.next(bonuses));
+  }
+
+  private computeBonuses(stats: StatsModel, references: BonusWithoutLvl[]): Record<number, Bonus> {
+    const hasBonuses = Object.keys(stats.bonuses).length > 0;
+    const hasReferences = Object.keys(references).length > 0;
+
+    if (!hasBonuses || !hasReferences) {
+      return {};
+    }
+
+    const bonuses: Record<number, Bonus> = {};
+    for (const referencesBonusId in this.referencesBonuses$.getValue()) {
+      bonuses[referencesBonusId] = {
+        ...this.referencesBonuses$.getValue()[referencesBonusId],
+        lvl: this.userPlayerStats$.getValue().bonuses[referencesBonusId],
+      };
+    }
+
+    return bonuses;
+  }
 
   loadPlayer(): Observable<any> {
     const url: string = this.API_URL + 'player';

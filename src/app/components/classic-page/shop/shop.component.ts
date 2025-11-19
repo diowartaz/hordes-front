@@ -15,36 +15,15 @@ export class ShopComponent implements OnInit {
   bonuses: Bonus[] = [];
   Math = Math;
   money = 0;
-  constructor(private cityService: CityService) {}
+  constructor(public cityService: CityService) {}
 
   ngOnInit(): void {
     this.cityService.userPlayerStats$.subscribe((stats) => {
       this.money = stats.money;
-      this.calculateBonuses();
-    });
-    this.cityService.referencesBonuses$.subscribe(() => {
-      this.calculateBonuses();
     });
   }
 
-  calculateBonuses(): void {
-    if (
-      Object.keys(this.cityService.userPlayerStats$.getValue().bonuses).length > 0 &&
-      Object.keys(this.cityService.referencesBonuses$.getValue()).length > 0
-    ) {
-      this.bonuses = [];
-      for (const referencesBonusId in this.cityService.referencesBonuses$.getValue()) {
-        this.bonuses.push({
-          ...this.cityService.referencesBonuses$.getValue()[referencesBonusId],
-          lvl: this.cityService.userPlayerStats$.getValue().bonuses[referencesBonusId],
-        });
-      }
-    } else {
-      this.bonuses = [];
-    }
-  }
-
-  buyItem(item: Bonus) {
-    this.cityService.buyBonus(item.id);
+  buyItem(id: number) {
+    this.cityService.buyBonus(id);
   }
 }

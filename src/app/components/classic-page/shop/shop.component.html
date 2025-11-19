@@ -2,31 +2,31 @@
   <ng-container icon> 💰 </ng-container>
   <ng-container content>
     <div class="shop-container">
-      <div class="shop-card container" *ngFor="let item of bonuses">
+      <div class="shop-card container" *ngFor="let item of (cityService.bonuses$ | async) | keyvalue">
         <div class="shop-card-header">
-          <span class="material-symbols-outlined icon">{{ item.icon }}</span>
+          <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
           <div>
-            <h3>{{ item.name }}</h3>
-            <p class="shop-description">{{ item.description }}</p>
+            <h3>{{ item.value.name }}</h3>
+            <p class="shop-description">{{ item.value.description }}</p>
           </div>
         </div>
 
         <div class="shop-levels">
           <span
-            >Level : <strong>{{ item.lvl }}</strong> / {{ item.lvl_max }}</span
+            >Level : <strong>{{ item.value.lvl }}</strong> / {{ item.value.lvl_max }}</span
           >
           <div class="progress-bar">
-            <div class="progress" [style.width.%]="(item.lvl / item.lvl_max) * 100"></div>
+            <div class="progress" [style.width.%]="(item.value.lvl / item.value.lvl_max) * 100"></div>
           </div>
         </div>
 
-        <div *ngIf="item.lvl < item.lvl_max" class="shop-footer">
-          <span class="shop-price">{{ item.price * Math.pow(2, item.lvl) }} 💰</span>
+        <div *ngIf="item.value.lvl < item.value.lvl_max" class="shop-footer">
+          <span class="shop-price">{{ item.value.price * Math.pow(2, item.value.lvl) }} 💰</span>
           <button
-            *ngIf="item.lvl < item.lvl_max && money >= item.price * Math.pow(2, item.lvl)"
+            *ngIf="item.value.lvl < item.value.lvl_max && money >= item.value.price * Math.pow(2, item.value.lvl)"
             class="buy-button"
-            (click)="buyItem(item)"
-            [disabled]="item.lvl >= item.lvl_max || money < item.price * Math.pow(2, item.lvl)"
+            (click)="buyItem(item.value.id)"
+            [disabled]="item.value.lvl >= item.value.lvl_max || money < item.value.price * Math.pow(2, item.value.lvl)"
           >
             Buy
           </button>

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { ClassicPageComponent } from '../classic-page.component';
-import { UserState } from 'src/app/models/router';
 
 @Component({
   selector: 'app-leaderboard-hordes',
@@ -25,9 +24,6 @@ export class LeaderboardHordesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLeaderboardRanked();
-    if (this.cityService.userPlayerState$.getValue() === UserState.NOT_LOADED_PLAYER) {
-      this.cityService.loadPlayer();
-    }
   }
 
   getLeaderboardBestDay() {

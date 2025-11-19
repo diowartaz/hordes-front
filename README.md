@@ -188,14 +188,12 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 | Level Bonus                       | +1 min earlier wake-up per level         |
 | Platforms                         | Web, Android (planned)                   |
 
-
-
 ### endpoints
 
 - **city/action/find-items/:nbItems**
   - données requises
     - city.lastRequestTimestamp
-    - city.inventory 
+    - city.inventory
     - city.skills (Map(skillId, skill))
     - city.time
     - player.bonuses
@@ -207,7 +205,7 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 - **city/action/build/:buildingId**
   - données requises
     - city.lastRequestTimestamp
-    - city.inventory 
+    - city.inventory
     - city.defense
     - city.skills
     - city.time
@@ -261,8 +259,5 @@ Ranked mode allows you to **compete asynchronously** with other players using de
     - city.day
     - city.buildings
     - city.skills
-
-
-
 
 ---
