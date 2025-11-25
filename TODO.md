@@ -1,10 +1,13 @@
 TODO
+faire le systeme de timeout pour les skills et la fouille
+
+
+
 mettre le loading alors return dans le service directement
-mettre des signals + typage
+
 
 attackRecap non optionel dans le back
 
-faire le systeme de timeout pour les skills et la fouille
 
 
 

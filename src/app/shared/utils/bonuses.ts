@@ -1,7 +1,8 @@
-import { AdvancedBonus, BonusWithoutLvl, StatsModel } from 'src/app/models/hordes';
+import { AdvancedBonus, BonusWithoutLvl, DefaultValuesModel, StatsModel } from 'src/app/models/hordes';
 
 export function computeBonuses(
   stats: StatsModel,
+  defaultValues: DefaultValuesModel,
   referencesBonuses: BonusWithoutLvl[],
 ): Record<number, AdvancedBonus> {
   const hasBonuses = Object.keys(stats.bonuses).length > 0;
@@ -16,8 +17,12 @@ export function computeBonuses(
     bonuses[referencesBonusId] = {
       ...referencesBonuses[referencesBonusId],
       lvl: stats.bonuses[referencesBonusId],
-      enoughMoney: true,
-      enoughLvlMax: true,
+      enoughMoney:
+        referencesBonuses[referencesBonusId].price *
+          defaultValues.BONUS_PRICE_MULTIPLIER *
+          stats.bonuses[referencesBonusId] <
+        stats.money,
+      enoughLvlMax: stats.bonuses[referencesBonusId] < referencesBonuses[referencesBonusId].lvl_max,
     };
   }
 

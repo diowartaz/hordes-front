@@ -28,7 +28,7 @@ export function calculateAdvancedBuildings(
 
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,
-      enoughRessources: contains(city.inventory, building.inventory),
+      enoughRessources: contains(city.inventory, building.inventory || {}),
       enoughTime: enoughTime,
       buildingTimeString: formatTimeToString(timeRequired, false),
       enoughLvlMax: building.lvl < building.lvl_max,

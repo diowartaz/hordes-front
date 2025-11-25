@@ -7,7 +7,7 @@
       <div class="container" *ngIf="nbChoicesAvailable() > 0">
         <div class="container-header">
           {{
-            `Pick ${nbMaxChoices} building${nbMaxChoices() - 2 > 1 ? 's' : ''} from the ${nbChoicesAvailable} available`
+            `Pick ${nbMaxChoices()} building${nbMaxChoices() > 1 ? 's' : ''} from the ${nbChoicesAvailable()} available`
           }}
         </div>
 

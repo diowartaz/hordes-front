@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="right-part">
-    <div class="icon-btn money">
+    <div *ngIf="cityService.userIsLoggedIn()" class="icon-btn money">
       <div class="plus">+</div>
       <span>{{ data().money }}</span>
       💰
@@ -32,7 +32,7 @@
     <button class="icon-btn" (click)="goToWiki()">
       <span class="emoticon">📖</span>
     </button>
-    <button class="icon-btn" (click)="goToShop()">
+    <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="goToShop()">
       <span class="emoticon">💰</span>
     </button>
     <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="goToSettings()">

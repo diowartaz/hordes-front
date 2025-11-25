@@ -39,7 +39,7 @@ export class CityService {
 
   referencesBonuses = signal<BonusWithoutLvl[]>([]);
   bonuses = computed<Record<number, AdvancedBonus>>(() => {
-    return computeBonuses(this.stats(), this.referencesBonuses());
+    return computeBonuses(this.stats(), this.defaultValues(), this.referencesBonuses());
   });
 
   skills = signal<SkillModel[]>([]); //TODO
@@ -328,7 +328,10 @@ export class CityService {
     this.httpClient
       .get<{ bonuses: BonusWithoutLvl[] }>(url)
       .pipe(
-        tap((response) => this.referencesBonuses.set(response.bonuses)),
+        tap((response) => {
+          console.log(response.bonuses);
+          this.referencesBonuses.set(response.bonuses);
+        }),
         catchError(handleError('loadReferencesBonuses', url)),
       )
       .subscribe();
