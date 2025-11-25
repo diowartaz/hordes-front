@@ -3,10 +3,9 @@ import { formatTimeToString } from './time';
 
 export function calculateAdvancedSkills(city: CityModel, defaultValues: DefaultValuesModel): AdvancedSkillModel[] {
   const advancedSkills: AdvancedSkillModel[] = [];
-  console.log(city.skills);
 
   for (const skill of city.skills) {
-    const timeRequired = skill.time * city.speeds.learn;
+    const timeRequired = skill.time * city.speeds.learn * defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
 
     const enoughTime = city.time + timeRequired <= defaultValues.day_end_time;
     const timeoutSeconds = (timeRequired - city.time) / defaultValues.coef_realtime_to_ingametime;
@@ -35,6 +34,7 @@ export function calculateAdvancedSkills(city: CityModel, defaultValues: DefaultV
 
 function getPercentageEfficacity(skill: SkillModel, plusLevel: number, defaultValues: DefaultValuesModel): string {
   if (skill.id == 4) {
+    //insomniac
     return formatTimeToString(defaultValues.day_start_time - skill.reduce_time_seconds * (skill.lvl + plusLevel));
   }
   return String(Math.round((1 - skill.avantage_per_lvl * (skill.lvl + plusLevel)) * 100)) + '%';
