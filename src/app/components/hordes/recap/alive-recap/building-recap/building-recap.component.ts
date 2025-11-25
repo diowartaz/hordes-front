@@ -1,48 +1,29 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { Subscription } from 'rxjs';
-import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
 import { CommonModule } from '@angular/common';
 import { BuildingRarityToIconPipe } from '../../../../../shared/pipes/building-rarity-to-icon';
+import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
+import { ItemIconPipe } from "../../../../../shared/pipes/item-to-icon.pipe";
 
 @Component({
   selector: 'app-building-recap',
   standalone: true,
-  imports: [CommonModule, BuildingRarityToIconPipe],
+  imports: [CommonModule, BuildingRarityToIconPipe, ItemIconPipe],
   templateUrl: './building-recap.component.html',
   styleUrls: ['./building-recap.component.scss'],
 })
-export class BuildingRecapComponent implements OnInit, OnDestroy {
-  @Input() building: any = null;
-  city: any = null;
-  subscriptions: Subscription[] = [];
+export class BuildingRecapComponent {
+  @Input() building: BuildingModel = createDefaultBuildingModel();
+  // rgreg: ItemModel
 
-  constructor(private cityService: CityService) {}
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.cityService.userPlayerCity$.subscribe((city: any) => {
-        this.city = city;
-        this.initBuildingCustomInventory();
-      }),
-    );
-  }
+  cityService = inject(CityService);
 
   getTimeBuildingString() {
-    if (!this.city) {
-      return '__h__';
-    }
-    return formatTimeToString(this.building.time * this.city.speeds.build);
+    return formatTimeToString(this.building.time * this.cityService.city().speeds.build);
   }
 
-  initBuildingCustomInventory() {
-    this.building.customInventory = buildingInventoryToUsableInventory(this.building.inventory);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+  castKey(key: string): ItemModel {
+    return key as ItemModel;
   }
 }

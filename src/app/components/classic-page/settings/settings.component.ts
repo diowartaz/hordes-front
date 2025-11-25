@@ -25,7 +25,7 @@ export class SettingsComponent {
 
   logOut() {
     localStorage.removeItem('token');
-    this.cityService.userPlayerState$.next(UserState.NOT_LOADED_PLAYER);
+    this.cityService.state.set(UserState.NOT_LOADED_PLAYER);
     this.router.navigate([RoutesEnum.HOME]);
   }
 
@@ -51,6 +51,6 @@ export class SettingsComponent {
   }
 
   logCity() {
-    console.log('city', this.cityService.userPlayerCity$.getValue());
+    console.log('city', this.cityService.city());
   }
 }

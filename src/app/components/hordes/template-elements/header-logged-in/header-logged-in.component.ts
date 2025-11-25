@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { StatsModel } from 'src/app/models/hordes';
-import { RoutesEnum, UserState } from 'src/app/models/router';
+import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
@@ -15,38 +13,25 @@ import { CommonModule, Location } from '@angular/common';
   templateUrl: './header-logged-in.component.html',
   styleUrls: ['./header-logged-in.component.scss'],
 })
-export class HeaderLoggedInComponent implements OnInit {
-  subscriptions: Subscription[] = [];
-  xpString = '';
-  lvl = '1';
-  xpRatio = 50;
+export class HeaderLoggedInComponent {
+  cityService = inject(CityService);
   goBackButton = false;
-  userIsLoggedIn = false;
-  money = 0;
+
+  data = computed(() => {
+    const { lvl, xpString, ratio } = XPToLVLandXP(this.cityService.stats().xp);
+    return {
+      lvl,
+      xpString,
+      xpRatio: ratio,
+      money: this.cityService.stats().money,
+    };
+  });
 
   constructor(
-    private cityService: CityService,
     private router: Router,
     private authService: AuthService,
     private location: Location,
   ) {}
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.cityService.userPlayerStats$.subscribe((stats: StatsModel | null) => {
-        if (stats != null) {
-          const { lvl, xpString, ratio } = XPToLVLandXP(stats.xp);
-          this.lvl = lvl;
-          this.xpString = xpString;
-          this.xpRatio = ratio;
-          this.money = stats.money;
-        }
-      }),
-      this.cityService.userPlayerState$.subscribe((userState: UserState) => {
-        this.userIsLoggedIn = [UserState.PLAYING, UserState.NO_CITY].includes(userState);
-      }),
-    );
-  }
 
   goToSettings() {
     this.router.navigate([RoutesEnum.SETTINGS]);

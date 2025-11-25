@@ -2,7 +2,7 @@
   <ng-container icon> 💰 </ng-container>
   <ng-container content>
     <div class="shop-container">
-      <div class="shop-card container" *ngFor="let item of cityService.bonuses$ | async | keyvalue">
+      <div class="shop-card container" *ngFor="let item of cityService.bonuses() | keyvalue">
         <div class="shop-card-header">
           <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
           <div>
@@ -23,10 +23,16 @@
         <div *ngIf="item.value.lvl < item.value.lvl_max" class="shop-footer">
           <span class="shop-price">{{ item.value.price * Math.pow(2, item.value.lvl) }} 💰</span>
           <button
-            *ngIf="item.value.lvl < item.value.lvl_max && money >= item.value.price * Math.pow(2, item.value.lvl)"
+            *ngIf="
+              item.value.lvl < item.value.lvl_max &&
+              cityService.stats().money >= item.value.price * Math.pow(2, item.value.lvl)
+            "
             class="buy-button"
             (click)="buyItem(item.value.id)"
-            [disabled]="item.value.lvl >= item.value.lvl_max || money < item.value.price * Math.pow(2, item.value.lvl)"
+            [disabled]="
+              item.value.lvl >= item.value.lvl_max ||
+              cityService.stats().money < item.value.price * Math.pow(2, item.value.lvl)
+            "
           >
             Buy
           </button>

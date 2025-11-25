@@ -12,7 +12,7 @@
   <div class="play-content">
     <div
       class="building"
-      *ngFor="let building of buildings"
+      *ngFor="let building of cityService.advancedBuildings()"
       [ngStyle]="{
         background: building.lvl === building.lvl_max ? '#00000061' : 'transparent',
       }"
@@ -62,12 +62,12 @@
               />
 
               <div class="nb">
-                <span class="alert-nb-item" *ngIf="city.inventory[item.key] < item.value">{{
-                  city.inventory[item.key]
-                }}</span>
-                <span class="ok-nb-item" *ngIf="city.inventory[item.key] >= item.value">{{
-                  city.inventory[item.key]
-                }}</span>
+                <span
+                  [ngClass]="[
+                    cityService.city().inventory[castKey(item.key)] >= item.value ? 'ok-nb-item' : 'alert-nb-item',
+                  ]"
+                  >{{ cityService.city().inventory[castKey(item.key)] }}</span
+                >
                 <span>/{{ item.value }}</span>
               </div>
             </div>

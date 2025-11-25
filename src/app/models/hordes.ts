@@ -41,6 +41,8 @@ export interface StatsModel {
   match_history: any[];
 }
 
+export type ItemModel = 'wood' | 'stone' | 'screw' | 'metal' | 'patch';
+
 export function createDefaultCityModel(): CityModel {
   return {
     day: 0,
@@ -52,7 +54,7 @@ export function createDefaultCityModel(): CityModel {
     buildings: [],
     skills: [],
     nb_zb_history: [],
-    inventory: {},
+    inventory: { wood: 0, stone: 0, screw: 0, metal: 0, patch: 0 },
     speeds: {
       build: 0,
       dig: 0,
@@ -63,6 +65,7 @@ export function createDefaultCityModel(): CityModel {
     state: 'noCity',
     attackRecap: {
       architect_shelter_buildings: [],
+      library_discoveries: {},
       nb_zb: 0,
       defense: 0,
       player_xp: 0,
@@ -84,15 +87,16 @@ export interface CityModel {
   skills: SkillModel[];
   nb_zb_history: number[];
   last_timestamp_request: number;
-  inventory: object;
+  inventory: { wood: number; stone: number; screw: number; metal: number; patch: number };
   speeds: SpeedsModel;
   state: string;
-  attackRecap?: AttackRecapModel;
+  attackRecap: AttackRecapModel;
   defaultCity?: boolean;
 }
 
 export interface AttackRecapModel {
   architect_shelter_buildings: BuildingModel[];
+  library_discoveries: Record<number, number>;
   nb_zb: number;
   defense: number;
   player_xp: number;
@@ -106,6 +110,24 @@ export interface SpeedsModel {
   insomniac: number;
 }
 
+export function createDefaultBuildingModel(): BuildingModel {
+  return {
+    id: 1,
+    defense: 50,
+    time: 3600,
+    lvl: 2,
+    lvl_max: 5,
+    name: 'Wooden Shelter',
+    inventory: {
+      wood: 10,
+      stone: 5,
+      metal: 2,
+    },
+    rarity: 'common',
+    selected: false,
+  };
+}
+
 export interface BuildingModel {
   id: number;
   defense: number;
@@ -114,11 +136,25 @@ export interface BuildingModel {
   lvl_max: number;
   name: string;
   inventory: Record<string, number>;
-  customInventory?: InventoryItem[];
-  enoughRessources: boolean;
-  enoughTime: boolean;
+  rarity: 'base' | 'common' | 'rare' | 'epic';
+  selected: boolean;
+}
+
+export interface AdvancedBuildingModel {
+  id: number;
+  defense: number;
+  time: number;
+  lvl: number;
+  lvl_max: number;
+  name: string;
+  inventory: Record<string, number>;
   buildingTimeString: string;
   rarity: 'base' | 'common' | 'rare' | 'epic';
+  selected: boolean;
+  enoughRessources: boolean;
+  enoughTime: boolean;
+  enoughLvlMax: boolean;
+  timeoutSeconds: number;
 }
 
 export interface SkillModel {
@@ -138,13 +174,6 @@ export interface customInventoryModel {
   nb: number;
   src: string;
   name: string;
-}
-
-export interface InventoryItem {
-  name: string;
-  src: string;
-  nb: number;
-  found: number;
 }
 
 export interface XPToLVL {
@@ -276,6 +305,14 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
         dig: 1,
         insomniac: 1,
       },
+      attackRecap: {
+        architect_shelter_buildings: [],
+        library_discoveries: {},
+        nb_zb: 0,
+        defense: 0,
+        player_xp: 0,
+        day: 0,
+      },
       last_timestamp_request: 0,
       state: 'playing',
     },
@@ -310,7 +347,7 @@ export interface BonusWithoutLvl {
   value: number;
 }
 
-export interface Bonus {
+export interface AdvancedBonus {
   id: number;
   name: string;
   description: string;
@@ -319,4 +356,16 @@ export interface Bonus {
   lvl: number;
   lvl_max: number;
   value: number;
+  enoughMoney: boolean;
+  enoughLvlMax: boolean;
+}
+
+export interface LeaderboardElement {
+  username: string;
+  username_truncated: string;
+  user_id: string;
+  personal_best_day: number;
+  personal_best_zb: number;
+  rank: number;
+  ranked_points: number;
 }

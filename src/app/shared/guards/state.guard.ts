@@ -7,7 +7,7 @@ export const stateGuard: CanActivateFn = (route) => {
   const cityService = inject(CityService);
   const router = inject(Router);
 
-  const userState = cityService.userPlayerState$.getValue() as UserState;
+  const userState = cityService.state() as UserState;
   const allowedStates = route.data['allowedStates'] as string[] | undefined;
 
   if (!allowedStates || allowedStates.includes(userState)) {

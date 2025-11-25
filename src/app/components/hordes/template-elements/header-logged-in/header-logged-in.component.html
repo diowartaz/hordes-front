@@ -1,29 +1,29 @@
 <div class="boundary">
-  <div *ngIf="userIsLoggedIn" class="left-part">
+  <div *ngIf="cityService.userIsLoggedIn()" class="left-part">
     <button *ngIf="goBackButton" class="icon-btn" (click)="goBack()">
       <span class="material-symbols-outlined icon"> keyboard_return </span>
     </button>
     <div class="lvl-wrapper">
       <img class="lvl-icon" src="assets/icons/lvl_icon.png" />
-      <div class="lvl">{{ lvl }}</div>
+      <div class="lvl">{{ data().lvl }}</div>
     </div>
     <div class="xp-bar-wrapper">
-      <div class="xp-bar-string">{{ xpString }}</div>
+      <div class="xp-bar-string">{{ data().xpString }}</div>
       <div class="progress-bar">
-        <div class="progress" [style.width.%]="xpRatio"></div>
+        <div class="progress" [style.width.%]="data().xpRatio"></div>
       </div>
     </div>
   </div>
   <div class="right-part">
     <div class="icon-btn money">
       <div class="plus">+</div>
-      <span>{{ money }}</span>
+      <span>{{ data().money }}</span>
       💰
     </div>
     <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
       <img src="assets/icons/discord_icon.png"
     /></a>
-    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToProfil()">
+    <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="goToProfil()">
       <span class="material-symbols-outlined icon"> group </span>
     </button>
     <button class="icon-btn" (click)="goToLeaderboard()">
@@ -35,7 +35,7 @@
     <button class="icon-btn" (click)="goToShop()">
       <span class="emoticon">💰</span>
     </button>
-    <button *ngIf="userIsLoggedIn" class="icon-btn" (click)="goToSettings()">
+    <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="goToSettings()">
       <span class="emoticon">⚙️</span>
     </button>
   </div>

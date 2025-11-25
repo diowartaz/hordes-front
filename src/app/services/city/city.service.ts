@@ -1,82 +1,93 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, combineLatest, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, map, Observable, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
-import { Bonus, BonusWithoutLvl, BuildingModel, createDefaultStatsModel, StatsModel } from 'src/app/models/hordes';
+import {
+  AdvancedBuildingModel,
+  AdvancedBonus,
+  BonusWithoutLvl,
+  BuildingModel,
+  CityModel,
+  createDefaultCityModel,
+  createDefaultDefaultValuesModel,
+  createDefaultStatsModel,
+  DefaultValuesModel,
+  LeaderboardElement,
+  SkillModel,
+  StatsModel,
+} from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { UserState } from 'src/app/models/router';
+import { calculateAdvancedBuildings } from 'src/app/shared/utils/buildings';
+import { computeBonuses } from 'src/app/shared/utils/bonuses';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CityService {
   API_URL = environment.API_URL;
-  userPlayerCity$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerStats$: BehaviorSubject<StatsModel> = new BehaviorSubject<StatsModel>(createDefaultStatsModel());
-  defaultValues$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  userPlayerState$: BehaviorSubject<UserState> = new BehaviorSubject<UserState>(UserState.NOT_LOADED_PLAYER);
-  playerLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  state = signal<UserState>(UserState.NOT_LOADED_PLAYER);
+  userIsLoggedIn = computed(() => {
+    return [UserState.PLAYING, UserState.NO_CITY].includes(this.state());
+  });
 
   userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
     string: '8h00',
     seconds: 8 * 60 * 60,
   });
 
-  referencesBonuses$: BehaviorSubject<BonusWithoutLvl[]> = new BehaviorSubject<BonusWithoutLvl[]>([]);
-  bonuses$: BehaviorSubject<Record<number, Bonus>> = new BehaviorSubject<Record<number, Bonus>>({});
+  referencesBonuses = signal<BonusWithoutLvl[]>([]);
+  bonuses = computed<Record<number, AdvancedBonus>>(() => {
+    return computeBonuses(this.stats(), this.referencesBonuses());
+  });
 
-  buildings = signal<BuildingModel[]>([]);
+  skills = signal<SkillModel[]>([]); //TODO
+  city = signal<CityModel>(createDefaultCityModel());
 
   setInterval: any = null;
 
-  setupBuildingsSignal(buildings: BuildingModel[]): void {
-    console.log(buildings);
-    this.buildings.set([]);
+  buildings = computed<BuildingModel[]>(() => {
+    return this.city().buildings;
+  });
+
+  advancedBuildings = computed<AdvancedBuildingModel[]>(() => {
+    return calculateAdvancedBuildings(this.city(), this.bonuses(), this.defaultValues());
+  });
+
+  defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
+  playerLoaded = signal<boolean>(false);
+  stats = signal<StatsModel>(createDefaultStatsModel());
+  buildLoading = signal<boolean>(false);
+  digLoading = signal<boolean>(false);
+  leaderboardBestDayLoading = signal<boolean>(false);
+  leaderboardRankedLoading = signal<boolean>(false);
+  leaderboardBestDay = signal<LeaderboardElement[]>([]);
+  leaderboardRanked = signal<LeaderboardElement[]>([]);
+
+  inventoryItemFound = signal({ wood: 0, stone: 0, metal: 0, patch: 0, screw: 0 });
+
+  time = computed(() => {
+    return this.calculateCityTime();
+  });
+
+  private calculateCityTime(): number {
+    return 8 * 60 * 60;
   }
 
-  constructor(private readonly httpClient: HttpClient) {
-    this.setupBonusCalculation();
-  }
-
-  private setupBonusCalculation(): void {
-    combineLatest([this.userPlayerStats$, this.referencesBonuses$])
-      .pipe(map(([stats, references]) => this.computeBonuses(stats, references)))
-      .subscribe((bonuses) => this.bonuses$.next(bonuses));
-  }
-
-  private computeBonuses(stats: StatsModel, references: BonusWithoutLvl[]): Record<number, Bonus> {
-    const hasBonuses = Object.keys(stats.bonuses).length > 0;
-    const hasReferences = Object.keys(references).length > 0;
-
-    if (!hasBonuses || !hasReferences) {
-      return {};
-    }
-
-    const bonuses: Record<number, Bonus> = {};
-    for (const referencesBonusId in this.referencesBonuses$.getValue()) {
-      bonuses[referencesBonusId] = {
-        ...this.referencesBonuses$.getValue()[referencesBonusId],
-        lvl: this.userPlayerStats$.getValue().bonuses[referencesBonusId],
-      };
-    }
-
-    return bonuses;
-  }
+  constructor(private readonly httpClient: HttpClient) {}
 
   loadPlayer(): Observable<any> {
     const url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
-        //console.log('state', response.player.state);
-        //TODO: if erreur: vider le local storage
         this.log('loadPlayer', response);
-        this.userPlayerState$.next(response.player.state);
-        this.userPlayerStats$.next(response.player.stats);
-        this.userPlayerCity$.next(response.player.city);
-        this.defaultValues$.next(response.default_values);
+        this.state.set(response.player.state);
+        this.stats.set(response.player.stats);
+        this.city.set(response.player.city);
+        this.defaultValues.set(response.default_values);
         this.updateTime(response.player.city);
-        this.playerLoaded$.next(true);
+        this.playerLoaded.set(true);
         return response;
       }),
       catchError(handleError('loadPlayer', url)),
@@ -88,7 +99,7 @@ export class CityService {
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
         this.log('getPlayerStats', response);
-        this.userPlayerStats$.next(response.stats);
+        this.stats.set(response.stats);
         return response;
       }),
       catchError(handleError('getPlayerStats', url)),
@@ -100,8 +111,8 @@ export class CityService {
     return this.httpClient.post<any>(url, { ranked }).pipe(
       map((response: any) => {
         this.log('new', response);
-        this.userPlayerCity$.next(response.player.city);
-        this.userPlayerState$.next(response.player.state);
+        this.city.set(response.player.city);
+        this.state.set(response.player.state);
         this.updateTime(response.player.city);
         return response;
       }),
@@ -114,38 +125,52 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('delete', response);
-        this.userPlayerCity$.next(null);
-        this.userPlayerState$.next(UserState.NO_CITY);
+        this.city.set(createDefaultCityModel());
+        this.state.set(UserState.NO_CITY);
         return response;
       }),
       catchError(handleError('delete', url)),
     );
   }
 
-  findItems(nb: number): Observable<any> {
+  findItems(nb: number): void {
+    this.digLoading.set(true);
     const url: string = this.API_URL + 'city/item/find/' + nb;
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('findItems', response);
-        this.userPlayerCity$.next(response.city);
-        this.updateTime(response.city);
-        return response;
-      }),
-      catchError(handleError('findItems', url)),
-    );
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        map((response: any) => {
+          this.log('findItems', response);
+          this.city.set(response.city);
+          this.updateTime(response.city);
+          this.inventoryItemFound.set(response.items_found_inventory);
+        }),
+        catchError(handleError('findItems', url)),
+        finalize(() => {
+          this.digLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
-  build(id: number): Observable<any> {
+  build(id: number): void {
+    this.buildLoading.set(true);
     const url: string = this.API_URL + 'city/build/' + id;
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('build', response);
-        this.updateTime(response.city);
-        this.userPlayerCity$.next(response.city);
-        return response;
-      }),
-      catchError(handleError('build', url)),
-    );
+
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        tap((response) => {
+          this.log('build', response);
+          this.updateTime(response.city);
+          this.city.set(response.city);
+        }),
+        catchError(handleError('build', url)),
+        finalize(() => {
+          this.buildLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   learn(id: number): Observable<any> {
@@ -153,7 +178,7 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('learn', response);
-        this.userPlayerCity$.next(response.city);
+        this.city.set(response.city);
         this.updateTime(response.city);
         return response;
       }),
@@ -167,25 +192,24 @@ export class CityService {
   }
 
   updateTime(city: any) {
-    if (!this.userPlayerCity$.getValue()) {
+    if (!this.city()) {
       if (this.setInterval) {
         clearInterval(this.setInterval);
       }
       return;
     }
     const timeToAdd = Math.floor(
-      ((new Date().getTime() - this.userPlayerCity$.getValue().last_timestamp_request) *
-        this.defaultValues$.getValue().coef_realtime_to_ingametime) /
+      ((new Date().getTime() - this.city().last_timestamp_request) * this.defaultValues().coef_realtime_to_ingametime) /
         1000,
     );
-    if (city.time + timeToAdd > this.defaultValues$.getValue().day_end_time) {
+    if (city.time + timeToAdd > this.defaultValues().day_end_time) {
       //fin de journee
       if (this.setInterval) {
         clearInterval(this.setInterval);
       }
       this.userPlayerCityTime$.next({
-        string: formatTimeToString(this.defaultValues$.getValue().day_end_time, true),
-        seconds: this.defaultValues$.getValue().day_end_time,
+        string: formatTimeToString(this.defaultValues().day_end_time, true),
+        seconds: this.defaultValues().day_end_time,
       });
       // this.endDay()
       return;
@@ -201,13 +225,13 @@ export class CityService {
       () => {
         this.addTime();
       },
-      Math.floor((60 * 1000) / this.defaultValues$.getValue().coef_realtime_to_ingametime),
+      Math.floor((60 * 1000) / this.defaultValues().coef_realtime_to_ingametime),
     );
   }
 
   addTime() {
     const x = this.userPlayerCityTime$.getValue().seconds + 60;
-    if (x >= this.defaultValues$.getValue().day_end_time) {
+    if (x >= this.defaultValues().day_end_time) {
       if (this.setInterval) {
         clearInterval(this.setInterval);
       }
@@ -225,9 +249,9 @@ export class CityService {
     return this.httpClient.post<any>(url, {}).pipe(
       map((response: any) => {
         this.log('endDay', response);
-        this.userPlayerCity$.next(response.player.city);
-        this.userPlayerStats$.next(response.player.stats);
-        this.userPlayerState$.next(response.player.state);
+        this.city.set(response.player.city);
+        this.stats.set(response.player.stats);
+        this.state.set(response.player.state);
         return response;
       }),
       catchError(handleError('endDay', url)),
@@ -240,8 +264,8 @@ export class CityService {
       map((response: any) => {
         //city
         this.log('startDay', response);
-        this.userPlayerCity$.next(response.city);
-        this.userPlayerState$.next(UserState.PLAYING);
+        this.city.set(response.city);
+        this.state.set(UserState.PLAYING);
         this.updateTime(response.city);
         return response;
       }),
@@ -249,24 +273,44 @@ export class CityService {
     );
   }
 
-  getLeaderboardBestDay() {
+  getLeaderboardBestDay(): void {
+    if (this.leaderboardBestDayLoading()) {
+      return;
+    }
+    this.leaderboardBestDayLoading.set(true);
     const url: string = this.API_URL + 'leaderboard/best-day';
-    return this.httpClient.get<any>(url).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('getLeaderboardBestDay', url)),
-    );
+    this.httpClient
+      .get<any>(url)
+      .pipe(
+        map((response: any) => {
+          this.leaderboardBestDay.set(response.leaderboard);
+        }),
+        catchError(handleError('getLeaderboardBestDay', url)),
+        finalize(() => {
+          this.leaderboardBestDayLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
-  getLeaderboardRanked() {
+  getLeaderboardRanked(): void {
+    if (this.leaderboardRankedLoading()) {
+      return;
+    }
+    this.leaderboardRankedLoading.set(true);
     const url: string = this.API_URL + 'leaderboard/ranked';
-    return this.httpClient.get<any>(url).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(handleError('getLeaderboardRanked', url)),
-    );
+    this.httpClient
+      .get<any>(url)
+      .pipe(
+        map((response: any) => {
+          this.leaderboardRanked.set(response.leaderboard);
+        }),
+        catchError(handleError('getLeaderboardRanked', url)),
+        finalize(() => {
+          this.leaderboardRankedLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   getProfil(id: string) {
@@ -284,7 +328,7 @@ export class CityService {
     this.httpClient
       .get<{ bonuses: BonusWithoutLvl[] }>(url)
       .pipe(
-        tap((response) => this.referencesBonuses$.next(response.bonuses)),
+        tap((response) => this.referencesBonuses.set(response.bonuses)),
         catchError(handleError('loadReferencesBonuses', url)),
       )
       .subscribe();
@@ -295,7 +339,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, {})
       .pipe(
-        tap((response) => this.userPlayerStats$.next(response.stats)),
+        tap((response) => this.stats.set(response.stats)),
         catchError(handleError('buyBonus', url)),
       )
       .subscribe();

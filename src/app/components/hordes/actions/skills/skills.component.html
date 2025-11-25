@@ -12,7 +12,7 @@
   <div class="play-content">
     <div
       class="building"
-      *ngFor="let skill of skills"
+      *ngFor="let skill of cityService.city().skills"
       [ngStyle]="{
         background: skill.lvl === skill.lvl_max ? '#00000061' : 'transparent',
         display: 0 === skill.lvl_max ? 'none' : 'flex',

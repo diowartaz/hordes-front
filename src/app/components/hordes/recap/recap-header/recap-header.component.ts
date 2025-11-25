@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-recap-header',
@@ -9,5 +10,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./recap-header.component.scss'],
 })
 export class RecapHeaderComponent {
-  @Input() city: any = null;
+  public cityService = inject(CityService);
 }

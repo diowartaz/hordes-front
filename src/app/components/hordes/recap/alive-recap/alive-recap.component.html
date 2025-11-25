@@ -2,17 +2,20 @@
   <div class="top">
     <div class="header container">Attack Recap</div>
     <div class="content">
-      <app-recap-header [city]="city" style="width: 100%"></app-recap-header>
+      <app-recap-header style="width: 100%"></app-recap-header>
 
-      <div class="container" *ngIf="nbChoicesAvailable > 0">
+      <div class="container" *ngIf="nbChoicesAvailable() > 0">
         <div class="container-header">
           {{
-            `Pick ${nbMaxChoices} building${nbMaxChoices - 2 > 1 ? 's' : ''} from the ${nbChoicesAvailable} available`
+            `Pick ${nbMaxChoices} building${nbMaxChoices() - 2 > 1 ? 's' : ''} from the ${nbChoicesAvailable} available`
           }}
         </div>
 
         <div class="container-content">
-          <div class="line" *ngFor="let building of city.attackRecap.architect_shelter_buildings; let i = index">
+          <div
+            class="line"
+            *ngFor="let building of cityService.city().attackRecap.architect_shelter_buildings; let i = index"
+          >
             <div class="aaa">
               <input
                 class="ckeckbox"
@@ -29,13 +32,13 @@
 
       <div class="container" *ngIf="library_discoveriesFormatted.length > 0">
         <div class="container-header">
-          {{ library_discoveriesFormatted.length }}
+          {{ Object.keys(library_discoveriesFormatted()).length }}
           <span *ngIf="library_discoveriesFormatted.length > 1"> skill discoveries </span>
           <span *ngIf="library_discoveriesFormatted.length === 1"> skill discovery </span>
         </div>
 
         <div class="container-content">
-          <app-skill-recap *ngFor="let skill of library_discoveriesFormatted" [skill]="skill"></app-skill-recap>
+          <app-skill-recap *ngFor="let skill of library_discoveriesFormatted()" [skill]="skill"></app-skill-recap>
         </div>
       </div>
 

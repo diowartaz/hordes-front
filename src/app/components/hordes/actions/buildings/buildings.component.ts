@@ -1,19 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { catchError, of, Subscription, take } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import { BuildingModel, CityModel } from 'src/app/models/hordes';
+import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
 import { CommonModule } from '@angular/common';
-import { buildingInventoryToUsableInventory } from 'src/app/shared/utils/inventory';
-import { formatTimeToString } from 'src/app/shared/utils/time';
 import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
 import { BuildingRarityToIconPipe } from '../../../../shared/pipes/building-rarity-to-icon';
-
-const rarityOrder: Record<string, number> = {
-  base: 1,
-  epic: 2,
-  rare: 3,
-  common: 4,
-};
 
 @Component({
   selector: 'app-buildings',
@@ -22,27 +12,10 @@ const rarityOrder: Record<string, number> = {
   templateUrl: './buildings.component.html',
   styleUrls: ['./buildings.component.scss'],
 })
-export class BuildingsComponent implements OnInit, OnDestroy {
-  city: any = null;
-  buildings: BuildingModel[] = [];
-  buildLoading = false;
-  subscriptions: Subscription[] = [];
+export class BuildingsComponent {
+  cityService = inject(CityService);
   dialogMessage = 'init';
   snackBarOpened = false;
-  setTimeoutRefs: any = [];
-
-  constructor(private cityService: CityService) {}
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.cityService.userPlayerCity$.subscribe((city: CityModel | null) => {
-        if (city) {
-          this.city = city;
-          this.initCustomCityBuildings();
-        }
-      }),
-    );
-  }
 
   closeSnackBar() {
     this.snackBarOpened = false;
@@ -53,115 +26,25 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     this.snackBarOpened = true;
   }
 
-  initCustomCityBuildings() {
-    if (this.city) {
-      this.buildings = [...this.city.buildings].sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
-      this.buildings.forEach((building: any) => {
-        if (!building.inventory) {
-          //TODO bug wtf
-          building.inventory = {};
-        }
-        this.setCustomInventory(building);
-        this.setEnoughRessources(building);
-        this.setEnoughTime(building);
-        this.setBuildingTimeString(building);
-      });
-    }
-  }
-
-  setCustomInventory(building: BuildingModel) {
-    building.customInventory = buildingInventoryToUsableInventory(building.inventory);
-  }
-
-  setEnoughRessources(building: any) {
-    building.enoughRessources = this.contains(this.city.inventory, building.inventory);
-  }
-
-  setEnoughTime(building: any) {
-    const flatBonus = this.cityService.bonuses$.getValue()[4];
-    const percentBonus = this.cityService.bonuses$.getValue()[5];
-    const timeRequired =
-      building.time * this.city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
-      flatBonus.value * flatBonus.lvl * 60;
-    building.enoughTime =
-      this.cityService.userPlayerCityTime$.getValue().seconds + timeRequired <=
-      this.cityService.defaultValues$.getValue().day_end_time;
-    if (building.enoughTime) {
-      const timeoutSeconds =
-        (timeRequired - this.cityService.userPlayerCityTime$.getValue().seconds) /
-        this.cityService.defaultValues$.getValue().coef_realtime_to_ingametime;
-      this.setTimeoutRefs.push(
-        setTimeout(() => {
-          building.enoughTime = false;
-        }, timeoutSeconds * 1000),
-      );
-    }
-  }
-
-  setBuildingTimeString(building: any) {
-    const flatBonus = this.cityService.bonuses$.getValue()[4];
-    const percentBonus = this.cityService.bonuses$.getValue()[5];
-    const timeRequired =
-      building.time * this.city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
-      flatBonus.value * flatBonus.lvl * 60;
-    building.buildingTimeString = formatTimeToString(timeRequired);
-  }
-
-  build(building: BuildingModel) {
-    if (this.buildLoading) {
+  build(building: AdvancedBuildingModel) {
+    if (this.cityService.buildLoading()) {
       return;
     }
-    // let reason =
-    if (!this.isBuildable(building)) {
-      if (
-        this.cityService.userPlayerCityTime$.getValue().seconds + building.time * this.city.speeds.build >
-        this.cityService.defaultValues$.getValue().day_end_time
-      ) {
-        this.openSnackBar('Not enough time');
-      } else if (building.lvl == building.lvl_max) {
-        this.openSnackBar('Already at max level');
-      } else {
-        this.openSnackBar('Not enough items');
-      }
-
+    if (!building.enoughRessources) {
+      this.openSnackBar('Not enough ressources');
+      return;
+    } else if (!building.enoughTime) {
+      this.openSnackBar('Not enough time');
+      return;
+    } else if (!building.enoughLvlMax) {
+      this.openSnackBar('Already at max level');
       return;
     }
-    this.buildLoading = true;
-    this.cityService
-      .build(building.id)
-      .pipe(
-        take(1),
-        catchError(() => of({ error: 'error' })),
-      )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log('error');
-        } else {
-          /* empty */
-        }
-        this.buildLoading = false;
-      });
+
+    this.cityService.build(building.id);
   }
 
-  contains(inv1: any, inv2: any) {
-    return Object.keys(inv2).every((key) => Object.prototype.hasOwnProperty.call(inv1, key) && inv1[key] >= inv2[key]);
-  }
-
-  isBuildable(building: BuildingModel): boolean {
-    if (this.city) {
-      const isBuildable: boolean = building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max;
-      return isBuildable;
-    } else {
-      return false;
-    }
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-    this.setTimeoutRefs.forEach((ref: any) => {
-      clearTimeout(ref);
-    });
+  castKey(key: string): ItemModel {
+    return key as ItemModel;
   }
 }

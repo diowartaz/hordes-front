@@ -12,7 +12,7 @@ const mapping: Record<string, string> = {
   standalone: true,
 })
 export class SkillToIconPipe implements PipeTransform {
-  transform(itemKey: string): string {
+  transform(itemKey: number): string {
     return mapping[itemKey] || 'assets/icons/default.png';
   }
 }

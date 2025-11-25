@@ -2,7 +2,7 @@
   <div class="left-part">
     <div class="element">
       <img class="icon" src="assets/icons/calendar.ico" />
-      <span class="text-span">{{ city?.day }}</span>
+      <span class="text-span">{{ cityService.city().day }}</span>
     </div>
 
     <div class="element">
@@ -12,13 +12,13 @@
 
     <div class="element">
       <img class="icon" src="assets/icons/defense.gif" />
-      <span class="text-span">{{ city?.defense }}</span>
+      <span class="text-span">{{ cityService.city().defense }}</span>
     </div>
     <div class="element">
       <img class="icon" src="assets/icons/zb.gif" />
 
-      <span class="text-span" [ngClass]="{ danger: city?.nb_zb_next_attack_max > city?.defense }"
-        >{{ city?.nb_zb_next_attack_min }}-{{ city?.nb_zb_next_attack_max }}</span
+      <span class="text-span" [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
+        >{{ cityService.city().nb_zb_next_attack_min }}-{{ cityService.city().nb_zb_next_attack_max }}</span
       >
     </div>
   </div>

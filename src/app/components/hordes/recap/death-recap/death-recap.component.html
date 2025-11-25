@@ -2,22 +2,20 @@
   <div class="top">
     <div class="header container">Attack Recap</div>
     <div class="content">
-      <app-recap-header [city]="getUserPlayerCity$() | async" style="width: 100%"></app-recap-header>
+      <app-recap-header style="width: 100%"></app-recap-header>
       <div class="container" style="border: 1px solid #dc1a1a">
         <img class="icon" src="assets/icons/small_death.gif" />
         <div>You died!</div>
       </div>
       <div class="container">
         <div class="xp">
-          + {{ getUserPlayerCity$().getValue().attackRecap.player_xp }}
+          + {{ cityService.city().attackRecap.player_xp }}
           <img style="width: 32px" src="assets/icons/xpLogo.png" />
         </div>
       </div>
       <app-game
         style="width: 100%"
-        [game]="
-          getUserPlayerStats$().getValue().match_history[getUserPlayerStats$().getValue().match_history.length - 1]
-        "
+        [game]="cityService.stats().match_history[cityService.stats().match_history.length - 1]"
       ></app-game>
     </div>
   </div>

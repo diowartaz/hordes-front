@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription, take } from 'rxjs';
 import { UserState } from 'src/app/models/router';
@@ -14,16 +14,15 @@ import { formatTimeToString } from 'src/app/shared/utils/time';
   styleUrls: ['./city-header.component.scss'],
 })
 export class CityHeaderComponent implements OnInit {
+  cityService = inject(CityService);
   subscriptions: Subscription[] = [];
   endDayLoading = false;
   time: any = { string: '8h00', seconds: 8 * 60 * 60 };
-  city: any = null;
-  headerIsDisplayed = false;
+  headerIsDisplayed = computed(() => {
+    return [UserState.PLAYING].includes(this.cityService.state());
+  });
 
-  constructor(
-    private cityService: CityService,
-    private router: Router,
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -31,16 +30,10 @@ export class CityHeaderComponent implements OnInit {
         this.time = time;
         if (
           (this.time.string == '00h00' || this.time.string == '23h59') &&
-          this.cityService.userPlayerState$.getValue() === UserState.PLAYING
+          this.cityService.state() === UserState.PLAYING
         ) {
           this.endDay();
         }
-      }),
-      this.cityService.userPlayerState$.subscribe((userState: UserState) => {
-        this.headerIsDisplayed = [UserState.PLAYING].includes(userState);
-      }),
-      this.cityService.userPlayerCity$.subscribe((city: any) => {
-        this.city = city;
       }),
     );
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
@@ -14,20 +14,11 @@ import { GameComponent } from 'src/app/components/classic-page/profil/game/game.
   styleUrls: ['./death-recap.component.scss'],
 })
 export class DeathRecapComponent {
+  public cityService = inject(CityService);
+
   tryAgainLoading = false;
 
-  constructor(
-    private router: Router,
-    private cityService: CityService,
-  ) {}
-
-  getUserPlayerCity$() {
-    return this.cityService.userPlayerCity$;
-  }
-
-  getUserPlayerStats$() {
-    return this.cityService.userPlayerStats$;
-  }
+  constructor(private router: Router) {}
 
   tryAgain() {
     this.tryAgainLoading = true;

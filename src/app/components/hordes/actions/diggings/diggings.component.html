@@ -16,7 +16,7 @@
         <span class="material-symbols-outlined"> arrow_left </span>
       </button>
       <div class="nb-digs element">
-        {{ nbDigs }}
+        {{ nbDigs() }}
       </div>
       <button class="btn element add-digs-btn add-digs-btn-left" (click)="addDigs(1)">
         <span class="material-symbols-outlined"> arrow_right </span>
@@ -34,16 +34,18 @@
     </button>
   </div>
   <div class="inventory">
-    <div class="item" *ngFor="let item of inventory">
+    <div class="item" *ngFor="let item of cityService.city().inventory | keyvalue">
       <img
         [ngStyle]="{
-          'margin-top': item.name === 'stone' ? '-2px' : '0px',
+          'margin-top': item.key === 'stone' ? '-2px' : '0px',
         }"
         class="icon"
-        src="{{ item.src }}"
+        src="{{ item.key | itemToIcon }}"
       />
-      <div class="nb">{{ item.nb }}</div>
-      <div class="item-found" *ngIf="item.found > 0">+{{ item.found }}</div>
+      <div class="nb">{{ item.value }}</div>
+      <div class="item-found" *ngIf="cityService.inventoryItemFound()[castKey(item.key)] > 0">
+        +{{ cityService.inventoryItemFound()[castKey(item.key)] }}
+      </div>
     </div>
   </div>
 </div>
