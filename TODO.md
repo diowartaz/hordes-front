@@ -1,6 +1,7 @@
 TODO
 faire le systeme de timeout pour les skills et la fouille
 
+stkills time qui prend en compte le multiplier
 
 
 mettre le loading alors return dans le service directement

@@ -30,7 +30,7 @@ export function calculateAdvancedBuildings(
       ...building,
       enoughRessources: contains(city.inventory, building.inventory || {}),
       enoughTime: enoughTime,
-      buildingTimeString: formatTimeToString(timeRequired, false),
+      timeString: formatTimeToString(timeRequired, false),
       enoughLvlMax: building.lvl < building.lvl_max,
       timeoutSeconds: timeoutSeconds,
     };

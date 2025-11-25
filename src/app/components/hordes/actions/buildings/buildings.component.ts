@@ -27,9 +27,6 @@ export class BuildingsComponent {
   }
 
   build(building: AdvancedBuildingModel) {
-    if (this.cityService.buildLoading()) {
-      return;
-    }
     if (!building.enoughRessources) {
       this.openSnackBar('Not enough ressources');
       return;

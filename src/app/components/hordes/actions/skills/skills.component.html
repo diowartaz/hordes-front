@@ -12,7 +12,7 @@
   <div class="play-content">
     <div
       class="building"
-      *ngFor="let skill of cityService.city().skills"
+      *ngFor="let skill of cityService.advancedSkills()"
       [ngStyle]="{
         background: skill.lvl === skill.lvl_max ? '#00000061' : 'transparent',
         display: 0 === skill.lvl_max ? 'none' : 'flex',
@@ -35,12 +35,12 @@
               schedule
             </span>
 
-            <span>{{ getPercentageEfficacity(skill, 0) }}</span>
+            <span>{{ skill.percentageEfficacityStringBefore }}</span>
           </div>
 
           <div class="element-wrapper">
             <span class="material-symbols-outlined icon"> schedule </span>
-            <div class="text">{{ getTimeLearnString(skill) }}</div>
+            <div class="text">{{ skill.timeString }}</div>
           </div>
 
           <div class="element-wrapper">
@@ -62,16 +62,17 @@
           >
             schedule
           </span>
-          <span>{{ getPercentageEfficacity(skill, 0) }}</span>
+          <span>{{ skill.percentageEfficacityStringBefore }}</span>
           <span class="material-symbols-outlined" style="font-size: 13px; margin: 0px 4px"> arrow_forward_ios </span>
 
-          <span style="color: #31c531">{{ getPercentageEfficacity(skill, 1) }}</span>
+          <span style="color: #31c531">{{ skill.percentageEfficacityStringAfter }}</span>
         </div>
         <button
           class="btn-build"
           (click)="learn(skill)"
           [ngStyle]="{
-            background: isLearnable(skill) ? 'var(--primary-yellow)' : 'var(--primary-yellow-disabled)',
+            background:
+              skill.enoughLvlMax && skill.enoughTime ? 'var(--primary-yellow)' : 'var(--primary-yellow-disabled)',
           }"
         >
           <img src="assets/icons/livre.gif" />

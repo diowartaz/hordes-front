@@ -16,11 +16,13 @@ import {
   LeaderboardElement,
   SkillModel,
   StatsModel,
+  AdvancedSkillModel,
 } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
 import { UserState } from 'src/app/models/router';
 import { calculateAdvancedBuildings } from 'src/app/shared/utils/buildings';
 import { computeBonuses } from 'src/app/shared/utils/bonuses';
+import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +44,6 @@ export class CityService {
     return computeBonuses(this.stats(), this.defaultValues(), this.referencesBonuses());
   });
 
-  skills = signal<SkillModel[]>([]); //TODO
   city = signal<CityModel>(createDefaultCityModel());
 
   setInterval: any = null;
@@ -55,10 +56,18 @@ export class CityService {
     return calculateAdvancedBuildings(this.city(), this.bonuses(), this.defaultValues());
   });
 
+  skills = computed<SkillModel[]>(() => {
+    return this.city().skills;
+  });
+  advancedSkills = computed<AdvancedSkillModel[]>(() => {
+    return calculateAdvancedSkills(this.city(), this.defaultValues());
+  });
+
   defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
   playerLoaded = signal<boolean>(false);
   stats = signal<StatsModel>(createDefaultStatsModel());
   buildLoading = signal<boolean>(false);
+  learnLoading = signal<boolean>(false);
   digLoading = signal<boolean>(false);
   leaderboardBestDayLoading = signal<boolean>(false);
   leaderboardRankedLoading = signal<boolean>(false);
@@ -154,6 +163,9 @@ export class CityService {
   }
 
   build(id: number): void {
+    if (this.buildLoading()) {
+      return;
+    }
     this.buildLoading.set(true);
     const url: string = this.API_URL + 'city/build/' + id;
 
@@ -173,17 +185,26 @@ export class CityService {
       .subscribe();
   }
 
-  learn(id: number): Observable<any> {
+  learn(id: number): void {
+    if (this.learnLoading()) {
+      return;
+    }
+    this.learnLoading.set(true);
     const url: string = this.API_URL + 'city/learn/' + id;
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('learn', response);
-        this.city.set(response.city);
-        this.updateTime(response.city);
-        return response;
-      }),
-      catchError(handleError('learn', url)),
-    );
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        tap((response) => {
+          this.log('learn', response);
+          this.updateTime(response.city);
+          this.city.set(response.city);
+        }),
+        catchError(handleError('learn', url)),
+        finalize(() => {
+          this.learnLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   log(functionName: string, response: any) {

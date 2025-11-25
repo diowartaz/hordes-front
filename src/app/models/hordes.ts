@@ -148,7 +148,7 @@ export interface AdvancedBuildingModel {
   lvl_max: number;
   name: string;
   inventory: Record<string, number>;
-  buildingTimeString: string;
+  timeString: string;
   rarity: 'base' | 'common' | 'rare' | 'epic';
   selected: boolean;
   enoughRessources: boolean;
@@ -167,6 +167,24 @@ export interface SkillModel {
   time: number;
   avantage_per_lvl: number;
   reduce_time_seconds: number;
+}
+
+export interface AdvancedSkillModel {
+  id: number;
+  name: string;
+  speed_name: string;
+  lvl: number;
+  lvl_max: number;
+  lvl_max_max: number;
+  time: number;
+  avantage_per_lvl: number;
+  reduce_time_seconds: number;
+  timeString: string;
+  enoughTime: boolean;
+  enoughLvlMax: boolean;
+  percentageEfficacityStringBefore: string;
+  percentageEfficacityStringAfter: string;
+  timeoutSeconds: number;
 }
 
 export interface customInventoryModel {
