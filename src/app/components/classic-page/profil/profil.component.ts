@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClassicPageComponent } from '../classic-page.component';
+import { GameHistoryModel, GameHistoryPlayerModel, ProfilModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-profil',
@@ -36,14 +37,11 @@ export class ProfilComponent implements OnInit {
     });
   }
 
-  player1Wins(player1: any, player2: any) {
-    if (!player2.defense) {
+  player1Wins(player1: GameHistoryPlayerModel, player2: GameHistoryPlayerModel | null) {
+    if (player2 === null) {
       return null;
     }
-    if (player1.defense >= player2.defense) {
-      return true;
-    }
-    return false;
+    return player1.defense >= player2.defense;
   }
 
   getProfil() {
@@ -58,15 +56,11 @@ export class ProfilComponent implements OnInit {
         take(1),
         catchError(() => of({ error: 'error' })),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log('Error getProfil', this.id);
-        } else {
-          this.profil = result.profil;
-          this.profil.match_history.forEach((match: any) => {
-            match.win = this.player1Wins(match.player1, match.player2);
-          });
-        }
+      .subscribe((result: { profil: ProfilModel }) => {
+        this.profil = result.profil;
+        this.profil.match_history.forEach((match: GameHistoryModel) => {
+          match.win = this.player1Wins(match.player1, match.player2);
+        });
         this.getProfilLoading = false;
       });
   }

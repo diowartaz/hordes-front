@@ -206,14 +206,25 @@ export interface ProfilModel {
   creation_date: string;
   personal_best_day: number;
   personal_best_zb: number;
-  last_10_games: GameHistoryModel[];
+  match_history: GameHistoryModel[];
+}
+
+export interface GameHistoryPlayerModel {
+  day: number;
+  defense: number;
+  id: string;
+  nb_zb: number;
+  username: string;
 }
 
 export interface GameHistoryModel {
+  _id_ranked: string | null;
   date: string;
-  zb: number;
-  day: number;
-  defense: number;
+  player1: GameHistoryPlayerModel;
+  player2: GameHistoryPlayerModel | null;
+  ranked: boolean;
+  ranked_points: number | null;
+  win: boolean | null;
 }
 
 export interface LeaderboardPlayerModel {
