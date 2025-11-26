@@ -1,6 +1,6 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, Injector, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, finalize, map, Observable, tap } from 'rxjs';
+import { catchError, finalize, interval, map, Observable, switchMap, takeWhile, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
 import {
@@ -23,6 +23,12 @@ import { UserState } from 'src/app/models/router';
 import { calculateAdvancedBuildings } from 'src/app/shared/utils/buildings';
 import { computeBonuses } from 'src/app/shared/utils/bonuses';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+
+interface GameTime {
+  string: string;
+  seconds: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -32,11 +38,6 @@ export class CityService {
   state = signal<UserState>(UserState.NOT_LOADED_PLAYER);
   userIsLoggedIn = computed(() => {
     return [UserState.PLAYING, UserState.NO_CITY].includes(this.state());
-  });
-
-  userPlayerCityTime$: BehaviorSubject<any> = new BehaviorSubject<any>({
-    string: '8h00',
-    seconds: 8 * 60 * 60,
   });
 
   referencesBonuses = signal<BonusWithoutLvl[]>([]);
@@ -68,6 +69,10 @@ export class CityService {
   stats = signal<StatsModel>(createDefaultStatsModel());
   buildLoading = signal<boolean>(false);
   learnLoading = signal<boolean>(false);
+  endDayLoading = signal<boolean>(false);
+  startDayLoading = signal<boolean>(false);
+  deleteCityLoading = signal<boolean>(false);
+  newCityLoading = signal<boolean>(false);
   digLoading = signal<boolean>(false);
   leaderboardBestDayLoading = signal<boolean>(false);
   leaderboardRankedLoading = signal<boolean>(false);
@@ -76,26 +81,52 @@ export class CityService {
 
   inventoryItemFound = signal({ wood: 0, stone: 0, metal: 0, patch: 0, screw: 0 });
 
-  time = computed(() => {
-    return this.calculateCityTime();
-  });
+  private readonly INGAME_REFRESH_SECONDS = 60;
+  public userPlayerCityTime: Signal<GameTime | undefined>;
+  private appInjector = inject(Injector);
 
-  private calculateCityTime(): number {
-    return 8 * 60 * 60;
+  constructor(private readonly httpClient: HttpClient) {
+    this.userPlayerCityTime = toSignal(
+      toObservable(this.city, { injector: this.appInjector }).pipe(
+        switchMap((city) => {
+          const coef = this.defaultValues().coef_realtime_to_ingametime;
+          const realTimeRefreshRateMs = Math.floor((60 * 1000) / coef);
+
+          // Utilise l'intervalle calculé pour mettre à jour l'horloge
+          return interval(realTimeRefreshRateMs).pipe(
+            map(() => {
+              const realTimeDeltaMs = new Date().getTime() - city.last_timestamp_request;
+              const ingameTimeDeltaSeconds = Math.floor((realTimeDeltaMs / 1000) * coef);
+              const newIngameTimeSeconds = city.time + ingameTimeDeltaSeconds;
+              const dayEndTime = this.defaultValues().day_end_time;
+
+              // Vérification de la fin de journée
+              const isEndOfDay = newIngameTimeSeconds >= dayEndTime;
+              if (isEndOfDay) {
+                this.endDay();
+              }
+              const finalTimeSeconds = isEndOfDay ? dayEndTime : newIngameTimeSeconds;
+
+              return {
+                string: formatTimeToString(finalTimeSeconds, true),
+                seconds: finalTimeSeconds,
+              } as GameTime;
+            }),
+            takeWhile((time) => time.seconds < this.defaultValues().day_end_time, true),
+          );
+        }),
+      ),
+    );
   }
-
-  constructor(private readonly httpClient: HttpClient) {}
 
   loadPlayer(): Observable<any> {
     const url: string = this.API_URL + 'player';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
-        this.log('loadPlayer', response);
         this.state.set(response.player.state);
         this.stats.set(response.player.stats);
         this.city.set(response.player.city);
         this.defaultValues.set(response.default_values);
-        this.updateTime(response.player.city);
         this.playerLoaded.set(true);
         return response;
       }),
@@ -107,7 +138,6 @@ export class CityService {
     const url: string = this.API_URL + 'player/stats';
     return this.httpClient.get<any>(url).pipe(
       map((response: any) => {
-        this.log('getPlayerStats', response);
         this.stats.set(response.stats);
         return response;
       }),
@@ -115,31 +145,48 @@ export class CityService {
     );
   }
 
-  new(ranked: boolean): Observable<any> {
+  newCity(ranked: boolean): void {
+    if (this.newCityLoading()) {
+      return;
+    }
+    this.newCityLoading.set(true);
     const url: string = this.API_URL + 'city/new/';
-    return this.httpClient.post<any>(url, { ranked }).pipe(
-      map((response: any) => {
-        this.log('new', response);
-        this.city.set(response.player.city);
-        this.state.set(response.player.state);
-        this.updateTime(response.player.city);
-        return response;
-      }),
-      catchError(handleError('new', url)),
-    );
+    this.httpClient
+      .post<any>(url, { ranked })
+      .pipe(
+        map((response: any) => {
+          this.city.set(response.player.city);
+          this.state.set(response.player.state);
+          localStorage.setItem('nb-dig', '1');
+          localStorage.setItem('play-route', 'dig');
+        }),
+        catchError(handleError('newCity', url)),
+        finalize(() => {
+          this.newCityLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
-  delete(): Observable<any> {
+  deleteCity(): void {
+    if (this.deleteCityLoading()) {
+      return;
+    }
+    this.deleteCityLoading.set(true);
     const url: string = this.API_URL + 'city/delete';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('delete', response);
-        this.city.set(createDefaultCityModel());
-        this.state.set(UserState.NO_CITY);
-        return response;
-      }),
-      catchError(handleError('delete', url)),
-    );
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        map(() => {
+          this.city.set(createDefaultCityModel());
+          this.state.set(UserState.NO_CITY);
+        }),
+        catchError(handleError('delete', url)),
+        finalize(() => {
+          this.deleteCityLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   findItems(nb: number): void {
@@ -149,9 +196,7 @@ export class CityService {
       .post<any>(url, {})
       .pipe(
         map((response: any) => {
-          this.log('findItems', response);
           this.city.set(response.city);
-          this.updateTime(response.city);
           this.inventoryItemFound.set(response.items_found_inventory);
         }),
         catchError(handleError('findItems', url)),
@@ -173,8 +218,6 @@ export class CityService {
       .post<any>(url, {})
       .pipe(
         tap((response) => {
-          this.log('build', response);
-          this.updateTime(response.city);
           this.city.set(response.city);
         }),
         catchError(handleError('build', url)),
@@ -195,8 +238,6 @@ export class CityService {
       .post<any>(url, {})
       .pipe(
         tap((response) => {
-          this.log('learn', response);
-          this.updateTime(response.city);
           this.city.set(response.city);
         }),
         catchError(handleError('learn', url)),
@@ -207,91 +248,47 @@ export class CityService {
       .subscribe();
   }
 
-  log(functionName: string, response: any) {
-    return;
-    console.log(functionName, 'response', response);
-  }
-
-  updateTime(city: any) {
-    if (!this.city()) {
-      if (this.setInterval) {
-        clearInterval(this.setInterval);
-      }
+  endDay(): void {
+    if (this.endDayLoading()) {
       return;
     }
-    const timeToAdd = Math.floor(
-      ((new Date().getTime() - this.city().last_timestamp_request) * this.defaultValues().coef_realtime_to_ingametime) /
-        1000,
-    );
-    if (city.time + timeToAdd > this.defaultValues().day_end_time) {
-      //fin de journee
-      if (this.setInterval) {
-        clearInterval(this.setInterval);
-      }
-      this.userPlayerCityTime$.next({
-        string: formatTimeToString(this.defaultValues().day_end_time, true),
-        seconds: this.defaultValues().day_end_time,
-      });
-      // this.endDay()
-      return;
-    }
-    this.userPlayerCityTime$.next({
-      string: formatTimeToString(city.time + timeToAdd, true),
-      seconds: city.time + timeToAdd,
-    });
-    if (this.setInterval) {
-      clearInterval(this.setInterval);
-    }
-    this.setInterval = setInterval(
-      () => {
-        this.addTime();
-      },
-      Math.floor((60 * 1000) / this.defaultValues().coef_realtime_to_ingametime),
-    );
-  }
-
-  addTime() {
-    const x = this.userPlayerCityTime$.getValue().seconds + 60;
-    if (x >= this.defaultValues().day_end_time) {
-      if (this.setInterval) {
-        clearInterval(this.setInterval);
-      }
-      //fin de journee
-    } else {
-      this.userPlayerCityTime$.next({
-        string: formatTimeToString(x, true),
-        seconds: x,
-      });
-    }
-  }
-
-  endDay(): Observable<any> {
+    this.learnLoading.set(true);
     const url: string = this.API_URL + 'city/day/end';
-    return this.httpClient.post<any>(url, {}).pipe(
-      map((response: any) => {
-        this.log('endDay', response);
-        this.city.set(response.player.city);
-        this.stats.set(response.player.stats);
-        this.state.set(response.player.state);
-        return response;
-      }),
-      catchError(handleError('endDay', url)),
-    );
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        map((response: any) => {
+          this.city.set(response.player.city);
+          this.stats.set(response.player.stats);
+          this.state.set(response.player.state);
+        }),
+        catchError(handleError('learn', url)),
+        finalize(() => {
+          this.endDayLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
-  startDay(whatAreTheSelectedBuildings: number[]): Observable<any> {
+  startDay(whatAreTheSelectedBuildings: number[]): void {
+    if (this.startDayLoading()) {
+      return;
+    }
+    this.learnLoading.set(true);
     const url: string = this.API_URL + 'city/day/start';
-    return this.httpClient.post<any>(url, { chosen_buildings: whatAreTheSelectedBuildings }).pipe(
-      map((response: any) => {
-        //city
-        this.log('startDay', response);
-        this.city.set(response.city);
-        this.state.set(UserState.PLAYING);
-        this.updateTime(response.city);
-        return response;
-      }),
-      catchError(handleError('startDay', url)),
-    );
+    this.httpClient
+      .post<any>(url, { chosen_buildings: whatAreTheSelectedBuildings })
+      .pipe(
+        map((response: any) => {
+          this.city.set(response.city);
+          this.state.set(UserState.PLAYING);
+        }),
+        catchError(handleError('startDay', url)),
+        finalize(() => {
+          this.startDayLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   getLeaderboardBestDay(): void {
@@ -350,7 +347,6 @@ export class CityService {
       .get<{ bonuses: BonusWithoutLvl[] }>(url)
       .pipe(
         tap((response) => {
-          console.log(response.bonuses);
           this.referencesBonuses.set(response.bonuses);
         }),
         catchError(handleError('loadReferencesBonuses', url)),

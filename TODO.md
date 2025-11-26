@@ -1,4 +1,6 @@
 TODO
+verifier toutes les redirection suite aux appels API
+
 faire le systeme de timeout pour les skills et la fouille
 
 stkills time qui prend en compte le multiplier

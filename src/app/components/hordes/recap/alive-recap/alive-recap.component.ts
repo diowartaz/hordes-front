@@ -1,6 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
@@ -26,7 +25,6 @@ export class AliveRecapComponent {
     return this.cityService.city().attackRecap.architect_shelter_buildings.length;
   });
 
-  startDayLoading = false;
   library_discoveriesFormatted = computed(() => {
     const library_discoveriesFormatted = [];
     for (const discoverySkillId in this.cityService.city().attackRecap.library_discoveries) {
@@ -50,24 +48,7 @@ export class AliveRecapComponent {
   constructor(private router: Router) {}
 
   startDay() {
-    if (this.startDayLoading) {
-      return;
-    }
-    this.startDayLoading = true;
-    this.cityService
-      .startDay(this.whatAreTheSelectedBuildings())
-      .pipe(
-        take(1),
-        catchError(() => of({ error: 'error' })),
-      )
-      .subscribe((result: any) => {
-        this.startDayLoading = false;
-        if (result.error) {
-          /* empty */
-        } else {
-          this.router.navigate(['play/' + localStorage.getItem('play-route')]);
-        }
-      });
+    this.cityService.startDay(this.whatAreTheSelectedBuildings());
   }
 
   whatAreTheSelectedBuildings() {

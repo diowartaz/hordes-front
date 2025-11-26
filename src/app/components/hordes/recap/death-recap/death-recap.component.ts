@@ -1,6 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, of, take } from 'rxjs';
 import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { CommonModule } from '@angular/common';
@@ -16,25 +14,7 @@ import { GameComponent } from 'src/app/components/classic-page/profil/game/game.
 export class DeathRecapComponent {
   public cityService = inject(CityService);
 
-  tryAgainLoading = false;
-
-  constructor(private router: Router) {}
-
   tryAgain() {
-    this.tryAgainLoading = true;
-    this.cityService
-      .delete()
-      .pipe(
-        take(1),
-        catchError(() => of({ error: 'error' })),
-      )
-      .subscribe((result: any) => {
-        if (result.error) {
-          console.log('error delete game');
-        } else {
-          this.router.navigate(['create-city']);
-        }
-        this.tryAgainLoading = false;
-      });
+    this.cityService.deleteCity();
   }
 }

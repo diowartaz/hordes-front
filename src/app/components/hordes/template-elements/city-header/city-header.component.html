@@ -7,7 +7,7 @@
 
     <div class="element">
       <span class="material-symbols-outlined icon"> schedule </span>
-      <span class="text-span">{{ time.string }}</span>
+      <span class="text-span">{{cityService.userPlayerCityTime()?.string}}</span>
     </div>
 
     <div class="element">
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: time.seconds > 79200 }" (click)="endDay()">
+  <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: cityService.userPlayerCityTime()?.seconds }" (click)="cityService.endDay()">
     <img src="assets/icons/sleep.gif" />
   </button>
 </div>
