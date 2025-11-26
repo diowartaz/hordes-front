@@ -26,11 +26,11 @@
       class="btn dig-btn"
       (click)="dig()"
       [ngStyle]="{
-        background: digDisabled() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
+        background: !enoughTime() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
       }"
     >
       <img class="icon" src="assets/icons/pelle.gif" />
-      <div class="dig-text">Dig for an item ({{ getDiggingsTimeString() }})</div>
+      <div class="dig-text">Dig for an item ({{ totalRequiredTimeString() }})</div>
     </button>
   </div>
   <div class="inventory">

@@ -23,27 +23,17 @@ export function calculateAdvancedBuildings(
       building.time * city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
       flatBonus.value * flatBonus.lvl * 60;
 
-    const enoughTime = city.time + timeRequired <= defaultValues.day_end_time;
-    const timeoutSeconds = (timeRequired - city.time) / defaultValues.coef_realtime_to_ingametime;
 
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,
       enoughRessources: contains(city.inventory, building.inventory || {}),
-      enoughTime: enoughTime,
       timeString: formatTimeToString(timeRequired, false),
       enoughLvlMax: building.lvl < building.lvl_max,
-      timeoutSeconds: timeoutSeconds,
+      expirationCityTime: defaultValues.day_end_time - timeRequired,
     };
     advancedBuildings.push(advancedBuilding);
-
-    // Mettre ça en place
-    // this.setTimeoutRefs.push(
-    //     setTimeout(() => {
-    //       building.enoughTime = false;
-    //     }, timeoutSeconds * 1000),
-    //   );
   }
 
-  advancedBuildings.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]); //TODO vérifier que c'est dans le bon ordre
+  advancedBuildings.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
   return advancedBuildings;
 }

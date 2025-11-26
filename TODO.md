@@ -3,20 +3,15 @@ verifier toutes les redirection suite aux appels API
 
 faire le systeme de timeout pour les skills et la fouille
 
-stkills time qui prend en compte le multiplier
-
-
-mettre le loading alors return dans le service directement
-
-
 attackRecap non optionel dans le back
 
+
+qaund on se deconnecte est ce que le loadplayer se fait bien apres une reconnexion
 
 
 
 ------------ tech ------------------
 load des headers apres un refresh
-signaux et optimisation des rerender
 
 ------------ fonc ------------------
 avoir une money secondaire grace à la ranked / tournois pour avoir des batiments legendaire

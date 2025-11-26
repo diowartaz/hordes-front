@@ -67,6 +67,7 @@ export class CityService {
   defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
   playerLoaded = signal<boolean>(false);
   stats = signal<StatsModel>(createDefaultStatsModel());
+
   buildLoading = signal<boolean>(false);
   learnLoading = signal<boolean>(false);
   endDayLoading = signal<boolean>(false);
@@ -76,6 +77,7 @@ export class CityService {
   digLoading = signal<boolean>(false);
   leaderboardBestDayLoading = signal<boolean>(false);
   leaderboardRankedLoading = signal<boolean>(false);
+
   leaderboardBestDay = signal<LeaderboardElement[]>([]);
   leaderboardRanked = signal<LeaderboardElement[]>([]);
 

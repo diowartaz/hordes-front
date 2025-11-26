@@ -10,3 +10,7 @@ export function formatTimeToString(seconds: number, reset24h = false): string {
 
   return `${hourStr}h${minuteStr}`;
 }
+
+export function enoughTime(timeRequired: number, cityTimeSeconds: number | undefined, dayEndTimeSeconds: number) {
+  return timeRequired + (cityTimeSeconds || 0) <= dayEndTimeSeconds;
+}

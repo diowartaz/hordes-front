@@ -152,9 +152,8 @@ export interface AdvancedBuildingModel {
   rarity: 'base' | 'common' | 'rare' | 'epic';
   selected: boolean;
   enoughRessources: boolean;
-  enoughTime: boolean;
   enoughLvlMax: boolean;
-  timeoutSeconds: number;
+  expirationCityTime: number;
 }
 
 export interface SkillModel {

@@ -78,7 +78,9 @@
           (click)="build(building)"
           [ngStyle]="{
             background:
-              building.enoughRessources && building.enoughTime && building.lvl < building.lvl_max
+              building.enoughRessources &&
+              (cityService.userPlayerCityTime()?.seconds || 0 < building.expirationCityTime) &&
+              building.enoughLvlMax
                 ? 'var(--primary-yellow)'
                 : 'var(--primary-yellow-disabled)',
           }"
