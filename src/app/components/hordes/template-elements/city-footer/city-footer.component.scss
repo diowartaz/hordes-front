@@ -28,4 +28,7 @@
   .footer-btn:last-child {
     border-right: none;
   }
+  .is-active {
+    background: var(--background-black-opacity-zero-six);
+  }
 }

@@ -25,11 +25,6 @@ import { computeBonuses } from 'src/app/shared/utils/bonuses';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
-interface GameTime {
-  string: string;
-  seconds: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -68,6 +63,11 @@ export class CityService {
   playerLoaded = signal<boolean>(false);
   stats = signal<StatsModel>(createDefaultStatsModel());
 
+  public cityTimeSeconds: Signal<number | undefined>;
+  public cityTimeString = computed(() => {
+    return formatTimeToString(this.cityTimeSeconds() || 0);
+  });
+
   buildLoading = signal<boolean>(false);
   learnLoading = signal<boolean>(false);
   endDayLoading = signal<boolean>(false);
@@ -84,11 +84,10 @@ export class CityService {
   inventoryItemFound = signal({ wood: 0, stone: 0, metal: 0, patch: 0, screw: 0 });
 
   private readonly INGAME_REFRESH_SECONDS = 60;
-  public userPlayerCityTime: Signal<GameTime | undefined>;
   private appInjector = inject(Injector);
 
   constructor(private readonly httpClient: HttpClient) {
-    this.userPlayerCityTime = toSignal(
+    this.cityTimeSeconds = toSignal(
       toObservable(this.city, { injector: this.appInjector }).pipe(
         switchMap((city) => {
           const coef = this.defaultValues().coef_realtime_to_ingametime;
@@ -109,12 +108,9 @@ export class CityService {
               }
               const finalTimeSeconds = isEndOfDay ? dayEndTime : newIngameTimeSeconds;
 
-              return {
-                string: formatTimeToString(finalTimeSeconds, true),
-                seconds: finalTimeSeconds,
-              } as GameTime;
+              return finalTimeSeconds;
             }),
-            takeWhile((time) => time.seconds < this.defaultValues().day_end_time, true),
+            takeWhile((cityTimeSeconds) => cityTimeSeconds < this.defaultValues().day_end_time, true),
           );
         }),
       ),

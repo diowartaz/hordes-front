@@ -14,8 +14,10 @@ import { CommonModule, Location } from '@angular/common';
   styleUrls: ['./header-logged-in.component.scss'],
 })
 export class HeaderLoggedInComponent {
-  cityService = inject(CityService);
-  goBackButton = false;
+  public readonly cityService = inject(CityService);
+  public readonly router = inject(Router);
+  public readonly authService = inject(AuthService);
+  public readonly RoutesEnum = RoutesEnum;
 
   data = computed(() => {
     const { lvl, xpString, ratio } = XPToLVLandXP(this.cityService.stats().xp);
@@ -27,32 +29,7 @@ export class HeaderLoggedInComponent {
     };
   });
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private location: Location,
-  ) {}
-
-  goToSettings() {
-    this.router.navigate([RoutesEnum.SETTINGS]);
-  }
-
-  goToWiki() {
-    this.router.navigate([RoutesEnum.WIKI]);
-  }
-
-  goToLeaderboard() {
-    this.router.navigate([RoutesEnum.LEADERBOARD]);
-  }
-
-  goToProfil() {
-    this.router.navigate([RoutesEnum.PROFIL], {
-      queryParams: { user_id: this.authService.getUserId() },
-    });
-  }
-  goToShop() {
-    this.router.navigate([RoutesEnum.SHOP]);
-  }
+  constructor(private location: Location) {}
 
   goBack() {
     this.location.back();

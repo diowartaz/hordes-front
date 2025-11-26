@@ -4,7 +4,7 @@ import { formatTimeToString } from 'src/app/shared/utils/time';
 import { CommonModule } from '@angular/common';
 import { BuildingRarityToIconPipe } from '../../../../../shared/pipes/building-rarity-to-icon';
 import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
-import { ItemIconPipe } from "../../../../../shared/pipes/item-to-icon.pipe";
+import { ItemIconPipe } from '../../../../../shared/pipes/item-to-icon.pipe';
 
 @Component({
   selector: 'app-building-recap',
@@ -15,7 +15,6 @@ import { ItemIconPipe } from "../../../../../shared/pipes/item-to-icon.pipe";
 })
 export class BuildingRecapComponent {
   @Input() building: BuildingModel = createDefaultBuildingModel();
-  // rgreg: ItemModel
 
   cityService = inject(CityService);
 

@@ -23,11 +23,10 @@ export function calculateAdvancedBuildings(
       building.time * city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
       flatBonus.value * flatBonus.lvl * 60;
 
-
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,
       enoughRessources: contains(city.inventory, building.inventory || {}),
-      timeString: formatTimeToString(timeRequired, false),
+      timeString: formatTimeToString(timeRequired),
       enoughLvlMax: building.lvl < building.lvl_max,
       expirationCityTime: defaultValues.day_end_time - timeRequired,
     };

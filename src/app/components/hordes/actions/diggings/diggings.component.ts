@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ItemModel } from 'src/app/models/hordes';
 import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
 import { enoughTime, formatTimeToString } from 'src/app/shared/utils/time';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-diggings',
@@ -13,6 +14,8 @@ import { enoughTime, formatTimeToString } from 'src/app/shared/utils/time';
   styleUrls: ['./diggings.component.scss'],
 })
 export class DiggingsComponent {
+  dialogMessage = 'init';
+  snackBarOpened = false;
   cityService = inject(CityService);
   nbDigs = signal(Number(localStorage.getItem('nb-dig')) || 1);
 
@@ -29,13 +32,13 @@ export class DiggingsComponent {
   });
 
   totalRequiredTimeString = computed(() => {
-    return formatTimeToString(this.totalRequiredTime(), false);
+    return formatTimeToString(this.totalRequiredTime());
   });
 
   enoughTime = computed(() => {
     return enoughTime(
       this.totalRequiredTime(),
-      this.cityService.userPlayerCityTime()?.seconds,
+      this.cityService.cityTimeSeconds(),
       this.cityService.defaultValues().day_end_time,
     );
   });
@@ -43,6 +46,8 @@ export class DiggingsComponent {
   disableMinusDigs = computed(() => {
     return this.nbDigs() - 1 < 1;
   });
+
+  constructor(private _snackBar: MatSnackBar) {}
 
   addDigs(nb: number) {
     this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
@@ -53,7 +58,16 @@ export class DiggingsComponent {
     return key as ItemModel;
   }
 
+  openSnackBar(message: string) {
+    this.dialogMessage = message;
+    this.snackBarOpened = true;
+  }
+
   dig() {
+    if (!enoughTime) {
+      this.openSnackBar('Not enough time');
+      return;
+    }
     this.cityService.findItems(this.nbDigs());
   }
 }

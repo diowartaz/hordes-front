@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-city-footer',
@@ -12,16 +11,13 @@ import { Subscription } from 'rxjs';
 })
 export class CityFooterComponent implements OnInit {
   content = 'dig';
-  subscriptions: Subscription[] = [];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     const content = localStorage.getItem('play-route');
-    if (content) {
-      if (content.length > 0) {
-        this.content = content;
-      }
+    if (content && content.length > 0) {
+      this.content = content;
     }
   }
 
@@ -29,12 +25,5 @@ export class CityFooterComponent implements OnInit {
     this.content = content;
     localStorage.setItem('play-route', content);
     this.router.navigate(['play/' + content]);
-  }
-
-  getStyle(content: string) {
-    if (content == this.content) {
-      return { background: 'var(--background-black-opacity-zero-six)' };
-    }
-    return {};
   }
 }

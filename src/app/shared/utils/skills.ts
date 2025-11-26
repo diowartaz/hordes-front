@@ -6,27 +6,15 @@ export function calculateAdvancedSkills(city: CityModel, defaultValues: DefaultV
 
   for (const skill of city.skills) {
     const timeRequired = skill.time * city.speeds.learn * defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
-
-    const enoughTime = city.time + timeRequired <= defaultValues.day_end_time;
-    const timeoutSeconds = (timeRequired - city.time) / defaultValues.coef_realtime_to_ingametime;
-
     const advancedSkill: AdvancedSkillModel = {
       ...skill,
-      enoughTime: enoughTime,
-      timeString: formatTimeToString(timeRequired, false),
+      expirationCityTime: defaultValues.day_end_time - timeRequired,
+      timeString: formatTimeToString(timeRequired),
       enoughLvlMax: skill.lvl < skill.lvl_max,
-      timeoutSeconds: timeoutSeconds,
       percentageEfficacityStringBefore: getPercentageEfficacity(skill, 0, defaultValues),
       percentageEfficacityStringAfter: getPercentageEfficacity(skill, 1, defaultValues),
     };
     advancedSkills.push(advancedSkill);
-
-    // Mettre ça en place
-    // this.setTimeoutRefs.push(
-    //     setTimeout(() => {
-    //       skill.enoughTime = false;
-    //     }, timeoutSeconds * 1000),
-    //   );
   }
 
   return advancedSkills;

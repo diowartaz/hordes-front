@@ -18,7 +18,7 @@ import { GameHistoryModel, GameHistoryPlayerModel, ProfilModel } from 'src/app/m
 })
 export class ProfilComponent implements OnInit {
   getProfilLoading = false;
-  profil: any = null;
+  profil: ProfilModel | null = null;
   id = '';
 
   constructor(

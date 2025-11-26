@@ -79,7 +79,7 @@
           [ngStyle]="{
             background:
               building.enoughRessources &&
-              (cityService.userPlayerCityTime()?.seconds || 0 < building.expirationCityTime) &&
+              (cityService.cityTimeSeconds() || 0 < building.expirationCityTime) &&
               building.enoughLvlMax
                 ? 'var(--primary-yellow)'
                 : 'var(--primary-yellow-disabled)',

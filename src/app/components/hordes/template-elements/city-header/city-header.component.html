@@ -7,7 +7,7 @@
 
     <div class="element">
       <span class="material-symbols-outlined icon"> schedule </span>
-      <span class="text-span">{{cityService.userPlayerCityTime()?.string}}</span>
+      <span class="text-span">{{ cityService.cityTimeString() }}</span>
     </div>
 
     <div class="element">
@@ -17,13 +17,19 @@
     <div class="element">
       <img class="icon" src="assets/icons/zb.gif" />
 
-      <span class="text-span" [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
+      <span
+        class="text-span"
+        [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
         >{{ cityService.city().nb_zb_next_attack_min }}-{{ cityService.city().nb_zb_next_attack_max }}</span
       >
     </div>
   </div>
 
-  <button class="icon-btn borderBlink" [ngClass]="{ borderBlink2: cityService.userPlayerCityTime()?.seconds }" (click)="cityService.endDay()">
+  <button
+    class="icon-btn borderBlink"
+    [ngClass]="{ borderBlink2: cityService.cityTimeSeconds() || 0 > 22 * 60 * 60 }"
+    (click)="cityService.endDay()"
+  >
     <img src="assets/icons/sleep.gif" />
   </button>
 </div>

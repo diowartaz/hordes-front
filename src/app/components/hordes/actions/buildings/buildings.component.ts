@@ -30,7 +30,7 @@ export class BuildingsComponent {
     if (!building.enoughRessources) {
       this.openSnackBar('Not enough ressources');
       return;
-    } else if (this.cityService.userPlayerCityTime()?.seconds || 0 > building.expirationCityTime) {
+    } else if (this.cityService.cityTimeSeconds() || 0 > building.expirationCityTime) {
       this.openSnackBar('Not enough time');
       return;
     } else if (!building.enoughLvlMax) {

@@ -179,11 +179,10 @@ export interface AdvancedSkillModel {
   avantage_per_lvl: number;
   reduce_time_seconds: number;
   timeString: string;
-  enoughTime: boolean;
   enoughLvlMax: boolean;
   percentageEfficacityStringBefore: string;
   percentageEfficacityStringAfter: string;
-  timeoutSeconds: number;
+  expirationCityTime: number;
 }
 
 export interface customInventoryModel {

@@ -1,28 +1,20 @@
 TODO
-verifier toutes les redirection suite aux appels API
-
-faire le systeme de timeout pour les skills et la fouille
-
-attackRecap non optionel dans le back
-
-
+faire ne sorte que loadPlayer soit charger par les gardiens
 qaund on se deconnecte est ce que le loadplayer se fait bien apres une reconnexion
-
-
-
------------- tech ------------------
 load des headers apres un refresh
+
+attackRecap renseigné dès le J0 dans le back (avec la supression des truc inutiles)
 
 ------------ fonc ------------------
 avoir une money secondaire grace à la ranked / tournois pour avoir des batiments legendaire
 afficher le % d'efficacite de chaque journee et gloable à la fin de la partie
 
------------- tech non prio -----------------
-signals
-typage
+---
 
------------- android ------------------
-sign in with google (https://www.youtube.com/watch?v=GEht4l4n4K8 (pas vraiment complet))
-mot de passe oublié avec email
-deployé sur andoid
-faire ne sorte que le joueur soit obliger de jouer avec la derniere version
+    // Mettre ça en place
+    // const timeoutSeconds = (timeRequired - city.time) / defaultValues.coef_realtime_to_ingametime;
+    // this.setTimeoutRefs.push(
+    //     setTimeout(() => {
+    //       skill.enoughTime = false;
+    //     }, timeoutSeconds * 1000),
+    //   );

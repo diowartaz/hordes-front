@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
 import { CommonModule } from '@angular/common';
+import { GameHistoryModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-game',
@@ -10,13 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
-  @Input() game!: {
-    win: boolean | null;
-    player1: any;
-    player2: any;
-    ranked: boolean;
-    ranked_points: number;
-  };
+  @Input() game!: GameHistoryModel;
 
   color = {
     true: 'green',
