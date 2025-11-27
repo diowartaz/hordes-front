@@ -1,4 +1,8 @@
 TODO
+userIsLoggedIn dans city service wtf
+
+
+
 faire ne sorte que loadPlayer soit charger par les gardiens
 qaund on se deconnecte est ce que le loadplayer se fait bien apres une reconnexion
 load des headers apres un refresh

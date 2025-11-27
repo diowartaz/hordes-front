@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, Injector, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, finalize, interval, map, Observable, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, finalize, interval, map, switchMap, takeWhile, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
 import {
@@ -31,9 +31,13 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 export class CityService {
   API_URL = environment.API_URL;
   state = signal<UserState>(UserState.NOT_LOADED_PLAYER);
+  playerLoaded = computed<boolean>(() => {
+    return this.state() !== UserState.NOT_LOADED_PLAYER;
+  });
+
   userIsLoggedIn = computed(() => {
     return [UserState.PLAYING, UserState.NO_CITY].includes(this.state());
-  });
+  }); //WTF
 
   referencesBonuses = signal<BonusWithoutLvl[]>([]);
   bonuses = computed<Record<number, AdvancedBonus>>(() => {
@@ -41,8 +45,6 @@ export class CityService {
   });
 
   city = signal<CityModel>(createDefaultCityModel());
-
-  setInterval: any = null;
 
   buildings = computed<BuildingModel[]>(() => {
     return this.city().buildings;
@@ -60,7 +62,6 @@ export class CityService {
   });
 
   defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
-  playerLoaded = signal<boolean>(false);
   stats = signal<StatsModel>(createDefaultStatsModel());
 
   public cityTimeSeconds: Signal<number | undefined>;
@@ -87,7 +88,17 @@ export class CityService {
   private appInjector = inject(Injector);
 
   constructor(private readonly httpClient: HttpClient) {
-    this.cityTimeSeconds = toSignal(
+    this.cityTimeSeconds = this.setCityTimeSeconds();
+
+    // effect(() => {
+    //   if (this.isPlayerConnected() && !this.playerLoaded()) {
+    //     this.loadPlayer();
+    //   }
+    // });
+  }
+
+  setCityTimeSeconds() {
+    return toSignal(
       toObservable(this.city, { injector: this.appInjector }).pipe(
         switchMap((city) => {
           const coef = this.defaultValues().coef_realtime_to_ingametime;
@@ -117,30 +128,24 @@ export class CityService {
     );
   }
 
-  loadPlayer(): Observable<any> {
+  loadPlayer(): void {
+    console.log('loadPlayer');
     const url: string = this.API_URL + 'player';
-    return this.httpClient.get<any>(url).pipe(
-      map((response: any) => {
-        this.state.set(response.player.state);
-        this.stats.set(response.player.stats);
-        this.city.set(response.player.city);
-        this.defaultValues.set(response.default_values);
-        this.playerLoaded.set(true);
-        return response;
-      }),
-      catchError(handleError('loadPlayer', url)),
-    );
-  }
-
-  getPlayerStats(): Observable<any> {
-    const url: string = this.API_URL + 'player/stats';
-    return this.httpClient.get<any>(url).pipe(
-      map((response: any) => {
-        this.stats.set(response.stats);
-        return response;
-      }),
-      catchError(handleError('getPlayerStats', url)),
-    );
+    this.httpClient
+      .get<any>(url)
+      .pipe(
+        tap((response: any) => {
+          this.state.set(response.player.state);
+          this.stats.set(response.player.stats);
+          this.city.set(response.player.city);
+          this.defaultValues.set(response.default_values);
+        }),
+        catchError(handleError('loadPlayer', url)),
+        finalize(() => {
+          this.newCityLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   newCity(ranked: boolean): void {
@@ -152,7 +157,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, { ranked })
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.city.set(response.player.city);
           this.state.set(response.player.state);
           localStorage.setItem('nb-dig', '1');
@@ -175,7 +180,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, {})
       .pipe(
-        map(() => {
+        tap(() => {
           this.city.set(createDefaultCityModel());
           this.state.set(UserState.NO_CITY);
         }),
@@ -193,7 +198,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, {})
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.city.set(response.city);
           this.inventoryItemFound.set(response.items_found_inventory);
         }),
@@ -255,7 +260,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, {})
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.city.set(response.player.city);
           this.stats.set(response.player.stats);
           this.state.set(response.player.state);
@@ -277,7 +282,7 @@ export class CityService {
     this.httpClient
       .post<any>(url, { chosen_buildings: whatAreTheSelectedBuildings })
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.city.set(response.city);
           this.state.set(UserState.PLAYING);
         }),
@@ -298,7 +303,7 @@ export class CityService {
     this.httpClient
       .get<any>(url)
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.leaderboardBestDay.set(response.leaderboard);
         }),
         catchError(handleError('getLeaderboardBestDay', url)),
@@ -318,7 +323,7 @@ export class CityService {
     this.httpClient
       .get<any>(url)
       .pipe(
-        map((response: any) => {
+        tap((response: any) => {
           this.leaderboardRanked.set(response.leaderboard);
         }),
         catchError(handleError('getLeaderboardRanked', url)),
