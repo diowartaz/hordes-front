@@ -26,7 +26,8 @@
       class="btn dig-btn"
       (click)="dig()"
       [ngStyle]="{
-        background: !enoughTime() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
+        background:
+          !enoughTime() || cityService.digLoading() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
       }"
     >
       <img class="icon" src="assets/icons/pelle.gif" />

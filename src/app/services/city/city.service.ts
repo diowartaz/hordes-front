@@ -188,6 +188,9 @@ export class CityService {
   }
 
   findItems(nb: number): void {
+    if (this.digLoading()) {
+      return;
+    }
     this.digLoading.set(true);
     const url: string = this.API_URL + 'city/item/find/' + nb;
     this.httpClient

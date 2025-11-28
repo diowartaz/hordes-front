@@ -64,7 +64,7 @@ export class DiggingsComponent {
   }
 
   dig() {
-    if (!enoughTime) {
+    if (!this.enoughTime()) {
       this.openSnackBar('Not enough time');
       return;
     }
