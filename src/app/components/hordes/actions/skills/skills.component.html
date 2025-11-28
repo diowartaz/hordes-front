@@ -72,7 +72,7 @@
           (click)="learn(skill)"
           [ngStyle]="{
             background:
-              skill.enoughLvlMax && (this.cityService.cityTimeSeconds() || 0 <= skill.expirationCityTime)
+              skill.enoughLvlMax && (this.cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
                 ? 'var(--primary-yellow)'
                 : 'var(--primary-yellow-disabled)',
           }"

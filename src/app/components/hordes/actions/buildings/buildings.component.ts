@@ -27,10 +27,12 @@ export class BuildingsComponent {
   }
 
   build(building: AdvancedBuildingModel) {
+    console.log(building.expirationCityTime / 60 / 60);
+    console.log((this.cityService.cityTimeSeconds() || 0) / 60 / 60);
     if (!building.enoughRessources) {
       this.openSnackBar('Not enough ressources');
       return;
-    } else if (this.cityService.cityTimeSeconds() || 0 > building.expirationCityTime) {
+    } else if ((this.cityService.cityTimeSeconds() || 0) > building.expirationCityTime) {
       this.openSnackBar('Not enough time');
       return;
     } else if (!building.enoughLvlMax) {

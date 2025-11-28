@@ -51,7 +51,7 @@ export class DiggingsComponent {
 
   addDigs(nb: number) {
     this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
-    localStorage.setItem('nb-dig', this.nbDigs.toString());
+    localStorage.setItem('nb-dig', this.nbDigs().toString());
   }
 
   castKey(key: string): ItemModel {

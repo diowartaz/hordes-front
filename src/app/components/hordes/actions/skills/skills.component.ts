@@ -32,7 +32,7 @@ export class SkillsComponent {
   }
 
   learn(skill: AdvancedSkillModel) {
-    if (this.cityService.cityTimeSeconds() || 0 > skill.expirationCityTime) {
+    if ((this.cityService.cityTimeSeconds() || 0) > skill.expirationCityTime) {
       this.openSnackBar('Not enough time');
       return;
     } else if (!skill.enoughLvlMax) {
