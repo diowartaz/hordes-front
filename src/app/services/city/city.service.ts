@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, Injector, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, finalize, interval, map, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, filter, finalize, interval, map, switchMap, takeWhile, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
 import {
@@ -34,10 +34,6 @@ export class CityService {
   playerLoaded = computed<boolean>(() => {
     return this.state() !== UserState.NOT_LOADED_PLAYER;
   });
-
-  userIsLoggedIn = computed(() => {
-    return [UserState.PLAYING, UserState.NO_CITY].includes(this.state());
-  }); //WTF
 
   referencesBonuses = signal<BonusWithoutLvl[]>([]);
   bonuses = computed<Record<number, AdvancedBonus>>(() => {
@@ -78,6 +74,7 @@ export class CityService {
   digLoading = signal<boolean>(false);
   leaderboardBestDayLoading = signal<boolean>(false);
   leaderboardRankedLoading = signal<boolean>(false);
+  playerLoading = signal<boolean>(false);
 
   leaderboardBestDay = signal<LeaderboardElement[]>([]);
   leaderboardRanked = signal<LeaderboardElement[]>([]);
@@ -89,17 +86,12 @@ export class CityService {
 
   constructor(private readonly httpClient: HttpClient) {
     this.cityTimeSeconds = this.setCityTimeSeconds();
-
-    // effect(() => {
-    //   if (this.isPlayerConnected() && !this.playerLoaded()) {
-    //     this.loadPlayer();
-    //   }
-    // });
   }
 
   setCityTimeSeconds() {
     return toSignal(
       toObservable(this.city, { injector: this.appInjector }).pipe(
+        filter(city => city !== null),
         switchMap((city) => {
           const coef = this.defaultValues().coef_realtime_to_ingametime;
           const realTimeRefreshRateMs = Math.floor((60 * 1000) / coef);
@@ -129,7 +121,10 @@ export class CityService {
   }
 
   loadPlayer(): void {
-    console.log('loadPlayer');
+    if (this.playerLoading()) {
+      return;
+    }
+    this.playerLoading.set(true);
     const url: string = this.API_URL + 'player';
     this.httpClient
       .get<any>(url)
@@ -142,7 +137,7 @@ export class CityService {
         }),
         catchError(handleError('loadPlayer', url)),
         finalize(() => {
-          this.newCityLoading.set(false);
+          this.playerLoading.set(false);
         }),
       )
       .subscribe();

@@ -45,13 +45,13 @@ export class ProfilComponent implements OnInit {
   }
 
   getProfil() {
-    this.getProfilLoading = true;
-    if (this.id == '') {
-      this.id = this.authService.getUserId() || '';
+    if (!this.id && !this.authService.userId()) {
+      return;
     }
+    this.getProfilLoading = true;
 
     this.cityService
-      .getProfil(this.id)
+      .getProfil(this.id || this.authService.userId())
       .pipe(
         take(1),
         catchError(() => of({ error: 'error' })),

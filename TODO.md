@@ -1,6 +1,40 @@
 TODO
+deleteAccount
+creer un service pour le local storage
+mettre le isLoggedIn en signal
+reparer le loadPlayer
 userIsLoggedIn dans city service wtf
 
+
+quel mecanisme pour rediriger l'utilisateur quand il est loaded
+effect quand loaded et connect, redirige vers state to route
+
+avir un effect sur le token pour rediriger vers la home
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlayerService {
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  
+  playerInfo = signal<PlayerInfo | null>(null);
+  
+  constructor() {
+    effect(() => {
+      if (this.authService.isConnected()) {
+        this.loadPlayerInfo();
+      }
+    });
+  }
+  
+  private loadPlayerInfo() {
+    this.apiService.getPlayerInfo().subscribe({
+      next: (info) => this.playerInfo.set(info)
+    });
+  }
+}
 
 
 faire ne sorte que loadPlayer soit charger par les gardiens

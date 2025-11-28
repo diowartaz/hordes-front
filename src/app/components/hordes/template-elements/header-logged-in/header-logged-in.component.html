@@ -1,5 +1,5 @@
 <div class="boundary">
-  <div *ngIf="cityService.userIsLoggedIn()" class="left-part">
+  <div *ngIf="authService.isConnected()" class="left-part">
     <div class="lvl-wrapper">
       <img class="lvl-icon" src="assets/icons/lvl_icon.png" />
       <div class="lvl">{{ data().lvl }}</div>
@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="right-part">
-    <div *ngIf="cityService.userIsLoggedIn()" class="icon-btn money">
+    <div *ngIf="authService.isConnected()" class="icon-btn money">
       <div class="plus">+</div>
       <span>{{ data().money }}</span>
       💰
@@ -21,11 +21,11 @@
       <img src="assets/icons/discord_icon.png"
     /></a>
     <button
-      *ngIf="cityService.userIsLoggedIn()"
+      *ngIf="authService.isConnected()"
       class="icon-btn"
       (click)="
         router.navigate([RoutesEnum.PROFIL], {
-          queryParams: { user_id: authService.getUserId() },
+          queryParams: { user_id: authService.userId() },
         })
       "
     >
@@ -37,10 +37,10 @@
     <button class="icon-btn" (click)="router.navigate([RoutesEnum.WIKI])">
       <span class="emoticon">📖</span>
     </button>
-    <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
+    <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
       <span class="emoticon">💰</span>
     </button>
-    <button *ngIf="cityService.userIsLoggedIn()" class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
+    <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
       <span class="emoticon">⚙️</span>
     </button>
   </div>

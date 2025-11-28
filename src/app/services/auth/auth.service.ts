@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { finalize, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthResponse, SignInParams, SignUpParams } from 'src/app/models/auth';
+import { RoutesEnum, statesToRoutes, UserState } from 'src/app/models/router';
+import { CityService } from '../city/city.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,31 +15,79 @@ export class AuthService {
   private jwtHelper = new JwtHelperService();
   private readonly API_URL = environment.API_URL;
 
-  constructor(private httpClient: HttpClient) {}
+  signInTempLoading = signal(false);
+  signInLoading = signal(false);
+  signUpLoading = signal(false);
+  deleteAccountLoading = signal(false);
 
-  userIsLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    return token ? !this.jwtHelper.isTokenExpired(token) : false;
-  }
+  token = signal<string | undefined>(undefined);
+  verifiedToken = computed(() => {
+    if (!this.token()) {
+      return undefined;
+    }
+    try {
+      return this.jwtHelper.isTokenExpired(this.token()!) ? undefined : this.token();
+    } catch {
+      return undefined;
+    }
+  });
 
-  parseJwt(): null | Record<string, string> {
-    const token = localStorage.getItem('token');
-    return token ? this.jwtHelper.decodeToken(token) : null;
-  }
+  isConnected = computed(() => this.verifiedToken() !== undefined);
 
-  getUserId(): string | null {
-    const payload = this.parseJwt();
-    return payload ? payload['id'] : null;
+  userId = computed(() => {
+    if (this.verifiedToken() === undefined) {
+      return undefined;
+    }
+    return this.jwtHelper.decodeToken(this.verifiedToken()!)['id'];
+  });
+
+  constructor(
+    private httpClient: HttpClient,
+    private cityService: CityService,
+    private router: Router,
+  ) {
+    this.token.set(localStorage.getItem('token') ?? undefined);
+    effect(() => {
+      if (this.isConnected() && this.cityService.state() === UserState.NOT_LOADED_PLAYER) {
+        this.cityService.loadPlayer();
+      }
+    });
+
+    effect(() => {
+      if (!this.isConnected()) {
+        this.router.navigate([RoutesEnum.HOME]);
+      }
+    });
+
+    effect(() => {
+      if (this.isConnected()) {
+        this.router.navigate(['/' + statesToRoutes[this.cityService.state()]]);
+      }
+    });
   }
 
   signIn(params: SignInParams): Observable<AuthResponse> {
     const url = `${this.API_URL}signin`;
-    return this.httpClient.post<AuthResponse>(url, params);
+    return this.httpClient.post<AuthResponse>(url, params).pipe(
+      tap((result: AuthResponse) => {
+        this.handleSucessSignIn(result.token, result.email);
+      }),
+    );
   }
 
   signInTemp(): Observable<AuthResponse> {
     const url = `${this.API_URL}signin-temp`;
-    return this.httpClient.post<AuthResponse>(url, {});
+    return this.httpClient.post<AuthResponse>(url, {}).pipe(
+      tap((result: AuthResponse) => {
+        this.handleSucessSignIn(result.token, result.email);
+      }),
+    );
+  }
+
+  private handleSucessSignIn(token: string, email: string) {
+    this.token.set(token);
+    localStorage.setItem('token', token);
+    localStorage.setItem('login', email);
   }
 
   signUp(params: SignUpParams): Observable<AuthResponse> {
@@ -44,8 +95,28 @@ export class AuthService {
     return this.httpClient.post<AuthResponse>(url, params);
   }
 
-  deleteAccount(): Observable<any> {
+  deleteAccount() {
+    if (this.deleteAccountLoading()) {
+      return;
+    }
+    this.deleteAccountLoading.set(true);
     const url: string = this.API_URL + 'delete';
-    return this.httpClient.post<any>(url, {});
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        tap(() => {
+          this.logOut();
+        }),
+        finalize(() => {
+          this.deleteAccountLoading.set(false);
+        }),
+      )
+      .subscribe();
+  }
+
+  logOut() {
+    this.token.set(undefined);
+    localStorage.removeItem('token');
+    this.cityService.state.set(UserState.NOT_LOADED_PLAYER);
   }
 }
