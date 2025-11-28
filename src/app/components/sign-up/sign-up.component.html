@@ -64,40 +64,38 @@
       />
     </div>
 
-    <div *ngIf="invalid()" class="invalid-authen">Invalid authentification</div>
+    <div class="errors-wrapper">
+      <div *ngIf="shouldShowError('email')">
+        <span *ngIf="formgroup.controls.email.errors?.['required']">Email is required</span>
+        <span *ngIf="formgroup.controls.email.errors?.['pattern']">Email must be valid</span>
+      </div>
 
-    <div *ngIf="invalid() && formgroup.controls.email.errors" class="invalid-authen">
-      <span *ngIf="formgroup.controls.email.errors['required']">Email is required</span>
-      <span *ngIf="formgroup.controls.email.errors['pattern']">Email must be valid</span>
+      <div *ngIf="shouldShowError('username')">
+        <span *ngIf="formgroup.controls.username.errors?.['required']">Username is required</span>
+        <span *ngIf="formgroup.controls.username.errors?.['notValid']">Username: 3 characters minimum</span>
+      </div>
+
+      <div *ngIf="shouldShowError('password')">
+        <span *ngIf="formgroup.controls.password.errors?.['required']">Password is required</span>
+
+        <span *ngIf="formgroup.controls.password.errors?.['noStrong']">Password: 8 characters minimum</span>
+      </div>
+
+      <div *ngIf="shouldShowError('confirmPassword')">
+        <span *ngIf="formgroup.controls.confirmPassword.errors?.['required']">Confirm password is required</span>
+        <span *ngIf="formgroup.controls.confirmPassword.errors?.['noMatchPassword']"
+          >Password and Confirm password must match</span
+        >
+      </div>
+
+      <div *ngIf="fieldAlreadyExist.email">
+        <span>Email already used</span>
+      </div>
+
+      <div *ngIf="fieldAlreadyExist.username">
+        <span>Username already used</span>
+      </div>
     </div>
-
-    <div *ngIf="invalid() && formgroup.controls.username.errors" class="invalid-authen">
-      <span *ngIf="formgroup.controls.username.errors['required']">Username is required</span>
-      <span *ngIf="formgroup.controls.username.errors['notValid']">Username: 3 characters minimum</span>
-    </div>
-
-    <div *ngIf="invalid() && formgroup.controls.password.errors" class="invalid-authen">
-      <span *ngIf="formgroup.controls.password.errors['required']">Password is required</span>
-
-      <span *ngIf="formgroup.controls.password.errors['noStrong']">Password: 8 characters minimum</span>
-    </div>
-
-    <div *ngIf="invalid() && formgroup.controls.confirmPassword.errors" class="invalid-authen">
-      <span *ngIf="formgroup.controls.confirmPassword.errors['required']">Confirm password is required</span>
-      <span *ngIf="formgroup.controls.confirmPassword.errors['noMatchPassword']"
-        >Password and Confirm password must match</span
-      >
-    </div>
-
-    <div *ngIf="fieldAlreadyExist.email" class="invalid-authen">
-      <span>Email already used</span>
-    </div>
-
-    <div *ngIf="fieldAlreadyExist.username" class="invalid-authen">
-      <span>Username already used</span>
-    </div>
-
-    <div *ngIf="!invalid()" class="valid-authen"></div>
 
     <div class="button-wrapper" type="submit" (click)="signUp()">
       <i *ngIf="!loading()" class="material-icons login-icon">login</i>
@@ -108,7 +106,9 @@
     </div>
 
     <div class="text-button" (click)="signIn()">Already have an account ? Sign In</div>
-    <div class="text-button" style="margin-top: 4px" (click)="loginTemp()">Play with a temporary account</div>
+    <div class="text-button" style="margin-top: 4px" (click)="authService.signInTemp()">
+      Play with a temporary account
+    </div>
     <a href="https://discord.gg/qFnSBa8P9Z" target="_blank">
       <img alt="discord icon" style="height: 50px; margin-top: 12px" src="assets/icons/discord_icon.png"
     /></a>

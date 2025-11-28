@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -35,8 +35,9 @@ interface FieldAlreadyExistModel {
   standalone: true,
   styleUrl: './sign-up.component.scss',
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
   formgroup!: FormGroup<SignUpForm>;
+  private formSubscription: Subscription | undefined;
 
   loading = signal(false);
   invalid = signal(false);
@@ -49,7 +50,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -72,15 +73,27 @@ export class SignUpComponent implements OnInit {
       }),
     });
 
-    this.subscriptions.push(
-      this.formgroup.valueChanges.subscribe(() => {
-        this.invalid.set(false);
-        this.fieldAlreadyExist = {
-          email: false,
-          username: false,
-        };
-      }),
-    );
+    // this.subscriptions.push(
+    //   this.formgroup.valueChanges.subscribe(() => {
+    //     this.invalid.set(false);
+    //     this.fieldAlreadyExist = {
+    //       email: false,
+    //       username: false,
+    //     };
+    //   }),
+    // );
+    this.setupUntouchOnModification();
+  }
+
+  setupUntouchOnModification(): void {
+    this.formSubscription = this.formgroup.valueChanges.subscribe(() => {
+      Object.keys(this.formgroup.controls).forEach((key) => {
+        const control = this.formgroup.get(key);
+        if (control && control.dirty) {
+          control.markAsUntouched();
+        }
+      });
+    });
   }
 
   signUp() {
@@ -108,7 +121,6 @@ export class SignUpComponent implements OnInit {
         }),
       )
       .subscribe((result: AuthResponse | { error: string }) => {
-        //TODO: Gérer le cas où l'email ou le nom d'utilisateur existe déjà: voir ancien projet
         if ('error' in result) {
           this.invalid.set(true);
         } else {
@@ -134,7 +146,7 @@ export class SignUpComponent implements OnInit {
         return null;
       }
 
-      const has8Characters = password.length >= 4;
+      const has8Characters = password.length >= 8;
       // const hasUpperCase = /[A-Z]+/.test(password);
       // const hasLowerCase = /[a-z]+/.test(password);
       // const hasNumeric = /[0-9]+/.test(password);
@@ -171,22 +183,15 @@ export class SignUpComponent implements OnInit {
     };
   }
 
-  loginTemp() {
-    if (this.loading()) {
-      return;
+  shouldShowError(fieldName: string): boolean {
+    const field = this.formgroup.get(fieldName);
+    return field ? field.invalid && field.touched : false;
+  }
+
+  ngOnDestroy(): void {
+    // Vérifier si l'abonnement existe et n'a pas déjà été fermé
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
     }
-    this.authService
-      .signInTemp()
-      .pipe(
-        take(1),
-        finalize(() => {
-          this.loading.set(false);
-        }),
-      )
-      .subscribe((result: AuthResponse) => {
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('emailOrUsername', result.email);
-        this.router.navigate(['load-player']);
-      });
   }
 }

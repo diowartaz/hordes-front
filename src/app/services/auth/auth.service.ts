@@ -75,13 +75,16 @@ export class AuthService {
     );
   }
 
-  signInTemp(): Observable<AuthResponse> {
+  signInTemp(): void {
     const url = `${this.API_URL}signin-temp`;
-    return this.httpClient.post<AuthResponse>(url, {}).pipe(
-      tap((result: AuthResponse) => {
-        this.handleSucessSignIn(result.token, result.email);
-      }),
-    );
+    this.httpClient
+      .post<AuthResponse>(url, {})
+      .pipe(
+        tap((result: AuthResponse) => {
+          this.handleSucessSignIn(result.token, result.email);
+        }),
+      )
+      .subscribe();
   }
 
   private handleSucessSignIn(token: string, email: string) {

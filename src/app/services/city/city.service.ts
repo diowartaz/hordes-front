@@ -91,7 +91,7 @@ export class CityService {
   setCityTimeSeconds() {
     return toSignal(
       toObservable(this.city, { injector: this.appInjector }).pipe(
-        filter(city => city !== null),
+        filter((city) => city !== null),
         switchMap((city) => {
           const coef = this.defaultValues().coef_realtime_to_ingametime;
           const realTimeRefreshRateMs = Math.floor((60 * 1000) / coef);

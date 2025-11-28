@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { finalize, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthResponse, SignInParams } from '../../models/auth';
+import { SignInParams } from '../../models/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   invalidAuthentification = signal(false);
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
   ) {}
 
@@ -57,12 +57,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private handleAuthSuccess(result: AuthResponse): void {
-    localStorage.setItem('token', result.token);
-    localStorage.setItem('login', result.email);
-    this.router.navigate([RoutesEnum.LOAD_PLAYER]);
-  }
-
   login() {
     if (this.loading()) {
       return;
@@ -85,28 +79,8 @@ export class LoginComponent implements OnInit {
           this.loading.set(false);
         }),
       )
-      .subscribe((result: AuthResponse) => {
+      .subscribe(() => {
         this.invalidAuthentification.set(false);
-        this.handleAuthSuccess(result);
-      });
-  }
-
-  loginTemp() {
-    if (this.loading()) {
-      return;
-    }
-    this.loading.set(true);
-
-    this.authService
-      .signInTemp()
-      .pipe(
-        take(1),
-        finalize(() => {
-          this.loading.set(false);
-        }),
-      )
-      .subscribe((result: AuthResponse) => {
-        this.handleAuthSuccess(result);
       });
   }
 

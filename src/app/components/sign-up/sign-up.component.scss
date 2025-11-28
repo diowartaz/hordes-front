@@ -41,16 +41,6 @@
         cursor: default;
       }
     }
-    .invalid-authen {
-      color: red;
-      font-weight: 500;
-      font-size: 12px;
-      margin-top: 6px;
-      margin-bottom: 6px;
-    }
-    .valid-authen {
-      height: 26px;
-    }
     .button-wrapper {
       display: flex;
       align-items: center;
@@ -94,6 +84,16 @@
     .forgot-password {
       margin-bottom: 8px;
     }
+  }
+  .errors-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: red;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 9px;
+    align-items: center;
   }
 }
 /////////////////////
