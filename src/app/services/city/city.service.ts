@@ -106,7 +106,7 @@ export class CityService {
 
               // Vérification de la fin de journée
               const isEndOfDay = newIngameTimeSeconds >= dayEndTime;
-              if (isEndOfDay) {
+              if (isEndOfDay && this.state() === UserState.PLAYING) { 
                 this.endDay();
               }
               const finalTimeSeconds = isEndOfDay ? dayEndTime : newIngameTimeSeconds;

@@ -1,12 +1,11 @@
-import { computed, effect, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
-import { finalize, Observable, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthResponse, SignInParams, SignUpParams } from 'src/app/models/auth';
-import { RoutesEnum, statesToRoutes, UserState } from 'src/app/models/router';
+import { UserState } from 'src/app/models/router';
 import { CityService } from '../city/city.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -44,26 +43,8 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private cityService: CityService,
-    private router: Router,
   ) {
     this.token.set(localStorage.getItem('token') ?? undefined);
-    effect(() => {
-      if (this.isConnected() && this.cityService.state() === UserState.NOT_LOADED_PLAYER) {
-        this.cityService.loadPlayer();
-      }
-    });
-
-    effect(() => {
-      if (!this.isConnected()) {
-        this.router.navigate([RoutesEnum.HOME]);
-      }
-    });
-
-    effect(() => {
-      if (this.isConnected()) {
-        this.router.navigate(['/' + statesToRoutes[this.cityService.state()]]);
-      }
-    });
   }
 
   signIn(params: SignInParams): Observable<AuthResponse> {
@@ -93,9 +74,37 @@ export class AuthService {
     localStorage.setItem('login', email);
   }
 
-  signUp(params: SignUpParams): Observable<AuthResponse> {
+  signUp(params: SignUpParams): Observable<
+    | AuthResponse
+    | {
+        error: {
+          emailAlreadyExists: boolean;
+          usernameAlreadyExists: boolean;
+        };
+      }
+  > {
     const url = `${this.API_URL}signup`;
-    return this.httpClient.post<AuthResponse>(url, params);
+    return this.httpClient
+      .post<
+        | AuthResponse
+        | {
+            error: {
+              emailAlreadyExists: boolean;
+              usernameAlreadyExists: boolean;
+            };
+          }
+      >(url, params)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 409) {
+            return new Observable<any>((subscriber) => {
+              subscriber.next({ error: error.error.error });
+              subscriber.complete();
+            });
+          }
+          return throwError(() => error);
+        }),
+      );
   }
 
   deleteAccount() {

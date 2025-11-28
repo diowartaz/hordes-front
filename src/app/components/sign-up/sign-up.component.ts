@@ -11,8 +11,7 @@ import {
 } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { catchError, finalize, of, Subscription, take } from 'rxjs';
-import { AuthResponse } from '../../models/auth';
+import { finalize, Subscription, take } from 'rxjs';
 import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -21,11 +20,6 @@ interface SignUpForm {
   username: FormControl<string>;
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
-}
-
-interface FieldAlreadyExistModel {
-  email: boolean;
-  username: boolean;
 }
 
 @Component({
@@ -38,15 +32,11 @@ interface FieldAlreadyExistModel {
 export class SignUpComponent implements OnInit, OnDestroy {
   formgroup!: FormGroup<SignUpForm>;
   private formSubscription: Subscription | undefined;
+  private passwordValidationSub: Subscription | undefined;
 
   loading = signal(false);
-  invalid = signal(false);
-
-  subscriptions: Subscription[] = [];
-  fieldAlreadyExist: FieldAlreadyExistModel = {
-    email: false,
-    username: false,
-  };
+  emailAlreadyExists = signal(false);
+  usernameAlreadyExists = signal(false);
 
   constructor(
     private router: Router,
@@ -54,6 +44,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.setUpFormGroup();
+    //this.setupUntouchOnModification();
+    this.passwordValidationSub = this.formgroup.controls.password.valueChanges.subscribe(() => {
+      this.formgroup.controls.confirmPassword.updateValueAndValidity();
+    });
+  }
+
+  setUpFormGroup(): void {
     this.formgroup = new FormGroup<SignUpForm>({
       email: new FormControl('', {
         nonNullable: true,
@@ -61,32 +59,27 @@ export class SignUpComponent implements OnInit, OnDestroy {
       }),
       username: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, this.usernameCustomValidator()],
+        validators: [Validators.required, this.usernameCustomValidator(), this.lessThan15Characters()],
       }),
       password: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, this.strongPasswordValidator()],
+        validators: [Validators.required, this.min8Characters()],
       }),
       confirmPassword: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required, this.confirmPasswordMatchValidator()],
       }),
     });
-
-    // this.subscriptions.push(
-    //   this.formgroup.valueChanges.subscribe(() => {
-    //     this.invalid.set(false);
-    //     this.fieldAlreadyExist = {
-    //       email: false,
-    //       username: false,
-    //     };
-    //   }),
-    // );
-    this.setupUntouchOnModification();
   }
 
   setupUntouchOnModification(): void {
     this.formSubscription = this.formgroup.valueChanges.subscribe(() => {
+      if (this.formgroup.controls.email.dirty) {
+        this.emailAlreadyExists.set(false);
+      }
+      if (this.formgroup.controls.username.dirty) {
+        this.usernameAlreadyExists.set(false);
+      }
       Object.keys(this.formgroup.controls).forEach((key) => {
         const control = this.formgroup.get(key);
         if (control && control.dirty) {
@@ -102,7 +95,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
     }
     this.formgroup.markAllAsTouched();
     if (this.formgroup.invalid) {
-      this.invalid.set(true);
       return;
     }
     this.loading.set(true);
@@ -115,46 +107,44 @@ export class SignUpComponent implements OnInit, OnDestroy {
       .signUp(params)
       .pipe(
         take(1),
-        catchError(() => of({ error: 'error' })),
         finalize(() => {
           this.loading.set(false);
         }),
       )
-      .subscribe((result: AuthResponse | { error: string }) => {
-        if ('error' in result) {
-          this.invalid.set(true);
+      .subscribe((result: any) => {
+        if (result.error) {
+          this.emailAlreadyExists.set(result.error.emailAlreadyExists);
+          this.usernameAlreadyExists.set(result.error.usernameAlreadyExists);
         } else {
-          this.invalid.set(false);
           this.router.navigate([RoutesEnum.SIGNIN]);
         }
       });
   }
 
-  signIn() {
+  goToSignIn() {
     this.router.navigate([RoutesEnum.SIGNIN]);
   }
 
-  fieldHasError(field: keyof SignUpForm): boolean {
-    const control = this.formgroup.controls[field];
-    return control.touched && control.invalid;
-  }
-
-  strongPasswordValidator(): ValidatorFn {
+  min8Characters(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const password = control.value;
-      if (!password) {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+      const has8Characters = value.length >= 8;
+
+      return !has8Characters ? { min8: true } : null;
+    };
+  }
+  lessThan15Characters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
         return null;
       }
 
-      const has8Characters = password.length >= 8;
-      // const hasUpperCase = /[A-Z]+/.test(password);
-      // const hasLowerCase = /[a-z]+/.test(password);
-      // const hasNumeric = /[0-9]+/.test(password);
-      // const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && has8Characters;
-
-      const passwordValid = has8Characters;
-
-      return !passwordValid ? { noStrong: true } : null;
+      const has15CharactersOrless = value.length <= 15;
+      return !has15CharactersOrless ? { max15: true } : null;
     };
   }
 
@@ -183,15 +173,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
     };
   }
 
-  shouldShowError(fieldName: string): boolean {
-    const field = this.formgroup.get(fieldName);
-    return field ? field.invalid && field.touched : false;
+  fieldHasError(field: keyof SignUpForm): boolean {
+    const control = this.formgroup.controls[field];
+    return control.touched && control.invalid;
   }
 
   ngOnDestroy(): void {
-    // Vérifier si l'abonnement existe et n'a pas déjà été fermé
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
+    }
+    if (this.passwordValidationSub) {
+      this.passwordValidationSub.unsubscribe();
     }
   }
 }

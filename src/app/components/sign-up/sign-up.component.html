@@ -4,7 +4,7 @@
 
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('email') || fieldAlreadyExist.email ? { 'border-color': 'red' } : null"
+      [ngStyle]="fieldHasError('email') || emailAlreadyExists() ? { 'border-color': 'red' } : null"
     >
       <i class="material-icons icon-input-field">mail</i>
       <input
@@ -20,7 +20,7 @@
 
     <div
       class="input-wrapper"
-      [ngStyle]="fieldHasError('username') || fieldAlreadyExist.username ? { 'border-color': 'red' } : null"
+      [ngStyle]="fieldHasError('username') || usernameAlreadyExists() ? { 'border-color': 'red' } : null"
     >
       <i class="material-icons icon-input-field">person</i>
       <input
@@ -65,34 +65,34 @@
     </div>
 
     <div class="errors-wrapper">
-      <div *ngIf="shouldShowError('email')">
+      <div *ngIf="fieldHasError('email')">
         <span *ngIf="formgroup.controls.email.errors?.['required']">Email is required</span>
         <span *ngIf="formgroup.controls.email.errors?.['pattern']">Email must be valid</span>
       </div>
 
-      <div *ngIf="shouldShowError('username')">
+      <div *ngIf="fieldHasError('username')">
         <span *ngIf="formgroup.controls.username.errors?.['required']">Username is required</span>
         <span *ngIf="formgroup.controls.username.errors?.['notValid']">Username: 3 characters minimum</span>
+        <span *ngIf="formgroup.controls.username.errors?.['max15']">Username: 15 characters maximum</span>
       </div>
 
-      <div *ngIf="shouldShowError('password')">
+      <div *ngIf="fieldHasError('password')">
         <span *ngIf="formgroup.controls.password.errors?.['required']">Password is required</span>
-
-        <span *ngIf="formgroup.controls.password.errors?.['noStrong']">Password: 8 characters minimum</span>
+        <span *ngIf="formgroup.controls.password.errors?.['min8']">Password: 8 characters minimum</span>
       </div>
 
-      <div *ngIf="shouldShowError('confirmPassword')">
+      <div *ngIf="fieldHasError('confirmPassword')">
         <span *ngIf="formgroup.controls.confirmPassword.errors?.['required']">Confirm password is required</span>
         <span *ngIf="formgroup.controls.confirmPassword.errors?.['noMatchPassword']"
           >Password and Confirm password must match</span
         >
       </div>
 
-      <div *ngIf="fieldAlreadyExist.email">
+      <div *ngIf="emailAlreadyExists()">
         <span>Email already used</span>
       </div>
 
-      <div *ngIf="fieldAlreadyExist.username">
+      <div *ngIf="usernameAlreadyExists()">
         <span>Username already used</span>
       </div>
     </div>
@@ -105,7 +105,7 @@
       <div *ngIf="loading()" class="login-text">Signing Up...</div>
     </div>
 
-    <div class="text-button" (click)="signIn()">Already have an account ? Sign In</div>
+    <div class="text-button" (click)="goToSignIn()">Already have an account ? Sign In</div>
     <div class="text-button" style="margin-top: 4px" (click)="authService.signInTemp()">
       Play with a temporary account
     </div>
