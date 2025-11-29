@@ -13,7 +13,6 @@ export class ClassicPageComponent {
   constructor(private location: Location) {}
 
   goBack() {
-    console.log(this.location);
     this.location.back();
   }
 }

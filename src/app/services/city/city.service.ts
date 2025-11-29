@@ -113,7 +113,11 @@ export class CityService {
 
               return finalTimeSeconds;
             }),
-            takeWhile((cityTimeSeconds) => cityTimeSeconds < this.defaultValues().day_end_time, true),
+            takeWhile(
+              (cityTimeSeconds) =>
+                this.state() === UserState.PLAYING && cityTimeSeconds < this.defaultValues().day_end_time,
+              true,
+            ),
           );
         }),
       ),

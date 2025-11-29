@@ -38,7 +38,7 @@ export interface StatsModel {
   money: number;
   bonuses: Record<number, number>;
   ranked_points: number;
-  match_history: any[];
+  match_history: GameHistoryModel[];
 }
 
 export type ItemModel = 'wood' | 'stone' | 'screw' | 'metal' | 'patch';

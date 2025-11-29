@@ -1,28 +1,32 @@
 <div class="boundary">
   <div class="element">
-    <div *ngIf="modifiedSubgame.id && otherPlayer" class="second-player" (click)="goToProfil(modifiedSubgame.id)">
-      {{ modifiedSubgame.username }}
+    <div
+      *ngIf="modifiedGameHistoryPlayer.id !== '--' && otherPlayer"
+      class="second-player"
+      (click)="goToProfil(modifiedGameHistoryPlayer.id)"
+    >
+      {{ modifiedGameHistoryPlayer.username }}
       <span class="material-symbols-outlined icon-search"> search </span>
     </div>
-    <div *ngIf="!modifiedSubgame.id || !otherPlayer">
-      {{ modifiedSubgame.username }}
+    <div *ngIf="!otherPlayer">
+      {{ modifiedGameHistoryPlayer.username }}
     </div>
   </div>
   <div class="elements-wrapper">
     <div class="element">
       <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/calendar.ico" />
-      <div>{{ modifiedSubgame.day }}</div>
+      <div>{{ modifiedGameHistoryPlayer.day }}</div>
     </div>
 
     <div class="element">
       <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/defense.gif" />
-      <div>{{ modifiedSubgame.defense }}</div>
+      <div>{{ modifiedGameHistoryPlayer.defense }}</div>
     </div>
 
     <div class="element">
       <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/ranked_points.png" />
       <div style="width: 24px; text-align: end; margin-left: -4px">
-        {{ modifiedSubgame.ranked_points }}
+        {{ modifiedGameHistoryPlayer.ranked_points }}
       </div>
     </div>
   </div>
