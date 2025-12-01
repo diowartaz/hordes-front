@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
 import { CommonModule } from '@angular/common';
@@ -16,14 +16,26 @@ export class BuildingsComponent {
   cityService = inject(CityService);
   dialogMessage = 'init';
   snackBarOpened = false;
+  private destroyRef = inject(DestroyRef);
 
   closeSnackBar() {
     this.snackBarOpened = false;
   }
 
   openSnackBar(message: string) {
+    if (this.snackBarOpened) {
+      return;
+    }
     this.dialogMessage = message;
     this.snackBarOpened = true;
+
+    const timeout = setTimeout(() => {
+      this.closeSnackBar();
+    }, 1000);
+
+    this.destroyRef.onDestroy(() => {
+      clearTimeout(timeout);
+    });
   }
 
   build(building: AdvancedBuildingModel) {

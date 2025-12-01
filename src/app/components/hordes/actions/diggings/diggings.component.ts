@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, DestroyRef } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { CommonModule } from '@angular/common';
 import { ItemModel } from 'src/app/models/hordes';
@@ -18,6 +18,7 @@ export class DiggingsComponent {
   snackBarOpened = false;
   cityService = inject(CityService);
   nbDigs = signal(Number(localStorage.getItem('nb-dig')) || 1);
+  private destroyRef = inject(DestroyRef);
 
   totalRequiredTime = computed(() => {
     const flatBonus = this.cityService.bonuses()[6];
@@ -59,8 +60,19 @@ export class DiggingsComponent {
   }
 
   openSnackBar(message: string) {
+    if (this.snackBarOpened) {
+      return;
+    }
     this.dialogMessage = message;
     this.snackBarOpened = true;
+
+    const timeout = setTimeout(() => {
+      this.closeSnackBar();
+    }, 1000);
+
+    this.destroyRef.onDestroy(() => {
+      clearTimeout(timeout);
+    });
   }
 
   dig() {

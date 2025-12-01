@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CityService } from 'src/app/services/city/city.service';
 import { SkillToIconPipe } from '../../../../shared/pipes/skill-to-icon';
@@ -16,6 +16,7 @@ export class SkillsComponent {
   learnLoading = false;
   dialogMessage = 'init';
   snackBarOpened = false;
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     public cityService: CityService,
@@ -27,8 +28,19 @@ export class SkillsComponent {
   }
 
   openSnackBar(message: string) {
+    if (this.snackBarOpened) {
+      return;
+    }
     this.dialogMessage = message;
     this.snackBarOpened = true;
+
+    const timeout = setTimeout(() => {
+      this.closeSnackBar();
+    }, 1000);
+
+    this.destroyRef.onDestroy(() => {
+      clearTimeout(timeout);
+    });
   }
 
   learn(skill: AdvancedSkillModel) {
