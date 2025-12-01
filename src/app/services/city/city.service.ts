@@ -207,6 +207,7 @@ export class CityService {
         tap(() => {
           this.city.set(createDefaultCityModel());
           this.state.set(UserState.NO_CITY);
+          this.router.navigate([RoutesEnum.CREATE_CITY]);
         }),
         catchError(handleError('delete', url)),
         finalize(() => {
