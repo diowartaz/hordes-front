@@ -125,7 +125,6 @@ export class CityService {
   }
 
   findItems(nb: number): void {
-    console.log(this.cityTimeSeconds(), this.cityTimeString());
     if (this.digLoading()) {
       return;
     }
@@ -135,7 +134,6 @@ export class CityService {
       .post<any>(url, {})
       .pipe(
         tap((response: any) => {
-          console.log(formatTimeToString(response.city.time));
           this.city.set(response.city);
           this.inventoryItemFound.set(response.items_found_inventory);
         }),
@@ -215,7 +213,6 @@ export class CityService {
   }
 
   build(id: number): void {
-    console.log(this.cityTimeSeconds(), this.cityTimeString());
     if (this.buildLoading()) {
       return;
     }
@@ -237,7 +234,6 @@ export class CityService {
   }
 
   learn(id: number): void {
-    console.log(this.cityTimeSeconds(), this.cityTimeString());
     if (this.learnLoading()) {
       return;
     }
