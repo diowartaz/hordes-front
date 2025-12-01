@@ -13,6 +13,6 @@ import { CityService } from 'src/app/services/city/city.service';
 export class CityHeaderComponent {
   cityService = inject(CityService);
   headerIsDisplayed = computed(() => {
-    return [UserState.PLAYING].includes(this.cityService.state());
+    return this.cityService.state() === UserState.PLAYING;
   });
 }

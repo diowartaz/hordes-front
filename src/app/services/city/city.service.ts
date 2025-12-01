@@ -19,11 +19,12 @@ import {
   AdvancedSkillModel,
 } from 'src/app/models/hordes';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { UserState } from 'src/app/models/router';
+import { RoutesEnum, UserState } from 'src/app/models/router';
 import { calculateAdvancedBuildings } from 'src/app/shared/utils/buildings';
 import { computeBonuses } from 'src/app/shared/utils/bonuses';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -84,7 +85,10 @@ export class CityService {
   private readonly INGAME_REFRESH_SECONDS = 60;
   private appInjector = inject(Injector);
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private router: Router,
+  ) {
     this.cityTimeSeconds = this.setCityTimeSeconds();
   }
 
@@ -266,8 +270,9 @@ export class CityService {
           this.city.set(response.player.city);
           this.stats.set(response.player.stats);
           this.state.set(response.player.state);
+          this.router.navigate([response.player.state]);
         }),
-        catchError(handleError('learn', url)),
+        catchError(handleError('endDay', url)),
         finalize(() => {
           this.endDayLoading.set(false);
         }),
@@ -287,6 +292,7 @@ export class CityService {
         tap((response: any) => {
           this.city.set(response.city);
           this.state.set(UserState.PLAYING);
+          this.router.navigate([RoutesEnum.PLAY, localStorage.getItem('play-route')]);
         }),
         catchError(handleError('startDay', url)),
         finalize(() => {
