@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, Injector, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, filter, finalize, interval, map, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, filter, finalize, interval, map, startWith, switchMap, takeWhile, tap } from 'rxjs';
 import { handleError } from 'src/app/shared/utils/general-functions';
 import { environment } from 'src/environments/environment';
 import {
@@ -98,6 +98,7 @@ export class CityService {
 
           // Utilise l'intervalle calculé pour mettre à jour l'horloge
           return interval(realTimeRefreshRateMs).pipe(
+            startWith(0),
             map(() => {
               const realTimeDeltaMs = new Date().getTime() - city.last_timestamp_request;
               const ingameTimeDeltaSeconds = Math.floor((realTimeDeltaMs / 1000) * coef);
@@ -110,7 +111,6 @@ export class CityService {
                 this.endDay();
               }
               const finalTimeSeconds = isEndOfDay ? dayEndTime : newIngameTimeSeconds;
-
               return finalTimeSeconds;
             }),
             takeWhile(
@@ -122,6 +122,29 @@ export class CityService {
         }),
       ),
     );
+  }
+
+  findItems(nb: number): void {
+    console.log(this.cityTimeSeconds(), this.cityTimeString());
+    if (this.digLoading()) {
+      return;
+    }
+    this.digLoading.set(true);
+    const url: string = this.API_URL + 'city/item/find/' + nb;
+    this.httpClient
+      .post<any>(url, {})
+      .pipe(
+        tap((response: any) => {
+          console.log(formatTimeToString(response.city.time));
+          this.city.set(response.city);
+          this.inventoryItemFound.set(response.items_found_inventory);
+        }),
+        catchError(handleError('findItems', url)),
+        finalize(() => {
+          this.digLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   loadPlayer(): void {
@@ -191,28 +214,8 @@ export class CityService {
       .subscribe();
   }
 
-  findItems(nb: number): void {
-    if (this.digLoading()) {
-      return;
-    }
-    this.digLoading.set(true);
-    const url: string = this.API_URL + 'city/item/find/' + nb;
-    this.httpClient
-      .post<any>(url, {})
-      .pipe(
-        tap((response: any) => {
-          this.city.set(response.city);
-          this.inventoryItemFound.set(response.items_found_inventory);
-        }),
-        catchError(handleError('findItems', url)),
-        finalize(() => {
-          this.digLoading.set(false);
-        }),
-      )
-      .subscribe();
-  }
-
   build(id: number): void {
+    console.log(this.cityTimeSeconds(), this.cityTimeString());
     if (this.buildLoading()) {
       return;
     }
@@ -234,6 +237,7 @@ export class CityService {
   }
 
   learn(id: number): void {
+    console.log(this.cityTimeSeconds(), this.cityTimeString());
     if (this.learnLoading()) {
       return;
     }
@@ -257,7 +261,7 @@ export class CityService {
     if (this.endDayLoading()) {
       return;
     }
-    this.learnLoading.set(true);
+    this.endDayLoading.set(true);
     const url: string = this.API_URL + 'city/day/end';
     this.httpClient
       .post<any>(url, {})
@@ -279,7 +283,7 @@ export class CityService {
     if (this.startDayLoading()) {
       return;
     }
-    this.learnLoading.set(true);
+    this.startDayLoading.set(true);
     const url: string = this.API_URL + 'city/day/start';
     this.httpClient
       .post<any>(url, { chosen_buildings: whatAreTheSelectedBuildings })

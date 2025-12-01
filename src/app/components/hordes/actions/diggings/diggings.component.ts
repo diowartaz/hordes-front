@@ -70,4 +70,8 @@ export class DiggingsComponent {
     }
     this.cityService.findItems(this.nbDigs());
   }
+
+  closeSnackBar() {
+    this.snackBarOpened = false;
+  }
 }

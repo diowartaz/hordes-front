@@ -76,6 +76,7 @@
         <button
           class="btn-build"
           (click)="build(building)"
+          [disabled]="cityService.buildLoading()"
           [ngStyle]="{
             background:
               !cityService.buildLoading() &&

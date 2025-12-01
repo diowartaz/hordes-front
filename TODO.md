@@ -1,5 +1,6 @@
 TODO
 comment j'arrive à faire 6 fouille
+batient tres long avec le nerf des skills builder
 
 
 ------------ fonc ------------------

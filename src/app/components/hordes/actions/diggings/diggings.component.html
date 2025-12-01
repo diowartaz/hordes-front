@@ -1,3 +1,9 @@
+<dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
+  <div>{{ dialogMessage }}</div>
+
+  <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
+</dialog>
+
 <div class="play-header">
   <img class="icon" src="assets/icons/pelle.gif" />
   <div>Dig For Items</div>
@@ -25,6 +31,7 @@
     <button
       class="btn dig-btn"
       (click)="dig()"
+      [disabled]="cityService.digLoading()"
       [ngStyle]="{
         background:
           !enoughTime() || cityService.digLoading() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',

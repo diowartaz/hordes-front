@@ -67,12 +67,16 @@
 
           <span style="color: #31c531">{{ skill.percentageEfficacityStringAfter }}</span>
         </div>
+        {{ cityService.learnLoading() }}
         <button
           class="btn-build"
           (click)="learn(skill)"
+          [disabled]="cityService.learnLoading()"
           [ngStyle]="{
             background:
-              skill.enoughLvlMax && (this.cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
+              !cityService.learnLoading() &&
+              skill.enoughLvlMax &&
+              (this.cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
                 ? 'var(--primary-yellow)'
                 : 'var(--primary-yellow-disabled)',
           }"
