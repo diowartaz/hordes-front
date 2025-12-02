@@ -227,15 +227,13 @@ input[type='checkbox']:checked::after {
 
 .go-to-wiki {
   color: white;
+
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-button,
-a.button {
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: none;
-  -webkit-text-fill-color: black;
-}
+// button,
+// a.button {
+//   -webkit-text-fill-color: black;
+// }
