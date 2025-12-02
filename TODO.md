@@ -1,7 +1,6 @@
 TODO
-comment j'arrive à faire 6 fouille
-batient tres long avec le nerf des skills builder
-
+responsive si moins de 700px
+leaderboard qui reste sur la bonne page
 
 ------------ fonc ------------------
 afficher le % d'efficacite de chaque journee et gloable à la fin de la partie

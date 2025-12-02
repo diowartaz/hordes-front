@@ -10,86 +10,88 @@
     <div>Build Defenses</div>
   </div>
   <div class="play-content">
-    <div class="building" *ngFor="let building of cityService.advancedBuildings()">
-      <div class="line">
-        <div class="element-wrapper">
-          <img class="icon" [src]="building.rarity | buildingRarityToIcon" />
-          <div class="text" style="margin-bottom: -3px; font-weight: 500">
-            {{ building.name }}
-          </div>
-        </div>
-
-        <div class="line-right">
+    <div class="play-content-bis">
+      <div class="building" *ngFor="let building of cityService.advancedBuildings()">
+        <div class="line">
           <div class="element-wrapper">
-            <img class="icon" src="assets/icons/defense.gif" />
-            <div class="text">{{ building.defense }}</div>
-            <div *ngIf="building.defense_ratio_percentage >= 0" class="percentdef green">
-              +{{ building.defense_ratio_percentage }}%
-            </div>
-            <div *ngIf="building.defense_ratio_percentage < 0" class="percentdef red">
-              {{ building.defense_ratio_percentage }}%
+            <img class="icon" [src]="building.rarity | buildingRarityToIcon" />
+            <div class="text" style="margin-bottom: -3px; font-weight: 500">
+              {{ building.name }}
             </div>
           </div>
 
-          <div class="element-wrapper">
-            <span class="material-symbols-outlined icon"> schedule </span>
-            <div class="text">{{ building.timeString }}</div>
-          </div>
+          <div class="line-right">
+            <div class="element-wrapper">
+              <img class="icon" src="assets/icons/defense.gif" />
+              <div class="text">{{ building.defense }}</div>
+              <div *ngIf="building.defense_ratio_percentage >= 0" class="percentdef green">
+                +{{ building.defense_ratio_percentage }}%
+              </div>
+              <div *ngIf="building.defense_ratio_percentage < 0" class="percentdef red">
+                {{ building.defense_ratio_percentage }}%
+              </div>
+            </div>
 
-          <div class="element-wrapper">
-            <span class="material-symbols-outlined icon"> trending_up </span>
-            <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
+            <div class="element-wrapper">
+              <span class="material-symbols-outlined icon"> schedule </span>
+              <div class="text">{{ building.timeString }}</div>
+            </div>
+
+            <div class="element-wrapper">
+              <span class="material-symbols-outlined icon"> trending_up </span>
+              <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="line" *ngIf="building.lvl !== building.lvl_max">
-        <div class="inventory">
-          <div
-            class="item-wrapper"
-            *ngFor="let item of building.inventory | keyvalue"
-            [ngStyle]="{
-              display: item.value > 0 ? 'flex' : 'none',
-            }"
-          >
-            <div class="item" *ngIf="item.value > 0">
-              <img
-                [ngStyle]="{
-                  'margin-top': item.key === 'stone' ? '-2px' : '0px',
-                }"
-                class="icon"
-                src="{{ item.key | itemToIcon }}"
-              />
+        <div class="line" *ngIf="building.lvl !== building.lvl_max">
+          <div class="inventory">
+            <div
+              class="item-wrapper"
+              *ngFor="let item of building.inventory | keyvalue"
+              [ngStyle]="{
+                display: item.value > 0 ? 'flex' : 'none',
+              }"
+            >
+              <div class="item" *ngIf="item.value > 0">
+                <img
+                  [ngStyle]="{
+                    'margin-top': item.key === 'stone' ? '-2px' : '0px',
+                  }"
+                  class="icon"
+                  src="{{ item.key | itemToIcon }}"
+                />
 
-              <div class="nb">
-                <span
-                  [ngClass]="[
-                    cityService.city().inventory[castKey(item.key)] >= item.value ? 'ok-nb-item' : 'alert-nb-item',
-                  ]"
-                  >{{ cityService.city().inventory[castKey(item.key)] }}</span
-                >
-                <span>/{{ item.value }}</span>
+                <div class="nb">
+                  <span
+                    [ngClass]="[
+                      cityService.city().inventory[castKey(item.key)] >= item.value ? 'ok-nb-item' : 'alert-nb-item',
+                    ]"
+                    >{{ cityService.city().inventory[castKey(item.key)] }}</span
+                  >
+                  <span>/{{ item.value }}</span>
+                </div>
               </div>
             </div>
           </div>
+          <button
+            class="btn-build"
+            (click)="build(building)"
+            [disabled]="cityService.buildLoading()"
+            [ngStyle]="{
+              background:
+                !cityService.buildLoading() &&
+                building.enoughRessources &&
+                (cityService.cityTimeSeconds() || 0) < building.expirationCityTime &&
+                building.enoughLvlMax
+                  ? 'var(--primary-yellow)'
+                  : 'var(--primary-yellow-disabled)',
+            }"
+          >
+            <img src="assets/icons/build.webp" />
+            <div class="text">Build</div>
+          </button>
         </div>
-        <button
-          class="btn-build"
-          (click)="build(building)"
-          [disabled]="cityService.buildLoading()"
-          [ngStyle]="{
-            background:
-              !cityService.buildLoading() &&
-              building.enoughRessources &&
-              (cityService.cityTimeSeconds() || 0) < building.expirationCityTime &&
-              building.enoughLvlMax
-                ? 'var(--primary-yellow)'
-                : 'var(--primary-yellow-disabled)',
-          }"
-        >
-          <img src="assets/icons/build.webp" />
-          <div class="text">Build</div>
-        </button>
       </div>
     </div>
   </div>
