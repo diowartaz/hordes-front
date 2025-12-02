@@ -4,7 +4,7 @@
     <div class="content">
       <app-recap-header style="width: 100%"></app-recap-header>
 
-      <div class="container" *ngIf="nbChoicesAvailable() > 0">
+      <div class="container" *ngIf="nbMaxChoices() > 0">
         <div class="container-header">
           {{
             `Pick ${nbMaxChoices()} building${nbMaxChoices() > 1 ? 's' : ''} from the ${nbChoicesAvailable()} available`
