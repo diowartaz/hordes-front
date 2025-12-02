@@ -125,6 +125,7 @@ export function createDefaultBuildingModel(): BuildingModel {
     },
     rarity: 'common',
     selected: false,
+    defense_ratio_percentage: -22,
   };
 }
 
@@ -138,6 +139,7 @@ export interface BuildingModel {
   inventory: Record<string, number>;
   rarity: 'base' | 'common' | 'rare' | 'epic';
   selected: boolean;
+  defense_ratio_percentage: number;
 }
 
 export interface AdvancedBuildingModel {
@@ -154,6 +156,7 @@ export interface AdvancedBuildingModel {
   enoughRessources: boolean;
   enoughLvlMax: boolean;
   expirationCityTime: number;
+  defense_ratio_percentage: number;
 }
 
 export interface SkillModel {

@@ -33,6 +33,12 @@ export function calculateAdvancedBuildings(
     advancedBuildings.push(advancedBuilding);
   }
 
-  advancedBuildings.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
+  advancedBuildings.sort((a, b) => {
+    const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
+    if (rarityDiff !== 0) {
+      return rarityDiff;
+    }
+    return b.defense_ratio_percentage - a.defense_ratio_percentage;
+  });
   return advancedBuildings;
 }
