@@ -4,6 +4,14 @@
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 8px;
+  @media (max-width: 550px) {
+    .lvl-wrapper {
+      display: none !important; /* Remplace le défaut: 2 éléments par ligne */
+    }
+    .xp-bar-wrapper {
+      display: none !important; /* Remplace le défaut: 2 éléments par ligne */
+    }
+  }
   .left-part {
     max-width: 400px;
     margin-right: 16px;
@@ -11,6 +19,8 @@
     display: flex;
     align-items: center;
     flex: 1;
+    gap: 8px;
+
     .lvl-wrapper {
       position: relative;
       text-align: center;
@@ -33,7 +43,7 @@
         font-weight: bold;
         position: absolute;
         top: 22px;
-        left: 2px;
+        left: 12px;
         z-index: 2;
         width: 100%;
       }

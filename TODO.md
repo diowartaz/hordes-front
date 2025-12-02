@@ -1,5 +1,5 @@
 TODO
-responsive si moins de 700px
+responsive si moins de 750px (un building par ligne)
 leaderboard qui reste sur la bonne page
 ranked qui donne 1.5x plus d'xp money
 joueur qui ne finisse pas les ranked au bout de 2h

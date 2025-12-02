@@ -9,7 +9,12 @@
       flex-wrap: wrap;
       flex-direction: row;
       gap: 8px;
-      .building {
+      @media (max-width: 750px) {
+        .building2 {
+          width: 100% !important; /* Remplace le défaut: 2 éléments par ligne */
+        }
+      }
+      .building2 {
         display: flex;
         flex-direction: column;
         color: white;
@@ -18,7 +23,7 @@
         box-shadow: 0px 0px 3px 2px #000000a1;
         border-radius: 4px;
         padding: 4px;
-        width: 330px;
+        width: calc(50% - 4px);
         background: rgba(0, 0, 0, 0.38);
         height: fit-content;
         .line {

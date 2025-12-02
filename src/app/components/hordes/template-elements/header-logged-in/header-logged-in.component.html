@@ -10,13 +10,18 @@
         <div class="progress" [style.width.%]="data().xpRatio"></div>
       </div>
     </div>
-  </div>
-  <div class="right-part">
     <div *ngIf="authService.isConnected()" class="icon-btn money">
       <div class="plus">+</div>
       <span>{{ data().money }}</span>
       💰
     </div>
+  </div>
+  <div class="right-part">
+    <!-- <div *ngIf="authService.isConnected()" class="icon-btn money">
+      <div class="plus">+</div>
+      <span>{{ data().money }}</span>
+      💰
+    </div> -->
     <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
       <img src="assets/icons/discord_icon.png"
     /></a>
