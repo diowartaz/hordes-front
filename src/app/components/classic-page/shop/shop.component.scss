@@ -1,8 +1,9 @@
 .shop-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 16px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .shop-card > * {
@@ -11,6 +12,7 @@
 }
 
 .shop-card {
+  width: calc(50% - 8px);
   padding: 8px !important;
   &-header {
     display: flex;
