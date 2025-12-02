@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { ClassicPageComponent } from '../classic-page.component';
 
@@ -12,14 +12,20 @@ import { ClassicPageComponent } from '../classic-page.component';
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })
 export class LeaderboardHordesComponent implements OnInit {
-  ranked = true;
+  ranked = false;
 
   constructor(
     private router: Router,
     public cityService: CityService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((queryParams: any) => {
+      if (queryParams.ranked) {
+        this.ranked = queryParams.ranked === 'false' ? false : true;
+      }
+    });
     this.cityService.getLeaderboardRanked();
     this.cityService.getLeaderboardBestDay();
   }
