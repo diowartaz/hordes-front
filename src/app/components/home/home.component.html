@@ -39,16 +39,21 @@
   </div>
 </div>
 
+<div class="go-to-wiki">
+  In case, it's your first time here
+  <button class="yellow-button" (click)="router.navigate([RoutesEnum.WIKI])">📖 Go to Wiki</button>
+</div>
+
 <div class="buttons">
   <button class="yellow-button" (click)="authService.signInTemp()">
-    <span>Play</span><span style="font-size: 12px">(No Progress Saved)</span>
+    <span>🎮 Play</span><span style="font-size: 12px">(No Progress Saved)</span>
   </button>
   <div class="secondary-buttons">
     <button class="yellow-button" (click)="useYourAccount()">
-      <span>Use My Account</span><span style="font-size: 12px">(Progress Saved)</span>
+      <span>🔒 Use My Account</span><span style="font-size: 12px">(Progress Saved)</span>
     </button>
     <button class="yellow-button" (click)="createAnAccount()">
-      <span>Create an account</span>
+      <span>✍️ Create an account</span>
     </button>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
+import { RoutesEnum } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
@@ -11,6 +13,8 @@ import { CityService } from 'src/app/services/city/city.service';
   styleUrls: ['./create-city.component.scss'],
 })
 export class CreateCityComponent {
+  public readonly router = inject(Router);
+  public readonly RoutesEnum = RoutesEnum;
   constructor(private cityService: CityService) {}
 
   createCity(ranked: boolean) {

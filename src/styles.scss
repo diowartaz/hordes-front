@@ -223,3 +223,10 @@ input[type='checkbox']:checked::after {
 .percentdef-red {
   background: #db5656;
 }
+
+.go-to-wiki {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
