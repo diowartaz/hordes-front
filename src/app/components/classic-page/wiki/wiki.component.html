@@ -40,17 +40,19 @@
         <h2>Overview</h2>
 
         <p style="margin-top: 16px">You are the last human alive in a ruined city.</p>
-        <div class="flex">
+        <div class="inline-div">
           Each night, waves of zombies<img src="assets/icons/zb.gif" />attack your defenses<img
             src="assets/icons/defense.gif"
           />.
         </div>
-        <div class="flex">
+        <div class="inline-div">
           Each day, you dig<img src="assets/icons/pelle.gif" />, build<img src="assets/icons/building.webp" />, and
-          learn <img src="assets/icons/livre.gif" />in an effort to survive one more night.
+          learn <img src="assets/icons/livre.gif" /><span style="white-space: normal"
+            >in an effort to survive one more night.</span
+          >
         </div>
 
-        <div class="flex">
+        <div class="inline-div">
           <strong>Are you ready to climb the ranks and dominate the leaderboard?</strong>
           <img src="assets/icons/leaderboard.gif" />
         </div>
@@ -58,15 +60,17 @@
 
       <section>
         <h2>⚔️ Defense and Attacks</h2>
-        <div class="flex">
+        <div class="inline-div">
           <img style="margin-top: -5px" src="assets/icons/building.webp" />All buildings (except special ones) add
           defense points.
         </div>
-        <div class="flex"><img src="assets/icons/zb.gif" />The zombie wave increases nightly.</div>
-        <div class="flex">
+        <div class="inline-div"><img src="assets/icons/zb.gif" />The zombie wave increases nightly.</div>
+        <div class="inline-div">
           <img src="assets/icons/defense.gif" /> ≥ <img src="assets/icons/zb.gif" /> → You survive.
         </div>
-        <div class="flex"><img src="assets/icons/defense.gif" /> < <img src="assets/icons/zb.gif" /> → You die.</div>
+        <div class="inline-div">
+          <img src="assets/icons/defense.gif" /> < <img src="assets/icons/zb.gif" /> → You die.
+        </div>
       </section>
 
       <section>
@@ -78,35 +82,44 @@
         <table>
           <tr>
             <th>Building</th>
-            <th>Max Level</th>
             <th>Description</th>
             <th>Detail</th>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/base_plan.webp" />Architect Shelter</td>
-            <td>3</td>
             <td>Increases discovery odds for new building plans (probability is 0.7 per level).</td>
             <td>You will have a choice for your discoveries</td>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/base_plan.webp" /> Library</td>
-            <td>3</td>
             <td>Increases discovery odds for new skill levels (probability is 0.5 per level).</td>
             <td>No choice</td>
           </tr>
         </table>
         <p style="margin-top: 16px">
-          A <strong>building's defense</strong> value is subject to a degree of <strong>random variability</strong>,
-          which can fluctuate by up to <strong>±20%</strong> from one game to the next.
+          A <strong>building's defense</strong
+          ><img style="vertical-align: middle; margin-left: 3px" src="assets/icons/defense.gif" /> value is subject to a
+          degree of <strong>random variability 🎲</strong>, which can fluctuate by up to <strong>±20%</strong> from one
+          game to the next.
         </p>
-        <p style="margin-top: 16px">
+        <div style="margin-top: 16px">
           These variations will be displayed by a small percentage indicator next to the building's defense rating.
-        </p>
-        <span style="margin-top: 16px" class="element-wrapper">
-          <img class="icon" src="assets/icons/defense.gif" />
-          <div class="text">52</div>
-          <div class="percentdef percentdef-green">+19%</div>
-        </span>
+          <span style="display: inline-block; vertical-align: middle"
+            ><span class="element-wrapper">
+              <img class="icon" src="assets/icons/defense.gif" />
+              <div class="text">52</div>
+              <div class="percentdef percentdef-green">+19%</div>
+            </span></span
+          >
+          ou
+          <span style="display: inline-block; vertical-align: middle"
+            ><span class="element-wrapper">
+              <img class="icon" src="assets/icons/defense.gif" />
+              <div class="text">35</div>
+              <div class="percentdef percentdef-red">-7%</div>
+            </span></span
+          >
+        </div>
       </section>
 
       <section>
@@ -115,31 +128,26 @@
         <table>
           <tr>
             <th>Skill</th>
-            <th>Max Level</th>
             <th>Effect per Level</th>
             <th>Level max Effect</th>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/sleep.gif" /> Insomniac</td>
-            <td>8</td>
             <td>Wake up 15 min earlier each day.</td>
             <td>2 hours earlier wake-up.</td>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/pelle.gif" /> Digger</td>
-            <td>5</td>
             <td>Reduce search time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/building.webp" />Builder</td>
-            <td>5</td>
             <td>Reduce building time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
           <tr>
             <td><img class="icon" src="assets/icons/livre.gif" />Fast Learner</td>
-            <td>5</td>
             <td>Reduce learning time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
@@ -149,7 +157,7 @@
       <section>
         <h2>💡 Experience & Levels</h2>
 
-        <div class="flex">
+        <div class="inline-div">
           <strong>Gain XP</strong> <img class="icon" src="assets/icons/xpLogo.png" /><strong
             >and Money 💰 equal to zombies defeated.</strong
           >
@@ -159,53 +167,18 @@
       <section>
         <h2><img class="icon" src="assets/icons/ranked.png" /> Ranked Mode</h2>
         <p><strong>Don't hesitate to play in ranked to get more 💰 (+50%)!</strong></p>
-        <div class="flex">After you complete your ranked game, one other player will play the same game.</div>
-        <div class="flex">When the other players finishes, the performance is compared between the 2 players:</div>
-        <div class="flex" style="margin-top: 6px !important">
+        <div class="inline-div">After you complete your ranked game, one other player will play the same game.</div>
+        <div class="inline-div">
+          When the other players finishes, the performance is compared between the 2 players:
+        </div>
+        <div class="inline-div" style="margin-top: 6px !important">
           🗓️ Days survived,
           <img src="assets/icons/defense.gif" />defenses built.
         </div>
-        <div class="flex">
+        <div class="inline-div">
           <img src="assets/icons/ranked_points.png" style="width: 16px" />Elo-like ranked point system.
         </div>
-        <div class="flex"><img src="assets/icons/leaderboard.gif" />Fight for the leaderboard.</div>
-      </section>
-
-      <section>
-        <h2>📈 Example Progression</h2>
-        <table>
-          <tr>
-            <th>Day 🗓️</th>
-            <th>Zombies<img src="assets/icons/zb.gif" style="margin-left: 4px; margin-bottom: -3px" /></th>
-            <th>Defense<img src="assets/icons/defense.gif" style="margin-left: 4px; margin-bottom: -3px" /></th>
-            <th>Result</th>
-            <th>
-              Cumulative
-              <img src="assets/icons/xpLogo.png" style="width: 16px; margin-left: 4px; margin-bottom: -3px" />/💰
-            </th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>10</td>
-            <td>15</td>
-            <td>Survive</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>20</td>
-            <td>23</td>
-            <td>Survive</td>
-            <td>30</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>35</td>
-            <td>28</td>
-            <td>Die</td>
-            <td>30</td>
-          </tr>
-        </table>
+        <div class="inline-div"><img src="assets/icons/leaderboard.gif" />Fight for the leaderboard.</div>
       </section>
 
       <section>
@@ -222,14 +195,13 @@
 
       <section>
         <h2>🧩 Strategy Tips</h2>
-        <div class="flex">
-          <img class="icon" src="assets/icons/base_plan.webp" />
-          <p>Upgrade Libraries to unlock higher skill caps.</p>
+        <div class="inline-div">
+          <img src="assets/icons/base_plan.webp" />
+          Upgrade Libraries to unlock higher skill caps.
         </div>
 
-        <div class="flex">
-          <img class="icon" src="assets/icons/base_plan.webp" />
-          <p>Architect Shelters unlock stronger defense plans.</p>
+        <div class="inline-div">
+          <img src="assets/icons/base_plan.webp" />Architect Shelters unlock stronger defense plans.
         </div>
 
         <p style="margin-top: 16px">✨ Buy strong bonuses</p>

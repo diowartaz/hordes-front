@@ -4,6 +4,8 @@ leaderboard qui reste sur la bonne page
 ranked qui donne 1.5x plus d'xp money
 joueur qui ne finisse pas les ranked au bout de 2h
 
+font inherit
+
 ------------ fonc ------------------
 afficher le % d'efficacite de chaque journee et gloable à la fin de la partie
 carte pour améliorer les batiment
