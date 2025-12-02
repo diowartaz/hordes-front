@@ -63,7 +63,7 @@ body {
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
   span {
-    cursor: pointer
+    cursor: pointer;
   }
 }
 
@@ -208,7 +208,6 @@ input[type='checkbox']:checked::after {
   left: 50%;
   transform: translate(-50%, -50%); /* centers the check mark */
 }
-
 
 .percentdef {
   border-radius: 4px;

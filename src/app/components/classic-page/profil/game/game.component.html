@@ -1,5 +1,10 @@
 <div class="container" [style.border-color]="color[win]">
-  <app-subgame [gameHistoryPlayer]="game.player1" [win]="game.win" [ranked_points]="game.ranked_points" [otherPlayer]="false">
+  <app-subgame
+    [gameHistoryPlayer]="game.player1"
+    [win]="game.win"
+    [ranked_points]="game.ranked_points"
+    [otherPlayer]="false"
+  >
   </app-subgame>
   <app-subgame
     *ngIf="game.ranked"
