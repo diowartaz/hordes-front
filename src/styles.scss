@@ -231,3 +231,11 @@ input[type='checkbox']:checked::after {
   flex-direction: column;
   gap: 8px;
 }
+
+button,
+a.button {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  //-webkit-text-fill-color: black;
+}
