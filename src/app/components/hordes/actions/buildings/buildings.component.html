@@ -10,13 +10,7 @@
     <div>Build Defenses</div>
   </div>
   <div class="play-content">
-    <div
-      class="building"
-      *ngFor="let building of cityService.advancedBuildings()"
-      [ngStyle]="{
-        background: building.lvl === building.lvl_max ? '#00000061' : 'transparent',
-      }"
-    >
+    <div class="building" *ngFor="let building of cityService.advancedBuildings()">
       <div class="line">
         <div class="element-wrapper">
           <img class="icon" [src]="building.rarity | buildingRarityToIcon" />
@@ -29,8 +23,8 @@
           <div class="element-wrapper">
             <img class="icon" src="assets/icons/defense.gif" />
             <div class="text">{{ building.defense }}</div>
-            <div *ngIf="building.defense_ratio_percentage > 0" class="percentdef green">
-              {{ building.defense_ratio_percentage }}%
+            <div *ngIf="building.defense_ratio_percentage >= 0" class="percentdef green">
+              +{{ building.defense_ratio_percentage }}%
             </div>
             <div *ngIf="building.defense_ratio_percentage < 0" class="percentdef red">
               {{ building.defense_ratio_percentage }}%

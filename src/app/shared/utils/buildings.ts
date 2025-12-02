@@ -30,7 +30,9 @@ export function calculateAdvancedBuildings(
       enoughLvlMax: building.lvl < building.lvl_max,
       expirationCityTime: defaultValues.day_end_time - timeRequired,
     };
-    advancedBuildings.push(advancedBuilding);
+    if (building.lvl < building.lvl_max) {
+      advancedBuildings.push(advancedBuilding);
+    }
   }
 
   advancedBuildings.sort((a, b) => {

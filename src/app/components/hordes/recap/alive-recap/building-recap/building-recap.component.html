@@ -34,8 +34,8 @@
       <div class="element-wrapper" style="width: 74px">
         <img class="icon" src="assets/icons/defense.gif" />
         <div class="text">{{ building.defense }}</div>
-        <div *ngIf="building.defense_ratio_percentage > 0" class="percentdef green">
-          {{ building.defense_ratio_percentage }}%
+        <div *ngIf="building.defense_ratio_percentage >= 0" class="percentdef green">
+          +{{ building.defense_ratio_percentage }}%
         </div>
         <div *ngIf="building.defense_ratio_percentage < 0" class="percentdef red">
           {{ building.defense_ratio_percentage }}%
