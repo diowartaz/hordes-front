@@ -84,3 +84,18 @@ footer {
   font-size: 0.9rem;
   margin-top: 2rem;
 }
+
+.element-wrapper {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  .icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+  .text {
+    height: fit-content;
+    line-height: 14px;
+  }
+}

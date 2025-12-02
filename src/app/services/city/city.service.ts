@@ -186,6 +186,7 @@ export class CityService {
           this.state.set(response.player.state);
           localStorage.setItem('nb-dig', '1');
           localStorage.setItem('play-route', 'dig');
+          this.router.navigate([RoutesEnum.PLAY]);
         }),
         catchError(handleError('newCity', url)),
         finalize(() => {

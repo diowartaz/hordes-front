@@ -208,3 +208,19 @@ input[type='checkbox']:checked::after {
   left: 50%;
   transform: translate(-50%, -50%); /* centers the check mark */
 }
+
+
+.percentdef {
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 0px 3px;
+  margin-bottom: 1px;
+  width: 35px;
+  text-align: center;
+}
+.percentdef-green {
+  background: green;
+}
+.percentdef-red {
+  background: #db5656;
+}
