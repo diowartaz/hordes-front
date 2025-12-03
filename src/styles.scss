@@ -39,7 +39,7 @@ button {
 
 html,
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   //color: white;
 }
 
@@ -233,12 +233,14 @@ input[type='checkbox']:checked::after {
   gap: 8px;
 }
 
+// Pour que les double click ne zoom pas
 button,
 a,
 input {
-  touch-action: manipulation; //double click ne zoom pas
+  touch-action: manipulation; 
 }
 
+// Pour ne pas avoir des boutons bleu sur IOS
 button {
   -webkit-appearance: none;
   appearance: none;
