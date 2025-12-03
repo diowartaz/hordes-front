@@ -237,12 +237,12 @@ input[type='checkbox']:checked::after {
 button,
 a,
 input {
-  touch-action: manipulation; 
+  touch-action: manipulation;
 }
 
 // Pour ne pas avoir des boutons bleu sur IOS
 button {
   -webkit-appearance: none;
   appearance: none;
-  color: inherit;
+  //color: inherit;
 }
