@@ -77,16 +77,7 @@
   }
 }
 
-.buy-button {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  padding: 2px 6px;
-  background-color: var(--primary-yellow);
-  border-radius: 4px;
-  border: var(--border-white-transparent);
-  font-weight: 500;
-  gap: 4px;
-  box-shadow: 0px 0px 7px 2px #000000a1;
+.yellow-button {
+  padding: 2px 6px !important;
+  width: fit-content !important;
 }

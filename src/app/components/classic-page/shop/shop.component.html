@@ -27,7 +27,7 @@
               item.value.lvl < item.value.lvl_max &&
               cityService.stats().money >= item.value.price * Math.pow(2, item.value.lvl)
             "
-            class="buy-button"
+            class="yellow-button"
             (click)="buyItem(item.value.id)"
             [disabled]="
               item.value.lvl >= item.value.lvl_max ||
