@@ -10,7 +10,7 @@
         <div class="progress" [style.width.%]="data().xpRatio"></div>
       </div>
     </div>
-    <div *ngIf="authService.isConnected()" class="icon-btn money">
+    <div *ngIf="authService.isConnected()" class="icon-btn money" (click)="router.navigate([RoutesEnum.SHOP])">
       <div class="plus">+</div>
       <span>{{ data().money }}</span>
       💰
@@ -42,9 +42,9 @@
     <button class="icon-btn" (click)="router.navigate([RoutesEnum.WIKI])">
       <span class="emoticon">📖</span>
     </button>
-    <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
+    <!-- <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
       <span class="emoticon">💰</span>
-    </button>
+    </button> -->
     <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
       <span class="emoticon">⚙️</span>
     </button>

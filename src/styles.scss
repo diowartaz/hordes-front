@@ -233,7 +233,14 @@ input[type='checkbox']:checked::after {
   gap: 8px;
 }
 
-// button,
-// a.button {
-//   -webkit-text-fill-color: black;
-// }
+button,
+a,
+input {
+  touch-action: manipulation; //double click ne zoom pas
+}
+
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  color: inherit;
+}
