@@ -1,0 +1,23 @@
+<div class="inventory">
+  <div class="item-wrapper" *ngFor="let item of building.inventory | keyvalue">
+    <div class="item" *ngIf="item.value > 0">
+      <img
+        [ngStyle]="{
+          'margin-top': item.key === 'stone' ? '-2px' : '0px',
+        }"
+        class="icon"
+        src="{{ item.key | itemToIcon }}"
+      />
+
+      <div class="nb">
+        <span class="alert-nb-item" *ngIf="cityService.city().inventory[castKey(item.key)] < item.value">{{
+          cityService.city().inventory[castKey(item.key)]
+        }}</span>
+        <span class="ok-nb-item" *ngIf="cityService.city().inventory[castKey(item.key)] >= item.value">{{
+          cityService.city().inventory[castKey(item.key)]
+        }}</span>
+        <span>/{{ item.value }}</span>
+      </div>
+    </div>
+  </div>
+</div>

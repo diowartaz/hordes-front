@@ -4,12 +4,12 @@ import { formatTimeToString } from 'src/app/shared/utils/time';
 import { CommonModule } from '@angular/common';
 import { BuildingRarityToIconPipe } from '../../../../../shared/pipes/building-rarity-to-icon';
 import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
-import { ItemIconPipe } from '../../../../../shared/pipes/item-to-icon.pipe';
+import { BuildingRecapInventoryComponent } from './building-recap-inventory/building-recap-inventory.component';
 
 @Component({
   selector: 'app-building-recap',
   standalone: true,
-  imports: [CommonModule, BuildingRarityToIconPipe, ItemIconPipe],
+  imports: [CommonModule, BuildingRarityToIconPipe, BuildingRecapInventoryComponent],
   templateUrl: './building-recap.component.html',
   styleUrls: ['./building-recap.component.scss'],
 })
