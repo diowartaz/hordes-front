@@ -55,7 +55,7 @@ export class CityService {
     return this.city().skills;
   });
   advancedSkills = computed<AdvancedSkillModel[]>(() => {
-    return calculateAdvancedSkills(this.city(), this.defaultValues());
+    return calculateAdvancedSkills(this.city(), this.bonuses(), this.defaultValues());
   });
 
   defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
