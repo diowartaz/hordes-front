@@ -7,7 +7,7 @@ export function calculateAdvancedSkills(
   defaultValues: DefaultValuesModel,
 ): AdvancedSkillModel[] {
   const advancedSkills: AdvancedSkillModel[] = [];
-  const percentBonus = bonuses[0];
+  const percentBonus = bonuses[9];
   for (const skill of city.skills) {
     const timeRequired =
       (1 - percentBonus.value) * skill.time * city.speeds.learn * defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
@@ -19,7 +19,9 @@ export function calculateAdvancedSkills(
       percentageEfficacityStringBefore: getPercentageEfficacity(skill, 0, defaultValues),
       percentageEfficacityStringAfter: getPercentageEfficacity(skill, 1, defaultValues),
     };
-    advancedSkills.push(advancedSkill);
+    if (advancedSkill.lvl_max > 0) {
+      advancedSkills.push(advancedSkill);
+    }
   }
 
   return advancedSkills;
