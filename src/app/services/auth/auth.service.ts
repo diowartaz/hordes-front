@@ -20,6 +20,15 @@ export class AuthService {
   deleteAccountLoading = signal(false);
 
   token = signal<string | undefined>(undefined);
+  email = signal<string | undefined>(undefined);
+  tempAccount = computed(() => {
+    if (this.email()) {
+      if (this.email()!.split('@')[1] === 'temp.com') {
+        return true;
+      }
+    }
+    return false;
+  });
   verifiedToken = computed(() => {
     if (!this.token()) {
       return undefined;
@@ -45,6 +54,7 @@ export class AuthService {
     private cityService: CityService,
   ) {
     this.token.set(localStorage.getItem('token') ?? undefined);
+    this.email.set(localStorage.getItem('login') ?? undefined);
   }
 
   signIn(params: SignInParams): Observable<AuthResponse> {
@@ -70,6 +80,7 @@ export class AuthService {
 
   private handleSucessSignIn(token: string, email: string) {
     this.token.set(token);
+    this.email.set(email);
     localStorage.setItem('token', token);
     localStorage.setItem('login', email);
   }

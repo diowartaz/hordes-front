@@ -9,9 +9,9 @@
       </div>
       <div class="container">
         <div class="xp">
-          + {{ money() }}(+{{ bonusMoney() }})
-          <img style="width: 32px" src="assets/icons/xpLogo.png" />
-          + {{ money() }}(+{{ bonusMoney() }}) 💰 
+          + {{ money() }}<span *ngIf="cityService.city().ranked">(+{{ bonusMoney() }})</span>
+          <img style="width: 32px; margin-right: 32px" src="assets/icons/xpLogo.png" />
+          + {{ money() }}<span *ngIf="cityService.city().ranked">(+{{ bonusMoney() }})</span> 💰
         </div>
       </div>
       <app-game

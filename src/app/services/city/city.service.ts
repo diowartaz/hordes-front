@@ -40,6 +40,14 @@ export class CityService {
   bonuses = computed<Record<number, AdvancedBonus>>(() => {
     return computeBonuses(this.stats(), this.defaultValues(), this.referencesBonuses());
   });
+  nbBuyableBonuses = computed<number>(() => {
+    const bonusList = Object.values(this.bonuses());
+    const buyableList = bonusList.filter(bonus => {
+      return bonus.enoughMoney && bonus.enoughLvlMax;
+    });
+
+    return buyableList.length;
+  });
 
   city = signal<CityModel>(createDefaultCityModel());
 
@@ -186,6 +194,7 @@ export class CityService {
           this.state.set(response.player.state);
           localStorage.setItem('nb-dig', '1');
           localStorage.setItem('play-route', 'dig');
+          this.inventoryItemFound.set({ wood: 0, stone: 0, metal: 0, patch: 0, screw: 0 });
           this.router.navigate([RoutesEnum.PLAY]);
         }),
         catchError(handleError('newCity', url)),
@@ -295,6 +304,7 @@ export class CityService {
           this.city.set(response.city);
           this.state.set(UserState.PLAYING);
           this.router.navigate([RoutesEnum.PLAY, localStorage.getItem('play-route')]);
+          this.inventoryItemFound.set({ wood: 0, stone: 0, metal: 0, patch: 0, screw: 0 });
         }),
         catchError(handleError('startDay', url)),
         finalize(() => {

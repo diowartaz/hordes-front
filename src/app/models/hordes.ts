@@ -71,7 +71,7 @@ export function createDefaultCityModel(): CityModel {
       player_xp: 0,
       day: 0,
     },
-
+    ranked: false,
     defaultCity: true,
   };
 }
@@ -92,6 +92,7 @@ export interface CityModel {
   state: string;
   attackRecap: AttackRecapModel;
   defaultCity?: boolean;
+  ranked: boolean;
 }
 
 export interface AttackRecapModel {
@@ -345,6 +346,7 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
       },
       last_timestamp_request: 0,
       state: 'playing',
+      ranked: false,
     },
     items: ['wood', 'metal', 'stone', 'screw', 'patch'],
     day_start_time: 28800,

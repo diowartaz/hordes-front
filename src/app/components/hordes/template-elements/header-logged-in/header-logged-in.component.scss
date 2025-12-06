@@ -150,5 +150,29 @@
   .money {
     color: white;
     cursor: pointer;
+    position: relative;
+  }
+
+  .no-cloud-save {
+    font-size: 12px;
+    background: #d41616;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 2px 6px;
+  }
+  .nb-bonuses-buyable {
+    background-color: #24c347;
+    position: absolute;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 8px;
+    top: -8px;
+    right: -10px;
+    font-weight: bold;
   }
 }
