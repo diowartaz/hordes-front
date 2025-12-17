@@ -42,7 +42,7 @@ export class CityService {
   });
   nbBuyableBonuses = computed<number>(() => {
     const bonusList = Object.values(this.bonuses());
-    const buyableList = bonusList.filter(bonus => {
+    const buyableList = bonusList.filter((bonus) => {
       return bonus.enoughMoney && bonus.enoughLvlMax;
     });
 

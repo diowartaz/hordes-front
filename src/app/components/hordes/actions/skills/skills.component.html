@@ -11,10 +11,7 @@
   </div>
   <div class="play-content">
     <div class="play-content-bis">
-      <div
-        class="skill"
-        *ngFor="let skill of cityService.advancedSkills()"
-      >
+      <div class="skill" *ngFor="let skill of cityService.advancedSkills()">
         <div class="line">
           <div class="element-wrapper">
             <img class="icon" [src]="skill.id | skillToIcon" />

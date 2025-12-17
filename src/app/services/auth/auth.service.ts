@@ -67,12 +67,19 @@ export class AuthService {
   }
 
   signInTemp(): void {
+    if (this.signInTempLoading()) {
+      return;
+    }
+    this.signInTempLoading.set(true);
     const url = `${this.API_URL}signin-temp`;
     this.httpClient
       .post<AuthResponse>(url, {})
       .pipe(
         tap((result: AuthResponse) => {
           this.handleSucessSignIn(result.token, result.email);
+        }),
+        finalize(() => {
+          this.signInTempLoading.set(false);
         }),
       )
       .subscribe();

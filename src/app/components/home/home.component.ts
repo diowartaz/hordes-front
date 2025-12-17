@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -7,7 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatProgressSpinnerModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

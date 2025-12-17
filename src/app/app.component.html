@@ -1,4 +1,17 @@
 <div class="page">
+  <dialog
+    *ngIf="wakeUpService.serverIsWakingUp()"
+    #dialog
+    class="dialog-class"
+    style="top: 73px !important; flex-direction: column; gap: 8px"
+  >
+    🚀 Server is waking up, this may take up to a minute.
+    <div style="display: inline-flex; align-items: center; white-space: nowrap">
+      Thank you for your patience!
+      <mat-spinner diameter="19" style="margin-left: 6px"></mat-spinner>
+    </div>
+  </dialog>
+
   <div class="headers">
     <app-header-logged-in></app-header-logged-in>
     <app-city-header></app-city-header>

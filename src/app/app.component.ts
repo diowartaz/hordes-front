@@ -4,11 +4,14 @@ import { HeaderLoggedInComponent } from './components/hordes/template-elements/h
 import { CityHeaderComponent } from './components/hordes/template-elements/city-header/city-header.component';
 import { CityService } from './services/city/city.service';
 import { RedirectionService } from './services/redirection/redirection.service';
+import { CommonModule } from '@angular/common';
+import { WakeUpService } from './services/wake-up/wake-up.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CityHeaderComponent, HeaderLoggedInComponent, RouterOutlet],
+  imports: [CityHeaderComponent, HeaderLoggedInComponent, RouterOutlet, CommonModule, MatProgressSpinner],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -16,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private cityService: CityService,
     private redirectionService: RedirectionService,
+    public wakeUpService: WakeUpService,
   ) {}
 
   ngOnInit(): void {
