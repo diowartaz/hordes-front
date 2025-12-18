@@ -152,7 +152,11 @@
     cursor: pointer;
     position: relative;
   }
-
+  @media (max-width: 424px) {
+    .no-cloud-save {
+      font-size: 7px !important;
+    }
+  }
   .no-cloud-save {
     font-size: 12px;
     background: #d41616;
