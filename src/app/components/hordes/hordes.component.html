@@ -1,4 +1,12 @@
 <div class="content-wrapper">
+  <div
+    *ngIf="generalSpeedVariation() !== 0"
+    class="icon-btn aaaa"
+    [class.green-icon]="generalSpeedVariation() > 0"
+    [class.red-icon]="generalSpeedVariation() < 0"
+  >
+    {{ generalSpeedVariationString() }} 🚀
+  </div>
   <router-outlet></router-outlet>
 </div>
 <app-city-footer></app-city-footer>

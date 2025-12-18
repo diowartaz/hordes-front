@@ -172,7 +172,9 @@ export class CityService {
           this.city.set(response.player.city);
           this.defaultValues.set(response.default_values);
         }),
-        catchError(handleError('loadPlayer', url)),
+        catchError((err) => {
+          return handleError('loadPlayer', url)(err);
+        }),
         finalize(() => {
           this.playerLoading.set(false);
         }),

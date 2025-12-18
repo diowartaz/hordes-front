@@ -3,9 +3,27 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   .content-wrapper {
     padding: 0px 8px 8px 8px;
     flex: 1;
     overflow: auto;
+  }
+
+  .aaaa {
+    position: absolute !important;
+    right: 8px;
+    height: 34px;
+    width: 68px;
+    font-weight: 700 !important;
+    text-align: center;
+  }
+  .green-icon {
+    color: green;
+    border-color: green;
+  }
+  .red-icon {
+    color: red;
+    border-color: red;
   }
 }
