@@ -19,7 +19,7 @@ export function calculateAdvancedBuildings(
   const percentBonus = bonuses[5];
   for (const building of city.buildings) {
     const timeRequired =
-      building.time * city.speeds.build * (1 - percentBonus.value * percentBonus.lvl) -
+      building.time * city.speeds.build * city.speeds.general * (1 - percentBonus.value * percentBonus.lvl) -
       flatBonus.value * flatBonus.lvl * 60;
 
     const advancedBuilding: AdvancedBuildingModel = {
@@ -35,6 +35,15 @@ export function calculateAdvancedBuildings(
   }
 
   advancedBuildings.sort((a, b) => {
+    const resA = a.enoughRessources ? 1 : 0;
+    const resB = b.enoughRessources ? 1 : 0;
+
+    if (resA !== resB) {
+      return resB - resA;
+    }
+    if (a.expirationCityTime !== b.expirationCityTime) {
+      return a.expirationCityTime - b.expirationCityTime;
+    }
     const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
     if (rarityDiff !== 0) {
       return rarityDiff;

@@ -10,7 +10,11 @@ export function calculateAdvancedSkills(
   const percentBonus = bonuses[9];
   for (const skill of city.skills) {
     const timeRequired =
-      (1 - percentBonus.value) * skill.time * city.speeds.learn * defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
+      (1 - percentBonus.value) *
+      skill.time *
+      city.speeds.learn *
+      city.speeds.general *
+      defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
     const advancedSkill: AdvancedSkillModel = {
       ...skill,
       expirationCityTime: defaultValues.day_end_time - timeRequired,

@@ -1,5 +1,5 @@
 TODO
-learn qui marche pas
+mettre un indicateur sur la derniere action réaliser
 -20% sur tous les batiments
 
 attackrecap decouverte batiment responsive
@@ -7,7 +7,11 @@ joueur qui ne finisse pas les ranked au bout de 2h
 
 ------------ fonc ------------------
 afficher le % d'efficacite de chaque journee et gloable à la fin de la partie
-carte pour améliorer les batiment
+
+coffre à la clash royale pour améliorer les batiments + deck de batiments?
+bobs? on peut attibuer une tache à chaque bob (fouille a une chance de trouver des objets, defense augmente un peu la defense, learn, )
+chaque bob permet d'avoir une reduction du coup de l'action (pourcentage de croissant) mécanique de changer à chaque action les bob pour obtenir de l'aide
+affiher le temps d'economie par action
 
 ---
 

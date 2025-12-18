@@ -27,6 +27,7 @@ export class DiggingsComponent {
       this.nbDigs() *
       (this.cityService.defaultValues().digging_time *
         this.cityService.city().speeds.dig *
+        this.cityService.city().speeds.general *
         (1 - percentBonus.value * percentBonus.lvl) -
         flatBonus.value * flatBonus.lvl * 60)
     );

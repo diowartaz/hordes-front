@@ -56,10 +56,11 @@ export function createDefaultCityModel(): CityModel {
     nb_zb_history: [],
     inventory: { wood: 0, stone: 0, screw: 0, metal: 0, patch: 0 },
     speeds: {
-      build: 0,
-      dig: 0,
-      learn: 0,
-      insomniac: 0,
+      build: 1,
+      dig: 1,
+      learn: 1,
+      insomniac: 1,
+      general: 1,
     },
     last_timestamp_request: new Date().getTime(),
     state: 'noCity',
@@ -109,6 +110,7 @@ export interface SpeedsModel {
   dig: number;
   learn: number;
   insomniac: number;
+  general: number;
 }
 
 export function createDefaultBuildingModel(): BuildingModel {
@@ -313,41 +315,7 @@ export interface CityTimeModel {
 
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
   return {
-    newCity: {
-      day: 1,
-      defense: 20,
-      buildings: [],
-      skills: [],
-      nb_zb_history: [],
-      nb_zb_previous_attack: 9,
-      nb_zb_next_attack_min: 11,
-      nb_zb_next_attack_max: 13,
-      time: 28800,
-      inventory: {
-        wood: 0,
-        stone: 0,
-        screw: 0,
-        metal: 0,
-        patch: 0,
-      },
-      speeds: {
-        build: 1,
-        learn: 1,
-        dig: 1,
-        insomniac: 1,
-      },
-      attackRecap: {
-        architect_shelter_buildings: [],
-        library_discoveries: {},
-        nb_zb: 0,
-        defense: 0,
-        player_xp: 0,
-        day: 0,
-      },
-      last_timestamp_request: 0,
-      state: 'playing',
-      ranked: false,
-    },
+    newCity: createDefaultCityModel(),
     items: ['wood', 'metal', 'stone', 'screw', 'patch'],
     day_start_time: 28800,
     day_end_time: 86459,
