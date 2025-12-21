@@ -1,9 +1,14 @@
 TODO
-mettre un indicateur sur la derniere action réaliser
+dialog pour expliquer variation de general speed
++wiki
+améliorer le visuel de l'indicateur
+
+
+
 -20% sur tous les batiments
 
-attackrecap decouverte batiment responsive
 joueur qui ne finisse pas les ranked au bout de 2h
+et faire des fausses ranked
 
 ------------ fonc ------------------
 afficher le % d'efficacite de chaque journee et gloable à la fin de la partie

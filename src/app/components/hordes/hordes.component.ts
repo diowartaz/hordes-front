@@ -15,7 +15,7 @@ export class HordesComponent {
   cityService = inject(CityService);
 
   generalSpeedVariation = computed(() => {
-    return -(this.cityService.city().speeds.general * 100 - 100);
+    return Math.round(-(this.cityService.city().speeds.general * 100 - 100));
   });
 
   generalSpeedVariationString = computed(() => {
