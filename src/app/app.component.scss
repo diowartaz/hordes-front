@@ -1,12 +1,12 @@
 :host {
   ::ng-deep.mat-mdc-progress-spinner {
-    --mdc-circular-progress-active-indicator-color: white;
+    --mdc-circular-progress-active-indicator-color: var(--white);
   }
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, var(--coral-orange), var(--coral-pink), var(--blue-gradient), var(--blue-teal));
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   @keyframes gradient {
@@ -27,7 +27,7 @@
     background-image: url('/assets/icons/background4.jpg');
     display: flex;
     flex-direction: column;
-    outline: 1px solid #ffffff80;
+    outline: 1px solid rgba(255, 255, 255, 0.5);
     .headers {
       display: flex;
       flex-direction: column;

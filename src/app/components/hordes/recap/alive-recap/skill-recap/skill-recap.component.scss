@@ -1,7 +1,7 @@
 .building {
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--white);
   gap: 8px;
   // border: 1px solid white;
   // box-shadow: 0px 0px 3px 2px #000000a1;
@@ -46,11 +46,11 @@
           height: fit-content;
           line-height: 16px;
           .alert-nb-item {
-            color: #dc1a1a;
+            color: var(--alert-red);
             font-weight: 500;
           }
           .ok-nb-item {
-            color: #31c531;
+            color: var(--bright-green);
             font-weight: 500;
           }
         }

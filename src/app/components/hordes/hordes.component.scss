@@ -19,11 +19,11 @@
     text-align: center;
   }
   .green-icon {
-    color: green;
-    border-color: green;
+    color: var(--success-green);
+    border-color: var(--success-green);
   }
   .red-icon {
-    color: red;
-    border-color: red;
+    color: var(--basic-red);
+    border-color: var(--basic-red);
   }
 }

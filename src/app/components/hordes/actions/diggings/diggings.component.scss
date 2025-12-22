@@ -4,8 +4,8 @@
   flex-direction: column;
   .btn {
     border: none;
-    background-color: transparent;
-    color: white;
+    background-color: var(--transparent);
+    color: var(--white);
     padding: 0px;
   }
   .play-content {
@@ -19,12 +19,12 @@
       }
       .select-nb-digs {
         display: flex;
-        color: white;
+        color: var(--white);
         height: fit-content;
         width: 50%;
         .nb-digs {
-          border-top: 1px solid white;
-          border-bottom: 1px solid white;
+          border-top: var(--border-white);
+          border-bottom: var(--border-white);
           width: 100%;
         }
         .element {
@@ -34,8 +34,8 @@
         }
         .add-digs-btn {
           background: var(--primary-yellow);
-          color: white;
-          border: 1px solid white;
+          color: var(--white);
+          border: var(--border-white);
         }
         .add-digs-btn-right {
           border-top-left-radius: 4px;
@@ -48,14 +48,14 @@
       }
       .dig-btn {
         display: flex;
-        border: 1px solid white;
+        border: var(--border-white);
         padding: 16px;
         border-radius: 4px;
         background: var(--primary-yellow);
         margin-top: 16px;
         justify-content: center;
         min-width: 160px;
-        box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
+        box-shadow: var(--box-shadow-button);
         .dig-text {
           margin-left: 4px;
         }
@@ -71,7 +71,7 @@
         display: flex;
         margin-bottom: 8px;
         .nb {
-          color: white;
+          color: var(--white);
           margin-left: 4px;
           font-size: 14px;
           min-width: 32px;
@@ -80,7 +80,7 @@
           height: 16px;
         }
         .item-found {
-          color: #06c258;
+          color: var(--bright-green);
           font-size: 14px;
           font-weight: 700;
           width: 0px;

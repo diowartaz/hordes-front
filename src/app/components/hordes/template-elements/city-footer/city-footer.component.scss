@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    background: transparent;
+    background: var(--transparent);
     border: none;
     padding: 8px 0px;
     background-color: var(--background-black-opacity-zero-trois);
@@ -19,7 +19,7 @@
       height: 24px;
     }
     .span {
-      color: white;
+      color: var(--white);
       font-size: 16px;
       font-weight: 500;
       margin-top: 4px;

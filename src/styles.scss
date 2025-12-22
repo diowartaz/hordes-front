@@ -3,16 +3,83 @@
 @include mat.core();
 
 :root {
+  // === Couleurs de base ===
+  --white: white;
+  --black: black;
   --basic-red: red;
-  --border-white-transparent: 1px solid rgba(255, 255, 255, 0.8);
-  --background-black-opacity-zero-trois: rgba(0, 0, 0, 0.3);
-  --background-black-opacity-zero-six: rgba(0, 0, 0, 0.6);
-  --primary-yellow: #f5a201;
-  --primary-yellow-disabled: #f5a201a8; //#f5a201a8 #8a6620 #c3beb4b8
+  --transparent: transparent;
+
+  // === Rouges ===
   --danger-red: #dc1a1a;
+  --alert-red: #dc1a1a;
+  --error-red: #e85e5e;
+  --bright-red: #db5656;
+
+  // === Verts ===
+  --success-green: green;
+  --bright-green: #31c531;
+  --green-hover: #24c347;
+  --green-accent: #00ff99;
+  --green-light: #88ffaa;
+  --green-gradient-start: #1cb63f;
+  --green-gradient-end: #0a8625;
+  --neon-green: #28ff8c;
+  --dark-green: #0ca34c;
+
+  // === Blues ===
   --primary-blue: rgb(20, 96, 154);
   --primary-dark-blue: rgb(18, 83, 139);
+  --primary-blue-light: #3388ff;
+  --primary-blue-lighter: #3388ff2e;
+  --primary-blue-hover: #3d93df;
+
+  // === Jaunes / Or ===
+  --primary-yellow: #f5a201;
+  --primary-yellow-disabled: #f5a201a8;
+  --gold-light: #ffd85d;
+  --gold-dark: #d39b00;
+  --gold-shadow: #7f5b00;
+
+  // === Violets ===
+  --purple-gradient-start: #b44cff;
+  --purple-gradient-end: #6a00b5;
+
+  // === Oranges / Corail ===
+  --coral-orange: #ee7752;
+
+  // === Gris ===
+  --gray-light: #ccc;
+  --gray-medium: #aaa;
+  --gray-dark: #767676;
+  --gray-darker: #777;
+  --gray-darkest: #333;
+  --gray-border: #d2d2d2;
+  --gray-text: #f3f3f3;
+
+  // === Backgrounds ===
+  --background-black-opacity-zero-trois: rgba(0, 0, 0, 0.3);
+  --background-black-opacity-zero-six: rgba(0, 0, 0, 0.6);
+  --background-black-38: rgba(0, 0, 0, 0.38);
+  --background-black-63: rgb(0 0 0 / 63%);
+  --background-dark: #2e2e2e;
+  --background-white-20: rgba(255, 255, 255, 0.2);
+  --background-gray-dark: rgba(40, 40, 40, 0.9);
   --container-color: #0000005e;
+
+  // === Borders ===
+  --border-white-transparent: 1px solid rgba(255, 255, 255, 0.8);
+  --border-dark: 1px solid #333;
+  --border-white: 1px solid white;
+
+  // === Shadows ===
+  --shadow-light: rgba(0, 0, 0, 0.4);
+  --shadow-medium: #000000a1;
+  --box-shadow-default: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+  --box-shadow-button: 0px 0px 7px 2px rgb(0 0 0 / 63%);
+  --box-shadow-card: 0px 0px 3px 2px #000000a1;
+  --box-shadow-gold: inset 0 0 3px #7f5b00;
+  --box-shadow-plus: 0 2px 3px rgba(0, 0, 0, 0.4);
+  --box-shadow-currency: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -52,10 +119,10 @@ body {
   bottom: 79px;
   text-align: center;
   width: calc(100% - 16px);
-  border: 1px solid white;
+  border: var(--border-white);
   border-radius: 4px;
-  color: white;
-  background-color: #e85e5e;
+  color: var(--white);
+  background-color: var(--error-red);
   padding: 12px 8px;
   max-width: 568px;
   left: 50%;
@@ -79,45 +146,45 @@ body {
   transition: transform 0.2s;
   background-color: var(--background-black-opacity-zero-trois);
   .icon {
-    color: white;
+    color: var(--white);
     font-weight: 200;
   }
 }
 
 ::ng-deep.mat-mdc-progress-spinner {
-  --mdc-circular-progress-active-indicator-color: white;
+  --mdc-circular-progress-active-indicator-color: var(--white);
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--white);
   gap: 4px;
   padding: 8px 4px;
   width: 100%;
   align-items: center;
-  border: 1px solid white;
+  border: var(--border-white);
   border-radius: 4px;
-  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-  background: #0000005e;
+  box-shadow: var(--box-shadow-default);
+  background: var(--container-color);
 }
 
 @-webkit-keyframes borderBlink {
   from,
   to {
-    border-color: transparent;
+    border-color: var(--transparent);
   }
   50% {
-    border-color: white;
+    border-color: var(--white);
   }
 }
 @keyframes borderBlink {
   from,
   to {
-    border-color: transparent;
+    border-color: var(--transparent);
   }
   10% {
-    border-color: white;
+    border-color: var(--white);
   }
 }
 
@@ -126,7 +193,7 @@ body {
   justify-content: center;
   font-size: 24px;
   padding: 8px;
-  color: white;
+  color: var(--white);
   .icon {
     width: 24px;
     height: 24px;
@@ -147,7 +214,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--transparent);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -155,21 +222,21 @@ body {
 }
 
 ::-webkit-scrollbar-corner {
-  background-color: transparent;
+  background-color: var(--transparent);
 }
 
 .yellow-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid white;
-  color: black;
+  border: var(--border-white);
+  color: var(--black);
   padding: 16px;
   gap: 16px;
   border-radius: 4px;
   width: 100%;
-  box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
-  background: linear-gradient(45deg, var(--primary-yellow) 40%, #ee7752 50%, var(--primary-yellow) 60%);
+  box-shadow: var(--box-shadow-button);
+  background: linear-gradient(45deg, var(--primary-yellow) 40%, var(--coral-orange) 50%, var(--primary-yellow) 60%);
   background-size: 400% 400%;
   animation: gradient 10s ease infinite;
 
@@ -189,21 +256,21 @@ body {
 input[type='checkbox'] {
   width: 1rem;
   height: 1rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--background-white-20);
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: 1px solid white;
+  border: var(--border-white);
   border-radius: 2px;
 }
 
 input[type='checkbox']:checked {
-  background: rgba(40, 40, 40, 0.9);
+  background: var(--background-gray-dark);
 }
 
 input[type='checkbox']:checked::after {
   content: '✓';
-  color: white;
+  color: var(--white);
   font-size: 0.8rem;
   position: absolute;
   top: 61%;
@@ -220,14 +287,14 @@ input[type='checkbox']:checked::after {
   text-align: center;
 }
 .percentdef-green {
-  background: green;
+  background: var(--success-green);
 }
 .percentdef-red {
-  background: #db5656;
+  background: var(--bright-red);
 }
 
 .go-to-wiki {
-  color: white;
+  color: var(--white);
 
   display: flex;
   flex-direction: column;

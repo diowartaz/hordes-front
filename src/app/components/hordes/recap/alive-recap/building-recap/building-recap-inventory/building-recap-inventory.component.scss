@@ -15,11 +15,11 @@
           height: fit-content;
           line-height: 16px;
           .alert-nb-item {
-            color: #dc1a1a;
+            color: var(--alert-red);
             font-weight: 500;
           }
           .ok-nb-item {
-            color: #31c531;
+            color: var(--bright-green);
             font-weight: 500;
           }
         }

@@ -38,11 +38,11 @@
     flex-direction: column;
     gap: 16px;
     .header {
-      color: white;
+      color: var(--white);
       font-size: 32px;
     }
     .content {
-      color: white;
+      color: var(--white);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -54,8 +54,8 @@
         gap: 8px;
         /* margin-bottom: 16px; */
         margin-bottom: 12px;
-        border-top: 2px solid white;
-        border-bottom: 2px solid white;
+        border-top: 2px solid var(--white);
+        border-bottom: 2px solid var(--white);
         padding-top: 8px;
         padding-bottom: 16px;
         .building {
@@ -88,12 +88,12 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      border: 1px solid white;
+      border: var(--border-white);
       padding: 16px;
       gap: 16px;
       border-radius: 4px;
-      box-shadow: 0px 0px 7px 2px rgb(0 0 0 / 63%);
-      background: linear-gradient(45deg, var(--primary-yellow) 40%, #ee7752 50%, var(--primary-yellow) 60%);
+      box-shadow: var(--box-shadow-button);
+      background: linear-gradient(45deg, var(--primary-yellow) 40%, var(--coral-orange) 50%, var(--primary-yellow) 60%);
       background-size: 400% 400%;
       animation: gradient 10s ease infinite;
 

@@ -16,11 +16,11 @@
   .element {
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--white);
     border-radius: 4px;
     .danger {
       font-weight: 700 !important;
-      color: #e85e5e;
+      color: var(--error-red);
     }
     .text-span {
       margin-left: 4px;
@@ -35,7 +35,7 @@
     }
   }
   .borderBlink {
-    border: 1px solid white;
+    border: var(--border-white);
     img {
       height: 24px;
     }

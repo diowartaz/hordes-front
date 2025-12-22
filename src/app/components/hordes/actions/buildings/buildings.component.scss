@@ -17,14 +17,14 @@
       .building2 {
         display: flex;
         flex-direction: column;
-        color: white;
+        color: var(--white);
         gap: 4px;
-        border: 1px solid white;
-        box-shadow: 0px 0px 3px 2px #000000a1;
+        border: var(--border-white);
+        box-shadow: var(--box-shadow-card);
         border-radius: 4px;
         padding: 4px;
         width: calc(50% - 4px);
-        background: rgba(0, 0, 0, 0.38);
+        background: var(--background-black-38);
         height: fit-content;
         .line {
           display: flex;
@@ -45,7 +45,7 @@
             border: var(--border-white-transparent);
             font-weight: 500;
             gap: 4px;
-            box-shadow: 0px 0px 7px 2px #000000a1;
+            box-shadow: var(--box-shadow-button);
           }
         }
         .element-wrapper {
@@ -78,11 +78,11 @@
                 height: fit-content;
                 line-height: 16px;
                 .alert-nb-item {
-                  color: #dc1a1a;
+                  color: var(--alert-red);
                   font-weight: 500;
                 }
                 .ok-nb-item {
-                  color: #31c531;
+                  color: var(--bright-green);
                   font-weight: 500;
                 }
               }

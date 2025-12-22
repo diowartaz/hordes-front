@@ -9,7 +9,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0px 16px 16px 16px;
-    background-color: white;
+    background-color: var(--white);
     border-radius: 12px;
 
     .input-wrapper {
@@ -17,11 +17,11 @@
       align-items: center;
       width: 100%;
       margin-bottom: 16px;
-      border: 2px solid white;
+      border: 2px solid var(--white);
       border-radius: 12px;
-      background-color: #3388ff2e;
+      background-color: var(--primary-blue-lighter);
       input {
-        background-color: #3388ff2e;
+        background-color: var(--primary-blue-lighter);
       }
       .input-field {
         display: block;
@@ -48,9 +48,9 @@
       width: 100%;
       margin-bottom: 16px;
       padding: 16px;
-      background-color: #3388ff;
+      background-color: var(--primary-blue-light);
       border-radius: 12px;
-      color: white;
+      color: var(--white);
       font-weight: 500;
       cursor: pointer;
       transition: all 0.5s;
@@ -64,7 +64,7 @@
         margin-right: 8px;
       }
       ::ng-deep.mat-mdc-progress-spinner {
-        --mdc-circular-progress-active-indicator-color: white;
+        --mdc-circular-progress-active-indicator-color: var(--white);
       }
     }
 
@@ -72,13 +72,13 @@
       opacity: 0.8;
     }
     .text-button {
-      color: #767676;
+      color: var(--gray-dark);
       font-size: 13px;
       cursor: pointer;
       transition: all 0.5s;
     }
     .text-button:hover {
-      color: black;
+      color: var(--black);
     }
 
     .forgot-password {
@@ -89,7 +89,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    color: red;
+    color: var(--basic-red);
     font-weight: 500;
     font-size: 12px;
     padding: 9px;

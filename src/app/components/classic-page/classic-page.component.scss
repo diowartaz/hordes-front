@@ -13,13 +13,13 @@
     .back-btn {
       position: absolute;
       left: 8px;
-      background-color: transparent !important;
+      background-color: var(--transparent) !important;
     }
     .header {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--white);
       font-size: 32px;
       padding: 32px;
       margin-bottom: 16px;

@@ -3,10 +3,10 @@
   .leaderboard-wrapper {
     display: flex;
     gap: 8px;
-    border: 1px solid white;
-    box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+    border: var(--border-white);
+    box-shadow: var(--box-shadow-default);
     border-radius: 4px;
-    background: #0000005e;
+    background: var(--container-color);
     width: 100%;
     justify-content: center;
     padding: 12px;
@@ -20,7 +20,7 @@
       }
       .leaderboard-row-element {
         display: flex;
-        color: white;
+        color: var(--white);
         justify-content: center;
         gap: 4px;
         .username {
@@ -35,7 +35,7 @@
       }
       .leaderboard-row-element:first-child {
         margin-bottom: 12px;
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid var(--white);
       }
     }
   }
@@ -43,7 +43,7 @@
   .perf-element {
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--white);
     border-radius: 4px;
     .text-span {
       margin-top: 3px;
@@ -64,7 +64,7 @@
     margin-bottom: 8px;
     display: flex;
     width: 100%;
-    box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 63%);
+    box-shadow: var(--box-shadow-default);
     .has-background {
       background: var(--background-black-opacity-zero-trois) !important;
     }
@@ -74,9 +74,9 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      background: transparent;
+      background: var(--transparent);
       padding: 8px 0px;
-      border: 1px solid white;
+      border: var(--border-white);
       transition: background-color 0.5s ease;
       .icon {
         width: 24px;
@@ -85,7 +85,7 @@
           drop-shadow(0 -0.1px 0 black);
       }
       .span {
-        color: white;
+        color: var(--white);
         font-size: 16px;
         font-weight: 500;
         margin-top: 4px;

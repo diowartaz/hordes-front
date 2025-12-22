@@ -27,18 +27,18 @@
     h3 {
       font-size: 1.1rem;
       margin: 0;
-      color: #fff;
+      color: var(--white);
     }
 
     .icon {
-      color: white;
+      color: var(--white);
       font-size: 1.8rem;
       margin-top: 0.2rem;
     }
   }
 
   .shop-description {
-    color: #aaa;
+    color: var(--gray-medium);
     font-size: 0.85rem;
     margin-top: 0.3rem;
     height: 34px;
@@ -47,19 +47,19 @@
   .shop-levels {
     margin: 1rem 0;
     font-size: 0.9rem;
-    color: #ccc;
+    color: var(--gray-light);
 
     .progress-bar {
       height: 8px;
       width: 100%;
-      background: #d2d2d2;
+      background: var(--gray-border);
       border-radius: 5px;
       overflow: hidden;
       margin-top: 0.3rem;
 
       .progress {
         height: 100%;
-        background: linear-gradient(90deg, #b44cff, #6a00b5);
+        background: linear-gradient(90deg, var(--purple-gradient-start), var(--purple-gradient-end));
         transition: width 0.3s ease;
       }
     }
