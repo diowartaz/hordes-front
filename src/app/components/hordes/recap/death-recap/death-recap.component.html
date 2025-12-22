@@ -7,22 +7,38 @@
         <img class="icon" src="assets/icons/small_death.gif" />
         <div>You died!</div>
       </div>
-      <div class="container">
-        <div class="xp">
-          + {{ money() }}<span *ngIf="cityService.city().ranked">(+{{ bonusMoney() }})</span>
-          <img style="width: 32px; margin-right: 32px" src="assets/icons/xpLogo.png" />
-          + {{ money() }}<span *ngIf="cityService.city().ranked">(+{{ bonusMoney() }})</span> 💰
-        </div>
-      </div>
+
       <app-game
         style="width: 100%"
         [game]="cityService.stats().match_history[cityService.stats().match_history.length - 1]"
       ></app-game>
+
+      <div class="earning-wrapper">
+        <div class="container earning">
+          <div class="title">Rewards</div>
+          <div class="line">
+            <div>Base</div>
+            <div class="money">{{ cityService.city().attackRecap.base_money }} <div class="icon">💰</div></div>
+          </div>
+          <div class="line">
+            <div>Ranked</div>
+            <div class="money">{{ cityService.city().attackRecap.ranked_money }} <div class="icon">💰</div></div>
+          </div>
+          <div class="line">
+            <div>Bonus</div>
+            <div class="money">{{ cityService.city().attackRecap.bonus_money }} <div class="icon">💰</div></div>
+          </div>
+          <div class="line">
+            <div>Total</div>
+            <div class="money">{{ cityService.city().attackRecap.total_money }} <div class="icon">💰</div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="footer">
-    <button (click)="tryAgain()">
+    <button (click)="cityService.deleteCity()">
       <span class="material-symbols-outlined icon"> schedule </span><span>Try Again!</span>
     </button>
   </div>

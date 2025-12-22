@@ -1,19 +1,10 @@
 <div class="boundary">
   <div *ngIf="authService.isConnected()" class="left-part">
-    <!-- <div class="lvl-wrapper">
-      <img class="lvl-icon" src="assets/icons/lvl_icon.png" />
-      <div class="lvl">{{ data().lvl }}</div>
-    </div>
-    <div class="xp-bar-wrapper">
-      <div class="xp-bar-string">{{ data().xpString }}</div>
-      <div class="progress-bar">
-        <div class="progress" [style.width.%]="data().xpRatio"></div>
-      </div>
-    </div> -->
     <div *ngIf="authService.isConnected()" class="icon-btn money" (click)="router.navigate([RoutesEnum.SHOP])">
       <div class="plus">+</div>
       <span>{{ data().money }}</span>
-      💰
+      <div style="font-size: 14px; margin-top: -1px; margin-left: 2px">💰</div>
+
       <div class="nb-bonuses-buyable">
         {{ this.cityService.nbBuyableBonuses() > 9 ? '9+' : this.cityService.nbBuyableBonuses() }}
       </div>

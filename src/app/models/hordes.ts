@@ -69,7 +69,10 @@ export function createDefaultCityModel(): CityModel {
       library_discoveries: {},
       nb_zb: 0,
       defense: 0,
-      player_xp: 0,
+      base_money: 0,
+      bonus_money: 0,
+      ranked_money: 0,
+      total_money: 0,
       day: 0,
     },
     ranked: false,
@@ -101,7 +104,10 @@ export interface AttackRecapModel {
   library_discoveries: Record<number, number>;
   nb_zb: number;
   defense: number;
-  player_xp: number;
+  base_money: number;
+  bonus_money: number;
+  ranked_money: number;
+  total_money: number
   day: number;
 }
 
