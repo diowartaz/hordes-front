@@ -13,14 +13,15 @@
   .aaaa {
     position: absolute !important;
     right: 8px;
-    height: 34px;
-    width: 76px;
+    height: 32px;
+    width: 74px;
     font-weight: 700 !important;
     text-align: center;
+    border-width: 2px;
   }
   .green-icon {
-    color: var(--success-green);
-    border-color: var(--success-green);
+    color: var(--green-hover);
+    border-color: var(--green-hover);
   }
   .red-icon {
     color: var(--basic-red);

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-city-footer',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CityFooterComponent implements OnInit {
   content = 'dig';
+  cityService = inject(CityService);
 
   constructor(private router: Router) {}
 

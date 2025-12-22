@@ -77,6 +77,7 @@ export function createDefaultCityModel(): CityModel {
     },
     ranked: false,
     defaultCity: true,
+    last_action: null,
   };
 }
 
@@ -97,6 +98,7 @@ export interface CityModel {
   attackRecap: AttackRecapModel;
   defaultCity?: boolean;
   ranked: boolean;
+  last_action: string | null;
 }
 
 export interface AttackRecapModel {
@@ -107,7 +109,7 @@ export interface AttackRecapModel {
   base_money: number;
   bonus_money: number;
   ranked_money: number;
-  total_money: number
+  total_money: number;
   day: number;
 }
 
