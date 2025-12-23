@@ -1,11 +1,9 @@
 TODO
-dialog pour expliquer variation de general speed
-+wiki
-améliorer le visuel de l'indicateur
+faire un deck + collection
+faire en sorte d'avoir un skill de chaque au debut
+verifier de random de batiment
 
-
-
--20% sur tous les batiments
+faire un system pour creer des ranked à la volé en feature flipping
 
 joueur qui ne finisse pas les ranked au bout de 2h
 et faire des fausses ranked
