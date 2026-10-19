@@ -9,7 +9,14 @@
         {{ this.cityService.nbBuyableBonuses() > 9 ? '9+' : this.cityService.nbBuyableBonuses() }}
       </div>
     </div>
-    <div *ngIf="authService.tempAccount()" class="no-cloud-save">no cloud save</div>
+    <div
+      *ngIf="authService.tempAccount()"
+      class="no-cloud-save"
+      title="Create your account to save your progress"
+      (click)="router.navigate([RoutesEnum.SETTINGS])"
+    >
+      no cloud save
+    </div>
   </div>
   <div class="right-part">
     <!-- <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">

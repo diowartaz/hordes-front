@@ -53,6 +53,7 @@
     ></mat-spinner>
     <span>🎮 Play as Guest</span>
   </button>
+  <div *ngIf="authService.signInTempError() as error" class="error">{{ error }}</div>
   <div class="secondary-buttons">
     <button class="yellow-button" (click)="useYourAccount()">
       <span>🗝️ Use my own Account</span>

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { getAuthErrorMessage } from 'src/app/shared/utils/auth-errors';
 
 interface SignInForm {
   login: FormControl<string>;
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   formgroup!: FormGroup<SignInForm>;
   loading = signal(false);
-  invalidAuthentification = signal(false);
+  errorMessage = signal<string | undefined>(undefined);
 
   constructor(
     public authService: AuthService,
@@ -38,9 +39,8 @@ export class LoginComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    const savedLogin: string = localStorage.getItem('login') ?? '';
     this.formgroup = new FormGroup<SignInForm>({
-      login: new FormControl(savedLogin, {
+      login: new FormControl(this.authService.savedLogin, {
         nonNullable: true,
         validators: [Validators.required],
       }),
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
 
   private subscribeToFormChanges(): void {
     this.formgroup.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.invalidAuthentification.set(false);
+      this.errorMessage.set(undefined);
     });
   }
 
@@ -63,12 +63,13 @@ export class LoginComponent implements OnInit {
     }
     this.formgroup.markAllAsTouched();
     if (this.formgroup.invalid) {
-      this.invalidAuthentification.set(true);
+      this.errorMessage.set('Invalid credentials');
       return;
     }
     this.loading.set(true);
+    // Le mot de passe n'est jamais trimé : il est comparé tel quel par le back
     const params: SignInParams = {
-      login: this.formgroup.controls.login.value,
+      login: this.formgroup.controls.login.value.trim(),
       password: this.formgroup.controls.password.value,
     };
     this.authService
@@ -79,8 +80,10 @@ export class LoginComponent implements OnInit {
           this.loading.set(false);
         }),
       )
-      .subscribe(() => {
-        this.invalidAuthentification.set(false);
+      .subscribe({
+        error: (error) => {
+          this.errorMessage.set(getAuthErrorMessage(error));
+        },
       });
   }
 

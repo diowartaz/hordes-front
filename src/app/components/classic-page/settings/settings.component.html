@@ -1,11 +1,123 @@
 <app-classic-page [title]="'Settings'">
   <ng-container icon> ⚙️ </ng-container>
   <ng-container content>
-    <button style="width: 60%" class="yellow-button" (click)="authService.logOut()">
+    <!-- Compte invité : le convertir pour ne pas perdre la progression -->
+    <form *ngIf="authService.tempAccount()" class="card" [formGroup]="upgradeForm" (ngSubmit)="upgradeAccount()">
+      <h2>Save your progress</h2>
+      <p class="warning">
+        You are playing as a guest: your progress is only saved in this browser. Create your account to keep it.
+      </p>
+
+      <input
+        [class.invalid]="hasError(upgradeForm.controls.email) || emailAlreadyExists()"
+        type="email"
+        placeholder="Email"
+        autocomplete="email"
+        formControlName="email"
+      />
+      <input
+        [class.invalid]="hasError(upgradeForm.controls.username) || usernameAlreadyExists()"
+        type="text"
+        placeholder="Username"
+        autocomplete="username"
+        formControlName="username"
+      />
+      <input
+        [class.invalid]="hasError(upgradeForm.controls.password)"
+        type="password"
+        placeholder="Password"
+        autocomplete="new-password"
+        formControlName="password"
+      />
+      <input
+        [class.invalid]="hasError(upgradeForm.controls.confirmPassword)"
+        type="password"
+        placeholder="Confirm password"
+        autocomplete="new-password"
+        formControlName="confirmPassword"
+      />
+
+      <div class="errors">
+        <span *ngIf="hasError(upgradeForm.controls.email)">Email must be valid</span>
+        <span *ngIf="hasError(upgradeForm.controls.username)"
+          >Username: 3 to 15 characters, only letters, numbers, "_" and "-"</span
+        >
+        <span *ngIf="hasError(upgradeForm.controls.password)">Password: 8 to 72 characters</span>
+        <span *ngIf="hasError(upgradeForm.controls.confirmPassword)">Passwords must match</span>
+        <span *ngIf="emailAlreadyExists()">Email already used</span>
+        <span *ngIf="usernameAlreadyExists()">Username already used</span>
+        <span *ngIf="upgradeError()">{{ upgradeError() }}</span>
+      </div>
+
+      <button type="submit" class="yellow-button">
+        <mat-spinner *ngIf="upgradeLoading()" diameter="20"></mat-spinner>
+        <span class="material-icons icon-header">cloud_upload</span><span>Create my account</span>
+      </button>
+    </form>
+
+    <form *ngIf="!authService.tempAccount()" class="card" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+      <h2>Change password</h2>
+      <input
+        [class.invalid]="hasError(passwordForm.controls.currentPassword)"
+        type="password"
+        placeholder="Current password"
+        autocomplete="current-password"
+        formControlName="currentPassword"
+      />
+      <input
+        [class.invalid]="hasError(passwordForm.controls.newPassword)"
+        type="password"
+        placeholder="New password"
+        autocomplete="new-password"
+        formControlName="newPassword"
+      />
+      <input
+        [class.invalid]="hasError(passwordForm.controls.confirmPassword)"
+        type="password"
+        placeholder="Confirm new password"
+        autocomplete="new-password"
+        formControlName="confirmPassword"
+      />
+
+      <div class="errors">
+        <span *ngIf="hasError(passwordForm.controls.currentPassword)">Current password is required</span>
+        <span *ngIf="hasError(passwordForm.controls.newPassword)">New password: 8 to 72 characters</span>
+        <span *ngIf="hasError(passwordForm.controls.confirmPassword)">Passwords must match</span>
+        <span *ngIf="passwordError()">{{ passwordError() }}</span>
+      </div>
+      <div *ngIf="passwordChanged()" class="success">Password changed, your other devices have been logged out</div>
+
+      <button type="submit" class="yellow-button">
+        <mat-spinner *ngIf="passwordLoading()" diameter="20"></mat-spinner>
+        <span class="material-icons icon-header">key</span><span>Change password</span>
+      </button>
+    </form>
+
+    <button style="width: 60%" class="yellow-button" (click)="logOut()">
       <span class="material-icons icon-header">logout</span><span>Log Out</span>
     </button>
-    <button style="width: 60%" class="yellow-button" (click)="deleteAccount()">
-      <span class="material-icons icon-header">delete</span><span>Delete my account</span>
+    <button *ngIf="!authService.tempAccount()" style="width: 60%" class="yellow-button" (click)="logOutAll()">
+      <mat-spinner *ngIf="logOutAllLoading()" diameter="20"></mat-spinner>
+      <span class="material-icons icon-header">devices</span><span>Log out from all devices</span>
     </button>
+    <div *ngIf="logOutAllError()" class="errors">{{ logOutAllError() }}</div>
+
+    <div *ngIf="showDeleteConfirmation()" class="card">
+      <p class="warning">Enter your password to confirm the deletion of your account.</p>
+      <input
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        [formControl]="deletePassword"
+        (keyup.enter)="deleteAccount()"
+      />
+      <button class="text-button" (click)="cancelDeleteAccount()">Cancel</button>
+    </div>
+    <button style="width: 60%" class="yellow-button" (click)="deleteAccount()">
+      <mat-spinner *ngIf="authService.deleteAccountLoading()" diameter="20"></mat-spinner>
+      <span class="material-icons icon-header">delete</span
+      ><span>{{ showDeleteConfirmation() ? 'Confirm deletion' : 'Delete my account' }}</span>
+    </button>
+    <div *ngIf="deleteError()" class="errors">{{ deleteError() }}</div>
   </ng-container>
 </app-classic-page>

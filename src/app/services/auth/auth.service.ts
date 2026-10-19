@@ -1,11 +1,27 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { finalize, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthResponse, SignInParams, SignUpParams } from 'src/app/models/auth';
+import {
+  AuthResponse,
+  ChangePasswordParams,
+  JwtPayload,
+  SignInParams,
+  SignUpParams,
+  UpgradeAccountParams,
+} from 'src/app/models/auth';
 import { UserState } from 'src/app/models/router';
 import { CityService } from '../city/city.service';
+import { getAuthErrorMessage } from 'src/app/shared/utils/auth-errors';
+
+const TOKEN_KEY = 'token';
+const TEMP_ACCOUNT_KEY = 'temp-account';
+// Dernier identifiant utilisé, pour pré-remplir le formulaire de connexion
+const LOGIN_KEY = 'login';
+
+// Anciens comptes invités en @temp.com, nouveaux en @temp.invalid
+const isTempEmail = (email: string | null): boolean => !!email && /@temp\.(com|invalid)$/.test(email);
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +31,12 @@ export class AuthService {
   private readonly API_URL = environment.API_URL;
 
   signInTempLoading = signal(false);
-  signInLoading = signal(false);
-  signUpLoading = signal(false);
+  signInTempError = signal<string | undefined>(undefined);
   deleteAccountLoading = signal(false);
 
   token = signal<string | undefined>(undefined);
-  email = signal<string | undefined>(undefined);
-  tempAccount = computed(() => {
-    if (this.email()) {
-      if (this.email()!.split('@')[1] === 'temp.com') {
-        return true;
-      }
-    }
-    return false;
-  });
+  tempAccount = signal(false);
+
   verifiedToken = computed(() => {
     if (!this.token()) {
       return undefined;
@@ -42,28 +50,36 @@ export class AuthService {
 
   isConnected = computed(() => this.verifiedToken() !== undefined);
 
-  userId = computed(() => {
-    if (this.verifiedToken() === undefined) {
-      return undefined;
-    }
-    return this.jwtHelper.decodeToken(this.verifiedToken()!)['id'];
+  private payload = computed(() => {
+    const token = this.verifiedToken();
+    return token ? this.jwtHelper.decodeToken<JwtPayload>(token) : undefined;
   });
+  userId = computed(() => this.payload()?.id);
+  username = computed(() => this.payload()?.username);
 
   constructor(
     private httpClient: HttpClient,
     private cityService: CityService,
   ) {
-    this.token.set(localStorage.getItem('token') ?? undefined);
-    this.email.set(localStorage.getItem('login') ?? undefined);
+    this.token.set(localStorage.getItem(TOKEN_KEY) ?? undefined);
+
+    const savedLogin = localStorage.getItem(LOGIN_KEY);
+    const savedTempAccount = localStorage.getItem(TEMP_ACCOUNT_KEY);
+    // Sessions ouvertes avant l'ajout de isTemporary : on se base sur le domaine de l'email
+    this.tempAccount.set(savedTempAccount === null ? isTempEmail(savedLogin) : savedTempAccount === 'true');
+    if (isTempEmail(savedLogin)) {
+      localStorage.removeItem(LOGIN_KEY);
+    }
+  }
+
+  get savedLogin(): string {
+    return localStorage.getItem(LOGIN_KEY) ?? '';
   }
 
   signIn(params: SignInParams): Observable<AuthResponse> {
-    const url = `${this.API_URL}signin`;
-    return this.httpClient.post<AuthResponse>(url, params).pipe(
-      tap((result: AuthResponse) => {
-        this.handleSucessSignIn(result.token, result.email);
-      }),
-    );
+    return this.httpClient
+      .post<AuthResponse>(`${this.API_URL}signin`, params)
+      .pipe(tap((result) => this.handleAuthSuccess(result, params.login)));
   }
 
   signInTemp(): void {
@@ -71,82 +87,82 @@ export class AuthService {
       return;
     }
     this.signInTempLoading.set(true);
-    const url = `${this.API_URL}signin-temp`;
+    this.signInTempError.set(undefined);
     this.httpClient
-      .post<AuthResponse>(url, {})
+      .post<AuthResponse>(`${this.API_URL}signin-temp`, {})
       .pipe(
-        tap((result: AuthResponse) => {
-          this.handleSucessSignIn(result.token, result.email);
-        }),
         finalize(() => {
           this.signInTempLoading.set(false);
         }),
       )
-      .subscribe();
+      .subscribe({
+        next: (result) => this.handleAuthSuccess(result),
+        error: (error) => this.signInTempError.set(getAuthErrorMessage(error)),
+      });
   }
 
-  private handleSucessSignIn(token: string, email: string) {
-    this.token.set(token);
-    this.email.set(email);
-    localStorage.setItem('token', token);
-    localStorage.setItem('login', email);
-  }
-
-  signUp(params: SignUpParams): Observable<
-    | AuthResponse
-    | {
-        error: {
-          emailAlreadyExists: boolean;
-          usernameAlreadyExists: boolean;
-        };
-      }
-  > {
-    const url = `${this.API_URL}signup`;
+  /**
+   * Le back renvoie un token à l'inscription : l'utilisateur est connecté directement
+   */
+  signUp(params: SignUpParams): Observable<AuthResponse> {
     return this.httpClient
-      .post<
-        | AuthResponse
-        | {
-            error: {
-              emailAlreadyExists: boolean;
-              usernameAlreadyExists: boolean;
-            };
-          }
-      >(url, params)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 409) {
-            return new Observable<any>((subscriber) => {
-              subscriber.next({ error: error.error.error });
-              subscriber.complete();
-            });
-          }
-          return throwError(() => error);
-        }),
-      );
+      .post<AuthResponse>(`${this.API_URL}signup`, params)
+      .pipe(tap((result) => this.handleAuthSuccess(result, params.email)));
   }
 
-  deleteAccount() {
-    if (this.deleteAccountLoading()) {
-      return;
-    }
+  /**
+   * Convertit le compte invité en compte classique (le back révoque l'ancien token et en renvoie un nouveau)
+   */
+  upgradeAccount(params: UpgradeAccountParams): Observable<AuthResponse> {
+    return this.httpClient
+      .post<AuthResponse>(`${this.API_URL}upgrade`, params)
+      .pipe(tap((result) => this.handleAuthSuccess(result, params.email)));
+  }
+
+  /**
+   * Les autres sessions sont révoquées : le back renvoie un nouveau token pour la session courante
+   */
+  changePassword(params: ChangePasswordParams): Observable<AuthResponse> {
+    return this.httpClient
+      .post<AuthResponse>(`${this.API_URL}password`, params)
+      .pipe(tap((result) => this.handleAuthSuccess(result)));
+  }
+
+  logOutAll(): Observable<unknown> {
+    return this.httpClient.post(`${this.API_URL}logout-all`, {}).pipe(tap(() => this.logOut()));
+  }
+
+  /**
+   * @param password requis sauf pour un compte invité
+   */
+  deleteAccount(password?: string): Observable<unknown> {
     this.deleteAccountLoading.set(true);
-    const url: string = this.API_URL + 'delete';
-    this.httpClient
-      .post<any>(url, {})
-      .pipe(
-        tap(() => {
-          this.logOut();
-        }),
-        finalize(() => {
-          this.deleteAccountLoading.set(false);
-        }),
-      )
-      .subscribe();
+    return this.httpClient.delete(`${this.API_URL}account`, { body: password ? { password } : {} }).pipe(
+      tap(() => {
+        localStorage.removeItem(LOGIN_KEY);
+        this.logOut();
+      }),
+      finalize(() => {
+        this.deleteAccountLoading.set(false);
+      }),
+    );
   }
 
-  logOut() {
+  private handleAuthSuccess(result: AuthResponse, login?: string): void {
+    this.token.set(result.token);
+    this.tempAccount.set(result.isTemporary);
+    localStorage.setItem(TOKEN_KEY, result.token);
+    localStorage.setItem(TEMP_ACCOUNT_KEY, String(result.isTemporary));
+    if (!result.isTemporary) {
+      localStorage.setItem(LOGIN_KEY, login ?? result.email);
+    }
+  }
+
+  logOut(): void {
     this.token.set(undefined);
-    localStorage.removeItem('token');
+    this.tempAccount.set(false);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TEMP_ACCOUNT_KEY);
     this.cityService.state.set(UserState.NOT_LOADED_PLAYER);
   }
 }

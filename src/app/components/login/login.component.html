@@ -6,7 +6,7 @@
       class="input-field"
       required
       placeholder="Email or username"
-      autocomplete="off"
+      autocomplete="username"
       formControlName="login"
       (keyup.enter)="login()"
     />
@@ -23,14 +23,14 @@
       class="input-field"
       required
       placeholder="Password"
-      autocomplete="off"
+      autocomplete="current-password"
       formControlName="password"
       (keyup.enter)="login()"
     />
   </div>
 
-  <div *ngIf="invalidAuthentification()" class="invalid-authen">Invalid authentification</div>
-  <div *ngIf="!invalidAuthentification()" class="valid-authen"></div>
+  <div *ngIf="errorMessage() || authService.signInTempError() as error" class="invalid-authen">{{ error }}</div>
+  <div *ngIf="!errorMessage() && !authService.signInTempError()" class="valid-authen"></div>
 
   <div class="button-wrapper" (click)="login()">
     <i *ngIf="!loading()" class="material-icons login-icon">login</i>

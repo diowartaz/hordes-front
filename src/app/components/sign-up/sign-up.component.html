@@ -13,7 +13,7 @@
         class="input-field"
         required
         placeholder="Email"
-        autocomplete="off"
+        autocomplete="email"
         formControlName="email"
       />
     </div>
@@ -29,7 +29,7 @@
         class="input-field"
         required
         placeholder="Username"
-        autocomplete="off"
+        autocomplete="username"
         formControlName="username"
       />
     </div>
@@ -42,7 +42,7 @@
         class="input-field"
         required
         placeholder="Password"
-        autocomplete="off"
+        autocomplete="new-password"
         formControlName="password"
       />
     </div>
@@ -59,7 +59,7 @@
         class="input-field"
         required
         placeholder="Confirm Password"
-        autocomplete="off"
+        autocomplete="new-password"
         formControlName="confirmPassword"
       />
     </div>
@@ -67,23 +67,29 @@
     <div class="errors-wrapper">
       <div *ngIf="fieldHasError('email')">
         <span *ngIf="formgroup.controls.email.errors?.['required']">Email is required</span>
-        <span *ngIf="formgroup.controls.email.errors?.['pattern']">Email must be valid</span>
+        <span *ngIf="formgroup.controls.email.errors?.['email'] || formgroup.controls.email.errors?.['maxlength']"
+          >Email must be valid</span
+        >
       </div>
 
       <div *ngIf="fieldHasError('username')">
         <span *ngIf="formgroup.controls.username.errors?.['required']">Username is required</span>
-        <span *ngIf="formgroup.controls.username.errors?.['notValid']">Username: 3 characters minimum</span>
-        <span *ngIf="formgroup.controls.username.errors?.['max15']">Username: 15 characters maximum</span>
+        <span *ngIf="formgroup.controls.username.errors?.['minlength']">Username: 3 characters minimum</span>
+        <span *ngIf="formgroup.controls.username.errors?.['maxlength']">Username: 15 characters maximum</span>
+        <span *ngIf="formgroup.controls.username.errors?.['pattern']"
+          >Username: only letters, numbers, "_" and "-"</span
+        >
       </div>
 
       <div *ngIf="fieldHasError('password')">
         <span *ngIf="formgroup.controls.password.errors?.['required']">Password is required</span>
-        <span *ngIf="formgroup.controls.password.errors?.['min8']">Password: 8 characters minimum</span>
+        <span *ngIf="formgroup.controls.password.errors?.['minlength']">Password: 8 characters minimum</span>
+        <span *ngIf="formgroup.controls.password.errors?.['maxlength']">Password: 72 characters maximum</span>
       </div>
 
       <div *ngIf="fieldHasError('confirmPassword')">
         <span *ngIf="formgroup.controls.confirmPassword.errors?.['required']">Confirm password is required</span>
-        <span *ngIf="formgroup.controls.confirmPassword.errors?.['noMatchPassword']"
+        <span *ngIf="formgroup.controls.confirmPassword.errors?.['noMatch']"
           >Password and Confirm password must match</span
         >
       </div>
@@ -94,6 +100,10 @@
 
       <div *ngIf="usernameAlreadyExists()">
         <span>Username already used</span>
+      </div>
+
+      <div *ngIf="errorMessage() || authService.signInTempError() as error">
+        <span>{{ error }}</span>
       </div>
     </div>
 
