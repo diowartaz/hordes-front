@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal, inject } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
@@ -11,6 +11,9 @@ import { CityService } from '../city/city.service';
   providedIn: 'root',
 })
 export class AuthService {
+  private httpClient = inject(HttpClient);
+  private cityService = inject(CityService);
+
   private jwtHelper = new JwtHelperService();
   private readonly API_URL = environment.API_URL;
 
@@ -49,10 +52,7 @@ export class AuthService {
     return this.jwtHelper.decodeToken(this.verifiedToken()!)['id'];
   });
 
-  constructor(
-    private httpClient: HttpClient,
-    private cityService: CityService,
-  ) {
+  constructor() {
     this.token.set(localStorage.getItem('token') ?? undefined);
     this.email.set(localStorage.getItem('login') ?? undefined);
   }

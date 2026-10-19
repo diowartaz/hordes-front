@@ -4,43 +4,53 @@
     <div class="content">
       <app-recap-header style="width: 100%"></app-recap-header>
 
-      <div class="container" *ngIf="nbMaxChoices() > 0">
-        <div class="container-header">
-          {{
-            `Pick ${nbMaxChoices()} building${nbMaxChoices() > 1 ? 's' : ''} from the ${nbChoicesAvailable()} available`
-          }}
-        </div>
-
-        <div class="container-content">
-          <div
-            class="line"
-            *ngFor="let building of cityService.city().attackRecap.architect_shelter_buildings; let i = index"
-          >
-            <div class="aaa">
-              <input
-                class="ckeckbox"
-                type="checkbox"
-                [(ngModel)]="building.selected"
-                (change)="onCheckboxChange($event, i)"
-              />
-            </div>
-
-            <app-building-recap class="building" [building]="building"></app-building-recap>
+      @if (nbMaxChoices() > 0) {
+        <div class="container">
+          <div class="container-header">
+            {{
+              `Pick ${nbMaxChoices()} building${nbMaxChoices() > 1 ? 's' : ''} from the ${nbChoicesAvailable()} available`
+            }}
+          </div>
+          <div class="container-content">
+            @for (
+              building of cityService.city().attackRecap.architect_shelter_buildings;
+              track building;
+              let i = $index
+            ) {
+              <div class="line">
+                <div class="aaa">
+                  <input
+                    class="ckeckbox"
+                    type="checkbox"
+                    [(ngModel)]="building.selected"
+                    (change)="onCheckboxChange($event, i)"
+                  />
+                </div>
+                <app-building-recap class="building" [building]="building"></app-building-recap>
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
 
-      <div class="container" *ngIf="library_discoveriesFormatted.length > 0">
-        <div class="container-header">
-          {{ Object.keys(library_discoveriesFormatted()).length }}
-          <span *ngIf="library_discoveriesFormatted.length > 1"> skill discoveries </span>
-          <span *ngIf="library_discoveriesFormatted.length === 1"> skill discovery </span>
+      @if (library_discoveriesFormatted.length > 0) {
+        <div class="container">
+          <div class="container-header">
+            {{ Object.keys(library_discoveriesFormatted()).length }}
+            @if (library_discoveriesFormatted.length > 1) {
+              <span> skill discoveries </span>
+            }
+            @if (library_discoveriesFormatted.length === 1) {
+              <span> skill discovery </span>
+            }
+          </div>
+          <div class="container-content">
+            @for (skill of library_discoveriesFormatted(); track skill) {
+              <app-skill-recap [skill]="skill"></app-skill-recap>
+            }
+          </div>
         </div>
-
-        <div class="container-content">
-          <app-skill-recap *ngFor="let skill of library_discoveriesFormatted()" [skill]="skill"></app-skill-recap>
-        </div>
-      </div>
+      }
 
       <div class="container">
         <div>You survived!</div>

@@ -1,16 +1,18 @@
-import { CommonModule, Location } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 
 @Component({
   selector: 'app-classic-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './classic-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./classic-page.component.scss'],
 })
 export class ClassicPageComponent {
+  private location = inject(Location);
+
   @Input() title = '';
-  constructor(private location: Location) {}
 
   goBack() {
     this.location.back();

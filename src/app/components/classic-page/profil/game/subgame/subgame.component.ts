@@ -1,24 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameHistoryPlayerModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-subgame',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './subgame.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./subgame.component.scss'],
 })
 export class SubgameComponent implements OnInit {
+  private router = inject(Router);
+
   @Input() gameHistoryPlayer: GameHistoryPlayerModel | null = null;
   @Input() win: boolean | null = false;
   @Input() ranked_points: number | null = null;
   @Input() otherPlayer = false;
 
   modifiedGameHistoryPlayer: any;
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.modifiedGameHistoryPlayer = {

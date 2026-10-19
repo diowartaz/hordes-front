@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Hordes** is a single-player survival strategy game built with **Angular 19** (standalone components). Players manage a city defending against nightly zombie attacks by building structures, learning skills, and collecting resources during limited daytime periods. The frontend communicates with a Node.js/Express/MongoDB backend.
+**Hordes** is a single-player survival strategy game built with **Angular 22** (standalone components). Players manage a city defending against nightly zombie attacks by building structures, learning skills, and collecting resources during limited daytime periods. The frontend communicates with a Node.js/Express/MongoDB backend.
 
 ## Architecture & State Management
 

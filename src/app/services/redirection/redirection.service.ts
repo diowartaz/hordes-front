@@ -1,4 +1,4 @@
-import { effect, Injectable } from '@angular/core';
+import { effect, Injectable, inject } from '@angular/core';
 import { RoutesEnum, statesToRoutes, UserState } from 'src/app/models/router';
 import { CityService } from '../city/city.service';
 import { Router } from '@angular/router';
@@ -25,11 +25,11 @@ const STATE_LESS_ROUTES = [
   providedIn: 'root',
 })
 export class RedirectionService {
-  constructor(
-    private cityService: CityService,
-    private authService: AuthService,
-    private router: Router,
-  ) {
+  private cityService = inject(CityService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  constructor() {
     effect(() => {
       if (this.authService.isConnected() && this.cityService.state() === UserState.NOT_LOADED_PLAYER) {
         this.cityService.loadPlayer();

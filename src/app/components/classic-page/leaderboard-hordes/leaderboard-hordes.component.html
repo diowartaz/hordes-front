@@ -16,52 +16,51 @@
     <div class="leaderboard-wrapper">
       <div class="leaderboard-col">
         <div class="leaderboard-row-element">Rank</div>
-        <div
-          class="leaderboard-row-element"
-          *ngFor="let user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay()"
-        >
-          <div>{{ user.rank }}</div>
-        </div>
+        @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+          <div class="leaderboard-row-element">
+            <div>{{ user.rank }}</div>
+          </div>
+        }
       </div>
       <div class="leaderboard-col">
         <div class="leaderboard-row-element">Username</div>
-        <div
-          class="leaderboard-row-element username-element"
-          *ngFor="let user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay()"
-        >
-          <div class="username" (click)="goToProfil(user.user_id)">
-            <span class="material-symbols-outlined icon-search"> search </span> {{ user.username_truncated }}
+        @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+          <div class="leaderboard-row-element username-element">
+            <div class="username" (click)="goToProfil(user.user_id)">
+              <span class="material-symbols-outlined icon-search"> search </span> {{ user.username_truncated }}
+            </div>
           </div>
-        </div>
+        }
       </div>
-      <div *ngIf="!ranked" class="leaderboard-col">
-        <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-        <div
-          class="leaderboard-row-element"
-          *ngFor="let user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay()"
-          style="justify-content: space-between; padding: 0px 4px"
-        >
-          <div class="perf-element">
-            <img class="icon" src="assets/icons/calendar.ico" />
-            <span class="text-span">{{ user.personal_best_day }}</span>
-          </div>
-          <div class="perf-element">
-            <img class="icon" src="assets/icons/zb.gif" />
-            <span class="text-span" style="margin-left: -1px">{{ user.personal_best_zb }}</span>
-          </div>
+      @if (!ranked) {
+        <div class="leaderboard-col">
+          <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
+          @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+            <div class="leaderboard-row-element" style="justify-content: space-between; padding: 0px 4px">
+              <div class="perf-element">
+                <img class="icon" src="assets/icons/calendar.ico" />
+                <span class="text-span">{{ user.personal_best_day }}</span>
+              </div>
+              <div class="perf-element">
+                <img class="icon" src="assets/icons/zb.gif" />
+                <span class="text-span" style="margin-left: -1px">{{ user.personal_best_zb }}</span>
+              </div>
+            </div>
+          }
         </div>
-      </div>
+      }
 
-      <div *ngIf="ranked" class="leaderboard-col">
-        <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-        <div
-          class="leaderboard-row-element"
-          *ngFor="let user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay()"
-        >
-          <div>{{ user.ranked_points }}</div>
-          <img style="width: 20px; height: 20px" src="assets/icons/ranked_points.png" />
+      @if (ranked) {
+        <div class="leaderboard-col">
+          <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
+          @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+            <div class="leaderboard-row-element">
+              <div>{{ user.ranked_points }}</div>
+              <img style="width: 20px; height: 20px" src="assets/icons/ranked_points.png" />
+            </div>
+          }
         </div>
-      </div>
+      }
     </div>
   </ng-container>
 </app-classic-page>

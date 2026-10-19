@@ -1,8 +1,9 @@
-<dialog *ngIf="snackBarOpened" #dialog class="dialog-class">
-  <div>{{ dialogMessage }}</div>
-
-  <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
-</dialog>
+@if (snackBarOpened) {
+  <dialog #dialog class="dialog-class">
+    <div>{{ dialogMessage }}</div>
+    <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
+  </dialog>
+}
 
 <div class="play-header">
   <img class="icon" src="assets/icons/pelle.gif" />
@@ -42,18 +43,20 @@
     </button>
   </div>
   <div class="inventory">
-    <div class="item" *ngFor="let item of cityService.city().inventory | keyvalue">
-      <img
-        [ngStyle]="{
-          'margin-top': item.key === 'stone' ? '-2px' : '0px',
-        }"
-        class="icon"
-        src="{{ item.key | itemToIcon }}"
-      />
-      <div class="nb">{{ item.value }}</div>
-      <div class="item-found" *ngIf="cityService.inventoryItemFound()[castKey(item.key)] > 0">
-        +{{ cityService.inventoryItemFound()[castKey(item.key)] }}
+    @for (item of cityService.city().inventory | keyvalue; track item) {
+      <div class="item">
+        <img
+          [ngStyle]="{
+            'margin-top': item.key === 'stone' ? '-2px' : '0px',
+          }"
+          class="icon"
+          src="{{ item.key | itemToIcon }}"
+        />
+        <div class="nb">{{ item.value }}</div>
+        @if (cityService.inventoryItemFound()[castKey(item.key)] > 0) {
+          <div class="item-found">+{{ cityService.inventoryItemFound()[castKey(item.key)] }}</div>
+        }
       </div>
-    </div>
+    }
   </div>
 </div>

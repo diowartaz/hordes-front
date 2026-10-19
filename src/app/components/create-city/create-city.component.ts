@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { RoutesEnum } from 'src/app/models/router';
@@ -8,14 +7,16 @@ import { CityService } from 'src/app/services/city/city.service';
 @Component({
   selector: 'app-create-city',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule],
   templateUrl: './create-city.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-city.component.scss'],
 })
 export class CreateCityComponent {
+  private cityService = inject(CityService);
+
   public readonly router = inject(Router);
   public readonly RoutesEnum = RoutesEnum;
-  constructor(private cityService: CityService) {}
 
   createCity(ranked: boolean) {
     this.cityService.newCity(ranked);

@@ -8,9 +8,15 @@
       <img class="icon" src="assets/icons/defense.gif" />
       <span class="text-span" style="margin-left: 6px">{{ cityService.city().defense }}</span>
     </div>
-    <div *ngIf="cityService.city().attackRecap.nb_zb === cityService.city().defense">=</div>
-    <div *ngIf="cityService.city().attackRecap.nb_zb > cityService.city().defense"><</div>
-    <div *ngIf="cityService.city().attackRecap.nb_zb < cityService.city().defense">></div>
+    @if (cityService.city().attackRecap.nb_zb === cityService.city().defense) {
+      <div>=</div>
+    }
+    @if (cityService.city().attackRecap.nb_zb > cityService.city().defense) {
+      <div><</div>
+    }
+    @if (cityService.city().attackRecap.nb_zb < cityService.city().defense) {
+      <div>></div>
+    }
     <div class="def-zb-el">
       <img class="icon" src="assets/icons/zb.gif" />
       <span style="margin-left: 0px" class="text-span">{{ cityService.city().attackRecap.nb_zb }}</span>

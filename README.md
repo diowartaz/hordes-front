@@ -4,7 +4,7 @@
 | ------------------- | ------------------------------------------------ |
 | Game Name           | **Hordes**                                       |
 | Genre               | **Single-player survival (asynchronous ranked)** |
-| Front-end           | **Angular 19**                                   |
+| Front-end           | **Angular 22**                                   |
 | Back-end            | **Node.js + Express**                            |
 | Database            | **MongoDB**                                      |
 | Target Distribution | **Android (Google Play / APK)**                  |
@@ -179,7 +179,7 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 | --------------------------------- | ---------------------------------------- |
 | Game Type                         | Single-player survival                   |
 | Ranked Mode                       | Asynchronous, seed-based                 |
-| Tech Stack                        | Angular 19 / Node.js / Express / MongoDB |
+| Tech Stack                        | Angular 22 / Node.js / Express / MongoDB |
 | Starting Buildings                | 7                                        |
 | Starting Skill Level Caps (Total) | 9                                        |
 | Special Buildings                 | Architect Shelter, Library               |

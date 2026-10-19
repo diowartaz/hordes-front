@@ -1,16 +1,16 @@
 <div class="boundary">
   <div class="element">
-    <div
-      *ngIf="modifiedGameHistoryPlayer.id !== '--' && otherPlayer"
-      class="second-player"
-      (click)="goToProfil(modifiedGameHistoryPlayer.id)"
-    >
-      {{ modifiedGameHistoryPlayer.username }}
-      <span class="material-symbols-outlined icon-search"> search </span>
-    </div>
-    <div *ngIf="!otherPlayer">
-      {{ modifiedGameHistoryPlayer.username }}
-    </div>
+    @if (modifiedGameHistoryPlayer.id !== '--' && otherPlayer) {
+      <div class="second-player" (click)="goToProfil(modifiedGameHistoryPlayer.id)">
+        {{ modifiedGameHistoryPlayer.username }}
+        <span class="material-symbols-outlined icon-search"> search </span>
+      </div>
+    }
+    @if (!otherPlayer) {
+      <div>
+        {{ modifiedGameHistoryPlayer.username }}
+      </div>
+    }
   </div>
   <div class="elements-wrapper">
     <div class="element">

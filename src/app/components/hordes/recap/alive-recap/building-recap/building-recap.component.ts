@@ -1,7 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { CommonModule } from '@angular/common';
+
 import { BuildingRarityToIconPipe } from '../../../../../shared/pipes/building-rarity-to-icon';
 import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
 import { BuildingRecapInventoryComponent } from './building-recap-inventory/building-recap-inventory.component';
@@ -9,8 +9,9 @@ import { BuildingRecapInventoryComponent } from './building-recap-inventory/buil
 @Component({
   selector: 'app-building-recap',
   standalone: true,
-  imports: [CommonModule, BuildingRarityToIconPipe, BuildingRecapInventoryComponent],
+  imports: [BuildingRarityToIconPipe, BuildingRecapInventoryComponent],
   templateUrl: './building-recap.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./building-recap.component.scss'],
 })
 export class BuildingRecapComponent {

@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-recap-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './recap-header.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recap-header.component.scss'],
 })
 export class RecapHeaderComponent {

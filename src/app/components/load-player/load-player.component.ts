@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CommonModule } from '@angular/common';
+
 import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-load-player',
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule],
   standalone: true,
   templateUrl: './load-player.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './load-player.component.scss',
 })
 export class LoadPlayerComponent implements OnInit {
-  constructor(private cityService: CityService) {}
+  private cityService = inject(CityService);
 
   ngOnInit(): void {
     this.cityService.loadPlayer();

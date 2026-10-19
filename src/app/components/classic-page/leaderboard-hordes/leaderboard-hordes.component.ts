@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { ClassicPageComponent } from '../classic-page.component';
@@ -9,16 +9,15 @@ import { ClassicPageComponent } from '../classic-page.component';
   standalone: true,
   imports: [CommonModule, ClassicPageComponent],
   templateUrl: './leaderboard-hordes.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })
 export class LeaderboardHordesComponent implements OnInit {
-  ranked = false;
+  private router = inject(Router);
+  cityService = inject(CityService);
+  private route = inject(ActivatedRoute);
 
-  constructor(
-    private router: Router,
-    public cityService: CityService,
-    private route: ActivatedRoute,
-  ) {}
+  ranked = false;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams: any) => {

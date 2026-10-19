@@ -1,31 +1,37 @@
 <div class="boundary">
-  <div *ngIf="authService.isConnected()" class="left-part">
-    <div *ngIf="authService.isConnected()" class="icon-btn money" (click)="router.navigate([RoutesEnum.SHOP])">
-      <div class="plus">+</div>
-      <span>{{ data().money }}</span>
-      <div style="font-size: 14px; margin-top: -1px; margin-left: 2px">💰</div>
-
-      <div class="nb-bonuses-buyable">
-        {{ this.cityService.nbBuyableBonuses() > 9 ? '9+' : this.cityService.nbBuyableBonuses() }}
-      </div>
+  @if (authService.isConnected()) {
+    <div class="left-part">
+      @if (authService.isConnected()) {
+        <div class="icon-btn money" (click)="router.navigate([RoutesEnum.SHOP])">
+          <div class="plus">+</div>
+          <span>{{ data().money }}</span>
+          <div style="font-size: 14px; margin-top: -1px; margin-left: 2px">💰</div>
+          <div class="nb-bonuses-buyable">
+            {{ this.cityService.nbBuyableBonuses() > 9 ? '9+' : this.cityService.nbBuyableBonuses() }}
+          </div>
+        </div>
+      }
+      @if (authService.tempAccount()) {
+        <div class="no-cloud-save">no cloud save</div>
+      }
     </div>
-    <div *ngIf="authService.tempAccount()" class="no-cloud-save">no cloud save</div>
-  </div>
+  }
   <div class="right-part">
     <!-- <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-      <img src="assets/icons/discord_icon.png"
+    <img src="assets/icons/discord_icon.png"
     /></a> -->
-    <button
-      *ngIf="authService.isConnected()"
-      class="icon-btn"
-      (click)="
-        router.navigate([RoutesEnum.PROFIL], {
-          queryParams: { user_id: authService.userId() },
-        })
-      "
-    >
-      <span class="material-symbols-outlined icon"> group </span>
-    </button>
+    @if (authService.isConnected()) {
+      <button
+        class="icon-btn"
+        (click)="
+          router.navigate([RoutesEnum.PROFIL], {
+            queryParams: { user_id: authService.userId() },
+          })
+        "
+      >
+        <span class="material-symbols-outlined icon"> group </span>
+      </button>
+    }
     <button class="icon-btn" (click)="router.navigate([RoutesEnum.LEADERBOARD])">
       <img src="assets/icons/leaderboard.gif" />
     </button>
@@ -33,10 +39,12 @@
       <span class="emoticon">📖</span>
     </button>
     <!-- <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
-      <span class="emoticon">💰</span>
-    </button> -->
-    <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
-      <span class="emoticon">⚙️</span>
-    </button>
+    <span class="emoticon">💰</span>
+  </button> -->
+    @if (authService.isConnected()) {
+      <button class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
+        <span class="emoticon">⚙️</span>
+      </button>
+    }
   </div>
 </div>

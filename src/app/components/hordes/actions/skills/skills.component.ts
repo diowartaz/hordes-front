@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CityService } from 'src/app/services/city/city.service';
 import { SkillToIconPipe } from '../../../../shared/pipes/skill-to-icon';
@@ -10,18 +10,17 @@ import { AdvancedSkillModel } from 'src/app/models/hordes';
   standalone: true,
   imports: [CommonModule, SkillToIconPipe],
   templateUrl: './skills.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
+  cityService = inject(CityService);
+  private _snackBar = inject(MatSnackBar);
+
   learnLoading = false;
   dialogMessage = 'init';
   snackBarOpened = false;
   private destroyRef = inject(DestroyRef);
-
-  constructor(
-    public cityService: CityService,
-    private _snackBar: MatSnackBar,
-  ) {}
 
   closeSnackBar() {
     this.snackBarOpened = false;

@@ -2,42 +2,45 @@
   <ng-container icon> ✨ </ng-container>
   <ng-container content>
     <div class="shop-container">
-      <div class="shop-card container" *ngFor="let item of cityService.bonuses() | keyvalue">
-        <div class="shop-card-header">
-          <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
-          <div>
-            <h3>{{ item.value.name }}</h3>
-            <p class="shop-description">{{ item.value.description }}</p>
+      @for (item of cityService.bonuses() | keyvalue; track item) {
+        <div class="shop-card container">
+          <div class="shop-card-header">
+            <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
+            <div>
+              <h3>{{ item.value.name }}</h3>
+              <p class="shop-description">{{ item.value.description }}</p>
+            </div>
           </div>
-        </div>
-
-        <div class="shop-levels">
-          <span
-            >Level : <strong>{{ item.value.lvl }}</strong> / {{ item.value.lvl_max }}</span
-          >
-          <div class="progress-bar">
-            <div class="progress" [style.width.%]="(item.value.lvl / item.value.lvl_max) * 100"></div>
+          <div class="shop-levels">
+            <span
+              >Level : <strong>{{ item.value.lvl }}</strong> / {{ item.value.lvl_max }}</span
+            >
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(item.value.lvl / item.value.lvl_max) * 100"></div>
+            </div>
           </div>
+          @if (item.value.lvl < item.value.lvl_max) {
+            <div class="shop-footer">
+              <span class="shop-price">{{ item.value.price * Math.pow(2, item.value.lvl) }} 💰</span>
+              @if (
+                item.value.lvl < item.value.lvl_max &&
+                cityService.stats().money >= item.value.price * Math.pow(2, item.value.lvl)
+              ) {
+                <button
+                  class="yellow-button"
+                  (click)="buyItem(item.value.id)"
+                  [disabled]="
+                    item.value.lvl >= item.value.lvl_max ||
+                    cityService.stats().money < item.value.price * Math.pow(2, item.value.lvl)
+                  "
+                >
+                  Buy
+                </button>
+              }
+            </div>
+          }
         </div>
-
-        <div *ngIf="item.value.lvl < item.value.lvl_max" class="shop-footer">
-          <span class="shop-price">{{ item.value.price * Math.pow(2, item.value.lvl) }} 💰</span>
-          <button
-            *ngIf="
-              item.value.lvl < item.value.lvl_max &&
-              cityService.stats().money >= item.value.price * Math.pow(2, item.value.lvl)
-            "
-            class="yellow-button"
-            (click)="buyItem(item.value.id)"
-            [disabled]="
-              item.value.lvl >= item.value.lvl_max ||
-              cityService.stats().money < item.value.price * Math.pow(2, item.value.lvl)
-            "
-          >
-            Buy
-          </button>
-        </div>
-      </div>
+      }
     </div>
   </ng-container>
 </app-classic-page>

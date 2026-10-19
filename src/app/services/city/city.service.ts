@@ -30,6 +30,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class CityService {
+  private readonly httpClient = inject(HttpClient);
+  private router = inject(Router);
+
   API_URL = environment.API_URL;
   state = signal<UserState>(UserState.NOT_LOADED_PLAYER);
   playerLoaded = computed<boolean>(() => {
@@ -93,10 +96,7 @@ export class CityService {
   private readonly INGAME_REFRESH_SECONDS = 60;
   private appInjector = inject(Injector);
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private router: Router,
-  ) {
+  constructor() {
     this.cityTimeSeconds = this.setCityTimeSeconds();
   }
 

@@ -15,6 +15,8 @@ module.exports = tseslint.config(
     processor: angular.processInlineTemplates,
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      // OnPush est le défaut depuis Angular 22 : les composants sont restés en Eager lors de la migration
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

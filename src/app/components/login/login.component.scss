@@ -75,7 +75,7 @@
         display: block;
       }
       ::ng-deep.mat-mdc-progress-spinner {
-        --mdc-circular-progress-active-indicator-color: var(--white);
+        --mat-progress-spinner-active-indicator-color: var(--white);
       }
     }
     .button-wrapper:hover {

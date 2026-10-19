@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CityService } from 'src/app/services/city/city.service';
 
@@ -8,13 +8,14 @@ import { CityService } from 'src/app/services/city/city.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './city-footer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./city-footer.component.scss'],
 })
 export class CityFooterComponent implements OnInit {
+  private router = inject(Router);
+
   content = 'dig';
   cityService = inject(CityService);
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     const content = localStorage.getItem('play-route');

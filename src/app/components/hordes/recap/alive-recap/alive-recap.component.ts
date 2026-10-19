@@ -1,20 +1,23 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
 import { SkillRecapComponent } from './skill-recap/skill-recap.component';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-alive-recap',
   standalone: true,
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, CommonModule, FormsModule],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, FormsModule],
   templateUrl: './alive-recap.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./alive-recap.component.scss'],
 })
 export class AliveRecapComponent {
+  private router = inject(Router);
+
   public cityService = inject(CityService);
 
   nbMaxChoices = computed(() => {
@@ -44,8 +47,6 @@ export class AliveRecapComponent {
     return library_discoveriesFormatted;
   });
   Object = Object;
-
-  constructor(private router: Router) {}
 
   startDay() {
     this.cityService.startDay(this.whatAreTheSelectedBuildings());

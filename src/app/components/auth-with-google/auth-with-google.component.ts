@@ -10,13 +10,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
+  private http = inject(HttpClient);
+  private ngZone = inject(NgZone);
   loading = signal(false);
   invalidAuthentification = signal(false);
-
-  constructor(
-    private http: HttpClient,
-    private ngZone: NgZone,
-  ) {}
 
   ngOnInit(): void {
     (window as any).google.accounts.id.initialize({

@@ -45,12 +45,9 @@
 
 <div class="buttons">
   <button class="yellow-button" (click)="authService.signInTemp()">
-    <mat-spinner
-      *ngIf="authService.signInTempLoading()"
-      style="margin: -6px 0px"
-      diameter="24"
-      class="spinner"
-    ></mat-spinner>
+    @if (authService.signInTempLoading()) {
+      <mat-spinner style="margin: -6px 0px" diameter="24" class="spinner"></mat-spinner>
+    }
     <span>🎮 Play as Guest</span>
   </button>
   <div class="secondary-buttons">

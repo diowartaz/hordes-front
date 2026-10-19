@@ -65,44 +65,80 @@
     </div>
 
     <div class="errors-wrapper">
-      <div *ngIf="fieldHasError('email')">
-        <span *ngIf="formgroup.controls.email.errors?.['required']">Email is required</span>
-        <span *ngIf="formgroup.controls.email.errors?.['pattern']">Email must be valid</span>
-      </div>
+      @if (fieldHasError('email')) {
+        <div>
+          @if (formgroup.controls.email.errors?.['required']) {
+            <span>Email is required</span>
+          }
+          @if (formgroup.controls.email.errors?.['pattern']) {
+            <span>Email must be valid</span>
+          }
+        </div>
+      }
 
-      <div *ngIf="fieldHasError('username')">
-        <span *ngIf="formgroup.controls.username.errors?.['required']">Username is required</span>
-        <span *ngIf="formgroup.controls.username.errors?.['notValid']">Username: 3 characters minimum</span>
-        <span *ngIf="formgroup.controls.username.errors?.['max15']">Username: 15 characters maximum</span>
-      </div>
+      @if (fieldHasError('username')) {
+        <div>
+          @if (formgroup.controls.username.errors?.['required']) {
+            <span>Username is required</span>
+          }
+          @if (formgroup.controls.username.errors?.['notValid']) {
+            <span>Username: 3 characters minimum</span>
+          }
+          @if (formgroup.controls.username.errors?.['max15']) {
+            <span>Username: 15 characters maximum</span>
+          }
+        </div>
+      }
 
-      <div *ngIf="fieldHasError('password')">
-        <span *ngIf="formgroup.controls.password.errors?.['required']">Password is required</span>
-        <span *ngIf="formgroup.controls.password.errors?.['min8']">Password: 8 characters minimum</span>
-      </div>
+      @if (fieldHasError('password')) {
+        <div>
+          @if (formgroup.controls.password.errors?.['required']) {
+            <span>Password is required</span>
+          }
+          @if (formgroup.controls.password.errors?.['min8']) {
+            <span>Password: 8 characters minimum</span>
+          }
+        </div>
+      }
 
-      <div *ngIf="fieldHasError('confirmPassword')">
-        <span *ngIf="formgroup.controls.confirmPassword.errors?.['required']">Confirm password is required</span>
-        <span *ngIf="formgroup.controls.confirmPassword.errors?.['noMatchPassword']"
-          >Password and Confirm password must match</span
-        >
-      </div>
+      @if (fieldHasError('confirmPassword')) {
+        <div>
+          @if (formgroup.controls.confirmPassword.errors?.['required']) {
+            <span>Confirm password is required</span>
+          }
+          @if (formgroup.controls.confirmPassword.errors?.['noMatchPassword']) {
+            <span>Password and Confirm password must match</span>
+          }
+        </div>
+      }
 
-      <div *ngIf="emailAlreadyExists()">
-        <span>Email already used</span>
-      </div>
+      @if (emailAlreadyExists()) {
+        <div>
+          <span>Email already used</span>
+        </div>
+      }
 
-      <div *ngIf="usernameAlreadyExists()">
-        <span>Username already used</span>
-      </div>
+      @if (usernameAlreadyExists()) {
+        <div>
+          <span>Username already used</span>
+        </div>
+      }
     </div>
 
     <div class="button-wrapper" type="submit" (click)="signUp()">
-      <i *ngIf="!loading()" class="material-icons login-icon">login</i>
-      <div *ngIf="!loading()" class="login-text">Sign Up</div>
+      @if (!loading()) {
+        <i class="material-icons login-icon">login</i>
+      }
+      @if (!loading()) {
+        <div class="login-text">Sign Up</div>
+      }
 
-      <mat-spinner *ngIf="loading()" diameter="24" class="spinner"></mat-spinner>
-      <div *ngIf="loading()" class="login-text">Signing Up...</div>
+      @if (loading()) {
+        <mat-spinner diameter="24" class="spinner"></mat-spinner>
+      }
+      @if (loading()) {
+        <div class="login-text">Signing Up...</div>
+      }
     </div>
 
     <div class="text-button" (click)="goToSignIn()">Already have an account ? Sign In</div>

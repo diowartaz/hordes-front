@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,7 @@ import { BuildingRarityToIconPipe } from '../../../../shared/pipes/building-rari
   standalone: true,
   imports: [CommonModule, ItemIconPipe, BuildingRarityToIconPipe],
   templateUrl: './buildings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./buildings.component.scss'],
 })
 export class BuildingsComponent {

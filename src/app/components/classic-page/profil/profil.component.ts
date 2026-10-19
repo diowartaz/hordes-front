@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -12,21 +12,20 @@ import { GameHistoryModel, GameHistoryPlayerModel, ProfilModel } from 'src/app/m
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [CommonModule, GameComponent, MatProgressSpinnerModule, ClassicPageComponent],
+  imports: [GameComponent, MatProgressSpinnerModule, ClassicPageComponent],
   templateUrl: './profil.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./profil.component.scss'],
 })
 export class ProfilComponent implements OnInit {
+  private cityService = inject(CityService);
+  private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   getProfilLoading = false;
   profil: ProfilModel | null = null;
   id = '';
-
-  constructor(
-    private cityService: CityService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private location: Location,
-  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams: any) => {

@@ -1,36 +1,34 @@
-<div *ngIf="headerIsDisplayed()" class="boundary">
-  <div class="left-part">
-    <div class="element">
-      <img class="icon" src="assets/icons/calendar.ico" />
-      <span class="text-span">{{ cityService.city().day }}</span>
+@if (headerIsDisplayed()) {
+  <div class="boundary">
+    <div class="left-part">
+      <div class="element">
+        <img class="icon" src="assets/icons/calendar.ico" />
+        <span class="text-span">{{ cityService.city().day }}</span>
+      </div>
+      <div class="element">
+        <span class="material-symbols-outlined icon"> schedule </span>
+        <span class="text-span">{{ cityService.cityTimeString() }}</span>
+      </div>
+      <div class="element">
+        <img class="icon" src="assets/icons/defense.gif" />
+        <span class="text-span">{{ cityService.city().defense }}</span>
+      </div>
+      <div class="element">
+        <img class="icon" src="assets/icons/zb.gif" />
+        <span
+          class="text-span"
+          [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
+          >{{ cityService.city().nb_zb_next_attack_min }}-{{ cityService.city().nb_zb_next_attack_max }}</span
+        >
+      </div>
     </div>
-
-    <div class="element">
-      <span class="material-symbols-outlined icon"> schedule </span>
-      <span class="text-span">{{ cityService.cityTimeString() }}</span>
-    </div>
-
-    <div class="element">
-      <img class="icon" src="assets/icons/defense.gif" />
-      <span class="text-span">{{ cityService.city().defense }}</span>
-    </div>
-    <div class="element">
-      <img class="icon" src="assets/icons/zb.gif" />
-
-      <span
-        class="text-span"
-        [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
-        >{{ cityService.city().nb_zb_next_attack_min }}-{{ cityService.city().nb_zb_next_attack_max }}</span
-      >
-    </div>
+    <button
+      class="icon-btn borderBlink"
+      style="height: 34px; width: 34px"
+      [ngClass]="{ borderBlink2: (cityService.cityTimeSeconds() || 0) > 22 * 60 * 60 }"
+      (click)="cityService.endDay()"
+    >
+      💤
+    </button>
   </div>
-
-  <button
-    class="icon-btn borderBlink"
-    style="height: 34px; width: 34px"
-    [ngClass]="{ borderBlink2: (cityService.cityTimeSeconds() || 0) > 22 * 60 * 60 }"
-    (click)="cityService.endDay()"
-  >
-    💤
-  </button>
-</div>
+}

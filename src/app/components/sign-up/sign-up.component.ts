@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, OnInit, signal, OnDestroy, ChangeDetectionStrategy, inject } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -27,9 +27,13 @@ interface SignUpForm {
   templateUrl: './sign-up.component.html',
   imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  authService = inject(AuthService);
+
   formgroup!: FormGroup<SignUpForm>;
   private formSubscription: Subscription | undefined;
   private passwordValidationSub: Subscription | undefined;
@@ -37,11 +41,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   loading = signal(false);
   emailAlreadyExists = signal(false);
   usernameAlreadyExists = signal(false);
-
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-  ) {}
 
   ngOnInit(): void {
     this.setUpFormGroup();

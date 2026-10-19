@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { finalize, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -19,18 +19,17 @@ interface SignInForm {
   imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
   standalone: true,
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  authService = inject(AuthService);
+  private router = inject(Router);
+
   private readonly destroyRef = inject(DestroyRef);
   formgroup!: FormGroup<SignInForm>;
   loading = signal(false);
   invalidAuthentification = signal(false);
-
-  constructor(
-    public authService: AuthService,
-    private router: Router,
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

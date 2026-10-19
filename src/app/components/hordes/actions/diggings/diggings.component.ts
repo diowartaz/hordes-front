@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, DestroyRef } from '@angular/core';
+import { Component, computed, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { CommonModule } from '@angular/common';
 import { ItemModel } from 'src/app/models/hordes';
@@ -11,9 +11,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [CommonModule, ItemIconPipe],
   templateUrl: './diggings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./diggings.component.scss'],
 })
 export class DiggingsComponent {
+  private _snackBar = inject(MatSnackBar);
+
   dialogMessage = 'init';
   snackBarOpened = false;
   cityService = inject(CityService);
@@ -48,8 +51,6 @@ export class DiggingsComponent {
   disableMinusDigs = computed(() => {
     return this.nbDigs() - 1 < 1;
   });
-
-  constructor(private _snackBar: MatSnackBar) {}
 
   addDigs(nb: number) {
     this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
