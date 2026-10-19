@@ -9,7 +9,6 @@ const mapping: Record<string, string> = {
 
 @Pipe({
   name: 'skillToIcon',
-  standalone: true,
 })
 export class SkillToIconPipe implements PipeTransform {
   transform(itemKey: number): string {

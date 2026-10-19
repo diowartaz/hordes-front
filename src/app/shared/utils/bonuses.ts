@@ -1,9 +1,19 @@
 import { AdvancedBonus, BonusWithoutLvl, DefaultValuesModel, StatsModel } from 'src/app/models/hordes';
 
+// Prix du prochain niveau, même formule que le back (playerController.buyBonus)
+export function bonusPrice(bonus: BonusWithoutLvl, lvl: number, defaultValues: DefaultValuesModel): number {
+  return bonus.price * defaultValues.BONUS_PRICE_MULTIPLIER ** lvl;
+}
+
+// Effet total d'un bonus (valeur × niveau), 0 tant que les références ne sont pas chargées
+export function bonusEffect(bonus: AdvancedBonus | undefined): number {
+  return bonus ? bonus.value * bonus.lvl : 0;
+}
+
 export function computeBonuses(
   stats: StatsModel,
   defaultValues: DefaultValuesModel,
-  referencesBonuses: BonusWithoutLvl[],
+  referencesBonuses: Record<number, BonusWithoutLvl>,
 ): Record<number, AdvancedBonus> {
   const hasBonuses = Object.keys(stats.bonuses).length > 0;
   const hasReferences = Object.keys(referencesBonuses).length > 0;
@@ -13,16 +23,15 @@ export function computeBonuses(
   }
 
   const bonuses: Record<number, AdvancedBonus> = {};
-  for (const referencesBonusId in referencesBonuses) {
-    bonuses[referencesBonusId] = {
-      ...referencesBonuses[referencesBonusId],
-      lvl: stats.bonuses[referencesBonusId],
-      enoughMoney:
-        referencesBonuses[referencesBonusId].price *
-          defaultValues.BONUS_PRICE_MULTIPLIER *
-          stats.bonuses[referencesBonusId] <
-        stats.money,
-      enoughLvlMax: stats.bonuses[referencesBonusId] < referencesBonuses[referencesBonusId].lvl_max,
+  for (const reference of Object.values(referencesBonuses)) {
+    const lvl = stats.bonuses[reference.id] ?? 0;
+    const price = bonusPrice(reference, lvl, defaultValues);
+    bonuses[reference.id] = {
+      ...reference,
+      lvl,
+      nextPrice: price,
+      enoughMoney: price <= stats.money,
+      enoughLvlMax: lvl < reference.lvl_max,
     };
   }
 

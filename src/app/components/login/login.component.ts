@@ -1,13 +1,15 @@
-import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { finalize, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignInParams } from '../../models/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { NgStyle } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { readStorage, StorageKey } from 'src/app/shared/utils/storage';
 
 interface SignInForm {
   login: FormControl<string>;
@@ -16,10 +18,8 @@ interface SignInForm {
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
-  standalone: true,
+  imports: [NgStyle, ReactiveFormsModule, MatProgressSpinnerModule],
   templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    const savedLogin: string = localStorage.getItem('login') ?? '';
+    const savedLogin: string = readStorage(StorageKey.LOGIN) ?? '';
     this.formgroup = new FormGroup<SignInForm>({
       login: new FormControl(savedLogin, {
         nonNullable: true,
@@ -78,8 +78,14 @@ export class LoginComponent implements OnInit {
           this.loading.set(false);
         }),
       )
-      .subscribe(() => {
-        this.invalidAuthentification.set(false);
+      .subscribe({
+        next: () => this.invalidAuthentification.set(false),
+        // 401/400 : identifiants refusés ; les autres erreurs sont déjà signalées par l'errorInterceptor
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 401 || error.status === 400) {
+            this.invalidAuthentification.set(true);
+          }
+        },
       });
   }
 

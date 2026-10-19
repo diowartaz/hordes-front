@@ -20,7 +20,8 @@ This codebase uses Angular's **modern signals API** extensively instead of tradi
 
 All components use `standalone: true` - no NgModules exist:
 
-- Import dependencies directly in component decorators: `imports: [CommonModule, ItemIconPipe, ...]`
+- Import dependencies directly in component decorators: `imports: [NgClass, KeyValuePipe, ItemIconPipe, ...]` (no `CommonModule`)
+- The app is **zoneless** (`provideZonelessChangeDetection`) and components use the default OnPush strategy: any state changed asynchronously (HTTP callback, `setTimeout`) must live in a signal
 - Inject services with `inject()` function, not constructor DI: `cityService = inject(CityService)`
 - Configure app in [src/app/app.config.ts](src/app/app.config.ts) using `ApplicationConfig`
 
@@ -28,8 +29,9 @@ All components use `standalone: true` - no NgModules exist:
 
 1. **CityService** is the single source of truth for game state (city, stats, player state)
 2. Components inject `CityService` and read computed signals reactively
-3. User actions call service methods which make HTTP requests and update signals
-4. HTTP interceptors automatically add JWT tokens ([auth.interceptor.ts](src/app/shared/interceptors/auth.interceptor.ts))
+3. User actions call service methods which make HTTP requests (typed calls in [game-api.service.ts](src/app/services/game-api/game-api.service.ts)) and update signals
+4. HTTP interceptors automatically add JWT tokens ([auth.interceptor.ts](src/app/shared/interceptors/auth.interceptor.ts)) and display errors / log out on 401 ([error.interceptor.ts](src/app/shared/interceptors/error.interceptor.ts))
+5. Navigation that follows a state change (login, logout, end of day…) is done **only** by [redirection.service.ts](src/app/services/redirection/redirection.service.ts); services never call the router
 
 ## Key Development Patterns
 
@@ -39,16 +41,8 @@ Every HTTP mutation follows this pattern (see [city.service.ts](src/app/services
 
 ```typescript
 someAction(): void {
-  if (this.someLoading()) return;  // Prevent duplicate requests
-  this.someLoading.set(true);
-  const url = this.API_URL + 'endpoint';
-  this.httpClient.post<any>(url, {})
-    .pipe(
-      tap((response) => this.city.set(response.city)),
-      catchError(handleError('someAction', url)),
-      finalize(() => this.someLoading.set(false))
-    )
-    .subscribe();
+  // runRequest ignores the call while someLoading() is true, and resets it at the end
+  runRequest(this.someLoading, this.api.someAction(), (response) => this.city.set(response.city));
 }
 ```
 
@@ -93,10 +87,10 @@ All game interfaces defined in [src/app/models/hordes.ts](src/app/models/hordes.
 ### Local Development
 
 ```bash
-npm run start1      # Dev server with hot reload (ng serve)
-npm start           # Production server via server.js
+npm start           # Dev server with hot reload (ng serve)
+npm run express     # Production server via server.js (after npm run build)
 npm run build       # Production build
-npm test            # Karma/Jasmine tests
+npm test            # Karma/Jasmine tests (headless Chrome, single run)
 npm run lint        # ESLint with auto-fix
 npm run prettier    # Format all files
 ```
@@ -111,7 +105,8 @@ npm run prettier    # Format all files
 
 - Tests located next to components: `*.component.spec.ts`
 - Test city/auth services: `city.service.spec.ts`, `auth.service.spec.ts`
-- Run with Karma: `npm test` (launches Chrome)
+- Game rules are tested in [game-rules.spec.ts](src/app/shared/utils/game-rules.spec.ts)
+- Run with Karma: `npm test` (headless Chrome)
 
 ## Critical Project-Specific Conventions
 
@@ -133,9 +128,9 @@ The game uses a real-time to in-game time conversion:
 
 ### Authentication Flow
 
-1. User signs in → JWT token stored in `localStorage.getItem('token')`
+1. User signs in → JWT token stored in localStorage (always through [storage.ts](src/app/shared/utils/storage.ts))
 2. `authInterceptor` attaches token to all API requests
-3. `AuthService.verifiedToken` computed signal validates token expiry with `JwtHelperService`
+3. `AuthService.verifiedToken` computed signal validates token expiry with [jwt.ts](src/app/shared/utils/jwt.ts)
 4. Temporary accounts have `@temp.com` email domain (no Google sign-in)
 
 ### User State Machine

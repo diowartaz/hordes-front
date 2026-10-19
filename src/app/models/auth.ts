@@ -1,6 +1,6 @@
 export interface JwtPayload {
   id: string;
-  exp: number;
+  exp?: number;
 }
 
 export interface AuthResponse {
@@ -18,4 +18,9 @@ export interface SignUpParams {
 export interface SignInParams {
   login: string;
   password: string;
+}
+
+export interface SignUpConflict {
+  emailAlreadyExists: boolean;
+  usernameAlreadyExists: boolean;
 }

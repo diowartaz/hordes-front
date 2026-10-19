@@ -1,4 +1,5 @@
 import { AdvancedBonus, AdvancedBuildingModel, CityModel, DefaultValuesModel } from 'src/app/models/hordes';
+import { bonusEffect } from './bonuses';
 import { contains } from './inventory';
 import { formatTimeToString } from './time';
 
@@ -15,12 +16,11 @@ export function calculateAdvancedBuildings(
   defaultValues: DefaultValuesModel,
 ): AdvancedBuildingModel[] {
   const advancedBuildings: AdvancedBuildingModel[] = [];
-  const flatBonus = bonuses[4];
-  const percentBonus = bonuses[5];
+  const flatBonusMinutes = bonusEffect(bonuses[4]);
+  const percentBonus = bonusEffect(bonuses[5]);
   for (const building of city.buildings) {
     const timeRequired =
-      building.time * city.speeds.build * city.speeds.general * (1 - percentBonus.value * percentBonus.lvl) -
-      flatBonus.value * flatBonus.lvl * 60;
+      building.time * city.speeds.build * city.speeds.general * (1 - percentBonus) - flatBonusMinutes * 60;
 
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,

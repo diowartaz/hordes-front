@@ -4,11 +4,11 @@
   </ng-container>
   <ng-container content>
     <div class="select">
-      <button class="select-btn" (click)="changeRanked(true)" [ngClass]="{ 'has-background': ranked }">
+      <button class="select-btn" (click)="changeRanked(true)" [ngClass]="{ 'has-background': ranked() }">
         <img class="icon" src="assets/icons/ranked.png" />
         <span class="span">Ranked</span>
       </button>
-      <button class="select-btn" (click)="changeRanked(false)" [ngClass]="{ 'has-background': !ranked }">
+      <button class="select-btn" (click)="changeRanked(false)" [ngClass]="{ 'has-background': !ranked() }">
         <img class="icon" src="assets/icons/normal.png" />
         <span class="span">Normal</span>
       </button>
@@ -16,7 +16,7 @@
     <div class="leaderboard-wrapper">
       <div class="leaderboard-col">
         <div class="leaderboard-row-element">Rank</div>
-        @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+        @for (user of leaderboard(); track user.user_id) {
           <div class="leaderboard-row-element">
             <div>{{ user.rank }}</div>
           </div>
@@ -24,7 +24,7 @@
       </div>
       <div class="leaderboard-col">
         <div class="leaderboard-row-element">Username</div>
-        @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+        @for (user of leaderboard(); track user.user_id) {
           <div class="leaderboard-row-element username-element">
             <div class="username" (click)="goToProfil(user.user_id)">
               <span class="material-symbols-outlined icon-search"> search </span> {{ user.username_truncated }}
@@ -32,10 +32,10 @@
           </div>
         }
       </div>
-      @if (!ranked) {
+      @if (!ranked()) {
         <div class="leaderboard-col">
-          <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-          @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+          <div class="leaderboard-row-element">{{ ranked() ? 'Ranked Points' : 'Performance' }}</div>
+          @for (user of leaderboard(); track user.user_id) {
             <div class="leaderboard-row-element" style="justify-content: space-between; padding: 0px 4px">
               <div class="perf-element">
                 <img class="icon" src="assets/icons/calendar.ico" />
@@ -50,10 +50,10 @@
         </div>
       }
 
-      @if (ranked) {
+      @if (ranked()) {
         <div class="leaderboard-col">
-          <div class="leaderboard-row-element">{{ ranked ? 'Ranked Points' : 'Performance' }}</div>
-          @for (user of ranked ? cityService.leaderboardRanked() : cityService.leaderboardBestDay(); track user) {
+          <div class="leaderboard-row-element">{{ ranked() ? 'Ranked Points' : 'Performance' }}</div>
+          @for (user of leaderboard(); track user.user_id) {
             <div class="leaderboard-row-element">
               <div>{{ user.ranked_points }}</div>
               <img style="width: 20px; height: 20px" src="assets/icons/ranked_points.png" />

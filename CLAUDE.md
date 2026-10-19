@@ -10,18 +10,21 @@ npm run build      # build de prod
 npm run express    # sert le build via server.js
 npm run lint       # ng lint --fix
 npm run prettier   # formatage
-npx ng test        # Karma/Jasmine (Chrome requis ; peu de specs)
+npm test           # Karma/Jasmine en ChromeHeadless, une seule passe
 ```
 
 ## Conventions
 
-- `CityService` (`src/app/services/city/city.service.ts`) est la source de vérité de l'état du jeu, exposée en `signal`/`computed`.
-- Mutations HTTP : garde `xxxLoading()` contre les doubles requêtes, puis `tap` → `catchError(handleError(...))` → `finalize`.
+- `CityService` (`src/app/services/city/city.service.ts`) est la source de vérité de l'état du jeu, exposée en `signal`/`computed`. Les appels HTTP typés sont dans `GameApiService`, les classements dans `LeaderboardService`.
+- Mutations HTTP : `runRequest(loadingSignal, api.xxx(), onSuccess)` (`shared/utils/http.ts`) ignore les doubles requêtes. Les erreurs sont affichées par `errorInterceptor` (snackbar, déconnexion sur 401) : pas de `catchError` dans les services.
+- Navigation liée à l'état (connexion, déconnexion, fin de journée…) : uniquement dans `RedirectionService`. Les services ne naviguent jamais ; les guards gèrent l'accès direct aux URL.
+- `localStorage` uniquement via `shared/utils/storage.ts` (`StorageKey`).
 - Calculs de jeu purs dans `src/app/shared/utils/` ; types dans `src/app/models/hordes.ts`.
 - Routage piloté par l'état joueur (`UserState`) via `stateGuard` et `data.allowedStates` dans `app.routes.ts`.
-- Composants en `ChangeDetectionStrategy.Eager` (conservé lors du passage à Angular 22, où OnPush est devenu le défaut) ; templates en control flow `@if`/`@for`.
+- Application **zoneless** et composants en OnPush (défaut d'Angular 22) : tout état modifié de façon asynchrone (callback HTTP, `setTimeout`) doit être un `signal`. Ne jamais muter un objet contenu dans un signal (utiliser `set`/`update`).
+- Écrans chargés à la demande (`loadComponent`) ; templates en control flow `@if`/`@for` ; pas de `CommonModule`, importer `NgClass`/`NgStyle`/`KeyValuePipe` au besoin.
 - Sélecteurs de composants préfixés `app-` ; `any` autorisé par ESLint.
 - L'URL de l'API vient de `src/environments/environment*.ts`.
-- `yarn.lock` et `package-lock.json` coexistent : les garder synchronisés quand on change une dépendance.
+- Gestionnaire de paquets : npm uniquement (`package-lock.json`).
 
-Détails d'architecture : @.github/copilot-instructions.md (attention : les commandes `start1`/`npm test` qui y figurent n'existent pas dans `package.json`).
+Détails d'architecture : @.github/copilot-instructions.md

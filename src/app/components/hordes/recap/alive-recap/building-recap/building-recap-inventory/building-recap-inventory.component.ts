@@ -1,15 +1,13 @@
-import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import { CommonModule } from '@angular/common';
+import { KeyValuePipe, NgStyle } from '@angular/common';
 import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
 import { ItemIconPipe } from '../../../../../../shared/pipes/item-to-icon.pipe';
 
 @Component({
   selector: 'app-building-recap-inventory-inventory',
-  standalone: true,
-  imports: [CommonModule, ItemIconPipe],
+  imports: [KeyValuePipe, NgStyle, ItemIconPipe],
   templateUrl: './building-recap-inventory.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./building-recap-inventory.component.scss'],
 })
 export class BuildingRecapInventoryComponent {

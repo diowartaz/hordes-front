@@ -9,7 +9,6 @@ const mapping: Record<string, string> = {
 
 @Pipe({
   name: 'buildingRarityToIcon',
-  standalone: true,
 })
 export class BuildingRarityToIconPipe implements PipeTransform {
   transform(itemKey: string): string {

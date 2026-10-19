@@ -1,12 +1,17 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+export interface SkillDiscovery {
+  name: string;
+  lvl: number;
+  old_lvl_max: number;
+  lvl_max: number;
+}
 
 @Component({
   selector: 'app-skill-recap',
-  standalone: true,
   templateUrl: './skill-recap.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./skill-recap.component.scss'],
 })
 export class SkillRecapComponent {
-  @Input() skill: any = null;
+  @Input({ required: true }) skill!: SkillDiscovery;
 }

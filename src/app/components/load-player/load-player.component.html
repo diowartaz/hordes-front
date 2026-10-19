@@ -1,3 +1,8 @@
 <div class="boundary">
-  <mat-spinner diameter="48" class="spinner"></mat-spinner>
+  @if (cityService.playerLoading() || cityService.playerLoaded()) {
+    <mat-spinner diameter="48" class="spinner"></mat-spinner>
+  } @else {
+    <!-- le chargement a échoué (l'erreur est affichée par l'errorInterceptor) -->
+    <button class="yellow-button" (click)="cityService.loadPlayer()">Retry</button>
+  }
 </div>

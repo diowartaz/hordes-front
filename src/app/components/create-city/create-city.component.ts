@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { RoutesEnum } from 'src/app/models/router';
@@ -6,10 +6,8 @@ import { CityService } from 'src/app/services/city/city.service';
 
 @Component({
   selector: 'app-create-city',
-  standalone: true,
   imports: [MatProgressSpinnerModule],
   templateUrl: './create-city.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-city.component.scss'],
 })
 export class CreateCityComponent {

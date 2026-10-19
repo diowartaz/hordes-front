@@ -10,7 +10,6 @@ const mapping: Record<string, string> = {
 
 @Pipe({
   name: 'itemToIcon',
-  standalone: true,
 })
 export class ItemIconPipe implements PipeTransform {
   transform(itemKey: string): string {

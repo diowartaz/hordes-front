@@ -1,6 +1,6 @@
-@if (snackBarOpened) {
+@if (snackBarOpened()) {
   <dialog #dialog class="dialog-class">
-    <div>{{ dialogMessage }}</div>
+    <div>{{ dialogMessage() }}</div>
     <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
   </dialog>
 }

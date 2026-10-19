@@ -1,6 +1,6 @@
-@if (snackBarOpened) {
+@if (snackBarOpened()) {
   <dialog #dialog class="dialog-class">
-    <div>{{ dialogMessage }}</div>
+    <div>{{ dialogMessage() }}</div>
     <span class="material-symbols-outlined" style="cursor: pointer" (click)="closeSnackBar()"> close </span>
   </dialog>
 }
@@ -75,7 +75,7 @@
                   background:
                     !cityService.learnLoading() &&
                     skill.enoughLvlMax &&
-                    (this.cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
+                    (cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
                       ? 'var(--primary-yellow)'
                       : 'var(--primary-yellow-disabled)',
                 }"

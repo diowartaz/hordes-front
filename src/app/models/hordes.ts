@@ -1,23 +1,57 @@
-export interface PlayerWrapperModel {
-  player: PlayerModel;
+import { UserState } from './router';
+
+// ---------- Réponses de l'API ----------
+
+export interface CityResponse {
+  city: CityModel;
 }
 
-export interface endDayModel {
+export interface FindItemsResponse {
+  city: CityModel;
+  items_found_inventory: InventoryModel;
+}
+
+export interface LoadPlayerResponse {
   player: {
-    city: CityModel;
+    state: UserState;
     stats: StatsModel;
-    state: string;
+    city: CityModel | null;
+  };
+  default_values: DefaultValuesModel;
+}
+
+export interface NewCityResponse {
+  player: {
+    state: UserState;
+    city: CityModel;
   };
 }
 
-export interface PlayerModel {
-  city: CityModel;
+export interface EndDayResponse {
+  player: {
+    state: UserState;
+    stats: StatsModel;
+    city: CityModel;
+  };
+}
+
+export interface StatsResponse {
   stats: StatsModel;
 }
 
-export interface CityWrapperModel {
-  city: CityModel;
+export interface LeaderboardResponse {
+  leaderboard: LeaderboardElement[];
 }
+
+export interface ProfilResponse {
+  profil: ProfilModel;
+}
+
+export interface ReferencesBonusesResponse {
+  bonuses: Record<number, BonusWithoutLvl>;
+}
+
+// ---------- Modèles du jeu ----------
 
 export function createDefaultStatsModel(): StatsModel {
   return {
@@ -43,6 +77,12 @@ export interface StatsModel {
 
 export type ItemModel = 'wood' | 'stone' | 'screw' | 'metal' | 'patch';
 
+export type InventoryModel = Record<ItemModel, number>;
+
+export function createEmptyInventory(): InventoryModel {
+  return { wood: 0, stone: 0, screw: 0, metal: 0, patch: 0 };
+}
+
 export function createDefaultCityModel(): CityModel {
   return {
     day: 0,
@@ -54,7 +94,7 @@ export function createDefaultCityModel(): CityModel {
     buildings: [],
     skills: [],
     nb_zb_history: [],
-    inventory: { wood: 0, stone: 0, screw: 0, metal: 0, patch: 0 },
+    inventory: createEmptyInventory(),
     speeds: {
       build: 1,
       dig: 1,
@@ -92,7 +132,7 @@ export interface CityModel {
   skills: SkillModel[];
   nb_zb_history: number[];
   last_timestamp_request: number;
-  inventory: { wood: number; stone: number; screw: number; metal: number; patch: number };
+  inventory: InventoryModel;
   speeds: SpeedsModel;
   state: string;
   attackRecap: AttackRecapModel;
@@ -199,13 +239,6 @@ export interface AdvancedSkillModel {
   expirationCityTime: number;
 }
 
-export interface customInventoryModel {
-  found: number;
-  nb: number;
-  src: string;
-  name: string;
-}
-
 export interface XPToLVL {
   lvl: string;
   xpString: string;
@@ -237,39 +270,6 @@ export interface GameHistoryModel {
   ranked: boolean;
   ranked_points: number | null;
   win: boolean | null;
-}
-
-export interface LeaderboardPlayerModel {
-  username: string;
-  user_id: string;
-  personal_best_day: number;
-  personal_best_zb: number;
-  rank: number;
-}
-
-export interface DeleteModel {
-  message: string;
-}
-
-export interface FindItemsModel {
-  city: CityModel;
-  items_found_inventory: Record<string, number>;
-}
-
-export interface LoadPlayerModel {
-  player: PlayerStateModel;
-  default_values: DefaultValuesModel;
-}
-
-export interface PlayerStateModel {
-  stats: {
-    xp: number;
-    personal_best_day: number;
-    personal_best_zb: number;
-    last_10_games: GameHistoryModel[];
-  };
-  state: string;
-  city: null | CityModel;
 }
 
 export interface DefaultValuesModel {
@@ -316,11 +316,6 @@ export interface BuildingBackendModel {
   inventory: BuildingInventoryModel;
 }
 
-export interface CityTimeModel {
-  secondsTosString: number;
-  seconds: string;
-}
-
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
   return {
     newCity: createDefaultCityModel(),
@@ -364,6 +359,7 @@ export interface AdvancedBonus {
   lvl: number;
   lvl_max: number;
   value: number;
+  nextPrice: number;
   enoughMoney: boolean;
   enoughLvlMax: boolean;
 }

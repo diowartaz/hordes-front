@@ -1,42 +1,38 @@
-import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { KeyValuePipe, NgClass, NgStyle } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
 import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
-import { CommonModule } from '@angular/common';
 import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
 import { BuildingRarityToIconPipe } from '../../../../shared/pipes/building-rarity-to-icon';
 
 @Component({
   selector: 'app-buildings',
-  standalone: true,
-  imports: [CommonModule, ItemIconPipe, BuildingRarityToIconPipe],
+  imports: [KeyValuePipe, NgClass, NgStyle, ItemIconPipe, BuildingRarityToIconPipe],
   templateUrl: './buildings.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./buildings.component.scss'],
 })
 export class BuildingsComponent {
   cityService = inject(CityService);
-  dialogMessage = 'init';
-  snackBarOpened = false;
-  private destroyRef = inject(DestroyRef);
+  dialogMessage = signal('');
+  snackBarOpened = signal(false);
+  private snackBarTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.snackBarTimeout));
+  }
 
   closeSnackBar() {
-    this.snackBarOpened = false;
+    clearTimeout(this.snackBarTimeout);
+    this.snackBarOpened.set(false);
   }
 
   openSnackBar(message: string) {
-    if (this.snackBarOpened) {
+    if (this.snackBarOpened()) {
       return;
     }
-    this.dialogMessage = message;
-    this.snackBarOpened = true;
-
-    const timeout = setTimeout(() => {
-      this.closeSnackBar();
-    }, 1000);
-
-    this.destroyRef.onDestroy(() => {
-      clearTimeout(timeout);
-    });
+    this.dialogMessage.set(message);
+    this.snackBarOpened.set(true);
+    this.snackBarTimeout = setTimeout(() => this.closeSnackBar(), 1000);
   }
 
   build(building: AdvancedBuildingModel) {

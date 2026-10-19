@@ -12,18 +12,14 @@
             }}
           </div>
           <div class="container-content">
-            @for (
-              building of cityService.city().attackRecap.architect_shelter_buildings;
-              track building;
-              let i = $index
-            ) {
+            @for (building of architectBuildings(); track $index) {
               <div class="line">
                 <div class="aaa">
                   <input
                     class="ckeckbox"
                     type="checkbox"
-                    [(ngModel)]="building.selected"
-                    (change)="onCheckboxChange($event, i)"
+                    [checked]="selectedBuildings().has($index)"
+                    (change)="toggleBuilding($event, $index)"
                   />
                 </div>
                 <app-building-recap class="building" [building]="building"></app-building-recap>
@@ -33,19 +29,18 @@
         </div>
       }
 
-      @if (library_discoveriesFormatted.length > 0) {
+      @if (libraryDiscoveries().length > 0) {
         <div class="container">
           <div class="container-header">
-            {{ Object.keys(library_discoveriesFormatted()).length }}
-            @if (library_discoveriesFormatted.length > 1) {
+            {{ libraryDiscoveries().length }}
+            @if (libraryDiscoveries().length > 1) {
               <span> skill discoveries </span>
-            }
-            @if (library_discoveriesFormatted.length === 1) {
+            } @else {
               <span> skill discovery </span>
             }
           </div>
           <div class="container-content">
-            @for (skill of library_discoveriesFormatted(); track skill) {
+            @for (skill of libraryDiscoveries(); track skill.name) {
               <app-skill-recap [skill]="skill"></app-skill-recap>
             }
           </div>

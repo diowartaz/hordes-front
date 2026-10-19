@@ -1,14 +1,12 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
 
 import { GameHistoryModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-game',
-  standalone: true,
   imports: [SubgameComponent],
   templateUrl: './game.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {

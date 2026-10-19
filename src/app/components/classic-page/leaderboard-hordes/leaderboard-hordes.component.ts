@@ -1,43 +1,42 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CityService } from 'src/app/services/city/city.service';
+import { map } from 'rxjs';
+import { RoutesEnum } from 'src/app/models/router';
+import { LeaderboardService } from 'src/app/services/leaderboard/leaderboard.service';
 import { ClassicPageComponent } from '../classic-page.component';
 
 @Component({
   selector: 'app-leaderboard-hordes',
-  standalone: true,
-  imports: [CommonModule, ClassicPageComponent],
+  imports: [NgClass, ClassicPageComponent],
   templateUrl: './leaderboard-hordes.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./leaderboard-hordes.component.scss'],
 })
 export class LeaderboardHordesComponent implements OnInit {
   private router = inject(Router);
-  cityService = inject(CityService);
   private route = inject(ActivatedRoute);
+  leaderboardService = inject(LeaderboardService);
 
-  ranked = false;
+  // L'onglet initial peut être imposé par ?ranked=true|false, puis le joueur peut en changer
+  private rankedFromUrl = toSignal(this.route.queryParamMap.pipe(map((params) => params.get('ranked'))));
+  private rankedChoice = signal<boolean | undefined>(undefined);
+  ranked = computed(() => this.rankedChoice() ?? this.rankedFromUrl() === 'true');
+
+  leaderboard = computed(() =>
+    this.ranked() ? this.leaderboardService.leaderboardRanked() : this.leaderboardService.leaderboardBestDay(),
+  );
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams: any) => {
-      if (queryParams.ranked) {
-        this.ranked = queryParams.ranked === 'false' ? false : true;
-      }
-    });
-    this.cityService.getLeaderboardRanked();
-    this.cityService.getLeaderboardBestDay();
-  }
-
-  goBackCityView() {
-    this.router.navigate(['play/' + localStorage.getItem('play-route')]);
+    this.leaderboardService.getLeaderboardRanked();
+    this.leaderboardService.getLeaderboardBestDay();
   }
 
   goToProfil(user_id: string) {
-    this.router.navigate(['profil'], { queryParams: { user_id } });
+    this.router.navigate([RoutesEnum.PROFIL], { queryParams: { user_id } });
   }
 
   changeRanked(ranked: boolean): void {
-    this.ranked = ranked;
+    this.rankedChoice.set(ranked);
   }
 }

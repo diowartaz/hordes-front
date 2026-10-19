@@ -1,4 +1,4 @@
-@if (profil) {
+@if (profil(); as profil) {
   <app-classic-page [title]="profil.username">
     <ng-container icon>
       <span class="material-symbols-outlined" style="height: 24px; width: 24px; font-size: 24px; margin-right: 8px">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="history">
-        @for (game of profil.match_history.slice().reverse(); track game) {
+        @for (game of matchHistory(); track $index) {
           <app-game [game]="game"></app-game>
         }
       </div>

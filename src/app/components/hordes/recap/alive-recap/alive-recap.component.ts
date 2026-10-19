@@ -1,78 +1,59 @@
-import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
-import { SkillRecapComponent } from './skill-recap/skill-recap.component';
-
-import { FormsModule } from '@angular/forms';
+import { SkillRecapComponent, SkillDiscovery } from './skill-recap/skill-recap.component';
 
 @Component({
   selector: 'app-alive-recap',
-  standalone: true,
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, FormsModule],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent],
   templateUrl: './alive-recap.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./alive-recap.component.scss'],
 })
 export class AliveRecapComponent {
-  private router = inject(Router);
-
   public cityService = inject(CityService);
 
-  nbMaxChoices = computed(() => {
-    return this.cityService.city().attackRecap.architect_shelter_buildings.length - 2;
-  });
+  // Index des bâtiments de l'abri de l'architecte choisis par le joueur
+  selectedBuildings = signal<ReadonlySet<number>>(new Set());
 
-  nbChoicesAvailable = computed(() => {
-    return this.cityService.city().attackRecap.architect_shelter_buildings.length;
-  });
+  architectBuildings = computed(() => this.cityService.city().attackRecap.architect_shelter_buildings);
+  nbChoicesAvailable = computed(() => this.architectBuildings().length);
+  nbMaxChoices = computed(() => this.nbChoicesAvailable() - 2);
 
-  library_discoveriesFormatted = computed(() => {
-    const library_discoveriesFormatted = [];
-    for (const discoverySkillId in this.cityService.city().attackRecap.library_discoveries) {
-      for (const skill of this.cityService.city().skills) {
-        if ((skill.id as unknown as string) === discoverySkillId) {
-          //TODO peut etre faire mieux
-          library_discoveriesFormatted.push({
-            name: skill.name,
-            lvl: skill.lvl,
-            old_lvl_max: skill.lvl_max - this.cityService.city().attackRecap.library_discoveries[discoverySkillId],
-            lvl_max: skill.lvl_max,
-          });
-          break;
-        }
+  libraryDiscoveries = computed<SkillDiscovery[]>(() => {
+    const city = this.cityService.city();
+    const discoveries: SkillDiscovery[] = [];
+    for (const [skillId, nbNewLevels] of Object.entries(city.attackRecap.library_discoveries)) {
+      const skill = city.skills.find((s) => String(s.id) === skillId);
+      if (skill) {
+        discoveries.push({
+          name: skill.name,
+          lvl: skill.lvl,
+          old_lvl_max: skill.lvl_max - nbNewLevels,
+          lvl_max: skill.lvl_max,
+        });
       }
     }
-    return library_discoveriesFormatted;
+    return discoveries;
   });
-  Object = Object;
 
   startDay() {
-    this.cityService.startDay(this.whatAreTheSelectedBuildings());
+    this.cityService.startDay([...this.selectedBuildings()].sort((a, b) => a - b));
   }
 
-  whatAreTheSelectedBuildings() {
-    const buildingSelected: (undefined | boolean)[] = this.cityService
-      .city()
-      .attackRecap.architect_shelter_buildings.map((b: any) => b.selected);
-    const result = [];
-    for (let i = 0; i < buildingSelected.length; i++) {
-      if (buildingSelected[i]) result.push(i);
-    }
-    return result;
-  }
-
-  onCheckboxChange(event: Event, index: number) {
+  toggleBuilding(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
-    const buildings = this.cityService.city().attackRecap.architect_shelter_buildings;
+    const selected = new Set(this.selectedBuildings());
 
-    if (input.checked) {
-      const selectedCount = buildings.filter((b: { selected: any }) => b.selected).length;
-      if (selectedCount > this.nbMaxChoices()) {
-        input.checked = false; // revert checkbox in DOM
-        buildings[index].selected = false; // revert model
-      }
+    if (input.checked && selected.size >= this.nbMaxChoices()) {
+      input.checked = false; // limite atteinte : on annule le clic
+      return;
     }
+    if (input.checked) {
+      selected.add(index);
+    } else {
+      selected.delete(index);
+    }
+    this.selectedBuildings.set(selected);
   }
 }

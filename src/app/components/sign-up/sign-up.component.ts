@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, OnDestroy, ChangeDetectionStrategy, inject } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { Component, DestroyRef, OnInit, signal, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormGroup,
   FormControl,
@@ -11,9 +12,9 @@ import {
 } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { finalize, Subscription, take } from 'rxjs';
+import { finalize, take } from 'rxjs';
 import { RoutesEnum } from '../../models/router';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService, SignUpResult } from 'src/app/services/auth/auth.service';
 
 interface SignUpForm {
   email: FormControl<string>;
@@ -25,18 +26,16 @@ interface SignUpForm {
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgStyle, ReactiveFormsModule, MatProgressSpinnerModule],
   styleUrl: './sign-up.component.scss',
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class SignUpComponent implements OnInit {
   private router = inject(Router);
   authService = inject(AuthService);
 
+  private readonly destroyRef = inject(DestroyRef);
+
   formgroup!: FormGroup<SignUpForm>;
-  private formSubscription: Subscription | undefined;
-  private passwordValidationSub: Subscription | undefined;
 
   loading = signal(false);
   emailAlreadyExists = signal(false);
@@ -44,8 +43,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setUpFormGroup();
-    //this.setupUntouchOnModification();
-    this.passwordValidationSub = this.formgroup.controls.password.valueChanges.subscribe(() => {
+    this.formgroup.controls.password.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.formgroup.controls.confirmPassword.updateValueAndValidity();
     });
   }
@@ -71,23 +69,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
   }
 
-  setupUntouchOnModification(): void {
-    this.formSubscription = this.formgroup.valueChanges.subscribe(() => {
-      if (this.formgroup.controls.email.dirty) {
-        this.emailAlreadyExists.set(false);
-      }
-      if (this.formgroup.controls.username.dirty) {
-        this.usernameAlreadyExists.set(false);
-      }
-      Object.keys(this.formgroup.controls).forEach((key) => {
-        const control = this.formgroup.get(key);
-        if (control && control.dirty) {
-          control.markAsUntouched();
-        }
-      });
-    });
-  }
-
   signUp() {
     if (this.loading()) {
       return;
@@ -110,13 +91,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
           this.loading.set(false);
         }),
       )
-      .subscribe((result: any) => {
-        if (result.error) {
-          this.emailAlreadyExists.set(result.error.emailAlreadyExists);
-          this.usernameAlreadyExists.set(result.error.usernameAlreadyExists);
-        } else {
-          this.router.navigate([RoutesEnum.SIGNIN]);
-        }
+      .subscribe({
+        next: (result: SignUpResult) => {
+          if ('error' in result) {
+            this.emailAlreadyExists.set(result.error.emailAlreadyExists);
+            this.usernameAlreadyExists.set(result.error.usernameAlreadyExists);
+          } else {
+            this.router.navigate([RoutesEnum.SIGNIN]);
+          }
+        },
+        // les autres erreurs sont affichées par l'errorInterceptor
+        error: () => undefined,
       });
   }
 
@@ -175,14 +160,5 @@ export class SignUpComponent implements OnInit, OnDestroy {
   fieldHasError(field: keyof SignUpForm): boolean {
     const control = this.formgroup.controls[field];
     return control.touched && control.invalid;
-  }
-
-  ngOnDestroy(): void {
-    if (this.formSubscription) {
-      this.formSubscription.unsubscribe();
-    }
-    if (this.passwordValidationSub) {
-      this.passwordValidationSub.unsubscribe();
-    }
   }
 }

@@ -13,6 +13,7 @@ describe('SkillRecapComponent', () => {
 
     fixture = TestBed.createComponent(SkillRecapComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('skill', { name: 'Fast Learner', lvl: 1, old_lvl_max: 2, lvl_max: 3 });
     fixture.detectChanges();
   });
 

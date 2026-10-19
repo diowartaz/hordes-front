@@ -1,106 +1,99 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { HordesComponent } from './components/hordes/hordes.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { LoadPlayerComponent } from './components/load-player/load-player.component';
 import { RoutesEnum, UserState } from './models/router';
 import { notAuthenticatedGuard } from './shared/guards/not-authenticated.guard';
 import { authGuard } from './shared/guards/auth.guard';
 import { gameLoadedGuard } from './shared/guards/game-loaded.guard';
-import { SettingsComponent } from './components/classic-page/settings/settings.component';
 import { stateGuard } from './shared/guards/state.guard';
-import { CreateCityComponent } from './components/create-city/create-city.component';
-import { DiggingsComponent } from './components/hordes/actions/diggings/diggings.component';
-import { SkillsComponent } from './components/hordes/actions/skills/skills.component';
-import { BuildingsComponent } from './components/hordes/actions/buildings/buildings.component';
-import { AliveRecapComponent } from './components/hordes/recap/alive-recap/alive-recap.component';
-import { DeathRecapComponent } from './components/hordes/recap/death-recap/death-recap.component';
-import { ProfilComponent } from './components/classic-page/profil/profil.component';
-import { LeaderboardHordesComponent } from './components/classic-page/leaderboard-hordes/leaderboard-hordes.component';
-import { HomeComponent } from './components/home/home.component';
-import { WikiComponent } from './components/classic-page/wiki/wiki.component';
-import { ShopComponent } from './components/classic-page/shop/shop.component';
 
+// Tous les écrans sont chargés à la demande pour alléger le bundle initial
 export const routes: Routes = [
   {
     path: RoutesEnum.HOME,
-    component: HomeComponent,
+    loadComponent: () => import('./components/home/home.component').then((m) => m.HomeComponent),
     canActivate: [notAuthenticatedGuard],
   },
   {
     path: RoutesEnum.SIGNIN,
-    component: LoginComponent,
+    loadComponent: () => import('./components/login/login.component').then((m) => m.LoginComponent),
     canActivate: [notAuthenticatedGuard],
   },
   {
     path: RoutesEnum.SIGNUP,
-    component: SignUpComponent,
+    loadComponent: () => import('./components/sign-up/sign-up.component').then((m) => m.SignUpComponent),
     canActivate: [notAuthenticatedGuard],
   },
   {
     path: RoutesEnum.LOAD_PLAYER,
-    component: LoadPlayerComponent,
+    loadComponent: () => import('./components/load-player/load-player.component').then((m) => m.LoadPlayerComponent),
     canActivate: [authGuard],
   },
   {
     path: RoutesEnum.CREATE_CITY,
-    component: CreateCityComponent,
-    canActivate: [authGuard, gameLoadedGuard],
+    loadComponent: () => import('./components/create-city/create-city.component').then((m) => m.CreateCityComponent),
+    canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.NO_CITY] },
   },
   {
     path: RoutesEnum.RECAP,
-    component: AliveRecapComponent,
+    loadComponent: () =>
+      import('./components/hordes/recap/alive-recap/alive-recap.component').then((m) => m.AliveRecapComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.RECAP] },
   },
   {
     path: RoutesEnum.DEATH_RECAP,
-    component: DeathRecapComponent,
+    loadComponent: () =>
+      import('./components/hordes/recap/death-recap/death-recap.component').then((m) => m.DeathRecapComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
-    data: { allowedStates: [UserState.DEAH_RECAP] },
+    data: { allowedStates: [UserState.DEATH_RECAP] },
   },
   {
     path: RoutesEnum.SETTINGS,
-    component: SettingsComponent,
+    loadComponent: () =>
+      import('./components/classic-page/settings/settings.component').then((m) => m.SettingsComponent),
     canActivate: [authGuard],
   },
   {
     path: RoutesEnum.LEADERBOARD,
-    component: LeaderboardHordesComponent,
+    loadComponent: () =>
+      import('./components/classic-page/leaderboard-hordes/leaderboard-hordes.component').then(
+        (m) => m.LeaderboardHordesComponent,
+      ),
   },
   {
     path: RoutesEnum.PROFIL,
-    component: ProfilComponent,
+    loadComponent: () => import('./components/classic-page/profil/profil.component').then((m) => m.ProfilComponent),
   },
   {
     path: RoutesEnum.WIKI,
-    component: WikiComponent,
+    loadComponent: () => import('./components/classic-page/wiki/wiki.component').then((m) => m.WikiComponent),
   },
   {
     path: RoutesEnum.SHOP,
-    component: ShopComponent,
+    loadComponent: () => import('./components/classic-page/shop/shop.component').then((m) => m.ShopComponent),
     canActivate: [authGuard],
   },
   {
     path: RoutesEnum.PLAY,
-    component: HordesComponent,
+    loadComponent: () => import('./components/hordes/hordes.component').then((m) => m.HordesComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.PLAYING] },
     children: [
       {
         path: 'dig',
-        component: DiggingsComponent,
+        loadComponent: () =>
+          import('./components/hordes/actions/diggings/diggings.component').then((m) => m.DiggingsComponent),
       },
       {
         path: 'learn',
-        component: SkillsComponent,
+        loadComponent: () =>
+          import('./components/hordes/actions/skills/skills.component').then((m) => m.SkillsComponent),
       },
       {
         path: 'build',
-        component: BuildingsComponent,
+        loadComponent: () =>
+          import('./components/hordes/actions/buildings/buildings.component').then((m) => m.BuildingsComponent),
       },
-
       {
         path: '',
         redirectTo: 'dig',

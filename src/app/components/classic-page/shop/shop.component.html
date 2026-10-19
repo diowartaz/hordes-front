@@ -2,7 +2,7 @@
   <ng-container icon> ✨ </ng-container>
   <ng-container content>
     <div class="shop-container">
-      @for (item of cityService.bonuses() | keyvalue; track item) {
+      @for (item of cityService.bonuses() | keyvalue; track item.key) {
         <div class="shop-card container">
           <div class="shop-card-header">
             <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
@@ -21,18 +21,12 @@
           </div>
           @if (item.value.lvl < item.value.lvl_max) {
             <div class="shop-footer">
-              <span class="shop-price">{{ item.value.price * Math.pow(2, item.value.lvl) }} 💰</span>
-              @if (
-                item.value.lvl < item.value.lvl_max &&
-                cityService.stats().money >= item.value.price * Math.pow(2, item.value.lvl)
-              ) {
+              <span class="shop-price">{{ item.value.nextPrice }} 💰</span>
+              @if (item.value.enoughLvlMax && item.value.enoughMoney) {
                 <button
                   class="yellow-button"
                   (click)="buyItem(item.value.id)"
-                  [disabled]="
-                    item.value.lvl >= item.value.lvl_max ||
-                    cityService.stats().money < item.value.price * Math.pow(2, item.value.lvl)
-                  "
+                  [disabled]="cityService.buyBonusLoading()"
                 >
                   Buy
                 </button>

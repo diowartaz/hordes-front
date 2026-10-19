@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-auth-with-google',
   imports: [],
-  standalone: true,
   templateUrl: './auth-with-google.component.html',
   styleUrl: './auth-with-google.component.scss',
 })

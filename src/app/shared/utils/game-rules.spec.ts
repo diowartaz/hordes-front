@@ -1,0 +1,185 @@
+import {
+  AdvancedBonus,
+  BonusWithoutLvl,
+  BuildingModel,
+  CityModel,
+  createDefaultBuildingModel,
+  createDefaultCityModel,
+  createDefaultDefaultValuesModel,
+  createDefaultStatsModel,
+  SkillModel,
+} from 'src/app/models/hordes';
+import { bonusEffect, bonusPrice, computeBonuses } from './bonuses';
+import { calculateAdvancedBuildings } from './buildings';
+import { contains } from './inventory';
+import { calculateAdvancedSkills } from './skills';
+import { enoughTime, formatTimeToString } from './time';
+import { lvlToXp, xpToLvl, XPToLVLandXP } from './xp';
+
+function bonus(id: number, value: number, lvl: number): AdvancedBonus {
+  return {
+    id,
+    name: 'b' + id,
+    description: '',
+    icon: '',
+    price: 100,
+    lvl,
+    lvl_max: 20,
+    value,
+    nextPrice: 0,
+    enoughMoney: false,
+    enoughLvlMax: true,
+  };
+}
+
+function building(overrides: Partial<BuildingModel>): BuildingModel {
+  return { ...createDefaultBuildingModel(), lvl: 0, lvl_max: 5, inventory: {}, ...overrides };
+}
+
+function skill(overrides: Partial<SkillModel>): SkillModel {
+  return {
+    id: 1,
+    name: 'Digger',
+    speed_name: 'dig',
+    lvl: 0,
+    lvl_max: 3,
+    lvl_max_max: 5,
+    time: 3600,
+    avantage_per_lvl: 0.1,
+    reduce_time_seconds: 600,
+    ...overrides,
+  };
+}
+
+describe('time', () => {
+  it('formate des secondes en HHhMM', () => {
+    expect(formatTimeToString(0)).toBe('00h00');
+    expect(formatTimeToString(3 * 3600 + 5 * 60 + 59)).toBe('03h05');
+    expect(formatTimeToString(23 * 3600 + 59 * 60)).toBe('23h59');
+  });
+
+  it("vérifie qu'une action se termine avant la fin de journée", () => {
+    expect(enoughTime(100, 900, 1000)).toBeTrue();
+    expect(enoughTime(101, 900, 1000)).toBeFalse();
+    expect(enoughTime(1000, undefined, 1000)).toBeTrue();
+  });
+});
+
+describe('inventory', () => {
+  it('contient toutes les ressources demandées', () => {
+    expect(contains({ wood: 3, stone: 1 }, { wood: 3 })).toBeTrue();
+    expect(contains({ wood: 2, stone: 1 }, { wood: 3 })).toBeFalse();
+    expect(contains({ wood: 3 }, { metal: 1 })).toBeFalse();
+    expect(contains({ wood: 3 }, {})).toBeTrue();
+  });
+});
+
+describe('xp', () => {
+  it('lvlToXp et xpToLvl sont cohérents', () => {
+    for (const lvl of [1, 5, 10, 25]) {
+      expect(xpToLvl(lvlToXp(lvl) + 10)).toBe(lvl);
+    }
+  });
+
+  it('renvoie un ratio de progression entre 0 et 100', () => {
+    const { ratio } = XPToLVLandXP(12345);
+    expect(ratio).toBeGreaterThanOrEqual(0);
+    expect(ratio).toBeLessThanOrEqual(100);
+  });
+});
+
+describe('bonuses', () => {
+  const defaultValues = { ...createDefaultDefaultValuesModel(), BONUS_PRICE_MULTIPLIER: 2 };
+  const references: Record<number, BonusWithoutLvl> = {
+    1: { id: 1, name: 'Money Maker', description: '', icon: '', price: 500, lvl_max: 20, value: 0.05 },
+    2: { id: 2, name: 'Defenser', description: '', icon: '', price: 1000, lvl_max: 2, value: 1 },
+  };
+
+  it('calcule le prix comme le back (prix × multiplicateur ^ niveau)', () => {
+    expect(bonusPrice(references[1], 0, defaultValues)).toBe(500);
+    expect(bonusPrice(references[1], 3, defaultValues)).toBe(4000);
+  });
+
+  it('associe chaque bonus à son niveau par id', () => {
+    const stats = { ...createDefaultStatsModel(), money: 2000, bonuses: { 1: 2, 2: 2 } };
+    const bonuses = computeBonuses(stats, defaultValues, references);
+
+    expect(bonuses[1].lvl).toBe(2);
+    expect(bonuses[1].nextPrice).toBe(2000);
+    expect(bonuses[1].enoughMoney).toBeTrue();
+    expect(bonuses[2].enoughLvlMax).toBeFalse();
+    expect(bonuses[2].enoughMoney).toBeFalse();
+  });
+
+  it('renvoie un objet vide tant que les références ne sont pas chargées', () => {
+    expect(computeBonuses(createDefaultStatsModel(), defaultValues, {})).toEqual({});
+  });
+
+  it('vaut 0 pour un bonus absent et valeur × niveau sinon', () => {
+    expect(bonusEffect(undefined)).toBe(0);
+    expect(bonusEffect(bonus(5, 0.02, 3))).toBeCloseTo(0.06);
+  });
+});
+
+describe('buildings', () => {
+  const defaultValues = createDefaultDefaultValuesModel();
+
+  it('applique les bonus de construction au temps requis', () => {
+    const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
+    // 3600 × (1 - 5 × 2 %) - 2 min = 3120 s
+    const [result] = calculateAdvancedBuildings(city, { 4: bonus(4, 1, 2), 5: bonus(5, 0.02, 5) }, defaultValues);
+
+    expect(result.timeString).toBe('00h52');
+    expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3120);
+  });
+
+  it('fonctionne avant le chargement des bonus', () => {
+    const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
+    const [result] = calculateAdvancedBuildings(city, {}, defaultValues);
+    expect(result.timeString).toBe('01h00');
+  });
+
+  it('masque les bâtiments au niveau max et trie les constructibles en premier', () => {
+    const city: CityModel = {
+      ...createDefaultCityModel(),
+      inventory: { wood: 5, stone: 0, screw: 0, metal: 0, patch: 0 },
+      buildings: [
+        building({ id: 1, name: 'too expensive', inventory: { wood: 10 } }),
+        building({ id: 2, name: 'affordable', inventory: { wood: 5 } }),
+        building({ id: 3, name: 'maxed', lvl: 5, lvl_max: 5 }),
+      ],
+    };
+    const result = calculateAdvancedBuildings(city, {}, defaultValues);
+
+    expect(result.map((b) => b.name)).toEqual(['affordable', 'too expensive']);
+    expect(result[0].enoughRessources).toBeTrue();
+  });
+});
+
+describe('skills', () => {
+  const defaultValues = createDefaultDefaultValuesModel();
+
+  it('applique le bonus Efficient Learner selon son niveau', () => {
+    const city: CityModel = { ...createDefaultCityModel(), skills: [skill({ time: 3600, lvl: 0 })] };
+
+    const [withoutBonus] = calculateAdvancedSkills(city, { 9: bonus(9, 0.02, 0) }, defaultValues);
+    const [withBonus] = calculateAdvancedSkills(city, { 9: bonus(9, 0.02, 5) }, defaultValues);
+
+    expect(withoutBonus.expirationCityTime).toBe(defaultValues.day_end_time - 3600);
+    expect(withBonus.expirationCityTime).toBe(defaultValues.day_end_time - 3240);
+  });
+
+  it('multiplie le temps à chaque niveau et ignore les compétences non débloquées', () => {
+    const city: CityModel = {
+      ...createDefaultCityModel(),
+      skills: [skill({ id: 1, lvl: 2 }), skill({ id: 2, lvl_max: 0 })],
+    };
+    const result = calculateAdvancedSkills(city, {}, defaultValues);
+
+    expect(result.length).toBe(1);
+    // 3600 × 1.5² = 8100 s
+    expect(result[0].timeString).toBe('02h15');
+    expect(result[0].percentageEfficacityStringBefore).toBe('80%');
+    expect(result[0].percentageEfficacityStringAfter).toBe('70%');
+  });
+});

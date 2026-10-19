@@ -1,32 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlayRoute, readPlayRoute, RoutesEnum } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
+import { StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 
 @Component({
   selector: 'app-city-footer',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [NgClass],
   templateUrl: './city-footer.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./city-footer.component.scss'],
 })
-export class CityFooterComponent implements OnInit {
+export class CityFooterComponent {
   private router = inject(Router);
-
-  content = 'dig';
   cityService = inject(CityService);
 
-  ngOnInit(): void {
-    const content = localStorage.getItem('play-route');
-    if (content && content.length > 0) {
-      this.content = content;
-    }
-  }
+  content = signal<PlayRoute>(readPlayRoute());
 
-  changeContent(content: string) {
-    this.content = content;
-    localStorage.setItem('play-route', content);
-    this.router.navigate(['play/' + content]);
+  changeContent(content: PlayRoute) {
+    this.content.set(content);
+    writeStorage(StorageKey.PLAY_ROUTE, content);
+    this.router.navigate([RoutesEnum.PLAY, content]);
   }
 }

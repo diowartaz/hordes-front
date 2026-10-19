@@ -1,60 +1,55 @@
-import { Component, computed, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, signal, DestroyRef } from '@angular/core';
+import { KeyValuePipe, NgStyle } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
-import { CommonModule } from '@angular/common';
 import { ItemModel } from 'src/app/models/hordes';
 import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
+import { bonusEffect } from 'src/app/shared/utils/bonuses';
 import { enoughTime, formatTimeToString } from 'src/app/shared/utils/time';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { readStorage, StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 
 @Component({
   selector: 'app-diggings',
-  standalone: true,
-  imports: [CommonModule, ItemIconPipe],
+  imports: [KeyValuePipe, NgStyle, ItemIconPipe],
   templateUrl: './diggings.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./diggings.component.scss'],
 })
 export class DiggingsComponent {
-  private _snackBar = inject(MatSnackBar);
-
-  dialogMessage = 'init';
-  snackBarOpened = false;
   cityService = inject(CityService);
-  nbDigs = signal(Number(localStorage.getItem('nb-dig')) || 1);
-  private destroyRef = inject(DestroyRef);
+
+  dialogMessage = signal('');
+  snackBarOpened = signal(false);
+  nbDigs = signal(Number(readStorage(StorageKey.NB_DIG)) || 1);
+  private snackBarTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.snackBarTimeout));
+  }
 
   totalRequiredTime = computed(() => {
-    const flatBonus = this.cityService.bonuses()[6];
-    const percentBonus = this.cityService.bonuses()[7];
+    const flatBonusMinutes = bonusEffect(this.cityService.bonuses()[6]);
+    const percentBonus = bonusEffect(this.cityService.bonuses()[7]);
+    const { dig, general } = this.cityService.city().speeds;
     return (
       this.nbDigs() *
-      (this.cityService.defaultValues().digging_time *
-        this.cityService.city().speeds.dig *
-        this.cityService.city().speeds.general *
-        (1 - percentBonus.value * percentBonus.lvl) -
-        flatBonus.value * flatBonus.lvl * 60)
+      (this.cityService.defaultValues().digging_time * dig * general * (1 - percentBonus) - flatBonusMinutes * 60)
     );
   });
 
-  totalRequiredTimeString = computed(() => {
-    return formatTimeToString(this.totalRequiredTime());
-  });
+  totalRequiredTimeString = computed(() => formatTimeToString(this.totalRequiredTime()));
 
-  enoughTime = computed(() => {
-    return enoughTime(
+  enoughTime = computed(() =>
+    enoughTime(
       this.totalRequiredTime(),
       this.cityService.cityTimeSeconds(),
       this.cityService.defaultValues().day_end_time,
-    );
-  });
+    ),
+  );
 
-  disableMinusDigs = computed(() => {
-    return this.nbDigs() - 1 < 1;
-  });
+  disableMinusDigs = computed(() => this.nbDigs() - 1 < 1);
 
   addDigs(nb: number) {
     this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
-    localStorage.setItem('nb-dig', this.nbDigs().toString());
+    writeStorage(StorageKey.NB_DIG, this.nbDigs().toString());
   }
 
   castKey(key: string): ItemModel {
@@ -62,19 +57,17 @@ export class DiggingsComponent {
   }
 
   openSnackBar(message: string) {
-    if (this.snackBarOpened) {
+    if (this.snackBarOpened()) {
       return;
     }
-    this.dialogMessage = message;
-    this.snackBarOpened = true;
+    this.dialogMessage.set(message);
+    this.snackBarOpened.set(true);
+    this.snackBarTimeout = setTimeout(() => this.closeSnackBar(), 1000);
+  }
 
-    const timeout = setTimeout(() => {
-      this.closeSnackBar();
-    }, 1000);
-
-    this.destroyRef.onDestroy(() => {
-      clearTimeout(timeout);
-    });
+  closeSnackBar() {
+    clearTimeout(this.snackBarTimeout);
+    this.snackBarOpened.set(false);
   }
 
   dig() {
@@ -83,9 +76,5 @@ export class DiggingsComponent {
       return;
     }
     this.cityService.findItems(this.nbDigs());
-  }
-
-  closeSnackBar() {
-    this.snackBarOpened = false;
   }
 }

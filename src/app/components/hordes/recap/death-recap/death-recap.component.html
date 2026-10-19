@@ -8,29 +8,40 @@
         <div>You died!</div>
       </div>
 
-      <app-game
-        style="width: 100%"
-        [game]="cityService.stats().match_history[cityService.stats().match_history.length - 1]"
-      ></app-game>
+      @if (lastGame(); as game) {
+        <app-game style="width: 100%" [game]="game"></app-game>
+      }
 
       <div class="earning-wrapper">
         <div class="container earning">
           <div class="title">Rewards</div>
           <div class="line">
             <div>Base</div>
-            <div class="money">{{ cityService.city().attackRecap.base_money }} <div class="icon">💰</div></div>
+            <div class="money">
+              {{ cityService.city().attackRecap.base_money }}
+              <div class="icon">💰</div>
+            </div>
           </div>
           <div class="line">
             <div>Ranked</div>
-            <div class="money">{{ cityService.city().attackRecap.ranked_money }} <div class="icon">💰</div></div>
+            <div class="money">
+              {{ cityService.city().attackRecap.ranked_money }}
+              <div class="icon">💰</div>
+            </div>
           </div>
           <div class="line">
             <div>Bonus</div>
-            <div class="money">{{ cityService.city().attackRecap.bonus_money }} <div class="icon">💰</div></div>
+            <div class="money">
+              {{ cityService.city().attackRecap.bonus_money }}
+              <div class="icon">💰</div>
+            </div>
           </div>
           <div class="line">
             <div>Total</div>
-            <div class="money">{{ cityService.city().attackRecap.total_money }} <div class="icon">💰</div></div>
+            <div class="money">
+              {{ cityService.city().attackRecap.total_money }}
+              <div class="icon">💰</div>
+            </div>
           </div>
         </div>
       </div>
