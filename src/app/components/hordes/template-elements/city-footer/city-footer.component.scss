@@ -9,16 +9,6 @@
   background: var(--surface-nav);
   border: 1px solid var(--line);
 
-  .speed-chip {
-    position: absolute;
-    top: -13px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    white-space: nowrap;
-    background: var(--surface-solid);
-  }
-
   .footer-btn {
     position: relative;
     height: 60px;
@@ -46,16 +36,6 @@
       app-icon {
         color: var(--c);
       }
-    }
-    .boost-dot {
-      position: absolute;
-      top: 6px;
-      right: 14px;
-      width: 8px;
-      height: 8px;
-      border-radius: 4px;
-      background: var(--pink);
-      box-shadow: 0 0 8px var(--pink);
     }
   }
 }

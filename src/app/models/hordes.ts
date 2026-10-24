@@ -45,7 +45,6 @@ export function createDefaultCityModel(): CityModel {
       dig: 1,
       learn: 1,
       insomniac: 1,
-      general: 1,
     },
     last_timestamp_request: new Date().getTime(),
     state: 'noCity',
@@ -63,7 +62,6 @@ export function createDefaultCityModel(): CityModel {
     },
     ranked: false,
     defaultCity: true,
-    last_action: null,
   };
 }
 
@@ -84,7 +82,6 @@ export interface CityModel {
   attackRecap: AttackRecapModel;
   defaultCity?: boolean;
   ranked: boolean;
-  last_action: string | null;
 }
 
 export interface AttackRecapModel {
@@ -106,7 +103,6 @@ export interface SpeedsModel {
   dig: number;
   learn: number;
   insomniac: number;
-  general: number;
 }
 
 export function createDefaultBuildingModel(): BuildingModel {

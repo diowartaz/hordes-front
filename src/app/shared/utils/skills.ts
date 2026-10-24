@@ -14,7 +14,6 @@ export function calculateAdvancedSkills(
       (1 - percentBonus) *
       skill.time *
       city.speeds.learn *
-      city.speeds.general *
       defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
     const advancedSkill: AdvancedSkillModel = {
       ...skill,

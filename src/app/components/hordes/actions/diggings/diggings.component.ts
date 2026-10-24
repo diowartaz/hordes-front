@@ -30,10 +30,10 @@ export class DiggingsComponent {
   totalRequiredTime = computed(() => {
     const flatBonusMinutes = bonusEffect(this.cityService.bonuses()[6]);
     const percentBonus = bonusEffect(this.cityService.bonuses()[7]);
-    const { dig, general } = this.cityService.city().speeds;
+    const { dig } = this.cityService.city().speeds;
     return (
       this.nbDigs() *
-      (this.cityService.defaultValues().digging_time * dig * general * (1 - percentBonus) - flatBonusMinutes * 60)
+      (this.cityService.defaultValues().digging_time * dig * (1 - percentBonus) - flatBonusMinutes * 60)
     );
   });
 

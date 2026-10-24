@@ -114,7 +114,6 @@ export function toCityModel(city: ApiCity): CityModel {
     state: stateFromCity(city),
     attackRecap: toAttackRecap(city.attackRecap),
     ranked: city.ranked,
-    last_action: city.lastAction,
   };
 }
 

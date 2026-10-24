@@ -420,7 +420,6 @@ export interface components {
       learn: number;
       dig: number;
       insomniac: number;
-      general: number;
     };
     ItemQuantitiesResponse: {
       wood?: number;
@@ -504,8 +503,6 @@ export interface components {
       buildings: components['schemas']['BuildingResponse'][];
       skills: components['schemas']['SkillResponse'][];
       zombies: components['schemas']['ZombiesResponse'];
-      /** @enum {string|null} */
-      lastAction: 'build' | 'learn' | 'dig' | null;
       /** Format: date-time */
       lastActivityAt: string;
       /** @description Durée d'une fouille, en secondes de jeu */

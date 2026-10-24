@@ -30,9 +30,6 @@ export class CityFooterComponent {
     return PLAY_ROUTES.includes(segment) ? segment : readPlayRoute();
   });
 
-  // Bonus de productivité (en %), affiché au-dessus de la barre
-  speedVariation = computed(() => Math.round(-(this.cityService.city().speeds.general * 100 - 100)));
-
   readonly tabs: { route: PlayRoute; label: string; icon: IconName; color: string }[] = [
     { route: 'dig', label: 'Dig', icon: 'dig', color: 'var(--yellow)' },
     { route: 'learn', label: 'Learn', icon: 'book', color: 'var(--cyan)' },

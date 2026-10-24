@@ -1,13 +1,4 @@
 <nav class="footer" aria-label="City actions">
-  @if (speedVariation() !== 0) {
-    <span
-      class="neon-chip speed-chip"
-      title="Productivity bonus: switch between actions to speed up"
-      [style.--c]="speedVariation() > 0 ? 'var(--green)' : 'var(--danger)'"
-    >
-      <app-icon name="rocket" [size]="14" />{{ speedVariation() > 0 ? '+' : '' }}{{ speedVariation() }}% speed
-    </span>
-  }
   @for (tab of tabs; track tab.route) {
     <button
       type="button"
@@ -18,9 +9,6 @@
     >
       <app-icon [name]="tab.icon" [size]="24" />
       <span>{{ tab.label }}</span>
-      @if (cityService.city().last_action !== tab.route) {
-        <span class="boost-dot" title="Speed bonus available"></span>
-      }
     </button>
   }
 </nav>
