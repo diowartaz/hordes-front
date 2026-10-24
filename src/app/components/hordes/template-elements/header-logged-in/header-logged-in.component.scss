@@ -95,4 +95,34 @@
       padding: 2px 4px;
     }
   }
+
+  // Très petits écrans (320px) : tout doit tenir sans débordement horizontal
+  @media (max-width: 360px) {
+    gap: 4px;
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+    }
+    .coins {
+      min-width: 0;
+      height: 36px;
+      gap: 4px;
+      padding: 0 8px 0 3px;
+      border-radius: 12px;
+      .coins-plus {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+      }
+      .coins-amount {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .no-cloud-save {
+      font-size: 8px;
+      padding: 2px 3px;
+    }
+  }
 }

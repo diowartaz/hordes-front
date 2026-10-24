@@ -16,7 +16,7 @@
 
 .versus {
   display: grid;
-  grid-template-columns: 1fr 54px 1fr;
+  grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr);
   align-items: center;
   gap: 6px;
   .side {
@@ -78,6 +78,7 @@
   .balance-head {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -104,6 +105,43 @@
       flex: 1;
       background: var(--danger);
       box-shadow: 0 0 10px var(--danger);
+    }
+  }
+}
+
+// Très petits écrans (320px)
+@media (max-width: 360px) {
+  .title .neon-title {
+    font-size: 22px;
+  }
+  .versus {
+    grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+    gap: 4px;
+    .side {
+      padding: 14px 6px;
+      .icon-tile {
+        width: 44px;
+        height: 44px;
+      }
+      .side-label {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+      .side-value {
+        font-size: 34px;
+      }
+    }
+    .vs {
+      width: 40px;
+      height: 40px;
+      font-size: 13px;
+    }
+  }
+  .balance {
+    padding: 10px 12px;
+    .balance-head {
+      font-size: 11px;
+      letter-spacing: 0.06em;
     }
   }
 }

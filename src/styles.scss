@@ -530,6 +530,31 @@ input[type='checkbox'] {
   }
 }
 
+// === Très petits écrans (320px) ===
+@media (max-width: 360px) {
+  .neon-title {
+    font-size: 20px;
+  }
+  .label,
+  .neon-chip {
+    letter-spacing: 0.06em;
+  }
+  .cta,
+  .yellow-button {
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .ghost-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .play-content {
+    padding: 4px 12px 12px;
+  }
+}
+
 // === Angular Material ===
 
 .mat-mdc-progress-spinner {

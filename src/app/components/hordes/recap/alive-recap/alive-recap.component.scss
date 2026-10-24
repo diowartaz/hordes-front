@@ -71,3 +71,24 @@
     color: #c9f8e0;
   }
 }
+
+// Très petits écrans (320px)
+@media (max-width: 360px) {
+  .recap {
+    .scroll {
+      padding: 4px 12px 12px;
+    }
+    .footer {
+      padding: 8px 12px 16px;
+    }
+  }
+  .result {
+    padding: 16px 12px;
+    .result-title {
+      font-size: 22px;
+    }
+    .result-sub {
+      font-size: 14px;
+    }
+  }
+}
