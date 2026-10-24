@@ -3,18 +3,24 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   padding: 8px 16px 20px;
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+// Pousse le lien du guide et les boutons en bas de la page
+.go-to-wiki {
+  margin-top: auto;
 }
 
+// Boutons de lancement flottants en bas de la zone scrollable :
+// enfants directs de :host pour que le sticky s'applique sur toute la hauteur
 .modes {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin: 0 -16px -20px;
+  padding: 24px 16px 20px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 40%);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
