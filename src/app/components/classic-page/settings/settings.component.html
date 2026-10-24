@@ -5,8 +5,10 @@
       @if (authService.tempAccount()) {
         <form class="auth-card upgrade-card" [formGroup]="upgradeForm" (ngSubmit)="upgradeAccount()">
           <header class="auth-head">
-            <app-icon name="user-plus" [size]="28" />
-            <h2 class="neon-title">Save my account</h2>
+            <div class="upgrade-title">
+              <app-icon name="user-plus" [size]="26" />
+              <h2 class="neon-title">Save my account</h2>
+            </div>
             <p class="upgrade-hint">
               You are playing as a guest: your progress is lost if you log out. Add an email and a password to keep it.
             </p>

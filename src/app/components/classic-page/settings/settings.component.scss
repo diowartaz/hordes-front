@@ -10,6 +10,23 @@
 .upgrade-card {
   margin-bottom: 12px;
 
+  // Icône et titre sur une même ligne, le titre ne passe jamais à la ligne
+  .upgrade-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    app-icon {
+      display: flex;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+    .neon-title {
+      font-size: clamp(18px, 5.5vw, 22px);
+      white-space: nowrap;
+    }
+  }
+
   .upgrade-hint {
     margin: 0;
     text-align: center;
