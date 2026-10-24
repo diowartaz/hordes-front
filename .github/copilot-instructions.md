@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Hordes** is a single-player survival strategy game built with **Angular 22** (standalone components). Players manage a city defending against nightly zombie attacks by building structures, learning skills, and collecting resources during limited daytime periods. The frontend communicates with a Node.js/Express/MongoDB backend.
+**Hordes** is a single-player survival strategy game built with **Angular 22** (standalone components). Players manage a city defending against nightly zombie attacks by building structures, learning skills, and collecting resources during limited daytime periods. The frontend communicates with `hordes-api` (NestJS/MongoDB, routes under `/api/v1`). The former Express backend `hordes-back` is obsolete and must not be used.
 
 ## Architecture & State Management
 
@@ -131,7 +131,7 @@ The game uses a real-time to in-game time conversion:
 1. User signs in → JWT token stored in localStorage (always through [storage.ts](src/app/shared/utils/storage.ts))
 2. `authInterceptor` attaches token to all API requests
 3. `AuthService.verifiedToken` computed signal validates token expiry with [jwt.ts](src/app/shared/utils/jwt.ts)
-4. Temporary accounts have `@temp.com` email domain (no Google sign-in)
+4. Guest accounts have an `@temp.invalid` email domain (`@temp.com` for older ones), detected by `AuthService.tempAccount`; they can be converted into a regular account from Settings (`POST auth/guest/upgrade`, which returns a new token)
 
 ### User State Machine
 
@@ -164,18 +164,18 @@ Routes enforce states via `stateGuard` with `data: { allowedStates: [...] }`.
 
 ## Backend Integration
 
-API base URL from `environment.API_URL`, all endpoints relative:
+The backend is `hordes-api` (NestJS). API base URL from `environment.API_URL` (`http://localhost:3000/api/v1/` locally), all endpoints relative. The contract is `hordes-api/openapi.json`; its generated types live in [src/app/models/api.ts](src/app/models/api.ts) and are mapped to front models in `GameApiService`.
 
-- `POST /city/build/:id` - Construct/upgrade building
-- `POST /city/learn/:id` - Train skill
-- `POST /city/item/find/:nb` - Dig for resources
-- `POST /city/day/end` - Trigger night attack
-- `POST /city/day/start` - Begin new day with chosen buildings
-- `GET /player` - Load player state
-- `GET /leaderboard/best-day` - Fetch best day leaderboard
-- `GET /leaderboard/ranked` - Fetch ranked points leaderboard
+- `POST auth/signup`, `POST auth/signin`, `POST auth/guest`, `POST auth/guest/upgrade` - Authentication (`{ token, account }`), in `AuthService`
+- `GET me` - Load player state; `DELETE me` - Delete account
+- `GET catalog` - Game constants (buildings, skills, bonuses)
+- `POST me/city` - Create a city; `POST me/city/dig` - Dig for resources
+- `POST me/city/buildings/:id/upgrade`, `POST me/city/skills/:id/upgrade` - Build / train
+- `POST me/city/day/end`, `POST me/city/day/start` - End the day / start the next one with chosen buildings
+- `POST me/bonuses/:id/level-up` - Buy a bonus
+- `GET leaderboards/best-day`, `GET leaderboards/ranked`, `GET players/:id/profile`
 
-Responses typically include `{ player: {...}, city: {...}, stats: {...}, default_values: {...} }`.
+Errors have the shape `{ statusCode, code, message, details? }` and are displayed by `errorInterceptor`.
 
 ## Key Files Reference
 

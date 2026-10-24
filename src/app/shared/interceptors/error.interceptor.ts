@@ -10,6 +10,7 @@ const SELF_HANDLED: { path: string; status: number }[] = [
   { path: 'auth/signin', status: 401 },
   { path: 'auth/signin', status: 400 },
   { path: 'auth/signup', status: 409 },
+  { path: 'auth/guest/upgrade', status: 409 },
 ];
 
 function errorMessage(error: HttpErrorResponse): string {

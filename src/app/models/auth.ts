@@ -31,3 +31,10 @@ export interface SignUpConflict {
   emailAlreadyExists: boolean;
   usernameAlreadyExists: boolean;
 }
+
+export interface UpgradeGuestParams {
+  email: string;
+  password: string;
+  // Le pseudo invité est conservé s'il est absent
+  username?: string;
+}

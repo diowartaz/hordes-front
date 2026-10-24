@@ -51,6 +51,11 @@ describe('errorInterceptor', () => {
     expect(snackBar.open).not.toHaveBeenCalled();
   });
 
+  it('laisse le formulaire de conversion du compte invité afficher un conflit', () => {
+    failRequest('auth/guest/upgrade', 409, { statusCode: 409, code: 'IDENTITY_TAKEN', details: ['email'] });
+    expect(snackBar.open).not.toHaveBeenCalled();
+  });
+
   it('affiche le message renvoyé par le back', () => {
     failRequest('me/city/buildings/3/upgrade', 422, {
       statusCode: 422,
