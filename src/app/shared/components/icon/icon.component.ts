@@ -13,7 +13,7 @@ const ICONS = {
   'user-plus': '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/>',
   trophy:
     '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
-  book: '<path d="M3 5a2 2 0 0 1 2-2h6v18H5a2 2 0 0 1-2-2zM21 5a2 2 0 0 0-2-2h-6v18h6a2 2 0 0 0 2-2z"/>',
+  book: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5M22 9v6"/>',
   settings:
     '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
   back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
@@ -29,8 +29,9 @@ const ICONS = {
   skull:
     '<path d="M12 3a8 8 0 0 0-8 8c0 3 1.5 4.5 3 5.5V20h10v-3.5c1.5-1 3-2.5 3-5.5a8 8 0 0 0-8-8z"/><circle cx="9" cy="11" r="1.5"/><circle cx="15" cy="11" r="1.5"/><path d="M10 20v-2M14 20v-2"/>',
   moon: '<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',
-  dig: '<path d="M14 4l6 6M17 7l-8 8"/><path d="M9 15l-4 1-1 4 4-1z"/>',
-  build: '<path d="M14 6l4 4M3 21l9-9"/><path d="M12 4l6-1 3 3-1 6-4-4z"/>',
+  dig: '<path d="M17 3l4 4M19 5l-8.5 8.5"/><path d="M8 11l5 5-4 4c-1.5 1.5-4 1.5-5 .5s-1-3.5.5-5z"/>',
+  build:
+    '<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9.3h18M3 14.6h18M12 4v5.3M7.5 9.3v5.3M16.5 9.3v5.3M12 14.6V20"/>',
   bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
   trend: '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
