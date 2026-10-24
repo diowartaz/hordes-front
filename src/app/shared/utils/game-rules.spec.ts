@@ -111,6 +111,15 @@ describe('bonuses', () => {
     expect(bonuses[2].enoughMoney).toBeFalse();
   });
 
+  it('liste tout le catalogue au niveau 0 pour un joueur sans bonus', () => {
+    const stats = { ...createDefaultStatsModel(), money: 0, bonuses: {} };
+    const bonuses = computeBonuses(stats, defaultValues, references);
+
+    expect(Object.keys(bonuses).length).toBe(2);
+    expect(bonuses[1].lvl).toBe(0);
+    expect(bonuses[1].nextPrice).toBe(500);
+  });
+
   it('renvoie un objet vide tant que les références ne sont pas chargées', () => {
     expect(computeBonuses(createDefaultStatsModel(), defaultValues, {})).toEqual({});
   });

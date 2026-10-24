@@ -15,10 +15,8 @@ export function computeBonuses(
   defaultValues: DefaultValuesModel,
   referencesBonuses: Record<number, BonusWithoutLvl>,
 ): Record<number, AdvancedBonus> {
-  const hasBonuses = Object.keys(stats.bonuses).length > 0;
-  const hasReferences = Object.keys(referencesBonuses).length > 0;
-
-  if (!hasBonuses || !hasReferences) {
+  // Un joueur sans aucun niveau acheté (bonusLevels vide) doit quand même voir tout le catalogue
+  if (Object.keys(referencesBonuses).length === 0) {
     return {};
   }
 
