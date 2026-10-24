@@ -1,150 +1,99 @@
-<div class="content">
-  <form class="login-form" [formGroup]="formgroup">
-    <h1 style="font-size: 32px; margin: 16px">User Sign Up</h1>
+<form class="auth-card" [formGroup]="formgroup" (ngSubmit)="signUp()">
+  <header class="auth-head">
+    <app-icon name="user-plus" [size]="32" />
+    <h1 class="neon-title">Sign up</h1>
+  </header>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('email') || emailAlreadyExists() ? { 'border-color': 'red' } : null"
-    >
-      <i class="material-icons icon-input-field">mail</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="email"
-        class="input-field"
-        required
-        placeholder="Email"
-        autocomplete="off"
-        formControlName="email"
-      />
-    </div>
+  <label class="neon-field" [class.invalid]="fieldHasError('email') || emailAlreadyExists()">
+    <app-icon name="mail" [size]="20" />
+    <input type="email" required placeholder="Email" autocomplete="email" formControlName="email" />
+  </label>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('username') || usernameAlreadyExists() ? { 'border-color': 'red' } : null"
-    >
-      <i class="material-icons icon-input-field">person</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="text"
-        class="input-field"
-        required
-        placeholder="Username"
-        autocomplete="off"
-        formControlName="username"
-      />
-    </div>
+  <label class="neon-field" [class.invalid]="fieldHasError('username') || usernameAlreadyExists()">
+    <app-icon name="user" [size]="20" />
+    <input type="text" required placeholder="Username" autocomplete="username" formControlName="username" />
+  </label>
 
-    <div class="input-wrapper" [ngStyle]="fieldHasError('password') ? { 'border-color': 'red' } : null">
-      <i class="material-icons icon-input-field">lock</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="password"
-        class="input-field"
-        required
-        placeholder="Password"
-        autocomplete="off"
-        formControlName="password"
-      />
-    </div>
+  <label class="neon-field" [class.invalid]="fieldHasError('password')">
+    <app-icon name="lock" [size]="20" />
+    <input type="password" required placeholder="Password" autocomplete="new-password" formControlName="password" />
+  </label>
 
-    <div
-      class="input-wrapper"
-      [ngStyle]="fieldHasError('confirmPassword') ? { 'border-color': 'red' } : null"
-      style="margin-bottom: 0px !important"
-    >
-      <i class="material-icons icon-input-field">lock</i>
-      <input
-        (keyup.enter)="signUp()"
-        type="password"
-        class="input-field"
-        required
-        placeholder="Confirm Password"
-        autocomplete="off"
-        formControlName="confirmPassword"
-      />
-    </div>
+  <label class="neon-field" [class.invalid]="fieldHasError('confirmPassword')">
+    <app-icon name="lock" [size]="20" />
+    <input
+      type="password"
+      required
+      placeholder="Confirm password"
+      autocomplete="new-password"
+      formControlName="confirmPassword"
+    />
+  </label>
 
-    <div class="errors-wrapper">
-      @if (fieldHasError('email')) {
-        <div>
-          @if (formgroup.controls.email.errors?.['required']) {
-            <span>Email is required</span>
-          }
-          @if (formgroup.controls.email.errors?.['pattern']) {
-            <span>Email must be valid</span>
-          }
-        </div>
+  <div class="auth-errors" aria-live="polite">
+    @if (fieldHasError('email')) {
+      @if (formgroup.controls.email.errors?.['required']) {
+        <span>Email is required</span>
       }
+      @if (formgroup.controls.email.errors?.['pattern']) {
+        <span>Email must be valid</span>
+      }
+    }
 
-      @if (fieldHasError('username')) {
-        <div>
-          @if (formgroup.controls.username.errors?.['required']) {
-            <span>Username is required</span>
-          }
-          @if (formgroup.controls.username.errors?.['notValid']) {
-            <span>Username: 3 characters minimum</span>
-          }
-          @if (formgroup.controls.username.errors?.['max15']) {
-            <span>Username: 15 characters maximum</span>
-          }
-        </div>
+    @if (fieldHasError('username')) {
+      @if (formgroup.controls.username.errors?.['required']) {
+        <span>Username is required</span>
       }
+      @if (formgroup.controls.username.errors?.['notValid']) {
+        <span>Username: 3 characters minimum</span>
+      }
+      @if (formgroup.controls.username.errors?.['max15']) {
+        <span>Username: 15 characters maximum</span>
+      }
+    }
 
-      @if (fieldHasError('password')) {
-        <div>
-          @if (formgroup.controls.password.errors?.['required']) {
-            <span>Password is required</span>
-          }
-          @if (formgroup.controls.password.errors?.['min8']) {
-            <span>Password: 8 characters minimum</span>
-          }
-        </div>
+    @if (fieldHasError('password')) {
+      @if (formgroup.controls.password.errors?.['required']) {
+        <span>Password is required</span>
       }
+      @if (formgroup.controls.password.errors?.['min8']) {
+        <span>Password: 8 characters minimum</span>
+      }
+    }
 
-      @if (fieldHasError('confirmPassword')) {
-        <div>
-          @if (formgroup.controls.confirmPassword.errors?.['required']) {
-            <span>Confirm password is required</span>
-          }
-          @if (formgroup.controls.confirmPassword.errors?.['noMatchPassword']) {
-            <span>Password and Confirm password must match</span>
-          }
-        </div>
+    @if (fieldHasError('confirmPassword')) {
+      @if (formgroup.controls.confirmPassword.errors?.['required']) {
+        <span>Confirm password is required</span>
       }
+      @if (formgroup.controls.confirmPassword.errors?.['noMatchPassword']) {
+        <span>Password and Confirm password must match</span>
+      }
+    }
 
-      @if (emailAlreadyExists()) {
-        <div>
-          <span>Email already used</span>
-        </div>
-      }
+    @if (emailAlreadyExists()) {
+      <span>Email already used</span>
+    }
 
-      @if (usernameAlreadyExists()) {
-        <div>
-          <span>Username already used</span>
-        </div>
-      }
-    </div>
+    @if (usernameAlreadyExists()) {
+      <span>Username already used</span>
+    }
+  </div>
 
-    <div class="button-wrapper" type="submit" (click)="signUp()">
-      @if (!loading()) {
-        <i class="material-icons login-icon">login</i>
-      }
-      @if (!loading()) {
-        <div class="login-text">Sign Up</div>
-      }
+  <button type="submit" class="cta cta-pink">
+    @if (loading()) {
+      <mat-spinner diameter="22"></mat-spinner>
+      Signing up…
+    } @else {
+      <app-icon name="user-plus" [size]="20" />
+      Sign up
+    }
+  </button>
 
-      @if (loading()) {
-        <mat-spinner diameter="24" class="spinner"></mat-spinner>
-      }
-      @if (loading()) {
-        <div class="login-text">Signing Up...</div>
-      }
-    </div>
-
-    <div class="text-button" (click)="goToSignIn()">Already have an account ? Sign In</div>
-    <div class="text-button" style="margin-top: 4px" (click)="authService.signInTemp()">Play as guest</div>
-    <a href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-      <img alt="discord icon" style="height: 50px; margin-top: 12px" src="assets/icons/discord_icon.png"
-    /></a>
-  </form>
-</div>
+  <div class="auth-links">
+    <button type="button" class="text-btn" (click)="goToSignIn()">Already have an account? Sign in</button>
+    <button type="button" class="text-btn" (click)="authService.signInTemp()">Play as guest</button>
+    <a class="text-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank" rel="noopener">
+      <app-icon name="friends" [size]="16" />Join the Discord
+    </a>
+  </div>
+</form>

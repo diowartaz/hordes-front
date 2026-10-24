@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameHistoryPlayerModel } from 'src/app/models/hordes';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-subgame',
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './subgame.component.html',
   styleUrls: ['./subgame.component.scss'],
 })

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignInParams } from '../../models/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgStyle } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { readStorage, StorageKey } from 'src/app/shared/utils/storage';
@@ -18,7 +18,7 @@ interface SignInForm {
 
 @Component({
   selector: 'app-login',
-  imports: [NgStyle, ReactiveFormsModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule, IconComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

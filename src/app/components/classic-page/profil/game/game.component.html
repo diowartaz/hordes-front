@@ -1,4 +1,12 @@
-<div class="container" [style.border-color]="color[win]">
+<div class="game" [class.win]="game.win === true" [class.loss]="game.win === false">
+  <div class="game-head">
+    <span class="neon-chip" [style.--c]="game.ranked ? 'var(--yellow)' : 'var(--cyan)'">
+      {{ game.ranked ? 'Ranked' : 'Normal' }}
+    </span>
+    @if (game.win !== null) {
+      <span class="result">{{ game.win ? 'Victory' : 'Defeat' }}</span>
+    }
+  </div>
   <app-subgame
     [gameHistoryPlayer]="game.player1"
     [win]="game.win"

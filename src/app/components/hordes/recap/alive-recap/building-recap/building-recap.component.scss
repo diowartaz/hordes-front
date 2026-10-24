@@ -1,40 +1,68 @@
+:host {
+  display: block;
+}
+
 .building {
   display: flex;
-  flex-direction: column;
-  color: var(--white);
-  gap: 8px;
-  padding: 4px;
-  font-size: 13px;
-  @media (max-width: 550px) {
-    .line {
-      flex-direction: column;
-    }
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, transparent);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  .tier {
+    width: 6px;
+    flex: none;
+    border-radius: 3px;
+    background: var(--c);
+    box-shadow: 0 0 10px var(--c);
   }
-  .line {
+
+  .body {
+    flex: 1;
+    min-width: 0;
     display: flex;
-    justify-content: space-between;
-    gap: 4px;
-    width: 100%;
-    .line-right {
-      display: flex;
-      gap: 6px;
-    }
+    flex-direction: column;
+    gap: 6px;
   }
-  .element-wrapper {
+
+  .row {
     display: flex;
-    gap: 2px;
     align-items: center;
-    .icon {
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-    }
-    .text {
-      height: fit-content;
-      line-height: 14px;
-    }
+    gap: 6px;
   }
-  .percentdef {
-    margin-bottom: 0px !important;
+
+  .name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .def {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--yellow);
+  }
+
+  .meta {
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-mute);
+    span {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
   }
 }

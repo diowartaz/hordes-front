@@ -1,6 +1,6 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GameApiService } from 'src/app/services/game-api/game-api.service';
@@ -8,10 +8,13 @@ import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClassicPageComponent } from '../classic-page.component';
 import { GameHistoryPlayerModel, ProfilModel } from 'src/app/models/hordes';
+import { RoutesEnum } from 'src/app/models/router';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-profil',
-  imports: [GameComponent, MatProgressSpinnerModule, ClassicPageComponent],
+  imports: [GameComponent, MatProgressSpinnerModule, ClassicPageComponent, IconComponent, RouterLink],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })
@@ -21,8 +24,12 @@ export class ProfilComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
+  readonly RoutesEnum = RoutesEnum;
+
   getProfilLoading = signal(false);
   profil = signal<ProfilModel | null>(null);
+
+  level = computed(() => XPToLVLandXP(this.profil()?.xp ?? 0));
 
   // Historique du plus récent au plus ancien, avec le résultat calculé pour le joueur 1
   matchHistory = computed(() =>

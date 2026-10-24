@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { ClassicPageComponent } from '../classic-page.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-settings',
-  imports: [ClassicPageComponent],
+  imports: [ClassicPageComponent, IconComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })

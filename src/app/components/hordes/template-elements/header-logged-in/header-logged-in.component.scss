@@ -1,175 +1,98 @@
-.boundary {
+.top-bar {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  @media (max-width: 550px) {
-    .lvl-wrapper {
-      display: none !important; /* Remplace le défaut: 2 éléments par ligne */
-    }
-    .xp-bar-wrapper {
-      display: none !important; /* Remplace le défaut: 2 éléments par ligne */
-    }
+  align-items: center;
+  gap: 8px;
+
+  .spacer {
+    flex: 1;
   }
-  .left-part {
-    max-width: 400px;
-    margin-right: 16px;
-    width: 100%;
+
+  .coins {
+    position: relative;
     display: flex;
     align-items: center;
-    flex: 1;
     gap: 8px;
+    height: 44px;
+    padding: 0 12px 0 4px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid rgba(255, 214, 10, 0.45);
+    box-shadow: 0 0 16px rgba(255, 214, 10, 0.25);
+    color: var(--yellow);
 
-    .lvl-wrapper {
-      position: relative;
-      text-align: center;
-      width: 74.65px;
-      height: 0px;
-      display: flex;
-      margin-top: -64px;
-      margin-right: -16px;
-      margin-left: -12px;
-      .lvl-icon {
-        height: 64px;
-        width: 64px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-      }
-      .lvl {
-        color: var(--white);
-        font-weight: bold;
-        position: absolute;
-        top: 22px;
-        left: 12px;
-        z-index: 2;
-        width: 100%;
-      }
-    }
-    .xp-bar-wrapper {
-      position: relative;
-      width: 100%;
+    .coins-plus {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--pink);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      .xp-bar-string {
-        position: absolute;
-        font-size: 12px;
-        color: var(--white);
-        font-weight: 500;
-      }
+      box-shadow: 0 0 14px var(--pink);
     }
-    .progress-bar {
-      height: 16px;
-      width: 100%;
-      background: var(--gray-darkest);
-      border: var(--border-white-transparent);
-      border-radius: 5px;
-      .progress {
-        height: 100%;
-        background: linear-gradient(90deg, var(--purple-gradient-start), var(--purple-gradient-end));
-      }
+    .coins-amount {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 18px;
+      text-shadow: 0 0 10px rgba(255, 214, 10, 0.6);
     }
-  }
-
-  .right-part {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 8px;
-    margin-left: auto;
-    img {
-      height: 24px;
-      width: 24px;
-    }
-    .emoticon {
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
+    .coins-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 4px;
+      border-radius: 11px;
+      background: var(--green);
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px var(--green);
     }
   }
 
-  .currency-bar {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--white);
-  }
-
-  .currency {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(180deg, var(--green-gradient-start), var(--green-gradient-end));
-    border-radius: 12px;
-    padding: 4px 10px;
-    box-shadow: var(--box-shadow-currency);
-  }
-
-  .currency span {
-    margin: 0 6px;
-  }
-
-  .currency.gold {
-    color: var(--white);
-  }
-
-  .currency.gold .icon {
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold-dark));
-    border-radius: 50%;
-    box-shadow: var(--box-shadow-gold);
-  }
-
-  .plus {
-    background: var(--primary-blue-hover);
-    color: var(--white);
-    font-weight: bold;
-    font-size: 18px;
-    border-radius: 6px;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 6px;
-    box-shadow: var(--box-shadow-plus);
-  }
-  .money {
-    color: var(--white);
-    cursor: pointer;
-    position: relative;
-  }
-  @media (max-width: 424px) {
-    .no-cloud-save {
-      font-size: 7px !important;
-    }
-  }
   .no-cloud-save {
-    font-size: 12px;
-    background: var(--bright-red);
-    border-radius: 4px;
-    text-align: center;
-    color: var(--white);
-    font-weight: bold;
-    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-s);
+    padding: 3px 6px;
   }
-  .nb-bonuses-buyable {
-    background-color: var(--green-hover);
-    position: absolute;
-    font-size: 10px;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-    text-align: center;
-    border-radius: 8px;
-    top: -8px;
-    right: -10px;
-    font-weight: bold;
+
+  // Écrans étroits : on resserre pour tout garder sur une ligne
+  @media (max-width: 430px) {
+    gap: 6px;
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+    }
+    .coins {
+      height: 40px;
+      gap: 6px;
+      padding-right: 10px;
+      .coins-plus {
+        width: 32px;
+        height: 32px;
+      }
+      .coins-amount {
+        font-size: 16px;
+      }
+      .coins-icon {
+        display: none;
+      }
+    }
+    .no-cloud-save {
+      font-size: 9px;
+      padding: 2px 4px;
+    }
   }
 }

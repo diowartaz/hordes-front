@@ -7,10 +7,11 @@ import { RedirectionService } from './services/redirection/redirection.service';
 
 import { WakeUpService } from './services/wake-up/wake-up.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { IconComponent } from './shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CityHeaderComponent, HeaderLoggedInComponent, RouterOutlet, MatProgressSpinner],
+  imports: [CityHeaderComponent, HeaderLoggedInComponent, RouterOutlet, MatProgressSpinner, IconComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

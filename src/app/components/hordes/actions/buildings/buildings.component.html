@@ -1,103 +1,70 @@
 @if (snackBarOpened()) {
   <dialog #dialog class="dialog-class">
     <div>{{ dialogMessage() }}</div>
-    <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
+    <button type="button" class="close-toast" aria-label="Close" (click)="closeSnackBar()">
+      <app-icon name="close" [size]="18" />
+    </button>
   </dialog>
 }
 
-<div class="boundary">
+<div class="play-content">
   <div class="play-header">
-    <img class="icon" src="assets/icons/building.webp" />
-    <div>Build Defenses</div>
+    <h1 class="neon-title" style="--glow: var(--orange)">Build defenses</h1>
+    <span class="label count">{{ cityService.advancedBuildings().length }} blueprints</span>
   </div>
-  <div class="play-content">
-    <div class="play-content-bis">
-      @for (building of cityService.advancedBuildings(); track building) {
-        <div class="building2">
-          <div class="line">
-            <div class="element-wrapper">
-              <img class="icon" [src]="building.rarity | buildingRarityToIcon" />
-              <div class="text" style="margin-bottom: -3px; font-weight: 500">
-                {{ building.name }}
-              </div>
-            </div>
-            <div class="line-right">
-              <div class="element-wrapper">
-                <img class="icon" src="assets/icons/defense.gif" />
-                <div class="text">{{ building.defense }}</div>
-                @if (building.defense_ratio_percentage >= 0) {
-                  <div class="percentdef percentdef-green">+{{ building.defense_ratio_percentage }}%</div>
-                }
-                @if (building.defense_ratio_percentage < 0) {
-                  <div class="percentdef percentdef-red">{{ building.defense_ratio_percentage }}%</div>
-                }
-              </div>
-              <div class="element-wrapper">
-                <span class="material-symbols-outlined icon"> schedule </span>
-                <div class="text">{{ building.timeString }}</div>
-              </div>
-              <div class="element-wrapper">
-                <span class="material-symbols-outlined icon"> trending_up </span>
-                <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
-              </div>
-            </div>
+
+  <div class="cards">
+    @for (building of cityService.advancedBuildings(); track building.id) {
+      <article class="building" [style.--c]="building.rarity | rarityToColor">
+        <span class="tier" [title]="building.rarity"></span>
+        <div class="body">
+          <div class="row">
+            <span class="name">{{ building.name }}</span>
+            <span class="def"><app-icon name="shield" [size]="13" />{{ building.defense }}</span>
+            <span
+              class="percentdef"
+              [class.percentdef-green]="building.defense_ratio_percentage >= 0"
+              [class.percentdef-red]="building.defense_ratio_percentage < 0"
+              >{{ building.defense_ratio_percentage >= 0 ? '+' : '' }}{{ building.defense_ratio_percentage }}%</span
+            >
           </div>
           @if (building.lvl !== building.lvl_max) {
-            <div class="line">
-              <div class="inventory">
-                @for (item of building.inventory | keyvalue; track item) {
-                  <div
-                    class="item-wrapper"
-                    [ngStyle]="{
-                      display: item.value > 0 ? 'flex' : 'none',
-                    }"
-                  >
-                    @if (item.value > 0) {
-                      <div class="item">
-                        <img
-                          [ngStyle]="{
-                            'margin-top': item.key === 'stone' ? '-2px' : '0px',
-                          }"
-                          class="icon"
-                          src="{{ item.key | itemToIcon }}"
-                        />
-                        <div class="nb">
-                          <span
-                            [ngClass]="[
-                              cityService.city().inventory[castKey(item.key)] >= item.value
-                                ? 'ok-nb-item'
-                                : 'alert-nb-item',
-                            ]"
-                            >{{ cityService.city().inventory[castKey(item.key)] }}</span
-                          >
-                          <span>/{{ item.value }}</span>
-                        </div>
-                      </div>
-                    }
-                  </div>
+            <div class="row costs">
+              @for (item of building.inventory | keyvalue; track item.key) {
+                @if (item.value > 0) {
+                  <span class="cost" [class.ok]="cityService.city().inventory[castKey(item.key)] >= item.value">
+                    <app-resource-gem [item]="item.key" [size]="10" />
+                    <span class="cost-name">{{ item.key }}</span>
+                    <span class="cost-qty">{{ cityService.city().inventory[castKey(item.key)] }}/{{ item.value }}</span>
+                  </span>
                 }
-              </div>
-              <button
-                class="btn-build"
-                (click)="build(building)"
-                [disabled]="cityService.buildLoading()"
-                [ngStyle]="{
-                  background:
-                    !cityService.buildLoading() &&
-                    building.enoughRessources &&
-                    (cityService.cityTimeSeconds() || 0) < building.expirationCityTime &&
-                    building.enoughLvlMax
-                      ? 'var(--primary-yellow)'
-                      : 'var(--primary-yellow-disabled)',
-                }"
-              >
-                <img src="assets/icons/build.webp" />
-                <div class="text">Build</div>
-              </button>
+              }
             </div>
           }
+          <div class="row meta">
+            <span><app-icon name="clock" [size]="13" />{{ building.timeString }}</span>
+            <span><app-icon name="trend" [size]="13" />{{ building.lvl }}/{{ building.lvl_max }}</span>
+          </div>
         </div>
-      }
-    </div>
+        @if (building.lvl !== building.lvl_max) {
+          <button
+            type="button"
+            class="build-btn"
+            (click)="build(building)"
+            [disabled]="cityService.buildLoading()"
+            [class.ready]="
+              building.enoughRessources &&
+              (cityService.cityTimeSeconds() || 0) < building.expirationCityTime &&
+              building.enoughLvlMax
+            "
+          >
+            <app-icon name="build" [size]="18" />
+            Build
+          </button>
+        } @else {
+          <span class="neon-chip max" style="--c: var(--green)">Max</span>
+        }
+      </article>
+    }
   </div>
 </div>

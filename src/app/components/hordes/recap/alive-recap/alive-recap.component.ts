@@ -3,10 +3,11 @@ import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
 import { SkillRecapComponent, SkillDiscovery } from './skill-recap/skill-recap.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-alive-recap',
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, IconComponent],
   templateUrl: './alive-recap.component.html',
   styleUrls: ['./alive-recap.component.scss'],
 })

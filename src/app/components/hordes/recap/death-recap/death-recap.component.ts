@@ -3,10 +3,11 @@ import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 
 import { GameComponent } from 'src/app/components/classic-page/profil/game/game.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-death-recap',
-  imports: [RecapHeaderComponent, GameComponent],
+  imports: [RecapHeaderComponent, GameComponent, IconComponent],
   templateUrl: './death-recap.component.html',
   styleUrls: ['./death-recap.component.scss'],
 })

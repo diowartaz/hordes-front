@@ -1,62 +1,66 @@
 @if (snackBarOpened()) {
   <dialog #dialog class="dialog-class">
     <div>{{ dialogMessage() }}</div>
-    <span class="material-symbols-outlined" (click)="closeSnackBar()"> close </span>
+    <button type="button" class="close-toast" aria-label="Close" (click)="closeSnackBar()">
+      <app-icon name="close" [size]="18" />
+    </button>
   </dialog>
 }
 
-<div class="play-header">
-  <img class="icon" src="assets/icons/pelle.gif" />
-  <div>Dig For Items</div>
-</div>
 <div class="play-content">
-  <div class="diggings">
-    <div class="select-nb-digs">
-      <button
-        [ngStyle]="{
-          background: disableMinusDigs() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
-        }"
-        class="btn element add-digs-btn add-digs-btn-right"
-        (click)="addDigs(-1)"
-        [disabled]="disableMinusDigs()"
-      >
-        <span class="material-symbols-outlined"> arrow_left </span>
-      </button>
-      <div class="nb-digs element">
-        {{ nbDigs() }}
-      </div>
-      <button class="btn element add-digs-btn add-digs-btn-left" (click)="addDigs(1)">
-        <span class="material-symbols-outlined"> arrow_right </span>
-      </button>
-    </div>
+  <h1 class="neon-title dig-title">Dig for items</h1>
+
+  <div class="dig-site" aria-hidden="true">
+    <div class="dig-core"><app-icon name="dig" [size]="64" /></div>
+  </div>
+
+  <div class="stepper">
     <button
-      class="btn dig-btn"
-      (click)="dig()"
-      [disabled]="cityService.digLoading()"
-      [ngStyle]="{
-        background:
-          !enoughTime() || cityService.digLoading() ? 'var(--primary-yellow-disabled)' : 'var(--primary-yellow)',
-      }"
+      type="button"
+      class="step-btn"
+      aria-label="Dig fewer items"
+      (click)="addDigs(-1)"
+      [disabled]="disableMinusDigs()"
     >
-      <img class="icon" src="assets/icons/pelle.gif" />
-      <div class="dig-text">Dig for an item ({{ totalRequiredTimeString() }})</div>
+      <app-icon name="minus" [size]="22" />
+    </button>
+    <div class="step-value">
+      <span class="qty">{{ nbDigs() }}</span>
+      <span class="label">Items to dig</span>
+    </div>
+    <button type="button" class="step-btn plus" aria-label="Dig more items" (click)="addDigs(1)">
+      <app-icon name="plus" [size]="22" />
     </button>
   </div>
-  <div class="inventory">
-    @for (item of cityService.city().inventory | keyvalue; track item) {
-      <div class="item">
-        <img
-          [ngStyle]="{
-            'margin-top': item.key === 'stone' ? '-2px' : '0px',
-          }"
-          class="icon"
-          src="{{ item.key | itemToIcon }}"
-        />
-        <div class="nb">{{ item.value }}</div>
-        @if (cityService.inventoryItemFound()[castKey(item.key)] > 0) {
-          <div class="item-found">+{{ cityService.inventoryItemFound()[castKey(item.key)] }}</div>
-        }
-      </div>
+
+  <button
+    type="button"
+    class="cta dig-btn"
+    (click)="dig()"
+    [disabled]="cityService.digLoading()"
+    [class.disabled]="!enoughTime()"
+  >
+    <span class="dig-main">Dig ×{{ nbDigs() }} · {{ totalRequiredTimeString() }}</span>
+    @if (enoughTime()) {
+      <span class="dig-sub">Done at {{ endTimeString() }}</span>
+    } @else {
+      <span class="dig-sub">Not enough time today</span>
     }
-  </div>
+  </button>
+
+  <section class="inventory">
+    <span class="label">Inventory</span>
+    <div class="inventory-grid">
+      @for (item of cityService.city().inventory | keyvalue; track item.key) {
+        <div class="item" [style.--c]="item.key | itemToColor">
+          @if (cityService.inventoryItemFound()[castKey(item.key)] > 0) {
+            <span class="item-found">+{{ cityService.inventoryItemFound()[castKey(item.key)] }}</span>
+          }
+          <app-resource-gem [item]="item.key" [size]="28" />
+          <span class="nb">{{ item.value }}</span>
+          <span class="name">{{ item.key }}</span>
+        </div>
+      }
+    </div>
+  </section>
 </div>

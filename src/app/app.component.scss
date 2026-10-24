@@ -1,41 +1,45 @@
 :host {
-  ::ng-deep.mat-mdc-progress-spinner {
-    --mat-progress-spinner-active-indicator-color: var(--white);
-  }
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(-45deg, var(--coral-orange), var(--coral-pink), var(--blue-gradient), var(--blue-teal));
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+  background: var(--bg);
+
   .page {
+    position: relative;
     height: 100dvh;
     width: 100%;
     max-width: 750px;
-    background-image: url('/assets/icons/background4.jpg');
     display: flex;
     flex-direction: column;
-    outline: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text);
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255, 46, 196, 0.22), transparent 45%),
+      radial-gradient(circle at 100% 45%, rgba(34, 230, 255, 0.16), transparent 45%),
+      radial-gradient(circle at 0% 100%, rgba(139, 61, 255, 0.18), transparent 40%), var(--bg);
+    box-shadow: 0 0 0 1px rgba(159, 168, 217, 0.15);
     .headers {
       display: flex;
       flex-direction: column;
-      padding: 0px 8px;
+      gap: 12px;
+      padding: 14px 16px 8px;
     }
     .content {
       flex: 1;
+      min-height: 0;
       overflow: auto;
+    }
+  }
+
+  .waking {
+    top: 73px;
+    bottom: auto;
+    flex-direction: column;
+    .waking-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
     }
   }
 }

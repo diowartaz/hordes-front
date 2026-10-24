@@ -1,40 +1,61 @@
 .footer {
-  border-top: var(--border-white-transparent);
-  display: flex;
-  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 12px 14px;
+  padding: 6px;
+  border-radius: var(--radius-xl);
+  background: var(--surface-nav);
+  border: 1px solid var(--line);
+
+  .speed-chip {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    white-space: nowrap;
+    background: var(--surface-solid);
+  }
+
   .footer-btn {
     position: relative;
+    height: 60px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-mute);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    background: var(--transparent);
-    border: none;
-    padding: 8px 0px;
-    background-color: var(--background-black-opacity-zero-trois);
-    border-right: var(--border-white-transparent);
-    transition: background-color 0.5s ease;
-    .fusee-icon {
+    gap: 2px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+      background 0.2s,
+      box-shadow 0.2s;
+    &.is-active {
+      color: #fff;
+      border-color: var(--c);
+      background: color-mix(in srgb, var(--c) 15%, transparent);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--c) 45%, transparent);
+      app-icon {
+        color: var(--c);
+      }
+    }
+    .boost-dot {
       position: absolute;
       top: 6px;
-      right: 6px;
+      right: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--pink);
+      box-shadow: 0 0 8px var(--pink);
     }
-    .icon {
-      width: 24px;
-      height: 24px;
-    }
-    .span {
-      color: var(--white);
-      font-size: 16px;
-      font-weight: 500;
-      margin-top: 4px;
-    }
-  }
-  .footer-btn:last-child {
-    border-right: none;
-  }
-  .is-active {
-    background: var(--background-black-opacity-zero-six);
   }
 }

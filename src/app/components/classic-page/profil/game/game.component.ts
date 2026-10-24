@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
 
 import { GameHistoryModel } from 'src/app/models/hordes';
@@ -9,18 +9,6 @@ import { GameHistoryModel } from 'src/app/models/hordes';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   @Input() game!: GameHistoryModel;
-
-  color = {
-    true: 'green',
-    false: 'red',
-    null: '',
-  };
-
-  win: 'true' | 'false' | 'null' = 'null';
-
-  ngOnInit(): void {
-    this.win = String(this.game.win) as 'true' | 'false' | 'null';
-  }
 }

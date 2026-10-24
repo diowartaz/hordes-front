@@ -1,92 +1,60 @@
 @if (snackBarOpened()) {
   <dialog #dialog class="dialog-class">
     <div>{{ dialogMessage() }}</div>
-    <span class="material-symbols-outlined" style="cursor: pointer" (click)="closeSnackBar()"> close </span>
+    <button type="button" class="close-toast" aria-label="Close" (click)="closeSnackBar()">
+      <app-icon name="close" [size]="18" />
+    </button>
   </dialog>
 }
 
-<div class="boundary">
+<div class="play-content">
   <div class="play-header">
-    <img class="icon" src="assets/icons/livre.gif" />
-    <div>Learn Skills</div>
+    <h1 class="neon-title" style="--glow: var(--cyan)">Learn skills</h1>
+    <span class="label count">{{ cityService.advancedSkills().length }} available</span>
   </div>
-  <div class="play-content">
-    <div class="play-content-bis">
-      @for (skill of cityService.advancedSkills(); track skill) {
-        <div class="skill">
-          <div class="line">
-            <div class="element-wrapper">
-              <img class="icon" [src]="skill.id | skillToIcon" />
-              <div class="text" style="margin-bottom: -3px; font-weight: 500">
-                {{ skill.name }}
-              </div>
-            </div>
-            <div class="line-right">
-              @if (skill.lvl === skill.lvl_max) {
-                <div class="efficacity" style="color: #31c531">
-                  @if (skill.id !== 4) {
-                    <span class="material-symbols-outlined" style="font-size: 16px; margin-top: -1px">
-                      keyboard_double_arrow_up
-                    </span>
-                  }
-                  @if (skill.id === 4) {
-                    <span class="material-symbols-outlined" style="font-size: 16px; margin-top: -2px"> schedule </span>
-                  }
-                  <span>{{ skill.percentageEfficacityStringBefore }}</span>
-                </div>
-              }
-              <div class="element-wrapper">
-                <span class="material-symbols-outlined icon"> schedule </span>
-                <div class="text">{{ skill.timeString }}</div>
-              </div>
-              <div class="element-wrapper">
-                <span class="material-symbols-outlined icon"> trending_up </span>
-                <div class="text">{{ skill.lvl }}/{{ skill.lvl_max }}</div>
-              </div>
-            </div>
+
+  <div class="cards">
+    @for (skill of cityService.advancedSkills(); track skill.id) {
+      <article class="skill" [style.--c]="skill.id | skillToColor">
+        <div class="icon-tile big"><app-icon [name]="skill.id | skillToIcon" [size]="28" /></div>
+        <div class="body">
+          <div class="row">
+            <span class="name">{{ skill.name }}</span>
+            <span class="meta"><app-icon name="clock" [size]="14" />{{ skill.timeString }}</span>
           </div>
-          @if (skill.lvl !== skill.lvl_max) {
-            <div class="line">
-              <div class="efficacity">
-                @if (skill.id !== 4) {
-                  <span class="material-symbols-outlined" style="font-size: 18px; margin-top: -2px">
-                    keyboard_double_arrow_up
-                  </span>
-                }
-                @if (skill.id === 4) {
-                  <span
-                    class="material-symbols-outlined"
-                    style="font-size: 16px; margin-right: 2px; margin-bottom: 2px"
-                  >
-                    schedule
-                  </span>
-                }
-                <span>{{ skill.percentageEfficacityStringBefore }}</span>
-                <span class="material-symbols-outlined" style="font-size: 13px; margin: 0px 4px">
-                  arrow_forward_ios
-                </span>
-                <span style="color: #31c531">{{ skill.percentageEfficacityStringAfter }}</span>
-              </div>
+          <div class="row efficacity">
+            <span class="eff-label">{{ skill.id === 4 ? 'Wake-up' : 'Speed' }}</span>
+            <span>{{ skill.percentageEfficacityStringBefore }}</span>
+            @if (skill.lvl !== skill.lvl_max) {
+              <app-icon name="arrow-right" [size]="14" class="up" />
+              <span class="after">{{ skill.percentageEfficacityStringAfter }}</span>
+            }
+          </div>
+          <div class="row">
+            <div class="pips">
+              @for (pip of pipsOf(skill.lvl_max); track $index) {
+                <span class="pip" [class.on]="$index < skill.lvl"></span>
+              }
+            </div>
+            <span class="lvl">LV {{ skill.lvl }}/{{ skill.lvl_max }}</span>
+            @if (skill.lvl !== skill.lvl_max) {
               <button
-                class="btn-build"
+                type="button"
+                class="mini-cta"
                 (click)="learn(skill)"
                 [disabled]="cityService.learnLoading()"
-                [ngStyle]="{
-                  background:
-                    !cityService.learnLoading() &&
-                    skill.enoughLvlMax &&
-                    (cityService.cityTimeSeconds() || 0) <= skill.expirationCityTime
-                      ? 'var(--primary-yellow)'
-                      : 'var(--primary-yellow-disabled)',
-                }"
+                [class.unavailable]="
+                  !skill.enoughLvlMax || (cityService.cityTimeSeconds() || 0) > skill.expirationCityTime
+                "
               >
-                <img src="assets/icons/livre.gif" />
-                <div class="text">Learn</div>
+                Learn
               </button>
-            </div>
-          }
+            } @else {
+              <span class="neon-chip" style="--c: var(--green)">Max</span>
+            }
+          </div>
         </div>
-      }
-    </div>
+      </article>
+    }
   </div>
 </div>

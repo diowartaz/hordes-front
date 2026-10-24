@@ -1,56 +1,51 @@
-<div class="boundary">
-  <div class="top">
-    <div class="header container">Attack Recap</div>
-    <div class="content">
-      <app-recap-header style="width: 100%"></app-recap-header>
-      <div class="container" style="border: 1px solid #dc1a1a">
-        <img class="icon" src="assets/icons/small_death.gif" />
-        <div>You died!</div>
-      </div>
+<div class="recap">
+  <div class="scroll">
+    <app-recap-header></app-recap-header>
 
-      @if (lastGame(); as game) {
-        <app-game style="width: 100%" [game]="game"></app-game>
-      }
+    <div class="result">
+      <app-icon name="skull" [size]="40" />
+      <span class="result-title">You died!</span>
+      <span class="result-sub">The horde broke through on day {{ cityService.city().day - 1 }}.</span>
+    </div>
 
-      <div class="earning-wrapper">
-        <div class="container earning">
-          <div class="title">Rewards</div>
-          <div class="line">
-            <div>Base</div>
-            <div class="money">
-              {{ cityService.city().attackRecap.base_money }}
-              <div class="icon">💰</div>
-            </div>
-          </div>
-          <div class="line">
-            <div>Ranked</div>
-            <div class="money">
-              {{ cityService.city().attackRecap.ranked_money }}
-              <div class="icon">💰</div>
-            </div>
-          </div>
-          <div class="line">
-            <div>Bonus</div>
-            <div class="money">
-              {{ cityService.city().attackRecap.bonus_money }}
-              <div class="icon">💰</div>
-            </div>
-          </div>
-          <div class="line">
-            <div>Total</div>
-            <div class="money">
-              {{ cityService.city().attackRecap.total_money }}
-              <div class="icon">💰</div>
-            </div>
-          </div>
+    @if (lastGame(); as game) {
+      <app-game [game]="game"></app-game>
+    }
+
+    <section class="rewards">
+      <h2 class="label">Rewards</h2>
+      <div class="reward-grid">
+        <div class="reward">
+          <span class="reward-label">Base</span>
+          <span class="reward-value"
+            ><app-icon name="coin" [size]="16" />{{ cityService.city().attackRecap.base_money }}</span
+          >
+        </div>
+        <div class="reward">
+          <span class="reward-label">Ranked</span>
+          <span class="reward-value"
+            ><app-icon name="coin" [size]="16" />{{ cityService.city().attackRecap.ranked_money }}</span
+          >
+        </div>
+        <div class="reward">
+          <span class="reward-label">Bonus</span>
+          <span class="reward-value"
+            ><app-icon name="coin" [size]="16" />{{ cityService.city().attackRecap.bonus_money }}</span
+          >
         </div>
       </div>
-    </div>
+      <div class="total">
+        <span>Total</span>
+        <span class="total-value"
+          ><app-icon name="coin" [size]="20" />{{ cityService.city().attackRecap.total_money }}</span
+        >
+      </div>
+    </section>
   </div>
 
   <div class="footer">
-    <button (click)="cityService.deleteCity()">
-      <span class="material-symbols-outlined icon"> schedule </span><span>Try Again!</span>
+    <button type="button" class="cta" (click)="cityService.deleteCity()">
+      <app-icon name="refresh" [size]="22" />Try again
     </button>
   </div>
 </div>

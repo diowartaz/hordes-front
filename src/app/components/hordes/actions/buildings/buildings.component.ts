@@ -1,13 +1,14 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { KeyValuePipe, NgClass, NgStyle } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
 import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
-import { ItemIconPipe } from '../../../../shared/pipes/item-to-icon.pipe';
-import { BuildingRarityToIconPipe } from '../../../../shared/pipes/building-rarity-to-icon';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { ResourceGemComponent } from 'src/app/shared/components/resource-gem/resource-gem.component';
+import { RarityToColorPipe } from 'src/app/shared/pipes/rarity-to-color.pipe';
 
 @Component({
   selector: 'app-buildings',
-  imports: [KeyValuePipe, NgClass, NgStyle, ItemIconPipe, BuildingRarityToIconPipe],
+  imports: [KeyValuePipe, IconComponent, ResourceGemComponent, RarityToColorPipe],
   templateUrl: './buildings.component.html',
   styleUrls: ['./buildings.component.scss'],
 })

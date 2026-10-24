@@ -1,34 +1,32 @@
-:host {
-  .inventory {
-    display: flex;
-    height: fit-content;
-    justify-content: space-between;
-    .item-wrapper > * {
-      margin-right: 8px;
-    }
-    .item-wrapper {
-      .item {
-        display: flex;
-        height: fit-content;
-        gap: 2px;
-        .nb {
-          height: fit-content;
-          line-height: 16px;
-          .alert-nb-item {
-            color: var(--alert-red);
-            font-weight: 500;
-          }
-          .ok-nb-item {
-            color: var(--bright-green);
-            font-weight: 500;
-          }
-        }
-        .icon {
-          width: 16px;
-          height: 16px;
-          font-size: 16px;
-        }
-      }
+.costs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.cost {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: var(--radius-s);
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 92, 138, 0.12);
+  border: 1px solid rgba(255, 92, 138, 0.4);
+  .cost-name {
+    color: var(--text-dim);
+    text-transform: capitalize;
+  }
+  .cost-qty {
+    color: var(--danger-light);
+  }
+  &.ok {
+    background: rgba(61, 255, 143, 0.1);
+    border-color: rgba(61, 255, 143, 0.4);
+    .cost-qty {
+      color: var(--green);
     }
   }
 }

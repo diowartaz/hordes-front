@@ -1,9 +1,9 @@
-<app-classic-page [title]="'Wiki'">
-  <ng-container icon> 📖 </ng-container>
+<app-classic-page [title]="'Guide'" [subtitle]="'How to survive the waves'" [glow]="'var(--cyan)'">
+  <ng-container icon><app-icon name="book" [size]="28" /></ng-container>
   <ng-container content>
     <div class="wiki-container">
       <section class="summary">
-        <h2>🧾 Summary</h2>
+        <h2><app-icon class="ic cyan" name="info" [size]="18" /> Summary</h2>
         <table>
           <tr>
             <th>Category</th>
@@ -41,40 +41,45 @@
 
         <p style="margin-top: 16px">You are the last human alive in a ruined city.</p>
         <div class="inline-div">
-          Each night, waves of zombies<img src="assets/icons/zb.gif" />attack your defenses<img
-            src="assets/icons/defense.gif"
-          />.
+          Each night, waves of zombies<app-icon class="ic danger" name="zombie" [size]="18" />attack your
+          defenses<app-icon class="ic yellow" name="shield" [size]="18" />.
         </div>
         <div class="inline-div">
-          Each day, you dig<img src="assets/icons/pelle.gif" />, build<img src="assets/icons/building.webp" />, and
-          learn <img src="assets/icons/livre.gif" /><span style="white-space: normal"
+          Each day, you dig<app-icon class="ic yellow" name="dig" [size]="18" />, build<app-icon
+            class="ic orange"
+            name="build"
+            [size]="18"
+          />, and learn <app-icon class="ic cyan" name="book" [size]="18" /><span style="white-space: normal"
             >in an effort to survive one more night.</span
           >
         </div>
 
         <div class="inline-div">
           <strong>Are you ready to climb the ranks and dominate the leaderboard?</strong>
-          <img src="assets/icons/leaderboard.gif" />
+          <app-icon class="ic yellow" name="trophy" [size]="18" />
         </div>
       </section>
 
       <section>
-        <h2>⚔️ Defense and Attacks</h2>
+        <h2><app-icon class="ic danger" name="shield" [size]="18" /> Defense and Attacks</h2>
         <div class="inline-div">
-          <img style="margin-top: -5px" src="assets/icons/building.webp" />All buildings (except special ones) add
-          defense points.
-        </div>
-        <div class="inline-div"><img src="assets/icons/zb.gif" />The zombie wave increases nightly.</div>
-        <div class="inline-div">
-          <img src="assets/icons/defense.gif" /> ≥ <img src="assets/icons/zb.gif" /> → You survive.
+          <app-icon class="ic orange" name="build" [size]="18" />All buildings (except special ones) add defense points.
         </div>
         <div class="inline-div">
-          <img src="assets/icons/defense.gif" /> < <img src="assets/icons/zb.gif" /> → You die.
+          <app-icon class="ic danger" name="zombie" [size]="18" />The zombie wave increases nightly.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="shield" [size]="18" /> ≥
+          <app-icon class="ic danger" name="zombie" [size]="18" /> → You survive.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="shield" [size]="18" /> <
+          <app-icon class="ic danger" name="zombie" [size]="18" /> → You die.
         </div>
       </section>
 
       <section>
-        <h2><img class="icon" src="assets/icons/building.webp" /> Buildings</h2>
+        <h2><app-icon class="ic orange" name="build" [size]="18" /> Buildings</h2>
         <p>
           Buildings cost <strong>resources</strong> and <strong>time</strong> to construct. The buildings increase the
           <strong>defense</strong> of your city.
@@ -86,44 +91,37 @@
             <th>Detail</th>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/base_plan.webp" />Architect Shelter</td>
+            <td><app-icon class="ic silver" name="build" [size]="18" />Architect Shelter</td>
             <td>Increases discovery odds for new building plans (probability is 0.7 per level).</td>
             <td>You will have a choice for your discoveries</td>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/base_plan.webp" /> Library</td>
+            <td><app-icon class="ic silver" name="build" [size]="18" /> Library</td>
             <td>Increases discovery odds for new skill levels (probability is 0.5 per level).</td>
             <td>No choice</td>
           </tr>
         </table>
         <p style="margin-top: 16px">
-          A <strong>building's defense</strong
-          ><img style="vertical-align: middle; margin-left: 3px" src="assets/icons/defense.gif" /> value is subject to a
-          degree of <strong>random variability 🎲</strong>, which can fluctuate by up to <strong>±20%</strong> from one
-          game to the next.
+          A <strong>building's defense</strong><app-icon class="ic yellow" name="shield" [size]="18" /> value is subject
+          to a degree of <strong>random variability</strong>, which can fluctuate by up to <strong>±20%</strong> from
+          one game to the next.
         </p>
-        <div style="margin-top: 16px">
+        <p>
           These variations will be displayed by a small percentage indicator next to the building's defense rating.
-          <span style="display: inline-block; vertical-align: middle"
-            ><span class="element-wrapper">
-              <img class="icon" src="assets/icons/defense.gif" />
-              <div class="text">52</div>
-              <div class="percentdef percentdef-green">+19%</div>
-            </span></span
+          <span class="def-sample"
+            ><app-icon class="ic yellow" name="shield" [size]="14" />52
+            <span class="percentdef percentdef-green">+19%</span></span
           >
-          ou
-          <span style="display: inline-block; vertical-align: middle"
-            ><span class="element-wrapper">
-              <img class="icon" src="assets/icons/defense.gif" />
-              <div class="text">35</div>
-              <div class="percentdef percentdef-red">-7%</div>
-            </span></span
+          or
+          <span class="def-sample"
+            ><app-icon class="ic yellow" name="shield" [size]="14" />35
+            <span class="percentdef percentdef-red">-7%</span></span
           >
-        </div>
+        </p>
       </section>
 
       <section>
-        <h2><img class="icon" src="assets/icons/livre.gif" />Skills</h2>
+        <h2><app-icon class="ic cyan" name="book" [size]="18" />Skills</h2>
         <p>Each skill improves a specific aspect of survival. Effects are linear per level.</p>
         <table>
           <tr>
@@ -132,22 +130,22 @@
             <th>Level max Effect</th>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/sleep.gif" /> Insomniac</td>
+            <td><app-icon class="ic violet" name="moon" [size]="18" /> Insomniac</td>
             <td>Wake up 15 min earlier each day.</td>
             <td>2 hours earlier wake-up.</td>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/pelle.gif" /> Digger</td>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" /> Digger</td>
             <td>Reduce search time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/building.webp" />Builder</td>
+            <td><app-icon class="ic orange" name="build" [size]="18" />Builder</td>
             <td>Reduce building time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
           <tr>
-            <td><img class="icon" src="assets/icons/livre.gif" />Fast Learner</td>
+            <td><app-icon class="ic cyan" name="book" [size]="18" />Fast Learner</td>
             <td>Reduce learning time linearly.</td>
             <td>Action time divided by 2.</td>
           </tr>
@@ -155,27 +153,34 @@
       </section>
 
       <section>
-        <h2><img class="icon" src="assets/icons/ranked.png" /> Ranked Mode</h2>
-        <p><strong>Don't hesitate to play in ranked to get more 💰 (+50%)!</strong></p>
+        <h2><app-icon class="ic pink" name="ranked" [size]="18" /> Ranked Mode</h2>
+        <p>
+          <strong
+            >Don't hesitate to play in ranked to get more
+            <app-icon class="ic yellow" name="coin" [size]="18" /> (+50%)!</strong
+          >
+        </p>
         <div class="inline-div">After you complete your ranked game, one other player will play the same game.</div>
         <div class="inline-div">
           When the other players finishes, the performance is compared between the 2 players:
         </div>
         <div class="inline-div" style="margin-top: 6px !important">
-          🗓️ Days survived,
-          <img src="assets/icons/defense.gif" />defenses built.
+          <app-icon class="ic cyan" name="calendar" [size]="18" /> Days survived,
+          <app-icon class="ic yellow" name="shield" [size]="18" />defenses built.
         </div>
         <div class="inline-div">
-          <img src="assets/icons/ranked_points.png" style="width: 16px" />Elo-like ranked point system.
+          <app-icon class="ic pink" name="ranked" [size]="18" />Elo-like ranked point system.
         </div>
-        <div class="inline-div"><img src="assets/icons/leaderboard.gif" />Fight for the leaderboard.</div>
+        <div class="inline-div"><app-icon class="ic yellow" name="trophy" [size]="18" />Fight for the leaderboard.</div>
       </section>
 
       <section>
-        <h2>✨ Bonuses</h2>
+        <h2><app-icon class="ic yellow" name="sparkle" [size]="18" /> Bonuses</h2>
         <p style="margin-top: 16px">
-          Use the money 💰 you accumulate across all your games in the shop to purchase powerful
-          <strong>permanent bonuses ✨</strong>. Any bonus bought will enhance your abilities in all future games.
+          Use the money <app-icon class="ic yellow" name="coin" [size]="18" /> you accumulate across all your games in
+          the shop to purchase powerful
+          <strong>permanent bonuses <app-icon class="ic yellow" name="sparkle" [size]="18" /></strong>. Any bonus bought
+          will enhance your abilities in all future games.
         </p>
         <p style="margin-top: 16px">
           These bonuses will be <strong>automatically applied</strong> to all your <strong>future games</strong>, giving
@@ -184,12 +189,12 @@
       </section>
 
       <section>
-        <h2>💤 Sleeping</h2>
+        <h2><app-icon class="ic violet" name="moon" [size]="18" /> Sleeping</h2>
 
         <div class="inline-div"><strong>Can't fit another action before midnight?</strong></div>
         <div class="inline-div" style="margin-top: 6px; display: flex">
           Sleep early to carry time over to the next day. By pressing this button:
-          <div class="icon-btn" style="height: 29px; width: 29px; margin: -4px 6px">💤</div>
+          <span class="sleep-sample"><app-icon name="moon" [size]="16" />Sleep</span>
         </div>
         <div class="inline-div" style="margin-top: 6px">
           <strong>Note:</strong> only half the time is recovered (e.g., sleep at 10pm = 2h saved = 1h bonus tomorrow).
@@ -197,7 +202,7 @@
       </section>
 
       <section>
-        <h2>🚀 Productivity</h2>
+        <h2><app-icon class="ic green" name="rocket" [size]="18" /> Productivity</h2>
         <div class="inline-div"><strong>Keep things fresh!</strong></div>
         <div class="inline-div" style="margin-top: 6px">
           Switching between dig, build, and learn speeds you up by 2% per change. Stack this bonus up to 20% for maximum
@@ -206,8 +211,8 @@
 
         <div class="inline-div" style="margin-top: 6px; display: flex; gap: 8px; align-items: center">
           You will see your productivity bonus with this indicator.
-          <div class="icon-btn aaaa green-icon">+8% 🚀</div>
-          <div class="icon-btn aaaa red-icon">-14% 🚀</div>
+          <span class="neon-chip" style="--c: var(--green)"><app-icon name="rocket" [size]="14" />+8%</span>
+          <span class="neon-chip" style="--c: var(--danger)"><app-icon name="rocket" [size]="14" />-14%</span>
         </div>
 
         <div class="inline-div" style="margin-top: 6px">
@@ -217,21 +222,21 @@
       </section>
 
       <section>
-        <h2>🧩 Strategy Tips</h2>
+        <h2><app-icon class="ic pink" name="sparkle" [size]="18" /> Strategy Tips</h2>
         <div class="inline-div">
-          <img src="assets/icons/base_plan.webp" />
+          <app-icon class="ic silver" name="build" [size]="18" />
           Upgrade Libraries to unlock higher skill caps.
         </div>
 
         <div class="inline-div">
-          <img src="assets/icons/base_plan.webp" />Architect Shelters unlock stronger defense plans.
+          <app-icon class="ic silver" name="build" [size]="18" />Architect Shelters unlock stronger defense plans.
         </div>
 
-        <p style="margin-top: 16px">✨ Buy strong bonuses</p>
+        <p style="margin-top: 16px"><app-icon class="ic yellow" name="sparkle" [size]="18" /> Buy strong bonuses</p>
       </section>
 
       <section>
-        <h2>✉️ Contact me</h2>
+        <h2><app-icon class="ic cyan" name="mail" [size]="18" /> Contact me</h2>
         <p style="margin-top: 16px">
           If you have any ideas to improve the game or just want to discuss about it, join the discord or send me an
           email to <strong>{{ 'dowartaz@gmail.com' }}</strong>
@@ -239,12 +244,12 @@
       </section>
 
       <section>
-        <h2><img class="icon" src="assets/icons/building.webp" /> Coming Soon</h2>
+        <h2><app-icon class="ic orange" name="build" [size]="18" /> Coming Soon</h2>
         <p>Would you like to have this game on the Play Store?</p>
       </section>
 
       <footer>
-        <p>Made with 💀 by the Zombie Waves Dev Team</p>
+        <p>Made with <app-icon class="ic pink" name="skull" [size]="18" /> by the Zombie Waves Dev Team</p>
       </footer>
     </div>
   </ng-container>

@@ -1,50 +1,40 @@
-<div class="boundary">
+<div class="top-bar">
   @if (authService.isConnected()) {
-    <div class="left-part">
-      @if (authService.isConnected()) {
-        <div class="icon-btn money" (click)="router.navigate([RoutesEnum.SHOP])">
-          <div class="plus">+</div>
-          <span>{{ data().money }}</span>
-          <div style="font-size: 14px; margin-top: -1px; margin-left: 2px">💰</div>
-          <div class="nb-bonuses-buyable">
-            {{ this.cityService.nbBuyableBonuses() > 9 ? '9+' : this.cityService.nbBuyableBonuses() }}
-          </div>
-        </div>
+    <button type="button" class="coins" aria-label="Open the bonus shop" (click)="router.navigate([RoutesEnum.SHOP])">
+      <span class="coins-plus"><app-icon name="plus" [size]="18" /></span>
+      <span class="coins-amount">{{ data().money }}</span>
+      <app-icon class="coins-icon" name="coin" [size]="18" />
+      @if (cityService.nbBuyableBonuses() > 0) {
+        <span class="coins-badge">{{
+          cityService.nbBuyableBonuses() > 9 ? '9+' : cityService.nbBuyableBonuses()
+        }}</span>
       }
-      @if (authService.tempAccount()) {
-        <div class="no-cloud-save">no cloud save</div>
-      }
-    </div>
+    </button>
+    @if (authService.tempAccount()) {
+      <span class="no-cloud-save">no cloud<br />save</span>
+    }
   }
-  <div class="right-part">
-    <!-- <a class="icon-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-    <img src="assets/icons/discord_icon.png"
-    /></a> -->
-    @if (authService.isConnected()) {
-      <button
-        class="icon-btn"
-        (click)="
-          router.navigate([RoutesEnum.PROFIL], {
-            queryParams: { user_id: authService.userId() },
-          })
-        "
-      >
-        <span class="material-symbols-outlined icon"> group </span>
-      </button>
-    }
-    <button class="icon-btn" (click)="router.navigate([RoutesEnum.LEADERBOARD])">
-      <img src="assets/icons/leaderboard.gif" />
-    </button>
-    <button class="icon-btn" (click)="router.navigate([RoutesEnum.WIKI])">
-      <span class="emoticon">📖</span>
-    </button>
-    <!-- <button *ngIf="authService.isConnected()" class="icon-btn" (click)="router.navigate([RoutesEnum.SHOP])">
-    <span class="emoticon">💰</span>
-  </button> -->
-    @if (authService.isConnected()) {
-      <button class="icon-btn" (click)="router.navigate([RoutesEnum.SETTINGS])">
-        <span class="emoticon">⚙️</span>
-      </button>
-    }
-  </div>
+  <div class="spacer"></div>
+  @if (authService.isConnected()) {
+    <a
+      class="icon-btn"
+      aria-label="Profile"
+      [routerLink]="['/', RoutesEnum.PROFIL]"
+      [queryParams]="{ user_id: authService.userId() }"
+      routerLinkActive="active"
+    >
+      <app-icon name="friends" />
+    </a>
+  }
+  <a class="icon-btn" aria-label="Leaderboard" [routerLink]="['/', RoutesEnum.LEADERBOARD]" routerLinkActive="active">
+    <app-icon name="trophy" />
+  </a>
+  <a class="icon-btn" aria-label="Guide" [routerLink]="['/', RoutesEnum.WIKI]" routerLinkActive="active">
+    <app-icon name="book" />
+  </a>
+  @if (authService.isConnected()) {
+    <a class="icon-btn" aria-label="Settings" [routerLink]="['/', RoutesEnum.SETTINGS]" routerLinkActive="active">
+      <app-icon name="settings" />
+    </a>
+  }
 </div>

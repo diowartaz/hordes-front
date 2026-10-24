@@ -1,63 +1,40 @@
-<form class="login-form" [formGroup]="formgroup">
-  <h1 style="font-size: 32px; margin: 16px">User Login</h1>
-  <div class="input-wrapper" [ngStyle]="fieldHasError('login') ? { 'border-color': 'red' } : null">
-    <i class="material-icons icon-input-field">mail</i>
-    <input
-      class="input-field"
-      required
-      placeholder="Email or username"
-      autocomplete="off"
-      formControlName="login"
-      (keyup.enter)="login()"
-    />
+<form class="auth-card" [formGroup]="formgroup" (ngSubmit)="login()">
+  <header class="auth-head">
+    <app-icon name="key" [size]="32" />
+    <h1 class="neon-title" style="--glow: var(--cyan)">Sign in</h1>
+  </header>
+
+  <label class="neon-field" [class.invalid]="fieldHasError('login')">
+    <app-icon name="mail" [size]="20" />
+    <input required placeholder="Email or username" autocomplete="username" formControlName="login" />
+  </label>
+
+  <label class="neon-field" [class.invalid]="fieldHasError('password')">
+    <app-icon name="lock" [size]="20" />
+    <input type="password" required placeholder="Password" autocomplete="current-password" formControlName="password" />
+  </label>
+
+  <div class="auth-errors" aria-live="polite">
+    @if (invalidAuthentification()) {
+      <span>Invalid authentication</span>
+    }
   </div>
 
-  <div
-    class="input-wrapper"
-    style="margin-bottom: 0px !important"
-    [ngStyle]="fieldHasError('password') ? { 'border-color': 'red' } : null"
-  >
-    <i class="material-icons icon-input-field">lock</i>
-    <input
-      type="password"
-      class="input-field"
-      required
-      placeholder="Password"
-      autocomplete="off"
-      formControlName="password"
-      (keyup.enter)="login()"
-    />
-  </div>
-
-  @if (invalidAuthentification()) {
-    <div class="invalid-authen">Invalid authentification</div>
-  }
-  @if (!invalidAuthentification()) {
-    <div class="valid-authen"></div>
-  }
-
-  <div class="button-wrapper" (click)="login()">
-    @if (!loading()) {
-      <i class="material-icons login-icon">login</i>
-    }
-    @if (!loading()) {
-      <div class="login-text">Login</div>
-    }
-
+  <button type="submit" class="cta" style="background: var(--grad-learn); color: var(--green-dark)">
     @if (loading()) {
-      <mat-spinner diameter="24" class="spinner"></mat-spinner>
+      <mat-spinner diameter="22"></mat-spinner>
+      Signing in…
+    } @else {
+      <app-icon name="arrow-right" [size]="20" />
+      Login
     }
-    @if (loading()) {
-      <div class="login-text">Login...</div>
-    }
-  </div>
+  </button>
 
-  <!-- <div class="text-button forgot-password" (click)="forgotPassword()">
-      Forgot Password ?
-    </div> -->
-  <div class="text-button" (click)="signUp()">No account yet ? Sign Up</div>
-  <div class="text-button" style="margin-top: 4px" (click)="authService.signInTemp()">Play as guest</div>
-  <a href="https://discord.gg/qFnSBa8P9Z" target="_blank">
-    <img alt="discord icon" style="height: 50px; margin-top: 12px" src="assets/icons/discord_icon.png"
-  /></a>
+  <div class="auth-links">
+    <button type="button" class="text-btn" (click)="signUp()">No account yet? Sign up</button>
+    <button type="button" class="text-btn" (click)="authService.signInTemp()">Play as guest</button>
+    <a class="text-btn" href="https://discord.gg/qFnSBa8P9Z" target="_blank" rel="noopener">
+      <app-icon name="friends" [size]="16" />Join the Discord
+    </a>
+  </div>
 </form>

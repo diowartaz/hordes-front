@@ -1,42 +1,95 @@
 :host {
   height: 100%;
-  .no-profil {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    gap: 16px;
+  display: block;
+}
 
-    .text {
-      color: var(--white);
-    }
-  }
-
-  .general-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    .line {
-      display: flex;
-      flex-direction: row;
-      gap: 8px;
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 16px 16px;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid rgba(139, 61, 255, 0.6);
+  box-shadow: 0 0 26px rgba(139, 61, 255, 0.3);
+  .avatar-ring {
+    width: 96px;
+    height: 96px;
+    padding: 4px;
+    border-radius: 50%;
+    background: conic-gradient(var(--pink), var(--violet), var(--cyan), var(--green), var(--pink));
+    box-shadow: 0 0 26px rgba(139, 61, 255, 0.7);
+    .avatar {
       width: 100%;
-      .surcharge-container {
-        flex-direction: row;
-        justify-content: center;
-        gap: 8px;
-      }
+      height: 100%;
+      border-radius: 50%;
+      background: var(--surface-solid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 38px;
+      color: #fff;
+      text-shadow: 0 0 12px var(--violet);
     }
   }
-  .history {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 8px;
-    //flex: 1;
-    //overflow: auto; // pas d overflow sinon les box shadow sont moches (coupées)
+  .username {
+    max-width: 100%;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 0 0 12px var(--violet);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  .chips {
+    display: flex;
+    gap: 6px;
+  }
+  .xp {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    .xp-head {
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.08em;
+    }
+  }
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  .tile-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actions {
+  padding: 0 16px 20px;
+  a.cta {
+    text-decoration: none;
+  }
+}
+
+.loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

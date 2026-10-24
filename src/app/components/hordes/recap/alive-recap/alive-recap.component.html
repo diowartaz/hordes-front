@@ -1,61 +1,47 @@
-<div class="boundary">
-  <div class="top">
-    <div class="header container">Attack Recap</div>
-    <div class="content">
-      <app-recap-header style="width: 100%"></app-recap-header>
+<div class="recap">
+  <div class="scroll">
+    <app-recap-header></app-recap-header>
 
-      @if (nbMaxChoices() > 0) {
-        <div class="container">
-          <div class="container-header">
-            {{
-              `Pick ${nbMaxChoices()} building${nbMaxChoices() > 1 ? 's' : ''} from the ${nbChoicesAvailable()} available`
-            }}
-          </div>
-          <div class="container-content">
-            @for (building of architectBuildings(); track $index) {
-              <div class="line">
-                <div class="aaa">
-                  <input
-                    class="ckeckbox"
-                    type="checkbox"
-                    [checked]="selectedBuildings().has($index)"
-                    (change)="toggleBuilding($event, $index)"
-                  />
-                </div>
-                <app-building-recap class="building" [building]="building"></app-building-recap>
-              </div>
-            }
-          </div>
-        </div>
-      }
+    @if (nbMaxChoices() > 0) {
+      <section class="neon-card">
+        <h2 class="label">
+          Pick {{ nbMaxChoices() }} building{{ nbMaxChoices() > 1 ? 's' : '' }} from the {{ nbChoicesAvailable() }}
+          available
+        </h2>
+        @for (building of architectBuildings(); track $index) {
+          <label class="pick" [class.selected]="selectedBuildings().has($index)">
+            <input
+              type="checkbox"
+              [checked]="selectedBuildings().has($index)"
+              (change)="toggleBuilding($event, $index)"
+            />
+            <app-building-recap [building]="building"></app-building-recap>
+          </label>
+        }
+      </section>
+    }
 
-      @if (libraryDiscoveries().length > 0) {
-        <div class="container">
-          <div class="container-header">
-            {{ libraryDiscoveries().length }}
-            @if (libraryDiscoveries().length > 1) {
-              <span> skill discoveries </span>
-            } @else {
-              <span> skill discovery </span>
-            }
-          </div>
-          <div class="container-content">
-            @for (skill of libraryDiscoveries(); track skill.name) {
-              <app-skill-recap [skill]="skill"></app-skill-recap>
-            }
-          </div>
-        </div>
-      }
+    @if (libraryDiscoveries().length > 0) {
+      <section class="neon-card">
+        <h2 class="label">
+          {{ libraryDiscoveries().length }} skill {{ libraryDiscoveries().length > 1 ? 'discoveries' : 'discovery' }}
+        </h2>
+        @for (skill of libraryDiscoveries(); track skill.name) {
+          <app-skill-recap [skill]="skill"></app-skill-recap>
+        }
+      </section>
+    }
 
-      <div class="container">
-        <div>You survived!</div>
-      </div>
+    <div class="result">
+      <app-icon name="shield-check" [size]="40" />
+      <span class="result-title">You survived!</span>
+      <span class="result-sub">Your walls held. Day {{ cityService.city().day }} begins.</span>
     </div>
   </div>
 
   <div class="footer">
-    <button (click)="startDay()">
-      <span class="material-symbols-outlined icon"> schedule </span><span>Wait for the attack to pass</span>
+    <button type="button" class="cta" (click)="startDay()">
+      <app-icon name="clock" [size]="22" />Wait for the attack to pass
     </button>
   </div>
 </div>

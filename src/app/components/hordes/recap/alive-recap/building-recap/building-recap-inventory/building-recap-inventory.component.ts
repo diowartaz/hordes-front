@@ -1,12 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import { KeyValuePipe, NgStyle } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
-import { ItemIconPipe } from '../../../../../../shared/pipes/item-to-icon.pipe';
+import { ResourceGemComponent } from 'src/app/shared/components/resource-gem/resource-gem.component';
 
 @Component({
   selector: 'app-building-recap-inventory-inventory',
-  imports: [KeyValuePipe, NgStyle, ItemIconPipe],
+  imports: [KeyValuePipe, ResourceGemComponent],
   templateUrl: './building-recap-inventory.component.html',
   styleUrls: ['./building-recap-inventory.component.scss'],
 })

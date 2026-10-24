@@ -1,4 +1,3 @@
-import { NgStyle } from '@angular/common';
 import { Component, DestroyRef, OnInit, signal, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -11,6 +10,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { Router } from '@angular/router';
 import { finalize, take } from 'rxjs';
 import { RoutesEnum } from '../../models/router';
@@ -26,7 +26,7 @@ interface SignUpForm {
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  imports: [NgStyle, ReactiveFormsModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule, IconComponent],
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent implements OnInit {

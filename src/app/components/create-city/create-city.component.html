@@ -1,56 +1,24 @@
-<div class="header container">
-  <img style="height: 24px; width: 24px; margin-right: 8px" src="assets/icons/small_death.gif" />Zombie Waves
-</div>
+<app-feature-list></app-feature-list>
 
-<div class="content container">
-  <div class="item">
-    <img class="icon" src="assets/icons/ame.gif" />
-    <p>Try your best to survive</p>
+<div class="actions">
+  <div class="go-to-wiki">
+    <span>First time here?</span>
+    <button
+      type="button"
+      class="ghost-btn"
+      style="--c: var(--violet-light)"
+      (click)="router.navigate([RoutesEnum.WIKI])"
+    >
+      <app-icon name="book" [size]="18" />Read the guide
+    </button>
   </div>
-
-  <div class="item" style="margin-top: 16px">
-    <img class="icon" src="assets/icons/pelle.gif" />
-    <p>Search for resources</p>
+  <div class="modes">
+    <button type="button" class="ghost-btn" (click)="createCity(false)">
+      <app-icon name="play" [size]="18" />Play normal
+    </button>
+    <button type="button" class="cta cta-gold ranked" (click)="createCity(true)">
+      <app-icon name="ranked" [size]="20" />
+      <span class="ranked-text">Play ranked<small>+50% coins</small></span>
+    </button>
   </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/building.webp" />
-    <p>Build powerful defenses</p>
-  </div>
-
-  <div class="item" style="margin-bottom: 16px">
-    <img class="icon" src="assets/icons/livre.gif" />
-    <p>Learn useful skills</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/zb.gif" />
-    <p>Defeat zombies every nights</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/xpLogo.png" />
-    <p>Accumulate experience and levels</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/leaderboard.gif" />
-    <p>Conquer the leaderboard!</p>
-  </div>
-</div>
-
-<div class="go-to-wiki">
-  In case, it's your first time here
-  <button class="yellow-button" (click)="router.navigate([RoutesEnum.WIKI])">📖 Go to Wiki</button>
-</div>
-
-<div class="footer">
-  <button class="yellow-button" (click)="createCity(false)">
-    <img class="icon" src="assets/icons/normal.png" />
-    <div style="height: 24px; display: flex; align-items: center">Play normal</div>
-  </button>
-  <button class="yellow-button" (click)="createCity(true)">
-    <img class="icon" src="assets/icons/ranked.png" />
-    <div style="height: 24px; display: flex; align-items: center">Play ranked (+50%💰)</div>
-  </button>
 </div>

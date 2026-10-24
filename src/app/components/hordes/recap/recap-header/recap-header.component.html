@@ -1,25 +1,35 @@
-<div class="container">
-  <div style="display: flex; gap: 4px">
-    <img style="width: 16px; height: 16px" src="assets/icons/calendar.ico" />
-    <div>{{ cityService.city().day - 1 }}</div>
+<div class="recap-header">
+  <div class="title">
+    <span class="neon-chip" style="--c: var(--pink-light)">
+      <app-icon name="calendar" [size]="14" />Night of day {{ cityService.city().day - 1 }}
+    </span>
+    <h1 class="neon-title">Attack recap</h1>
   </div>
-  <div class="def-zb">
-    <div class="def-zb-el">
-      <img class="icon" src="assets/icons/defense.gif" />
-      <span class="text-span" style="margin-left: 6px">{{ cityService.city().defense }}</span>
+
+  <div class="versus">
+    <div class="side" style="--c: var(--cyan)">
+      <div class="icon-tile"><app-icon name="shield" [size]="28" /></div>
+      <span class="side-label">Your defense</span>
+      <span class="side-value">{{ defense() }}</span>
     </div>
-    @if (cityService.city().attackRecap.nb_zb === cityService.city().defense) {
-      <div>=</div>
-    }
-    @if (cityService.city().attackRecap.nb_zb > cityService.city().defense) {
-      <div><</div>
-    }
-    @if (cityService.city().attackRecap.nb_zb < cityService.city().defense) {
-      <div>></div>
-    }
-    <div class="def-zb-el">
-      <img class="icon" src="assets/icons/zb.gif" />
-      <span style="margin-left: 0px" class="text-span">{{ cityService.city().attackRecap.nb_zb }}</span>
+    <div class="vs">VS</div>
+    <div class="side" style="--c: var(--danger)">
+      <div class="icon-tile"><app-icon name="zombie" [size]="28" /></div>
+      <span class="side-label">Attackers</span>
+      <span class="side-value">{{ attackers() }}</span>
+    </div>
+  </div>
+
+  <div class="balance">
+    <div class="balance-head">
+      <span>Balance of power</span>
+      <span [class.positive]="margin() >= 0" [class.negative]="margin() < 0">
+        {{ margin() >= 0 ? '+' : '' }}{{ margin() }} margin
+      </span>
+    </div>
+    <div class="balance-bar">
+      <span class="def" [style.width.%]="defenseRatio()"></span>
+      <span class="zb"></span>
     </div>
   </div>
 </div>

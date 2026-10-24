@@ -1,26 +1,11 @@
-<div class="inventory">
-  @for (item of building.inventory | keyvalue; track item) {
-    <div class="item-wrapper">
-      @if (item.value > 0) {
-        <div class="item">
-          <img
-            [ngStyle]="{
-              'margin-top': item.key === 'stone' ? '-2px' : '0px',
-            }"
-            class="icon"
-            src="{{ item.key | itemToIcon }}"
-          />
-          <div class="nb">
-            @if (cityService.city().inventory[castKey(item.key)] < item.value) {
-              <span class="alert-nb-item">{{ cityService.city().inventory[castKey(item.key)] }}</span>
-            }
-            @if (cityService.city().inventory[castKey(item.key)] >= item.value) {
-              <span class="ok-nb-item">{{ cityService.city().inventory[castKey(item.key)] }}</span>
-            }
-            <span>/{{ item.value }}</span>
-          </div>
-        </div>
-      }
-    </div>
+<div class="costs">
+  @for (item of building.inventory | keyvalue; track item.key) {
+    @if (item.value > 0) {
+      <span class="cost" [class.ok]="cityService.city().inventory[castKey(item.key)] >= item.value">
+        <app-resource-gem [item]="item.key" [size]="10" />
+        <span class="cost-name">{{ item.key }}</span>
+        <span class="cost-qty">{{ cityService.city().inventory[castKey(item.key)] }}/{{ item.value }}</span>
+      </span>
+    }
   }
 </div>

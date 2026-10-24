@@ -1,33 +1,27 @@
-<div class="boundary">
-  <div class="element">
-    @if (modifiedGameHistoryPlayer.id !== '--' && otherPlayer) {
-      <div class="second-player" (click)="goToProfil(modifiedGameHistoryPlayer.id)">
-        {{ modifiedGameHistoryPlayer.username }}
-        <span class="material-symbols-outlined icon-search"> search </span>
-      </div>
-    }
-    @if (!otherPlayer) {
-      <div>
-        {{ modifiedGameHistoryPlayer.username }}
-      </div>
+<div class="subgame">
+  <div class="player">
+    @if (otherPlayer) {
+      @if (modifiedGameHistoryPlayer.id !== '--') {
+        <button type="button" class="link" (click)="goToProfil(modifiedGameHistoryPlayer.id)">
+          {{ modifiedGameHistoryPlayer.username }}
+          <app-icon name="search" [size]="14" />
+        </button>
+      } @else {
+        <span>{{ modifiedGameHistoryPlayer.username }}</span>
+      }
+    } @else {
+      <span>{{ modifiedGameHistoryPlayer.username }}</span>
     }
   </div>
-  <div class="elements-wrapper">
-    <div class="element">
-      <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/calendar.ico" />
-      <div>{{ modifiedGameHistoryPlayer.day }}</div>
-    </div>
-
-    <div class="element">
-      <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/defense.gif" />
-      <div>{{ modifiedGameHistoryPlayer.defense }}</div>
-    </div>
-
-    <div class="element">
-      <img style="height: 24px; width: 24px; margin-right: -8px" src="assets/icons/ranked_points.png" />
-      <div style="width: 24px; text-align: end; margin-left: -4px">
-        {{ modifiedGameHistoryPlayer.ranked_points }}
-      </div>
-    </div>
+  <div class="stats">
+    <span class="stat" title="Days survived"
+      ><app-icon name="calendar" [size]="14" />{{ modifiedGameHistoryPlayer.day }}</span
+    >
+    <span class="stat def" title="Defense"
+      ><app-icon name="shield" [size]="14" />{{ modifiedGameHistoryPlayer.defense }}</span
+    >
+    <span class="stat pts" title="Ranked points"
+      ><app-icon name="ranked" [size]="14" />{{ modifiedGameHistoryPlayer.ranked_points }}</span
+    >
   </div>
 </div>

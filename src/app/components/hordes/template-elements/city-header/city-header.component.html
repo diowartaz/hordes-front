@@ -1,34 +1,34 @@
 @if (headerIsDisplayed()) {
-  <div class="boundary">
-    <div class="left-part">
-      <div class="element">
-        <img class="icon" src="assets/icons/calendar.ico" />
-        <span class="text-span">{{ cityService.city().day }}</span>
+  <div class="stats-bar">
+    <div class="stats">
+      <div class="stat" style="--c: var(--cyan)">
+        <span class="stat-label">Day</span>
+        <span class="stat-value">{{ cityService.city().day }}</span>
       </div>
-      <div class="element">
-        <span class="material-symbols-outlined icon"> schedule </span>
-        <span class="text-span">{{ cityService.cityTimeString() }}</span>
+      <div class="stat" style="--c: var(--pink-light)">
+        <span class="stat-label">Time</span>
+        <span class="stat-value">{{ cityService.cityTimeString() }}</span>
       </div>
-      <div class="element">
-        <img class="icon" src="assets/icons/defense.gif" />
-        <span class="text-span">{{ cityService.city().defense }}</span>
+      <div class="stat" style="--c: var(--yellow)">
+        <span class="stat-label">Def</span>
+        <span class="stat-value">{{ cityService.city().defense }}</span>
       </div>
-      <div class="element">
-        <img class="icon" src="assets/icons/zb.gif" />
-        <span
-          class="text-span"
-          [ngClass]="{ danger: cityService.city().nb_zb_next_attack_max > cityService.city().defense }"
-          >{{ cityService.city().nb_zb_next_attack_min }}-{{ cityService.city().nb_zb_next_attack_max }}</span
+      <div class="stat" style="--c: var(--danger-light)">
+        <span class="stat-label">Threat</span>
+        <span class="stat-value" [class.danger]="cityService.city().nb_zb_next_attack_max > cityService.city().defense"
+          >{{ cityService.city().nb_zb_next_attack_min }}–{{ cityService.city().nb_zb_next_attack_max }}</span
         >
       </div>
     </div>
     <button
-      class="icon-btn borderBlink"
-      style="height: 34px; width: 34px"
-      [ngClass]="{ borderBlink2: (cityService.cityTimeSeconds() || 0) > 22 * 60 * 60 }"
+      type="button"
+      class="sleep-btn"
+      aria-label="End the day and sleep"
+      [class.late]="(cityService.cityTimeSeconds() || 0) > 22 * 60 * 60"
       (click)="cityService.endDay()"
     >
-      💤
+      <app-icon name="moon" [size]="22" />
+      Sleep
     </button>
   </div>
 }

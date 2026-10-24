@@ -1,65 +1,28 @@
-.building {
+.skill {
   display: flex;
-  flex-direction: column;
-  color: var(--white);
-  gap: 8px;
-  // border: 1px solid white;
-  // box-shadow: 0px 0px 3px 2px #000000a1;
-  // border-radius: 4px;
-  padding: 4px;
-  font-size: 13px;
-  .line {
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
-    .line-right {
-      display: flex;
-      gap: 6px;
-    }
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid rgba(34, 230, 255, 0.25);
+  .icon-tile {
+    width: 40px;
+    height: 40px;
   }
-  .element-wrapper {
-    display: flex;
-    gap: 2px;
-    align-items: center;
-    .icon {
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-    }
-    .text {
-      height: fit-content;
-      line-height: 14px;
-    }
+  .name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    font-size: 17px;
   }
-
-  .inventory {
-    display: flex;
-    height: fit-content;
-    justify-content: space-between;
-    gap: 4px;
-    .item-wrapper {
-      .item {
-        display: flex;
-        height: fit-content;
-        gap: 2px;
-        .nb {
-          height: fit-content;
-          line-height: 16px;
-          .alert-nb-item {
-            color: var(--alert-red);
-            font-weight: 500;
-          }
-          .ok-nb-item {
-            color: var(--bright-green);
-            font-weight: 500;
-          }
-        }
-        .icon {
-          width: 16px;
-          height: 16px;
-          font-size: 16px;
-        }
-      }
-    }
+  .lvl {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-mute);
+  }
+  .up,
+  .after {
+    color: var(--green);
   }
 }

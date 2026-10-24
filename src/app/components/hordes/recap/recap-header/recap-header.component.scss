@@ -1,14 +1,109 @@
-.container {
-  .def-zb {
+.recap-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  .neon-title {
+    font-size: 28px;
+  }
+}
+
+.versus {
+  display: grid;
+  grid-template-columns: 1fr 54px 1fr;
+  align-items: center;
+  gap: 6px;
+  .side {
     display: flex;
-    gap: 8px;
-    .def-zb-el {
-      display: flex;
-      .icon {
-        height: 16px;
-        width: 16px;
-        font-size: 16px;
-      }
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 18px 8px;
+    border-radius: 18px;
+    background: var(--surface-2);
+    border: 1px solid var(--c);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--c) 32%, transparent);
+    .icon-tile {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-l);
+    }
+    .side-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      color: color-mix(in srgb, var(--c) 70%, white);
+    }
+    .side-value {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 44px;
+      color: #fff;
+      text-shadow: 0 0 14px var(--c);
+    }
+  }
+  .vs {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--yellow);
+    box-shadow: 0 0 18px rgba(255, 214, 10, 0.6);
+  }
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  .balance-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    .positive {
+      color: var(--green);
+    }
+    .negative {
+      color: var(--danger);
+    }
+  }
+  .balance-bar {
+    display: flex;
+    gap: 2px;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    .def {
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .zb {
+      flex: 1;
+      background: var(--danger);
+      box-shadow: 0 0 10px var(--danger);
     }
   }
 }

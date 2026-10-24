@@ -1,38 +1,43 @@
 :host {
   height: 100%;
-  .classic-page {
-    height: 100%;
+  display: block;
+}
+
+.classic-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .page-header {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    padding: 8px 8px 8px 8px;
-    position: relative;
-    .container {
-      flex-direction: row;
-    }
-    .back-btn {
-      position: absolute;
-      left: 8px;
-      background-color: var(--transparent) !important;
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 32px;
-      padding: 32px;
-      margin-bottom: 16px;
-    }
-    .content {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      padding: 8px;
-      width: 100%;
-      gap: 16px;
+    gap: 12px;
+    padding: 4px 16px 12px;
+    .titles {
       flex: 1;
-      overflow-y: auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      .neon-title {
+        font-size: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
+    .deco {
+      display: flex;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+  }
+
+  .content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 16px 16px;
   }
 }

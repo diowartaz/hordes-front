@@ -1,39 +1,42 @@
-<app-classic-page [title]="'Bonus Shop'">
-  <ng-container icon> ✨ </ng-container>
+<app-classic-page [title]="'Bonus shop'" [subtitle]="'Permanent upgrades'" [glow]="'var(--yellow)'">
+  <ng-container icon><app-icon name="sparkle" [size]="32" /></ng-container>
   <ng-container content>
-    <div class="shop-container">
+    <div class="cards">
       @for (item of cityService.bonuses() | keyvalue; track item.key) {
-        <div class="shop-card container">
-          <div class="shop-card-header">
-            <span class="material-symbols-outlined icon">{{ item.value.icon }}</span>
-            <div>
-              <h3>{{ item.value.name }}</h3>
-              <p class="shop-description">{{ item.value.description }}</p>
+        <article class="bonus" [style.--c]="item.value.icon | bonusToColor">
+          <div class="bonus-head">
+            <div class="icon-tile"><app-icon [name]="item.value.icon | bonusToIcon" [size]="28" /></div>
+            <div class="bonus-text">
+              <div class="bonus-title">
+                <h3>{{ item.value.name }}</h3>
+                <span class="lvl">LV {{ item.value.lvl }}/{{ item.value.lvl_max }}</span>
+              </div>
+              <p>{{ item.value.description }}</p>
             </div>
           </div>
-          <div class="shop-levels">
-            <span
-              >Level : <strong>{{ item.value.lvl }}</strong> / {{ item.value.lvl_max }}</span
-            >
-            <div class="progress-bar">
-              <div class="progress" [style.width.%]="(item.value.lvl / item.value.lvl_max) * 100"></div>
-            </div>
+          <div class="pips">
+            @for (pip of pipsOf(item.value.lvl_max); track $index) {
+              <span class="pip" [class.on]="$index < item.value.lvl"></span>
+            }
           </div>
           @if (item.value.lvl < item.value.lvl_max) {
-            <div class="shop-footer">
-              <span class="shop-price">{{ item.value.nextPrice }} 💰</span>
-              @if (item.value.enoughLvlMax && item.value.enoughMoney) {
-                <button
-                  class="yellow-button"
-                  (click)="buyItem(item.value.id)"
-                  [disabled]="cityService.buyBonusLoading()"
-                >
-                  Buy
-                </button>
-              }
+            <div class="bonus-foot">
+              <span class="price-hint" [class.short]="!item.value.enoughMoney">
+                {{ item.value.enoughMoney ? 'Ready to buy' : 'Not enough coins' }}
+              </span>
+              <button
+                type="button"
+                class="buy-btn"
+                (click)="buyItem(item.value.id)"
+                [disabled]="cityService.buyBonusLoading() || !item.value.enoughLvlMax || !item.value.enoughMoney"
+              >
+                <app-icon name="coin" [size]="16" />{{ item.value.nextPrice }} · Buy
+              </button>
             </div>
+          } @else {
+            <span class="neon-chip maxed" style="--c: var(--green)">Max level</span>
           }
-        </div>
+        </article>
       }
     </div>
   </ng-container>

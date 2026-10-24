@@ -1,58 +1,18 @@
-<div class="header container">
-  <img style="height: 24px; width: 24px; margin-right: 8px" src="assets/icons/small_death.gif" />Zombie Waves
-</div>
+<app-feature-list></app-feature-list>
 
-<div class="content container">
-  <div class="item">
-    <img class="icon" src="assets/icons/ame.gif" />
-    <p>Try your best to survive</p>
-  </div>
-
-  <div class="item" style="margin-top: 16px">
-    <img class="icon" src="assets/icons/pelle.gif" />
-    <p>Search for resources</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/building.webp" />
-    <p>Build powerful defenses</p>
-  </div>
-
-  <div class="item" style="margin-bottom: 16px">
-    <img class="icon" src="assets/icons/livre.gif" />
-    <p>Learn useful skills</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/zb.gif" />
-    <p>Defeat zombies every nights</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/xpLogo.png" />
-    <p>Accumulate experience and levels</p>
-  </div>
-
-  <div class="item">
-    <img class="icon" src="assets/icons/leaderboard.gif" />
-    <p>Conquer the leaderboard!</p>
-  </div>
-</div>
-
-<button class="yellow-button" style="padding: 8px; width: fit-content" (click)="router.navigate([RoutesEnum.WIKI])">
-  📖 Discover the game with the Wiki
-</button>
-
-<div class="buttons">
-  <button class="yellow-button" (click)="authService.signInTemp()">
-    @if (authService.signInTempLoading()) {
-      <mat-spinner style="margin: -6px 0px" diameter="24" class="spinner"></mat-spinner>
-    }
-    <span>🎮 Play as Guest</span>
+<div class="actions">
+  <button type="button" class="ghost-btn wiki-btn" (click)="router.navigate([RoutesEnum.WIKI])">
+    <app-icon name="book" [size]="18" />Discover the guide
   </button>
-  <div class="secondary-buttons">
-    <button class="yellow-button" (click)="useYourAccount()">
-      <span>🗝️ Use my own Account</span>
-    </button>
-  </div>
+  <button type="button" class="cta cta-pink" (click)="authService.signInTemp()">
+    @if (authService.signInTempLoading()) {
+      <mat-spinner diameter="22"></mat-spinner>
+    } @else {
+      <app-icon name="gamepad" [size]="22" />
+    }
+    Play as guest
+  </button>
+  <button type="button" class="ghost-btn" (click)="useYourAccount()">
+    <app-icon name="key" [size]="18" />Use my own account
+  </button>
 </div>

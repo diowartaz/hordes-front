@@ -1,12 +1,12 @@
-import { NgStyle } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
-import { SkillToIconPipe } from '../../../../shared/pipes/skill-to-icon';
+import { SkillToColorPipe, SkillToIconPipe } from 'src/app/shared/pipes/skill-to-icon.pipe';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { AdvancedSkillModel } from 'src/app/models/hordes';
 
 @Component({
   selector: 'app-skills',
-  imports: [NgStyle, SkillToIconPipe],
+  imports: [SkillToIconPipe, SkillToColorPipe, IconComponent],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
@@ -19,6 +19,11 @@ export class SkillsComponent {
 
   constructor() {
     inject(DestroyRef).onDestroy(() => clearTimeout(this.snackBarTimeout));
+  }
+
+  // Une case de jauge par niveau
+  pipsOf(count: number): number[] {
+    return Array.from({ length: count });
   }
 
   closeSnackBar() {

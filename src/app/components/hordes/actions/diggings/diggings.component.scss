@@ -2,93 +2,157 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  .btn {
-    border: none;
-    background-color: var(--transparent);
-    color: var(--white);
-    padding: 0px;
+}
+
+.play-content {
+  gap: 14px;
+}
+
+.dig-title {
+  text-align: center;
+  text-shadow:
+    0 0 12px var(--yellow),
+    0 0 26px var(--orange);
+}
+
+.dig-site {
+  align-self: center;
+  width: 170px;
+  height: 170px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 214, 10, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .dig-core {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 214, 10, 0.7);
+    box-shadow:
+      0 0 30px rgba(255, 214, 10, 0.35),
+      0 0 30px rgba(255, 214, 10, 0.2) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(255, 159, 90, 0.3), rgba(11, 7, 24, 0.9) 70%);
+    color: var(--yellow);
   }
-  .play-content {
-    .diggings {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      .icon {
-        width: 16px;
-        height: 16px;
-      }
-      .select-nb-digs {
-        display: flex;
-        color: var(--white);
-        height: fit-content;
-        width: 50%;
-        .nb-digs {
-          border-top: var(--border-white);
-          border-bottom: var(--border-white);
-          width: 100%;
-        }
-        .element {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .add-digs-btn {
-          background: var(--primary-yellow);
-          color: var(--white);
-          border: var(--border-white);
-        }
-        .add-digs-btn-right {
-          border-top-left-radius: 4px;
-          border-bottom-left-radius: 4px;
-        }
-        .add-digs-btn-left {
-          border-top-right-radius: 4px;
-          border-bottom-right-radius: 4px;
-        }
-      }
-      .dig-btn {
-        display: flex;
-        border: var(--border-white);
-        padding: 16px;
-        border-radius: 4px;
-        background: var(--primary-yellow);
-        margin-top: 16px;
-        justify-content: center;
-        min-width: 160px;
-        box-shadow: var(--box-shadow-button);
-        .dig-text {
-          margin-left: 4px;
-        }
-      }
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+  border: 1px solid rgba(255, 214, 10, 0.35);
+  .step-btn {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: var(--radius-m);
+    border: 1px solid var(--yellow);
+    background: rgba(255, 214, 10, 0.12);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.plus {
+      border: 0;
+      background: var(--yellow);
+      color: #2a1500;
+      box-shadow: 0 0 14px var(--yellow);
     }
-    .inventory {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      .item {
-        display: flex;
-        margin-bottom: 8px;
-        .nb {
-          color: var(--white);
-          margin-left: 4px;
-          font-size: 14px;
-          min-width: 32px;
-        }
-        .icon {
-          height: 16px;
-        }
-        .item-found {
-          color: var(--bright-green);
-          font-size: 14px;
-          font-weight: 700;
-          width: 0px;
-        }
-      }
-      .item:last-child {
-        margin-bottom: 0px;
-      }
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+  .step-value {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .qty {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 28px;
+      color: #fff;
+      text-shadow: 0 0 10px var(--yellow);
+    }
+    .label {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+    }
+  }
+}
+
+.dig-btn {
+  flex-direction: column;
+  gap: 0;
+  min-height: 64px;
+  color: #1a0a00;
+  background: var(--grad-dig);
+  box-shadow: 0 0 26px rgba(255, 159, 90, 0.6);
+  .dig-main {
+    font-size: 17px;
+  }
+  .dig-sub {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+.inventory {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .label {
+    letter-spacing: 0.14em;
+  }
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 0 8px;
+    border-radius: var(--radius-m);
+    background: var(--surface-2);
+    border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+    .nb {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+    }
+    .item-found {
+      position: absolute;
+      top: -8px;
+      right: -4px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--green);
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 0 10px var(--green);
     }
   }
 }

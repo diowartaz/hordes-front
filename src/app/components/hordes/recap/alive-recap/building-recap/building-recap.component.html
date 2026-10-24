@@ -1,35 +1,20 @@
-<div class="building container">
-  <div class="line">
-    <div class="element-wrapper">
-      <img class="icon" [src]="building.rarity | buildingRarityToIcon" />
-      <div class="text" style="margin-bottom: -3px; font-weight: 500">
-        {{ building.name }}
-      </div>
+<div class="building" [style.--c]="building.rarity | rarityToColor">
+  <span class="tier" [title]="building.rarity"></span>
+  <div class="body">
+    <div class="row">
+      <span class="name">{{ building.name }}</span>
+      <span class="def"><app-icon name="shield" [size]="13" />{{ building.defense }}</span>
+      <span
+        class="percentdef"
+        [class.percentdef-green]="building.defense_ratio_percentage >= 0"
+        [class.percentdef-red]="building.defense_ratio_percentage < 0"
+        >{{ building.defense_ratio_percentage >= 0 ? '+' : '' }}{{ building.defense_ratio_percentage }}%</span
+      >
     </div>
-    <div class="line-right" style="justify-content: space-between">
-      <app-building-recap-inventory-inventory [building]="building"></app-building-recap-inventory-inventory>
-      <div class="line-right">
-        <div class="element-wrapper" style="width: 74px">
-          <img class="icon" src="assets/icons/defense.gif" />
-          <div class="text">{{ building.defense }}</div>
-          @if (building.defense_ratio_percentage >= 0) {
-            <div class="percentdef percentdef-green">+{{ building.defense_ratio_percentage }}%</div>
-          }
-          @if (building.defense_ratio_percentage < 0) {
-            <div class="percentdef percentdef-red">{{ building.defense_ratio_percentage }}%</div>
-          }
-        </div>
-
-        <div class="element-wrapper" style="width: 55px">
-          <span class="material-symbols-outlined icon"> schedule </span>
-          <div class="text">{{ getTimeBuildingString() }}</div>
-        </div>
-
-        <div class="element-wrapper">
-          <span class="material-symbols-outlined icon"> trending_up </span>
-          <div class="text">{{ building.lvl }}/{{ building.lvl_max }}</div>
-        </div>
-      </div>
+    <app-building-recap-inventory-inventory [building]="building"></app-building-recap-inventory-inventory>
+    <div class="row meta">
+      <span><app-icon name="clock" [size]="13" />{{ getTimeBuildingString() }}</span>
+      <span><app-icon name="trend" [size]="13" />{{ building.lvl }}/{{ building.lvl_max }}</span>
     </div>
   </div>
 </div>

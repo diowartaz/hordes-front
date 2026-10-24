@@ -1,23 +1,26 @@
-<div class="footer">
-  <button [ngClass]="{ 'is-active': content() === 'dig' }" class="footer-btn" (click)="changeContent('dig')">
-    <img class="icon" src="assets/icons/pelle.gif" />
-    <span class="span">Dig</span>
-    @if (cityService.city().last_action !== 'dig') {
-      <div class="fusee-icon">🚀</div>
-    }
-  </button>
-  <button [ngClass]="{ 'is-active': content() === 'learn' }" class="footer-btn" (click)="changeContent('learn')">
-    <img class="icon" src="assets/icons/livre.gif" />
-    <span class="span">Learn</span>
-    @if (cityService.city().last_action !== 'learn') {
-      <div class="fusee-icon">🚀</div>
-    }
-  </button>
-  <button [ngClass]="{ 'is-active': content() === 'build' }" class="footer-btn" (click)="changeContent('build')">
-    <img class="icon" src="assets/icons/building.webp" />
-    <span class="span">Build</span>
-    @if (cityService.city().last_action !== 'build') {
-      <div class="fusee-icon">🚀</div>
-    }
-  </button>
-</div>
+<nav class="footer" aria-label="City actions">
+  @if (speedVariation() !== 0) {
+    <span
+      class="neon-chip speed-chip"
+      title="Productivity bonus: switch between actions to speed up"
+      [style.--c]="speedVariation() > 0 ? 'var(--green)' : 'var(--danger)'"
+    >
+      <app-icon name="rocket" [size]="14" />{{ speedVariation() > 0 ? '+' : '' }}{{ speedVariation() }}% speed
+    </span>
+  }
+  @for (tab of tabs; track tab.route) {
+    <button
+      type="button"
+      class="footer-btn"
+      [class.is-active]="content() === tab.route"
+      [style.--c]="tab.color"
+      (click)="changeContent(tab.route)"
+    >
+      <app-icon [name]="tab.icon" [size]="24" />
+      <span>{{ tab.label }}</span>
+      @if (cityService.city().last_action !== tab.route) {
+        <span class="boost-dot" title="Speed bonus available"></span>
+      }
+    </button>
+  }
+</nav>

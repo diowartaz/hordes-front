@@ -1,95 +1,72 @@
 @use '@angular/material' as mat;
 
 @include mat.elevation-classes();
-@include mat.app-background();
 
+// Thème « Néon Arcade »
 :root {
-  // === Couleurs de base ===
-  --white: white;
-  --black: black;
-  --basic-red: red;
-  --transparent: transparent;
+  // === Fond et surfaces ===
+  --bg: #0b0718;
+  --surface: rgba(20, 12, 48, 0.85);
+  --surface-2: rgba(22, 14, 51, 0.92);
+  --surface-solid: #160e33;
+  --surface-nav: rgba(14, 8, 34, 0.96);
+  --line: rgba(159, 168, 217, 0.25);
+  --line-strong: rgba(159, 168, 217, 0.45);
 
-  // === Rouges ===
-  --danger-red: #dc1a1a;
-  --alert-red: #dc1a1a;
-  --error-red: #e85e5e;
-  --bright-red: #db5656;
+  // === Texte ===
+  --text: #eaf6ff;
+  --text-dim: #c9cff2;
+  --text-mute: #9fa8d9;
+  --text-dark: #0b0718;
 
-  // === Verts ===
-  --success-green: green;
-  --bright-green: #31c531;
-  --green-hover: #24c347;
-  --green-accent: #00ff99;
-  --green-light: #88ffaa;
-  --green-gradient-start: #1cb63f;
-  --green-gradient-end: #0a8625;
-  --neon-green: #28ff8c;
-  --dark-green: #0ca34c;
+  // === Accents ===
+  --pink: #ff2ec4;
+  --pink-light: #ff8be0;
+  --cyan: #22e6ff;
+  --cyan-light: #8ff3ff;
+  --cyan-pale: #c9f8ff;
+  --yellow: #ffd60a;
+  --yellow-light: #ffe97a;
+  --green: #3dff8f;
+  --green-dark: #04210f;
+  --orange: #ff9f5a;
+  --orange-light: #ffc79e;
+  --violet: #8b3dff;
+  --violet-light: #b98bff;
+  --violet-pale: #c9a8ff;
+  --danger: #ff5c8a;
+  --danger-light: #ff8ba8;
+  --silver: #c9d6ff;
 
-  // === Blues ===
-  --primary-blue: rgb(20, 96, 154);
-  --primary-dark-blue: rgb(18, 83, 139);
-  --primary-blue-light: #3388ff;
-  --primary-blue-lighter: #3388ff2e;
-  --primary-blue-hover: #3d93df;
-  --blue-gradient: #23a6d5;
-  --blue-teal: #23d5ab;
+  // === Typographie ===
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
 
-  // === Jaunes / Or ===
-  --primary-yellow: #f5a201;
-  --primary-yellow-disabled: #f5a201a8;
-  --gold-light: #ffd85d;
-  --gold-dark: #d39b00;
-  --gold-shadow: #7f5b00;
+  // === Dégradés ===
+  --grad-pink: linear-gradient(90deg, var(--pink), var(--violet));
+  --grad-gold: linear-gradient(90deg, var(--yellow), var(--orange));
+  --grad-dig: linear-gradient(90deg, var(--yellow), var(--orange), var(--pink));
+  --grad-learn: linear-gradient(90deg, var(--cyan), var(--green));
+  --grad-sunset: linear-gradient(90deg, var(--pink), var(--orange));
 
-  // === Violets ===
-  --purple-gradient-start: #b44cff;
-  --purple-gradient-end: #6a00b5;
+  // === Rayons ===
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-xl: 20px;
+}
 
-  // === Oranges / Corail ===
-  --coral-orange: #ee7752;
-  --coral-pink: #e73c7e;
-
-  // === Gris ===
-  --gray-light: #ccc;
-  --gray-medium: #aaa;
-  --gray-dark: #767676;
-  --gray-darker: #777;
-  --gray-darkest: #333;
-  --gray-border: #d2d2d2;
-  --gray-text: #f3f3f3;
-
-  // === Backgrounds ===
-  --background-black-opacity-zero-trois: rgba(0, 0, 0, 0.3);
-  --background-black-opacity-zero-six: rgba(0, 0, 0, 0.6);
-  --background-black-38: rgba(0, 0, 0, 0.38);
-  --background-black-63: rgb(0 0 0 / 63%);
-  --background-dark: #2e2e2e;
-  --background-white-20: rgba(255, 255, 255, 0.2);
-  --background-gray-dark: rgba(40, 40, 40, 0.9);
-  --container-color: #0000005e;
-
-  // === Borders ===
-  --border-white-transparent: 1px solid rgba(255, 255, 255, 0.8);
-  --border-dark: 1px solid #333;
-  --border-white: 1px solid white;
-
-  // === Shadows ===
-  --shadow-light: rgba(0, 0, 0, 0.4);
-  --shadow-medium: #000000a1;
-  --box-shadow-default: 0px 0px 3px 2px rgb(0 0 0 / 63%);
-  --box-shadow-button: 0px 0px 7px 2px rgb(0 0 0 / 63%);
-  --box-shadow-card: 0px 0px 3px 2px #000000a1;
-  --box-shadow-gold: inset 0 0 3px #7f5b00;
-  --box-shadow-plus: 0 2px 3px rgba(0, 0, 0, 0.4);
-  --box-shadow-currency: 0 2px 4px rgba(0, 0, 0, 0.4);
+html,
+body {
+  min-height: 100dvh;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  font-weight: 500;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 600;
 }
 
 *,
@@ -100,209 +77,23 @@ body {
 
 * {
   margin: 0;
-  padding: 0px;
+  padding: 0;
   font: inherit;
+}
+
+a {
+  color: var(--cyan);
+  &:hover {
+    color: var(--cyan-light);
+  }
 }
 
 button {
   cursor: pointer;
-}
-
-html,
-body {
-  min-height: 100dvh;
-  //color: white;
-}
-
-.dialog-class {
-  z-index: 99;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 79px;
-  text-align: center;
-  width: calc(100% - 16px);
-  border: var(--border-white);
-  border-radius: 4px;
-  color: var(--white);
-  background-color: var(--error-red);
-  padding: 12px 8px;
-  max-width: 568px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  span {
-    cursor: pointer;
+  color: inherit;
+  &:disabled {
+    cursor: not-allowed;
   }
-}
-
-.icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  padding: 4px;
-  border-radius: 4px;
-  border: var(--border-white-transparent);
-  transition: transform 0.2s;
-  background-color: var(--background-black-opacity-zero-trois);
-  .icon {
-    color: var(--white);
-    font-weight: 200;
-  }
-}
-
-::ng-deep.mat-mdc-progress-spinner {
-  --mat-progress-spinner-active-indicator-color: var(--white);
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  color: var(--white);
-  gap: 4px;
-  padding: 8px 4px;
-  width: 100%;
-  align-items: center;
-  border: var(--border-white);
-  border-radius: 4px;
-  box-shadow: var(--box-shadow-default);
-  background: var(--container-color);
-}
-
-@-webkit-keyframes borderBlink {
-  from,
-  to {
-    border-color: var(--transparent);
-  }
-  50% {
-    border-color: var(--white);
-  }
-}
-@keyframes borderBlink {
-  from,
-  to {
-    border-color: var(--transparent);
-  }
-  10% {
-    border-color: var(--white);
-  }
-}
-
-.play-header {
-  display: flex;
-  justify-content: center;
-  font-size: 24px;
-  padding: 8px;
-  color: var(--white);
-  .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-  }
-}
-.play-content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  overflow: auto;
-  padding: 8px;
-}
-
-::-webkit-scrollbar {
-  width: 2px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--transparent);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--container-color);
-}
-
-::-webkit-scrollbar-corner {
-  background-color: var(--transparent);
-}
-
-.yellow-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: var(--border-white);
-  color: var(--black);
-  padding: 16px;
-  gap: 16px;
-  border-radius: 4px;
-  width: 100%;
-  box-shadow: var(--box-shadow-button);
-  background: linear-gradient(45deg, var(--primary-yellow) 40%, var(--coral-orange) 50%, var(--primary-yellow) 60%);
-  background-size: 400% 400%;
-  animation: gradient 10s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-}
-
-input[type='checkbox'] {
-  width: 1rem;
-  height: 1rem;
-  background: var(--background-white-20);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: var(--border-white);
-  border-radius: 2px;
-}
-
-input[type='checkbox']:checked {
-  background: var(--background-gray-dark);
-}
-
-input[type='checkbox']:checked::after {
-  content: '✓';
-  color: var(--white);
-  font-size: 0.8rem;
-  position: absolute;
-  top: 61%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* centers the check mark */
-}
-
-.percentdef {
-  border-radius: 4px;
-  font-size: 12px;
-  padding: 0px 3px;
-  margin-bottom: 1px;
-  width: 35px;
-  text-align: center;
-}
-.percentdef-green {
-  background: var(--success-green);
-}
-.percentdef-red {
-  background: var(--bright-red);
-}
-
-.go-to-wiki {
-  color: var(--white);
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 // Pour que les double click ne zoom pas
@@ -316,5 +107,541 @@ input {
 button {
   -webkit-appearance: none;
   appearance: none;
-  //color: inherit;
+}
+
+// === Typographie ===
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.neon-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  --glow: var(--pink);
+  text-shadow:
+    0 0 12px var(--glow),
+    0 0 26px var(--glow);
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+// === Blocs ===
+
+.neon-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+// Ancienne carte générique, alignée sur le thème
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.neon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  --c: var(--cyan);
+  color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-l);
+  border: 1px dashed rgba(159, 168, 217, 0.4);
+  color: var(--text-mute);
+  font-size: 16px;
+}
+
+// Carré d'icône coloré et lumineux
+.icon-tile {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-m);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+  background: var(--c, var(--cyan));
+  box-shadow: 0 0 16px var(--c, var(--cyan));
+}
+
+// Tuile de statistique (profil, recap)
+.stat-tile {
+  --c: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+  .stat-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--c) 55%, white);
+  }
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 22px;
+  }
+}
+
+// Jauge segmentée (niveaux)
+.pips {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+  .pip {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(159, 168, 217, 0.22);
+    &.on {
+      background: var(--c, var(--cyan));
+      box-shadow: 0 0 6px var(--c, var(--cyan));
+    }
+  }
+}
+
+// Barre de progression
+.bar {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(159, 168, 217, 0.18);
+  overflow: hidden;
+  .fill {
+    display: block;
+    height: 100%;
+    border-radius: 5px;
+    background: var(--grad-learn);
+    box-shadow: 0 0 10px var(--cyan);
+  }
+}
+
+// === Boutons ===
+
+// Bouton icône carré (barre du haut, retour…)
+.icon-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--radius-m);
+  border: 1px solid rgba(34, 230, 255, 0.35);
+  background: rgba(20, 12, 48, 0.8);
+  color: var(--cyan-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(34, 230, 255, 0.18) inset;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+  &:hover,
+  &.active {
+    border-color: var(--pink);
+    color: var(--pink-light);
+    box-shadow: 0 0 14px rgba(255, 46, 196, 0.55);
+  }
+}
+
+// Bouton d'action principal (dégradé lumineux)
+.cta,
+.yellow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 18px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--grad-sunset);
+  box-shadow: 0 0 26px rgba(255, 46, 196, 0.5);
+  transition:
+    filter 0.2s,
+    box-shadow 0.2s;
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+  &:disabled,
+  &.disabled {
+    filter: grayscale(0.85) brightness(0.6);
+    box-shadow: none;
+  }
+}
+.cta-gold,
+.yellow-button {
+  color: #1a0a00;
+  background: var(--grad-gold);
+  box-shadow: 0 0 22px rgba(255, 159, 90, 0.5);
+}
+.cta-pink {
+  background: var(--grad-pink);
+  box-shadow: 0 0 18px rgba(255, 46, 196, 0.55);
+}
+
+// Bouton contour
+.ghost-btn {
+  --c: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 54px;
+  padding: 8px 16px;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  color: color-mix(in srgb, var(--c) 35%, white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  &:hover:not(:disabled) {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--c) 50%, transparent);
+  }
+}
+
+// Petit bouton d'action dans une carte
+.mini-cta {
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  background: var(--grad-learn);
+  box-shadow: 0 0 14px rgba(34, 230, 255, 0.6);
+  &:disabled {
+    color: var(--text-mute);
+    background: rgba(159, 168, 217, 0.15);
+    box-shadow: none;
+  }
+}
+
+// === Formulaires ===
+
+.neon-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  border: 1px solid rgba(34, 230, 255, 0.3);
+  color: var(--text-mute);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  &:focus-within {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 14px rgba(34, 230, 255, 0.35);
+  }
+  &.invalid {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font-size: 17px;
+    &::placeholder {
+      color: var(--text-mute);
+    }
+  }
+}
+
+input[type='checkbox'] {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  appearance: none;
+  border-radius: 6px;
+  border: 1px solid var(--cyan);
+  background: rgba(34, 230, 255, 0.08);
+  cursor: pointer;
+  &:checked {
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    &::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid var(--text-dark);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+// === Badges de pourcentage de défense ===
+
+.percentdef {
+  display: inline-block;
+  min-width: 42px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.percentdef-green {
+  color: var(--green);
+  background: rgba(61, 255, 143, 0.12);
+  border: 1px solid var(--green);
+}
+.percentdef-red {
+  color: var(--danger);
+  background: rgba(255, 92, 138, 0.12);
+  border: 1px solid var(--danger);
+}
+
+// === Mise en page des écrans de jeu ===
+
+.play-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.play-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  overflow: auto;
+  padding: 4px 16px 16px;
+}
+
+// Toast d'information (réveil du serveur…)
+.dialog-class {
+  z-index: 99;
+  position: absolute;
+  left: 50%;
+  bottom: 96px;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 568px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  text-align: center;
+  color: var(--text);
+  background: var(--surface-solid);
+  border: 1px solid var(--pink);
+  border-radius: var(--radius-m);
+  box-shadow: 0 0 18px rgba(255, 46, 196, 0.45);
+  span {
+    cursor: pointer;
+  }
+}
+
+.go-to-wiki {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-mute);
+}
+
+// === Glow clignotant (bouton sommeil après 22h) ===
+@keyframes glowBlink {
+  from,
+  to {
+    box-shadow: 0 0 6px rgba(139, 61, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 24px var(--violet);
+  }
+}
+
+// === Angular Material ===
+
+.mat-mdc-progress-spinner {
+  --mat-progress-spinner-active-indicator-color: var(--cyan);
+}
+
+.mat-mdc-snack-bar-container {
+  --mat-snack-bar-container-color: var(--surface-solid);
+  --mat-snack-bar-supporting-text-color: var(--text);
+  --mat-snack-bar-button-color: var(--pink-light);
+  --mat-snack-bar-supporting-text-font: var(--font-body);
+  .mat-mdc-snackbar-surface {
+    border: 1px solid var(--danger);
+    box-shadow: 0 0 18px rgba(255, 92, 138, 0.4);
+  }
+  .mdc-snackbar__label,
+  button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+}
+
+// === Barre de défilement ===
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(34, 230, 255, 0.35);
+  border-radius: 2px;
+}
+
+// === Liens et petits boutons ===
+
+a.icon-btn,
+a.cta,
+a.ghost-btn {
+  text-decoration: none;
+}
+
+.text-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-mute);
+  font-size: 15px;
+  text-decoration: none;
+  &:hover {
+    color: var(--cyan);
+  }
+}
+
+.close-toast {
+  flex: none;
+  display: flex;
+  padding: 4px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--pink-light);
+}
+
+// === Formulaires d'authentification (connexion, inscription) ===
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 18px 18px;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid rgba(34, 230, 255, 0.35);
+  box-shadow: 0 0 30px rgba(34, 230, 255, 0.15);
+
+  .auth-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--cyan);
+    .neon-title {
+      font-size: 26px;
+    }
+  }
+  .auth-errors {
+    min-height: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--danger);
+  }
+  .cta {
+    --mat-progress-spinner-active-indicator-color: currentColor;
+  }
+  .auth-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-top: 4px;
+  }
 }

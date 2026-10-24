@@ -1,29 +1,44 @@
-.boundary {
+.subgame {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  width: 100%;
-  padding: 4px;
-  .element {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    width: 100%;
-    .second-player {
-      display: flex;
-      cursor: pointer;
-      gap: 4px;
+  .player {
+    min-width: 0;
+    font-weight: 700;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    .link {
+      display: inline-flex;
       align-items: center;
-      .icon-search {
-        font-size: 16px;
-      }
+      gap: 4px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: 16px;
     }
   }
-
-  .elements-wrapper {
+  .stats {
     display: flex;
-    gap: 16px;
-    align-items: center;
-    width: 100%;
+    gap: 12px;
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+      color: var(--text-dim);
+      &.def {
+        color: var(--yellow);
+      }
+      &.pts {
+        min-width: 44px;
+        justify-content: flex-end;
+        color: var(--pink-light);
+      }
+    }
   }
 }

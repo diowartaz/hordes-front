@@ -3,28 +3,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
   .content-wrapper {
-    padding: 0px 8px 8px 8px;
     flex: 1;
+    min-height: 0;
     overflow: auto;
-  }
-
-  .aaaa {
-    position: absolute !important;
-    right: 8px;
-    height: 32px;
-    width: 74px;
-    font-weight: 700 !important;
-    text-align: center;
-    border-width: 2px;
-  }
-  .green-icon {
-    color: var(--green-hover);
-    border-color: var(--green-hover);
-  }
-  .red-icon {
-    color: var(--basic-red);
-    border-color: var(--basic-red);
   }
 }

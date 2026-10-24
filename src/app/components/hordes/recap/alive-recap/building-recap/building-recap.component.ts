@@ -1,14 +1,14 @@
 import { Component, inject, Input } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-
-import { BuildingRarityToIconPipe } from '../../../../../shared/pipes/building-rarity-to-icon';
-import { BuildingModel, createDefaultBuildingModel, ItemModel } from 'src/app/models/hordes';
+import { BuildingModel, createDefaultBuildingModel } from 'src/app/models/hordes';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { RarityToColorPipe } from 'src/app/shared/pipes/rarity-to-color.pipe';
 import { BuildingRecapInventoryComponent } from './building-recap-inventory/building-recap-inventory.component';
 
 @Component({
   selector: 'app-building-recap',
-  imports: [BuildingRarityToIconPipe, BuildingRecapInventoryComponent],
+  imports: [RarityToColorPipe, IconComponent, BuildingRecapInventoryComponent],
   templateUrl: './building-recap.component.html',
   styleUrls: ['./building-recap.component.scss'],
 })
@@ -19,9 +19,5 @@ export class BuildingRecapComponent {
 
   getTimeBuildingString() {
     return formatTimeToString(this.building.time * this.cityService.city().speeds.build);
-  }
-
-  castKey(key: string): ItemModel {
-    return key as ItemModel;
   }
 }
