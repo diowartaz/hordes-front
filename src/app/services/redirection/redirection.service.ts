@@ -1,5 +1,6 @@
 import { effect, Injectable, inject, untracked } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import {
   firstSegment,
   PUBLIC_ROUTES,
@@ -34,6 +35,16 @@ export class RedirectionService {
       const connected = this.authService.isConnected();
       const state = this.cityService.state();
       untracked(() => this.onChange(connected, state));
+    });
+
+    // Si le joueur est chargé avant la fin de la première navigation, le gameLoadedGuard
+    // envoie quand même sur l'écran d'attente : on en repart dès qu'on y arrive
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      const state = this.cityService.state();
+      const waiting = firstSegment(this.router.url) === RoutesEnum.LOAD_PLAYER;
+      if (waiting && this.authService.isConnected() && state !== UserState.NOT_LOADED_PLAYER) {
+        this.router.navigateByUrl(routeForState(state));
+      }
     });
   }
 

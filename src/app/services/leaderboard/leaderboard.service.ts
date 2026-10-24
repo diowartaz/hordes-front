@@ -14,14 +14,14 @@ export class LeaderboardService {
   leaderboardRankedLoading = signal<boolean>(false);
 
   getLeaderboardBestDay(): void {
-    runRequest(this.leaderboardBestDayLoading, this.api.getLeaderboardBestDay(), (response) =>
-      this.leaderboardBestDay.set(response.leaderboard),
+    runRequest(this.leaderboardBestDayLoading, this.api.getLeaderboardBestDay(), (entries) =>
+      this.leaderboardBestDay.set(entries),
     );
   }
 
   getLeaderboardRanked(): void {
-    runRequest(this.leaderboardRankedLoading, this.api.getLeaderboardRanked(), (response) =>
-      this.leaderboardRanked.set(response.leaderboard),
+    runRequest(this.leaderboardRankedLoading, this.api.getLeaderboardRanked(), (entries) =>
+      this.leaderboardRanked.set(entries),
     );
   }
 }

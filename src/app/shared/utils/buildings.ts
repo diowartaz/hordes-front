@@ -1,13 +1,14 @@
-import { AdvancedBonus, AdvancedBuildingModel, CityModel, DefaultValuesModel } from 'src/app/models/hordes';
+import { AdvancedBonus, AdvancedBuildingModel, CityModel, DefaultValuesModel, Rarity } from 'src/app/models/hordes';
 import { bonusEffect } from './bonuses';
 import { contains } from './inventory';
 import { formatTimeToString } from './time';
 
-const rarityOrder: Record<string, number> = {
+const rarityOrder: Record<Rarity, number> = {
   base: 1,
-  epic: 2,
-  rare: 3,
-  common: 4,
+  legendary: 2,
+  epic: 3,
+  rare: 4,
+  common: 5,
 };
 
 export function calculateAdvancedBuildings(

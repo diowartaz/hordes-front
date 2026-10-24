@@ -40,19 +40,23 @@ describe('errorInterceptor', () => {
   }
 
   it('déconnecte le joueur quand le token est refusé', () => {
-    failRequest('player', 401);
+    failRequest('me', 401);
     expect(authService.logOut).toHaveBeenCalled();
     expect(snackBar.open).toHaveBeenCalled();
   });
 
   it('laisse le formulaire de connexion gérer un mauvais mot de passe', () => {
-    failRequest('signin', 401);
+    failRequest('auth/signin', 401);
     expect(authService.logOut).not.toHaveBeenCalled();
     expect(snackBar.open).not.toHaveBeenCalled();
   });
 
   it('affiche le message renvoyé par le back', () => {
-    failRequest('city/build/3', 400, { error: 'Building 3 not available' });
+    failRequest('me/city/buildings/3/upgrade', 422, {
+      statusCode: 422,
+      code: 'BUILDING_NOT_AVAILABLE',
+      message: 'Building 3 not available',
+    });
     expect(snackBar.open).toHaveBeenCalledWith('Building 3 not available', 'OK', jasmine.any(Object));
     expect(authService.logOut).not.toHaveBeenCalled();
   });

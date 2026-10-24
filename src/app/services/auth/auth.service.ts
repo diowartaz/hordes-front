@@ -25,7 +25,8 @@ export class AuthService {
   token = signal<string | undefined>(readStorage(StorageKey.TOKEN) ?? undefined);
   email = signal<string | undefined>(readStorage(StorageKey.LOGIN) ?? undefined);
 
-  tempAccount = computed(() => this.email()?.split('@')[1] === 'temp.com');
+  // Les comptes invités ont un email réservé (@temp.invalid ; @temp.com pour les plus anciens)
+  tempAccount = computed(() => ['temp.invalid', 'temp.com'].includes(this.email()?.split('@')[1] ?? ''));
 
   verifiedToken = computed(() => {
     const token = this.token();
@@ -41,13 +42,13 @@ export class AuthService {
 
   signIn(params: SignInParams): Observable<AuthResponse> {
     return this.httpClient
-      .post<AuthResponse>(`${this.API_URL}signin`, params)
-      .pipe(tap((result) => this.handleSuccessSignIn(result.token, result.email)));
+      .post<AuthResponse>(`${this.API_URL}auth/signin`, params)
+      .pipe(tap((result) => this.handleSuccessSignIn(result.token, result.account.email)));
   }
 
   signInTemp(): void {
-    runRequest(this.signInTempLoading, this.httpClient.post<AuthResponse>(`${this.API_URL}signin-temp`, {}), (result) =>
-      this.handleSuccessSignIn(result.token, result.email),
+    runRequest(this.signInTempLoading, this.httpClient.post<AuthResponse>(`${this.API_URL}auth/guest`, {}), (result) =>
+      this.handleSuccessSignIn(result.token, result.account.email),
     );
   }
 
@@ -62,10 +63,16 @@ export class AuthService {
 
   // Un conflit (409) n'est pas une erreur pour l'appelant : il reçoit les champs déjà utilisés
   signUp(params: SignUpParams): Observable<SignUpResult> {
-    return this.httpClient.post<AuthResponse>(`${this.API_URL}signup`, params).pipe(
+    return this.httpClient.post<AuthResponse>(`${this.API_URL}auth/signup`, params).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 409) {
-          return of({ error: error.error.error as SignUpConflict });
+          // { code: 'IDENTITY_TAKEN', details: ['email', 'username'] }
+          const taken: string[] = error.error?.details ?? [];
+          const conflict: SignUpConflict = {
+            emailAlreadyExists: taken.includes('email'),
+            usernameAlreadyExists: taken.includes('username'),
+          };
+          return of({ error: conflict });
         }
         return throwError(() => error);
       }),
@@ -73,7 +80,9 @@ export class AuthService {
   }
 
   deleteAccount() {
-    runRequest(this.deleteAccountLoading, this.httpClient.post(this.API_URL + 'delete', {}), () => this.logOut());
+    runRequest(this.deleteAccountLoading, this.httpClient.delete(this.API_URL + 'me', { body: {} }), () =>
+      this.logOut(),
+    );
   }
 
   logOut() {

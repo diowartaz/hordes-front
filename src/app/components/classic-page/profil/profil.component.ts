@@ -49,7 +49,7 @@ export class ProfilComponent implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((result) => this.profil.set(result.profil));
+      .subscribe((profil) => this.profil.set(profil));
   }
 
   player1Wins(player1: GameHistoryPlayerModel, player2: GameHistoryPlayerModel | null) {

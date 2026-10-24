@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 
 // Endpoints dont les erreurs attendues sont affichées par le formulaire lui-même
 const SELF_HANDLED: { path: string; status: number }[] = [
-  { path: 'signin', status: 401 },
-  { path: 'signin', status: 400 },
-  { path: 'signup', status: 409 },
+  { path: 'auth/signin', status: 401 },
+  { path: 'auth/signin', status: 400 },
+  { path: 'auth/signup', status: 409 },
 ];
 
 function errorMessage(error: HttpErrorResponse): string {
@@ -19,7 +19,8 @@ function errorMessage(error: HttpErrorResponse): string {
   if (error.status === 401) {
     return 'Your session has expired, please log in again';
   }
-  const backendMessage = error.error?.error;
+  // Format de hordes-api : { statusCode, code, message, details? }
+  const backendMessage = error.error?.message;
   return typeof backendMessage === 'string' ? backendMessage : 'Something went wrong, please try again';
 }
 

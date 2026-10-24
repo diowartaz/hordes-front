@@ -13,6 +13,7 @@ import {
   createDefaultStatsModel,
   createEmptyInventory,
   DefaultValuesModel,
+  GameHistoryModel,
   InventoryModel,
   SkillModel,
   StatsModel,
@@ -24,7 +25,7 @@ import { runRequest } from 'src/app/shared/utils/http';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 import { StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { GameApiService } from '../game-api/game-api.service';
+import { GameApiService, PlayerSnapshot } from '../game-api/game-api.service';
 
 // Source de vérité de l'état de la partie. La navigation qui découle d'un changement de `state`
 // est gérée par RedirectionService, jamais ici.
@@ -36,6 +37,9 @@ export class CityService {
   private readonly appInjector = inject(Injector);
 
   state = signal<UserState>(UserState.NOT_LOADED_PLAYER);
+  // Compte chargé par loadPlayer (sert à retrouver la dernière partie terminée)
+  accountId = signal<string | undefined>(undefined);
+  lastGame = signal<GameHistoryModel | undefined>(undefined);
   playerLoaded = computed<boolean>(() => this.state() !== UserState.NOT_LOADED_PLAYER);
 
   referencesBonuses = signal<Record<number, BonusWithoutLvl>>({});
@@ -121,21 +125,22 @@ export class CityService {
     this.city.set(createDefaultCityModel());
     this.stats.set(createDefaultStatsModel());
     this.inventoryItemFound.set(createEmptyInventory());
+    this.accountId.set(undefined);
+    this.lastGame.set(undefined);
   }
 
   loadPlayer(): void {
-    runRequest(this.playerLoading, this.api.loadPlayer(), (response) => {
-      this.defaultValues.set(response.default_values);
-      this.stats.set(response.player.stats);
-      this.city.set(response.player.city ?? createDefaultCityModel());
-      this.state.set(response.player.state);
+    runRequest(this.playerLoading, this.api.loadPlayer(), ({ player, catalog }) => {
+      this.defaultValues.set(catalog.defaultValues);
+      this.referencesBonuses.set(catalog.bonuses);
+      this.applyPlayer(player);
     });
   }
 
   findItems(nb: number): void {
     runRequest(this.digLoading, this.api.findItems(nb), (response) => {
       this.city.set(response.city);
-      this.inventoryItemFound.set(response.items_found_inventory);
+      this.inventoryItemFound.set(response.found);
     });
   }
 
@@ -144,8 +149,8 @@ export class CityService {
       writeStorage(StorageKey.NB_DIG, '1');
       writeStorage(StorageKey.PLAY_ROUTE, 'dig');
       this.inventoryItemFound.set(createEmptyInventory());
-      this.city.set(response.player.city);
-      this.state.set(response.player.state);
+      this.city.set(response.city);
+      this.state.set(response.state);
     });
   }
 
@@ -157,36 +162,48 @@ export class CityService {
   }
 
   build(id: number): void {
-    runRequest(this.buildLoading, this.api.build(id), (response) => this.city.set(response.city));
+    runRequest(this.buildLoading, this.api.build(id), (city) => this.city.set(city));
   }
 
   learn(id: number): void {
-    runRequest(this.learnLoading, this.api.learn(id), (response) => this.city.set(response.city));
+    runRequest(this.learnLoading, this.api.learn(id), (city) => this.city.set(city));
   }
 
   endDay(): void {
-    runRequest(this.endDayLoading, this.api.endDay(), (response) => {
-      this.city.set(response.player.city);
-      this.stats.set(response.player.stats);
-      this.state.set(response.player.state);
-    });
+    runRequest(this.endDayLoading, this.api.endDay(), (player) => this.applyPlayer(player));
   }
 
+  // Les choix sont des index dans attackRecap.architect_shelter_buildings ; l'API attend des ids
   startDay(chosenBuildings: number[]): void {
-    runRequest(this.startDayLoading, this.api.startDay(chosenBuildings), (response) => {
+    const offers = this.city().attackRecap.architect_shelter_buildings;
+    const ids = chosenBuildings.map((index) => offers[index]?.id).filter((id) => id !== undefined);
+    runRequest(this.startDayLoading, this.api.startDay(ids), (city) => {
       this.inventoryItemFound.set(createEmptyInventory());
-      this.city.set(response.city);
+      this.city.set(city);
       this.state.set(UserState.PLAYING);
     });
   }
 
   loadReferencesBonuses(): void {
-    runRequest(this.referencesBonusesLoading, this.api.getReferencesBonuses(), (response) =>
-      this.referencesBonuses.set(response.bonuses),
+    runRequest(this.referencesBonusesLoading, this.api.getCatalog(), (catalog) =>
+      this.referencesBonuses.set(catalog.bonuses),
     );
   }
 
   buyBonus(id: number): void {
-    runRequest(this.buyBonusLoading, this.api.buyBonus(id), (response) => this.stats.set(response.stats));
+    runRequest(this.buyBonusLoading, this.api.buyBonus(id), (stats) => this.stats.set(stats));
+  }
+
+  private applyPlayer(player: PlayerSnapshot): void {
+    this.accountId.set(player.accountId);
+    this.stats.set(player.stats);
+    this.city.set(player.city ?? createDefaultCityModel());
+    this.state.set(player.state);
+    this.lastGame.set(undefined);
+    if (player.state === UserState.DEATH_RECAP) {
+      this.api
+        .getLastGame(player.accountId)
+        .subscribe({ next: (game) => this.lastGame.set(game), error: () => undefined });
+    }
   }
 }

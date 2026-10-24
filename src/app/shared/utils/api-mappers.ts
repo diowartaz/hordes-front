@@ -1,0 +1,217 @@
+import { components } from 'src/app/models/api';
+import {
+  AttackRecapModel,
+  BonusWithoutLvl,
+  BuildingModel,
+  CityModel,
+  createDefaultCityModel,
+  DefaultValuesModel,
+  GameHistoryModel,
+  InventoryModel,
+  LeaderboardElement,
+  ProfilModel,
+  SkillModel,
+  StatsModel,
+} from 'src/app/models/hordes';
+import { UserState } from 'src/app/models/router';
+
+// Conversion des réponses de hordes-api (types générés depuis openapi.json) vers les modèles du front.
+// Les composants ne manipulent que les modèles de src/app/models/hordes.ts.
+
+type Schemas = components['schemas'];
+export type ApiCity = Schemas['CityResponse'];
+export type ApiPlayer = Schemas['PlayerResponse'];
+export type ApiCatalog = Schemas['CatalogResponse'];
+export type ApiProfile = Schemas['ProfileResponse'];
+export type ApiMatch = Schemas['MatchResponse'];
+export type ApiLeaderboardEntry = Schemas['LeaderboardEntryResponse'];
+type ApiBuilding = Schemas['BuildingResponse'];
+type ApiSkill = Schemas['SkillResponse'];
+type ApiAttackRecap = Schemas['AttackRecapResponse'];
+type ApiItemQuantities = Schemas['ItemQuantitiesResponse'];
+
+const PHASE_TO_STATE: Record<ApiCity['phase'], UserState> = {
+  playing: UserState.PLAYING,
+  dayRecap: UserState.RECAP,
+  deathRecap: UserState.DEATH_RECAP,
+};
+
+export function stateFromCity(city: ApiCity | null): UserState {
+  return city ? PHASE_TO_STATE[city.phase] : UserState.NO_CITY;
+}
+
+export function toInventory(items: ApiItemQuantities): InventoryModel {
+  return {
+    wood: items.wood ?? 0,
+    stone: items.stone ?? 0,
+    screw: items.screw ?? 0,
+    metal: items.metal ?? 0,
+    patch: items.patch ?? 0,
+  };
+}
+
+function toBuildingModel(building: ApiBuilding): BuildingModel {
+  return {
+    id: building.id,
+    name: building.name,
+    rarity: building.rarity,
+    defense: building.defense,
+    defense_ratio_percentage: building.defenseVariancePercent,
+    time: building.buildTime,
+    lvl: building.level,
+    lvl_max: building.maxLevel,
+    inventory: { ...building.cost },
+    selected: false,
+  };
+}
+
+function toSkillModel(skill: ApiSkill): SkillModel {
+  return {
+    id: skill.id,
+    name: skill.name,
+    speed_name: skill.speed,
+    lvl: skill.level,
+    lvl_max: skill.maxLevel,
+    lvl_max_max: skill.levelCap,
+    time: skill.learnTime,
+    avantage_per_lvl: skill.speedGainPerLevel,
+    reduce_time_seconds: skill.wakeUpEarlierSeconds ?? 0,
+  };
+}
+
+function toAttackRecap(recap: ApiAttackRecap | null): AttackRecapModel {
+  if (!recap) {
+    return createDefaultCityModel().attackRecap;
+  }
+  return {
+    architect_shelter_buildings: recap.buildingOffers.map(toBuildingModel),
+    building_picks: recap.buildingPicks,
+    library_discoveries: Object.fromEntries(recap.skillDiscoveries.map((d) => [d.skillId, d.levels])),
+    nb_zb: recap.zombies,
+    defense: recap.defense,
+    base_money: recap.rewards?.baseMoney ?? 0,
+    ranked_money: recap.rewards?.rankedMoney ?? 0,
+    bonus_money: recap.rewards?.bonusMoney ?? 0,
+    total_money: recap.rewards?.totalMoney ?? 0,
+    day: recap.day,
+  };
+}
+
+export function toCityModel(city: ApiCity): CityModel {
+  return {
+    day: city.day,
+    defense: city.defense,
+    time: city.time,
+    nb_zb_previous_attack: city.zombies.lastAttack,
+    nb_zb_next_attack_min: city.zombies.nextAttackMin,
+    nb_zb_next_attack_max: city.zombies.nextAttackMax,
+    nb_zb_history: city.zombies.history,
+    buildings: city.buildings.map(toBuildingModel),
+    skills: city.skills.map(toSkillModel),
+    last_timestamp_request: Date.parse(city.lastActivityAt),
+    inventory: { ...city.inventory },
+    speeds: { ...city.speeds },
+    state: stateFromCity(city),
+    attackRecap: toAttackRecap(city.attackRecap),
+    ranked: city.ranked,
+    last_action: city.lastAction,
+  };
+}
+
+export function toStatsModel(player: ApiPlayer): StatsModel {
+  return {
+    personal_best_day: player.personalBest.day,
+    personal_best_zb: player.personalBest.zombies,
+    xp: player.xp,
+    money: player.money,
+    bonuses: Object.fromEntries(Object.entries(player.bonusLevels).map(([id, lvl]) => [Number(id), lvl])),
+    ranked_points: player.rankedPoints,
+  };
+}
+
+export function toBonusReferences(catalog: ApiCatalog): Record<number, BonusWithoutLvl> {
+  return Object.fromEntries(
+    catalog.bonuses.map((bonus) => [
+      bonus.id,
+      {
+        id: bonus.id,
+        name: bonus.name,
+        description: bonus.description,
+        icon: bonus.icon,
+        price: bonus.price,
+        lvl_max: bonus.maxLevel,
+        value: bonus.value,
+      },
+    ]),
+  );
+}
+
+export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
+  const rules = catalog.rules;
+  return {
+    items: catalog.items,
+    day_start_time: rules['DAY_START_TIME'],
+    day_end_time: rules['DAY_END_TIME'],
+    digging_time: rules['DIG_TIME'],
+    coef_realtime_to_ingametime: rules['GAME_SECONDS_PER_REAL_SECOND'],
+    nb_buildings_start: rules['STARTING_BUILDING_PLANS'],
+    nb_skills_start: rules['STARTING_SKILL_LEVELS'],
+    probaBuildingDiscovery: rules['ARCHITECT_DISCOVERY_PROBABILITY'],
+    probaSkillDiscovery: rules['LIBRARY_DISCOVERY_PROBABILITY'],
+    randomPercentageDefBuilding: rules['BUILDING_DEFENSE_VARIANCE_PERCENT'],
+    bonuses: toBonusReferences(catalog),
+    SKILL_TIME_MULTIPLIER: rules['SKILL_TIME_MULTIPLIER'],
+    BONUS_PRICE_MULTIPLIER: rules['BONUS_PRICE_MULTIPLIER'],
+    ZOMBIE_COEF_MIN: rules['ZOMBIE_COEF_MIN'],
+    ZOMBIE_COEF_MAX: rules['ZOMBIE_COEF_MAX'],
+    ARCHITECT_DISCOVERY_CHOICES: rules['ARCHITECT_EXTRA_OFFERS'],
+  };
+}
+
+const USERNAME_DISPLAY_MAX = 22;
+
+export function toLeaderboard(entries: ApiLeaderboardEntry[]): LeaderboardElement[] {
+  return entries.map((entry) => ({
+    user_id: entry.playerId,
+    username: entry.username,
+    username_truncated:
+      entry.username.length > USERNAME_DISPLAY_MAX ? `${entry.username.substring(0, 19)}...` : entry.username,
+    personal_best_day: entry.bestDay,
+    personal_best_zb: entry.bestZombies,
+    ranked_points: entry.rankedPoints,
+    rank: entry.rank,
+  }));
+}
+
+// Dans l'historique du front, player1 est toujours le joueur du profil
+export function toGameHistory(match: ApiMatch, player: { id: string; username: string }): GameHistoryModel {
+  return {
+    date: match.playedAt,
+    ranked: match.ranked,
+    ranked_points: match.rankedPointsDelta === null ? null : Math.abs(match.rankedPointsDelta),
+    player1: { id: player.id, username: player.username, day: match.day, defense: match.defense, nb_zb: match.zombies },
+    player2: match.opponent
+      ? {
+          id: match.opponent.playerId,
+          username: match.opponent.username,
+          day: match.opponent.day,
+          defense: match.opponent.defense,
+          nb_zb: match.opponent.zombies,
+        }
+      : null,
+    win: match.rankedPointsDelta === null ? null : match.rankedPointsDelta >= 0,
+  };
+}
+
+export function toProfil(profile: ApiProfile): ProfilModel {
+  return {
+    username: profile.username,
+    rank: profile.rank,
+    xp: profile.xp,
+    creation_date: profile.createdAt,
+    personal_best_day: profile.personalBest.day,
+    personal_best_zb: profile.personalBest.zombies,
+    // L'API renvoie la plus récente en premier, le profil affiche l'historique du plus ancien au plus récent
+    match_history: profile.matches.map((match) => toGameHistory(match, profile)).reverse(),
+  };
+}

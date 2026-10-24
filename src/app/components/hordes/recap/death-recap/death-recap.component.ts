@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 
@@ -13,5 +13,5 @@ import { GameComponent } from 'src/app/components/classic-page/profil/game/game.
 export class DeathRecapComponent {
   public cityService = inject(CityService);
 
-  lastGame = computed(() => this.cityService.stats().match_history.at(-1));
+  lastGame = this.cityService.lastGame;
 }

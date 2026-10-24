@@ -18,7 +18,7 @@ export class AliveRecapComponent {
 
   architectBuildings = computed(() => this.cityService.city().attackRecap.architect_shelter_buildings);
   nbChoicesAvailable = computed(() => this.architectBuildings().length);
-  nbMaxChoices = computed(() => this.nbChoicesAvailable() - 2);
+  nbMaxChoices = computed(() => this.cityService.city().attackRecap.building_picks);
 
   libraryDiscoveries = computed<SkillDiscovery[]>(() => {
     const city = this.cityService.city();

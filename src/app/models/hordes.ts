@@ -1,56 +1,3 @@
-import { UserState } from './router';
-
-// ---------- Réponses de l'API ----------
-
-export interface CityResponse {
-  city: CityModel;
-}
-
-export interface FindItemsResponse {
-  city: CityModel;
-  items_found_inventory: InventoryModel;
-}
-
-export interface LoadPlayerResponse {
-  player: {
-    state: UserState;
-    stats: StatsModel;
-    city: CityModel | null;
-  };
-  default_values: DefaultValuesModel;
-}
-
-export interface NewCityResponse {
-  player: {
-    state: UserState;
-    city: CityModel;
-  };
-}
-
-export interface EndDayResponse {
-  player: {
-    state: UserState;
-    stats: StatsModel;
-    city: CityModel;
-  };
-}
-
-export interface StatsResponse {
-  stats: StatsModel;
-}
-
-export interface LeaderboardResponse {
-  leaderboard: LeaderboardElement[];
-}
-
-export interface ProfilResponse {
-  profil: ProfilModel;
-}
-
-export interface ReferencesBonusesResponse {
-  bonuses: Record<number, BonusWithoutLvl>;
-}
-
 // ---------- Modèles du jeu ----------
 
 export function createDefaultStatsModel(): StatsModel {
@@ -60,7 +7,6 @@ export function createDefaultStatsModel(): StatsModel {
     xp: 0,
     money: 0,
     bonuses: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, 0])),
-    match_history: [],
     ranked_points: 500,
   };
 }
@@ -72,7 +18,6 @@ export interface StatsModel {
   money: number;
   bonuses: Record<number, number>;
   ranked_points: number;
-  match_history: GameHistoryModel[];
 }
 
 export type ItemModel = 'wood' | 'stone' | 'screw' | 'metal' | 'patch';
@@ -106,6 +51,7 @@ export function createDefaultCityModel(): CityModel {
     state: 'noCity',
     attackRecap: {
       architect_shelter_buildings: [],
+      building_picks: 0,
       library_discoveries: {},
       nb_zb: 0,
       defense: 0,
@@ -143,6 +89,8 @@ export interface CityModel {
 
 export interface AttackRecapModel {
   architect_shelter_buildings: BuildingModel[];
+  // Nombre maximum de bâtiments à garder parmi architect_shelter_buildings
+  building_picks: number;
   library_discoveries: Record<number, number>;
   nb_zb: number;
   defense: number;
@@ -180,6 +128,8 @@ export function createDefaultBuildingModel(): BuildingModel {
   };
 }
 
+export type Rarity = 'base' | 'common' | 'rare' | 'epic' | 'legendary';
+
 export interface BuildingModel {
   id: number;
   defense: number;
@@ -188,7 +138,7 @@ export interface BuildingModel {
   lvl_max: number;
   name: string;
   inventory: Record<string, number>;
-  rarity: 'base' | 'common' | 'rare' | 'epic';
+  rarity: Rarity;
   selected: boolean;
   defense_ratio_percentage: number;
 }
@@ -202,7 +152,7 @@ export interface AdvancedBuildingModel {
   name: string;
   inventory: Record<string, number>;
   timeString: string;
-  rarity: 'base' | 'common' | 'rare' | 'epic';
+  rarity: Rarity;
   selected: boolean;
   enoughRessources: boolean;
   enoughLvlMax: boolean;
@@ -263,7 +213,6 @@ export interface GameHistoryPlayerModel {
 }
 
 export interface GameHistoryModel {
-  _id_ranked: string | null;
   date: string;
   player1: GameHistoryPlayerModel;
   player2: GameHistoryPlayerModel | null;
@@ -273,14 +222,11 @@ export interface GameHistoryModel {
 }
 
 export interface DefaultValuesModel {
-  newCity: CityModel;
   items: string[];
   day_start_time: number;
   day_end_time: number;
   digging_time: number;
   coef_realtime_to_ingametime: number;
-  buildings: BuildingBackendModel[];
-  LEVELED_PROBA_RESSOURCES: LeveledProbaModel[];
   nb_buildings_start: number;
   nb_skills_start: number;
   probaBuildingDiscovery: number;
@@ -294,46 +240,21 @@ export interface DefaultValuesModel {
   ARCHITECT_DISCOVERY_CHOICES: number;
 }
 
-export interface LeveledProbaModel {
-  object: string;
-  nb: number;
-}
-
-export interface BuildingInventoryModel {
-  wood: number;
-  metal: number;
-  screw: number;
-}
-
-export interface BuildingBackendModel {
-  id: number;
-  rarity: string;
-  name: string;
-  defense: number;
-  lvl: number;
-  lvl_max: number;
-  time: number;
-  inventory: BuildingInventoryModel;
-}
-
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
   return {
-    newCity: createDefaultCityModel(),
     items: ['wood', 'metal', 'stone', 'screw', 'patch'],
     day_start_time: 28800,
     day_end_time: 86459,
     digging_time: 7200,
     coef_realtime_to_ingametime: 192,
-    buildings: [],
     nb_buildings_start: 7,
     nb_skills_start: 9,
     probaBuildingDiscovery: 0.7,
     probaSkillDiscovery: 0.5,
     randomPercentageDefBuilding: 20,
-    LEVELED_PROBA_RESSOURCES: [],
     bonuses: {},
     SKILL_TIME_MULTIPLIER: 1.5,
-    BONUS_PRICE_MULTIPLIER: 1.5,
+    BONUS_PRICE_MULTIPLIER: 2,
     ZOMBIE_COEF_MIN: 2,
     ZOMBIE_COEF_MAX: 4,
     ARCHITECT_DISCOVERY_CHOICES: 2,

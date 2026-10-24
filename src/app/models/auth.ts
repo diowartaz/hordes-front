@@ -3,10 +3,17 @@ export interface JwtPayload {
   exp?: number;
 }
 
-export interface AuthResponse {
-  email: string;
+export interface AccountModel {
   id: string;
+  username: string;
+  email: string;
+  role: 'user' | 'admin';
+  isGuest: boolean;
+}
+
+export interface AuthResponse {
   token: string;
+  account: AccountModel;
 }
 
 export interface SignUpParams {

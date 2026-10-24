@@ -4,6 +4,8 @@ const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 
 module.exports = tseslint.config(
+  // Types générés depuis hordes-api/openapi.json (npm run api:types)
+  { ignores: ['src/app/models/api.ts'] },
   {
     files: ['**/*.ts'],
     extends: [

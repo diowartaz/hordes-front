@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  API_URL: 'https://diowartaz.onrender.com/',
+  // URL du service Render créé depuis hordes-api/render.yaml : à vérifier après sa création
+  API_URL: 'https://hordes-api.onrender.com/api/v1/',
 };
