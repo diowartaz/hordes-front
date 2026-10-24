@@ -2,7 +2,7 @@
 
 <div class="actions">
   <button type="button" class="ghost-btn wiki-btn" (click)="router.navigate([RoutesEnum.WIKI])">
-    <app-icon name="book" [size]="18" />Discover the guide
+    <app-icon name="bookmark" [size]="18" />Discover the guide
   </button>
   <button type="button" class="cta cta-pink" (click)="authService.signInTemp()">
     @if (authService.signInTempLoading()) {

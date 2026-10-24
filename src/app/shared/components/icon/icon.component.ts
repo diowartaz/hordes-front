@@ -5,17 +5,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 const ICONS = {
   plus: '<path d="M12 5v14M5 12h14"/>',
   minus: '<path d="M5 12h14"/>',
-  coin: '<circle cx="12" cy="12" r="9"/><path d="M12 7v10"/>',
   money:
     '<circle cx="12" cy="12" r="9"/><path d="M12 6v12M15 9c0-1.2-1.3-2-3-2s-3 .8-3 2 1.3 1.8 3 2.2 3 1 3 2.3-1.3 2-3 2-3-.8-3-2"/>',
   friends: '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M16 4a4 4 0 0 1 0 8M22 21c0-3-2-5-4-6"/>',
-  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>',
+  user: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M6.2 18.8a7 7 0 0 1 11.6 0"/>',
   'user-plus': '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/>',
   trophy:
     '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
   book: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5M22 9v6"/>',
+  bookmark: '<path d="M4 19.5V5a2 2 0 0 1 2-2h14v18H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M10 3v8l2.5-2 2.5 2V3"/>',
   settings:
-    '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+    '<circle cx="12" cy="12" r="3"/><path d="M12 2l1.8 2.6 3.1-.7.7 3.1L20.2 9 19 12l1.2 3-2.6 2-.7 3.1-3.1-.7L12 22l-1.8-2.6-3.1.7-.7-3.1L3.8 15 5 12 3.8 9l2.6-2 .7-3.1 3.1.7z"/>',
   back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   'arrow-right': '<path d="M5 12h14M13 6l6 6-6 6"/>',
   'chevron-left': '<path d="M15 6l-6 6 6 6"/>',
@@ -25,7 +25,8 @@ const ICONS = {
   shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
   'shield-check': '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
   'shield-plus': '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v8M8 12h8"/>',
-  zombie: '<circle cx="12" cy="5" r="3"/><path d="M12 8v8M7 10l5 2 5-2M9 22l3-6 3 6"/>',
+  zombie:
+    '<path d="M5 10a7 7 0 0 1 14 0v4a3 3 0 0 1-3 3v4H8v-4a3 3 0 0 1-3-3z"/><path d="M8 9l2 2M10 9l-2 2"/><circle cx="15" cy="10" r="1.2"/><path d="M9 14h6M11 14v1.5M13 14v1.5"/>',
   skull:
     '<path d="M12 3a8 8 0 0 0-8 8c0 3 1.5 4.5 3 5.5V20h10v-3.5c1.5-1 3-2.5 3-5.5a8 8 0 0 0-8-8z"/><circle cx="9" cy="11" r="1.5"/><circle cx="15" cy="11" r="1.5"/><path d="M10 20v-2M14 20v-2"/>',
   moon: '<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',

@@ -30,7 +30,7 @@
                 (click)="buyItem(item.value.id)"
                 [disabled]="cityService.buyBonusLoading() || !item.value.enoughLvlMax || !item.value.enoughMoney"
               >
-                <app-icon name="coin" [size]="16" />{{ item.value.nextPrice }} · Buy
+                <app-icon name="money" [size]="16" />{{ item.value.nextPrice }} · Buy
               </button>
             </div>
           } @else {

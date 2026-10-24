@@ -3,7 +3,7 @@
     <button type="button" class="coins" aria-label="Open the bonus shop" (click)="router.navigate([RoutesEnum.SHOP])">
       <span class="coins-plus"><app-icon name="plus" [size]="18" /></span>
       <span class="coins-amount">{{ data().money }}</span>
-      <app-icon class="coins-icon" name="coin" [size]="18" />
+      <app-icon class="coins-icon" name="money" [size]="18" />
       @if (cityService.nbBuyableBonuses() > 0) {
         <span class="coins-badge">{{
           cityService.nbBuyableBonuses() > 9 ? '9+' : cityService.nbBuyableBonuses()
@@ -30,7 +30,7 @@
     <app-icon name="trophy" />
   </a>
   <a class="icon-btn" aria-label="Guide" [routerLink]="['/', RoutesEnum.WIKI]" routerLinkActive="active">
-    <app-icon name="book" />
+    <app-icon name="bookmark" />
   </a>
   @if (authService.isConnected()) {
     <a class="icon-btn" aria-label="Settings" [routerLink]="['/', RoutesEnum.SETTINGS]" routerLinkActive="active">
