@@ -18,6 +18,7 @@ import {
   DefaultValuesModel,
   GameHistoryModel,
   InventoryModel,
+  ItemModel,
   SkillModel,
   StatsModel,
 } from 'src/app/models/hordes';
@@ -149,8 +150,8 @@ export class CityService {
     });
   }
 
-  findItems(nb: number): void {
-    runRequest(this.digLoading, this.api.findItems(nb), (response) => {
+  findItems(nb: number, pick?: ItemModel): void {
+    runRequest(this.digLoading, this.api.findItems(nb, pick), (response) => {
       this.city.set(response.city);
       this.inventoryItemFound.set(response.found);
     });

@@ -116,6 +116,7 @@ export function toCityModel(city: ApiCity): CityModel {
     skills: city.skills.map(toSkillModel),
     last_timestamp_request: Date.parse(city.lastActivityAt),
     inventory: { ...city.inventory },
+    dig_offer: [...city.digOffer],
     speeds: { ...city.speeds },
     state: stateFromCity(city),
     attackRecap: toAttackRecap(city.attackRecap),

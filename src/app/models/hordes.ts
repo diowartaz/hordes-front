@@ -46,6 +46,7 @@ export function createDefaultCityModel(): CityModel {
     skills: [],
     nb_zb_history: [],
     inventory: createEmptyInventory(),
+    dig_offer: [],
     speeds: {
       build: 1,
       dig: 1,
@@ -84,6 +85,8 @@ export interface CityModel {
   nb_zb_history: number[];
   last_timestamp_request: number;
   inventory: InventoryModel;
+  // Deux ressources distinctes proposées pour la prochaine fouille
+  dig_offer: ItemModel[];
   speeds: SpeedsModel;
   state: string;
   attackRecap: AttackRecapModel;

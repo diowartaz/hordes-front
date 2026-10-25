@@ -15,6 +15,91 @@
     0 0 26px var(--orange);
 }
 
+// Paire proposée : chaque carte lance une fouille et garde cette ressource
+.offer,
+.random {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  > .label {
+    letter-spacing: 0.14em;
+  }
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px 10px;
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--c) 30%, transparent);
+  color: #fff;
+  transition:
+    filter 0.2s,
+    box-shadow 0.2s;
+  .name {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stock {
+    font-size: 12px;
+    color: var(--text-mute);
+  }
+  .time {
+    margin-top: 4px;
+    padding-top: 6px;
+    width: 100%;
+    border-top: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  &:hover:not(:disabled) {
+    box-shadow: 0 0 24px color-mix(in srgb, var(--c) 55%, transparent);
+  }
+  &:disabled,
+  &.disabled {
+    filter: grayscale(0.85) brightness(0.6);
+    box-shadow: none;
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-mute);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--surface-2);
+  }
+}
+
+.random-hint {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-mute);
+}
+
 .stepper {
   display: flex;
   align-items: center;

@@ -132,8 +132,9 @@
           the shop. Duplicates are kept for later.
         </div>
         <div class="inline-div">
-          <app-icon class="ic yellow" name="dig" [size]="18" />Digs find every resource with the
-          <strong>same probability</strong>: a deck that needs a bit of every resource builds faster.
+          <app-icon class="ic yellow" name="dig" [size]="18" />Each dig offers <strong>two resources</strong>: pick the
+          one you keep, or dig at random. A random dig of several items takes the first one from the pair, then every
+          other resource with the <strong>same probability</strong>. Lucky Digger on the first dig gives you both.
         </div>
         <div class="inline-div">
           <app-icon class="ic cyan" name="recycle" [size]="18" />Once <strong>15 buildings</strong> of your deck reach
@@ -200,9 +201,9 @@
         <p><strong>The same hordes for both players</strong></p>
         <div class="inline-div">
           Both players share the same random seeds: same zombie waves
-          <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same starting skills, same resources
-          found dig after dig. Each player brings their own <app-icon class="ic cyan" name="cards" [size]="18" />deck:
-          building it well is part of the duel.
+          <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same starting skills, same
+          resources found dig after dig. Each player brings their own
+          <app-icon class="ic cyan" name="cards" [size]="18" />deck: building it well is part of the duel.
         </div>
         <div class="inline-div">
           Your permanent <app-icon class="ic yellow" name="sparkle" [size]="18" />bonuses still apply in ranked.
@@ -314,7 +315,8 @@
           <span class="sleep-sample"><app-icon name="moon" [size]="16" />Sleep</span>
         </div>
         <div class="inline-div" style="margin-top: 6px">
-          <strong>Note:</strong> only half the time is recovered, up to 3h (e.g., sleep at 10pm = 2h saved = 1h bonus tomorrow; sleep at 6pm or earlier = 3h bonus).
+          <strong>Note:</strong> only half the time is recovered, up to 3h (e.g., sleep at 10pm = 2h saved = 1h bonus
+          tomorrow; sleep at 6pm or earlier = 3h bonus).
         </div>
       </section>
 

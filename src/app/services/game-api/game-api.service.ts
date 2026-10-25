@@ -11,6 +11,7 @@ import {
   DefaultValuesModel,
   GameHistoryModel,
   InventoryModel,
+  ItemModel,
   LeaderboardElement,
   ProfilModel,
   StatsModel,
@@ -99,9 +100,10 @@ export class GameApiService {
     return forkJoin({ player: this.getMe(), catalog: this.getCatalog() });
   }
 
-  findItems(count: number): Observable<{ city: CityModel; found: InventoryModel }> {
+  // pick : ressource choisie dans la paire proposée pour la première fouille, sinon l'une des deux au hasard
+  findItems(count: number, pick?: ItemModel): Observable<{ city: CityModel; found: InventoryModel }> {
     return this.httpClient
-      .post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', { count })
+      .post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', { count, pick })
       .pipe(map((response) => ({ city: toCityModel(response.city), found: toInventory(response.found) })));
   }
 

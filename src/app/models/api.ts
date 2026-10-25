@@ -575,6 +575,8 @@ export interface components {
             /** @description Heure de jeu, en secondes depuis minuit */
             time: number;
             inventory: components["schemas"]["InventoryResponse"];
+            /** @description Deux ressources distinctes proposées pour la prochaine fouille */
+            digOffer: ("wood" | "metal" | "stone" | "screw" | "patch")[];
             speeds: components["schemas"]["SpeedsResponse"];
             /** @description Ids des plans du deck joué */
             deck: number[];
@@ -599,6 +601,11 @@ export interface components {
         };
         DigDto: {
             count: number;
+            /**
+             * @description Ressource choisie dans digOffer pour la première fouille ; absente : l'une des deux au hasard
+             * @enum {string}
+             */
+            pick?: "wood" | "metal" | "stone" | "screw" | "patch";
         };
         DigResponse: {
             city: components["schemas"]["CityResponse"];
