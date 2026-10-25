@@ -52,8 +52,8 @@ However, two special buildings provide **strategic advantages** rather than defe
 
 | Building                 | Max Level | Description                                                                                                                    |
 | ------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 🏗 **Architect Shelter** | 3         | Increases your odds of discovering **new building plans** during the night. Higher levels give more options for future builds. |
-| 📚 **Library**           | 3         | Increases your odds of discovering **new skill levels**. For example, it might expand a skill’s maximum level cap.             |
+| 🏗 **Blueprint Workshop** | 3         | Increases your odds of discovering **new building plans** during the night. Higher levels give more options for future builds. |
+| 📚 **Archives**           | 3         | Increases your odds of discovering **new skill levels**. For example, it might expand a skill’s maximum level cap.             |
 
 Each city starts with a limited number of **building plans**, randomly chosen at the start of a new game.
 
@@ -64,7 +64,7 @@ Each city starts with a limited number of **building plans**, randomly chosen at
 At the beginning, your city will have access to **7 different building blueprints**, and **all skills start at level 0**.  
 However, the **total of all skills’ maximum levels available at the start is 9**.  
 For example, you might initially be able to train **Digger up to level 3**, **Builder up to level 2**, **Insomniac up to level 4**, and **Fast Learner up to level 0**.  
-To unlock higher maximum levels for your skills, you must construct and upgrade your **Library**, which increases your chances of discovering new skill tiers.
+To unlock higher maximum levels for your skills, you must construct and upgrade your **Archives**, which increases your chances of discovering new skill tiers.
 
 ---
 
@@ -80,13 +80,13 @@ Skill improvements are **linear per level**, and all skills have a **maximum lev
 | 🧱 **Builder**      | 5         | Reduce building time linearly.       | Action time divided by 2 at level 5.   |
 | 📖 **Fast Learner** | 5         | Reduce learning time linearly.       | Learning time divided by 2 at level 5. |
 
-Skill level caps can be increased by upgrading your **Library**.
+Skill level caps can be increased by upgrading your **Archives**.
 
 ---
 
 ## ⚔️ Defense and Attacks
 
-- Every building (except Architect Shelter and Library) adds **defense points**.
+- Every building (except Blueprint Workshop and Archives) adds **defense points**.
 - Each night, the **zombie horde** increases in number.
 - If your **total defense** ≥ **zombie count**, you survive.
 - Otherwise, you die and your run ends.
@@ -162,7 +162,7 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 ## 🧩 Strategy Tips
 
 - **Use Libraries smartly:** Unlock higher skill caps to surpass your early efficiency limits.
-- **Architect Shelters** are essential for long runs — more blueprints mean more defense variety.
+- **Blueprint Workshops** are essential for long runs — more blueprints mean more defense variety.
 - In **Ranked Mode**, focus on **efficiency**, not just survival — time management and planning beat luck every time.
 
 ---
@@ -182,7 +182,7 @@ Ranked mode allows you to **compete asynchronously** with other players using de
 | Tech Stack                        | Angular 22 / Node.js / Express / MongoDB |
 | Starting Buildings                | 7                                        |
 | Starting Skill Level Caps (Total) | 9                                        |
-| Special Buildings                 | Architect Shelter, Library               |
+| Special Buildings                 | Blueprint Workshop, Archives              |
 | Skill Scaling                     | Linear                                   |
 | XP → Level                        | Logarithmic                              |
 | Level Bonus                       | +1 min earlier wake-up per level         |
