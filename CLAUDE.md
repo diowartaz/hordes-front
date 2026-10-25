@@ -5,13 +5,17 @@ SPA Angular (standalone components, signals, `inject()`), Angular Material. Buil
 ## Commandes
 
 ```bash
-npm start          # ng serve (http://localhost:4200, API sur http://localhost:3000/)
+npm start          # ng serve (http://localhost:4200, API hordes-api sur http://localhost:3000/api/v1/)
 npm run build      # build de prod
 npm run express    # sert le build via server.js
 npm run lint       # ng lint --fix
 npm run prettier   # formatage
 npm test           # Karma/Jasmine en ChromeHeadless, une seule passe
+npm run api:types  # régénère src/app/models/api.ts depuis ../hordes-api/openapi.json
 ```
+
+- Un seul fichier de test : `npx ng test --watch=false --browsers=ChromeHeadless --include=src/app/components/create-city/create-city.component.spec.ts`.
+- `src/app/models/api.ts` est généré : ne jamais l'éditer à la main. Quand un DTO change côté API : `npm run openapi` dans `hordes-api`, puis `npm run api:types` ici, puis adapter le mapping dans `GameApiService`.
 
 ## Conventions
 
