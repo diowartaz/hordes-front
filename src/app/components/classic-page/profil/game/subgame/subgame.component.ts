@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { GameHistoryPlayerModel } from 'src/app/models/hordes';
+import { GameHistoryPlayerModel, GameOutcome } from 'src/app/models/hordes';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
@@ -13,7 +13,7 @@ export class SubgameComponent implements OnInit {
   private router = inject(Router);
 
   @Input() gameHistoryPlayer: GameHistoryPlayerModel | null = null;
-  @Input() win: boolean | null = false;
+  @Input() outcome: GameOutcome | null = null;
   @Input() ranked_points: number | null = null;
   @Input() otherPlayer = false;
 
@@ -25,7 +25,13 @@ export class SubgameComponent implements OnInit {
       day: this.gameHistoryPlayer?.day || '--',
       defense: this.gameHistoryPlayer?.defense || '--',
       username: this.gameHistoryPlayer?.username || '--',
-      ranked_points: this.ranked_points ? (this.win ? this.ranked_points : '-' + this.ranked_points) : '--',
+      // ranked_points est la valeur absolue de la variation : le signe vient de l'issue
+      ranked_points:
+        this.ranked_points === null || this.outcome === null
+          ? '--'
+          : this.outcome === 'loss' && this.ranked_points > 0
+            ? '-' + this.ranked_points
+            : this.ranked_points,
     };
   }
 

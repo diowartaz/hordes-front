@@ -1,15 +1,20 @@
-<div class="game" [class.win]="game.win === true" [class.loss]="game.win === false">
+<div
+  class="game"
+  [class.win]="game.outcome === 'win'"
+  [class.loss]="game.outcome === 'loss'"
+  [class.draw]="game.outcome === 'draw'"
+>
   <div class="game-head">
     <span class="neon-chip" [style.--c]="game.ranked ? 'var(--yellow)' : 'var(--cyan)'">
       {{ game.ranked ? 'Ranked' : 'Normal' }}
     </span>
-    @if (game.win !== null) {
-      <span class="result">{{ game.win ? 'Victory' : 'Defeat' }}</span>
+    @if (game.outcome !== null) {
+      <span class="result">{{ outcomeLabels[game.outcome] }}{{ game.forfeit ? ' (forfeit)' : '' }}</span>
     }
   </div>
   <app-subgame
     [gameHistoryPlayer]="game.player1"
-    [win]="game.win"
+    [outcome]="game.outcome"
     [ranked_points]="game.ranked_points"
     [otherPlayer]="false"
   >
@@ -17,7 +22,7 @@
   @if (game.ranked) {
     <app-subgame
       [gameHistoryPlayer]="game.player2"
-      [win]="!game.win"
+      [outcome]="opponentOutcome()"
       [ranked_points]="game.ranked_points"
       [otherPlayer]="true"
     >

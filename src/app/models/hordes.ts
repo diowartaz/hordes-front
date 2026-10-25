@@ -208,13 +208,19 @@ export interface GameHistoryPlayerModel {
   username: string;
 }
 
+/** Issue d'une partie ranked, calculée par l'API */
+export type GameOutcome = 'win' | 'loss' | 'draw';
+
 export interface GameHistoryModel {
   date: string;
   player1: GameHistoryPlayerModel;
   player2: GameHistoryPlayerModel | null;
   ranked: boolean;
   ranked_points: number | null;
-  win: boolean | null;
+  /** Issue pour player1 ; null hors ranked ou tant que l'adversaire n'a pas terminé */
+  outcome: GameOutcome | null;
+  /** Partie réglée par l'inactivité d'un des deux joueurs */
+  forfeit: boolean;
 }
 
 export interface DefaultValuesModel {

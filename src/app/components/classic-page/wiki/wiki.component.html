@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <td>Back-end</td>
-            <td>Node.js + Express</td>
+            <td>NestJS (Node.js)</td>
           </tr>
           <tr>
             <td>Database</td>
@@ -160,18 +160,112 @@
             <app-icon class="ic yellow" name="money" [size]="18" /> (+50%)!</strong
           >
         </p>
-        <div class="inline-div">After you complete your ranked game, one other player will play the same game.</div>
+        <p>
+          A ranked game is a duel: two players play <strong>the exact same city</strong>, one after the other, and the
+          best survivor wins <app-icon class="ic pink" name="ranked" [size]="18" />ranked points.
+        </p>
+
+        <p><strong>Finding an opponent</strong></p>
         <div class="inline-div">
-          When the other players finishes, the performance is compared between the 2 players:
-        </div>
-        <div class="inline-div" style="margin-top: 6px !important">
-          <app-icon class="ic cyan" name="calendar" [size]="18" /> Days survived,
-          <app-icon class="ic yellow" name="shield" [size]="18" />defenses built.
+          When you start a ranked game, you join the oldest game whose first player has
+          <strong>already finished</strong>. You play their city, but you won't see their score until you fall too.
         </div>
         <div class="inline-div">
-          <app-icon class="ic pink" name="ranked" [size]="18" />Elo-like ranked point system.
+          If no game is waiting, a new one is created and <strong>you play first</strong>: your result waits for the
+          next ranked player to take up the challenge.
         </div>
-        <div class="inline-div"><app-icon class="ic yellow" name="trophy" [size]="18" />Fight for the leaderboard.</div>
+
+        <p><strong>The same city for both players</strong></p>
+        <div class="inline-div">
+          Both players share the same random seeds: same starting building plans and skills, same zombie waves
+          <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same random draws. Only your
+          choices make the difference.
+        </div>
+        <div class="inline-div">
+          Your permanent <app-icon class="ic yellow" name="sparkle" [size]="18" />bonuses still apply in ranked.
+        </div>
+
+        <p><strong>Who wins?</strong></p>
+        <table>
+          <tr>
+            <th>Order</th>
+            <th>Criterion</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>
+              <app-icon class="ic cyan" name="calendar" [size]="18" />The player who survives the
+              <strong>most days</strong> wins.
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <app-icon class="ic yellow" name="shield" [size]="18" />Same day: the <strong>highest defense</strong> on
+              the night of the fall wins.
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Same day and same defense: it's a <strong>draw</strong>, nobody wins or loses points.</td>
+          </tr>
+        </table>
+
+        <p><strong>Ranked points</strong></p>
+        <div class="inline-div">
+          Every player starts with <strong>500</strong> <app-icon class="ic pink" name="ranked" [size]="18" />points.
+          Points are computed like chess Elo: what the winner earns, the loser loses (at most 48 per game). Beating a
+          stronger player earns more, losing to them costs less.
+        </div>
+        <table>
+          <tr>
+            <th>Your opponent has…</th>
+            <th>If you win</th>
+            <th>If you lose</th>
+          </tr>
+          <tr>
+            <td>the same points as you</td>
+            <td>+24</td>
+            <td>-24</td>
+          </tr>
+          <tr>
+            <td>200 points more</td>
+            <td>+36</td>
+            <td>-12</td>
+          </tr>
+          <tr>
+            <td>400 points more</td>
+            <td>+44</td>
+            <td>-4</td>
+          </tr>
+        </table>
+        <div class="inline-div">
+          Points are given once <strong>both players</strong> have fallen. Until then, the game shows as pending in your
+          <app-icon class="ic cyan" name="history" [size]="18" />history, then as <strong>Victory</strong>,
+          <strong>Defeat</strong> or <strong>Draw</strong>.
+        </div>
+
+        <p><strong>Ranked money</strong></p>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="money" [size]="18" />At the fall of your city, you earn 50% more money (half
+          of the zombies repelled), win or lose. It is credited right away, without waiting for your opponent.
+        </div>
+
+        <p><strong>Inactivity</strong></p>
+        <div class="inline-div">
+          <app-icon class="ic danger" name="clock" [size]="18" />If you are the second player and your city stays
+          <strong>inactive for 48 hours</strong> while your opponent has finished for more than 48 hours, you
+          <strong>lose by forfeit</strong>, with your city's current day and defense. Your city is not lost: it goes on
+          as a normal game, without ranked money.
+        </div>
+        <div class="inline-div">
+          If you play first and don't finish within <strong>30 days</strong>, the ranked game is cancelled: your city
+          goes on and counts as a normal game, without ranked points.
+        </div>
+
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="trophy" [size]="18" />Climb the ranked leaderboard!
+        </div>
       </section>
 
       <section>

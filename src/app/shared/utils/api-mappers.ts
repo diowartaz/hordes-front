@@ -198,7 +198,8 @@ export function toGameHistory(match: ApiMatch, player: { id: string; username: s
           nb_zb: match.opponent.zombies,
         }
       : null,
-    win: match.rankedPointsDelta === null ? null : match.rankedPointsDelta >= 0,
+    outcome: match.outcome,
+    forfeit: match.forfeit,
   };
 }
 

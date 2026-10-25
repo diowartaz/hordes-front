@@ -393,6 +393,13 @@ export interface components {
       zombies: number;
       defense: number;
       opponent: components['schemas']['MatchPlayerResponse'] | null;
+      /**
+       * @description Issue ranked pour ce joueur ; null hors ranked ou tant que l'adversaire n'a pas terminé
+       * @enum {string|null}
+       */
+      outcome: 'win' | 'loss' | 'draw' | null;
+      /** @description Partie ranked réglée par l'inactivité d'un des deux joueurs */
+      forfeit: boolean;
     };
     ProfileResponse: {
       id: string;

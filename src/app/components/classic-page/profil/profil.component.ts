@@ -7,7 +7,7 @@ import { GameApiService } from 'src/app/services/game-api/game-api.service';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClassicPageComponent } from '../classic-page.component';
-import { GameHistoryPlayerModel, ProfilModel } from 'src/app/models/hordes';
+import { ProfilModel } from 'src/app/models/hordes';
 import { RoutesEnum } from 'src/app/models/router';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
@@ -31,12 +31,8 @@ export class ProfilComponent implements OnInit {
 
   level = computed(() => XPToLVLandXP(this.profil()?.xp ?? 0));
 
-  // Historique du plus récent au plus ancien, avec le résultat calculé pour le joueur 1
-  matchHistory = computed(() =>
-    (this.profil()?.match_history ?? [])
-      .map((match) => ({ ...match, win: this.player1Wins(match.player1, match.player2) }))
-      .reverse(),
-  );
+  // Historique du plus récent au plus ancien
+  matchHistory = computed(() => [...(this.profil()?.match_history ?? [])].reverse());
 
   ngOnInit(): void {
     this.route.queryParamMap
@@ -57,12 +53,5 @@ export class ProfilComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((profil) => this.profil.set(profil));
-  }
-
-  player1Wins(player1: GameHistoryPlayerModel, player2: GameHistoryPlayerModel | null) {
-    if (player2 === null) {
-      return null;
-    }
-    return player1.defense >= player2.defense;
   }
 }

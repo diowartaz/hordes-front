@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
 
-import { GameHistoryModel } from 'src/app/models/hordes';
+import { GameHistoryModel, GameOutcome } from 'src/app/models/hordes';
+
+const OPPOSITE: Record<GameOutcome, GameOutcome> = { win: 'loss', loss: 'win', draw: 'draw' };
 
 @Component({
   selector: 'app-game',
@@ -11,4 +13,11 @@ import { GameHistoryModel } from 'src/app/models/hordes';
 })
 export class GameComponent {
   @Input() game!: GameHistoryModel;
+
+  readonly outcomeLabels: Record<GameOutcome, string> = { win: 'Victory', loss: 'Defeat', draw: 'Draw' };
+
+  // L'issue est donnée pour player1 : l'adversaire a l'inverse
+  opponentOutcome(): GameOutcome | null {
+    return this.game.outcome && OPPOSITE[this.game.outcome];
+  }
 }

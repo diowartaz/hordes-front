@@ -19,6 +19,9 @@
     --c: var(--danger);
     box-shadow: 0 0 16px rgba(255, 92, 138, 0.2);
   }
+  &.draw {
+    --c: var(--yellow);
+  }
   .game-head {
     display: flex;
     align-items: center;
