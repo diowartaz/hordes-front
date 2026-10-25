@@ -148,7 +148,7 @@ describe('buildings', () => {
     expect(result.timeString).toBe('01h00');
   });
 
-  it('masque les bâtiments au niveau max et trie les constructibles en premier', () => {
+  it('trie les constructibles en premier et garde les bâtiments au niveau max en fin de liste', () => {
     const city: CityModel = {
       ...createDefaultCityModel(),
       inventory: { wood: 5, stone: 0, screw: 0, metal: 0, patch: 0 },
@@ -160,7 +160,7 @@ describe('buildings', () => {
     };
     const result = calculateAdvancedBuildings(city, {}, defaultValues);
 
-    expect(result.map((b) => b.name)).toEqual(['affordable', 'too expensive']);
+    expect(result.map((b) => b.name)).toEqual(['affordable', 'too expensive', 'maxed']);
     expect(result[0].enoughRessources).toBeTrue();
   });
 });

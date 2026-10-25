@@ -13,6 +13,31 @@
     <span class="label count">{{ cityService.advancedBuildings().length }} blueprints</span>
   </div>
 
+  @let deck = cityService.city().deck_status;
+  <div class="deck-status" [class.recycling]="deck.recycling">
+    <span class="pile"
+      ><app-icon name="cards" [size]="16" />Draw pile: {{ deck.unseen }} unseen plan{{
+        deck.unseen === 1 ? '' : 's'
+      }}</span
+    >
+    <span class="progress">
+      <app-icon name="recycle" [size]="16" />Completed {{ deck.completed }}/{{ deck.recycle_threshold }}
+      <span class="track"
+        ><span class="fill" [style.width.%]="(100 * deck.completed) / (deck.recycle_threshold || 1)"></span
+      ></span>
+    </span>
+    @if (deck.recycling) {
+      <p>Recycling: completed buildings are back in the draw pile, picking one again adds levels.</p>
+    } @else if (deck.unseen === 0) {
+      <p>
+        The architect has no plans left: complete {{ deck.recycle_threshold - deck.completed }} more building{{
+          deck.recycle_threshold - deck.completed === 1 ? '' : 's'
+        }}
+        to recycle them.
+      </p>
+    }
+  </div>
+
   <div class="cards">
     @for (building of cityService.advancedBuildings(); track building.id) {
       <article class="building" [style.--c]="building.rarity | rarityToColor">
@@ -61,6 +86,10 @@
             <app-icon name="build" [size]="18" />
             Build
           </button>
+        } @else if (deck.recycling && building.rarity !== 'base') {
+          <span class="neon-chip max" style="--c: var(--cyan)" title="Back in the draw pile"
+            ><app-icon name="recycle" [size]="12" />Pile</span
+          >
         } @else {
           <span class="neon-chip max" style="--c: var(--green)">Max</span>
         }

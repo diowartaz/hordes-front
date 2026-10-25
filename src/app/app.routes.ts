@@ -74,6 +74,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: RoutesEnum.DECK,
+    loadComponent: () => import('./components/classic-page/deck/deck.component').then((m) => m.DeckComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: RoutesEnum.PLAY,
     loadComponent: () => import('./components/hordes/hordes.component').then((m) => m.HordesComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],

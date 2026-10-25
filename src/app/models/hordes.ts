@@ -8,6 +8,8 @@ export function createDefaultStatsModel(): StatsModel {
     money: 0,
     bonuses: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, 0])),
     ranked_points: 500,
+    collection: {},
+    deck: [],
   };
 }
 
@@ -18,6 +20,10 @@ export interface StatsModel {
   money: number;
   bonuses: Record<number, number>;
   ranked_points: number;
+  // Plans possédés : nombre d'exemplaires par id de bâtiment
+  collection: Record<number, number>;
+  // Ids des plans du deck joué à chaque partie
+  deck: number[];
 }
 
 export type ItemModel = 'wood' | 'stone' | 'screw' | 'metal' | 'patch';
@@ -61,6 +67,7 @@ export function createDefaultCityModel(): CityModel {
       day: 0,
     },
     ranked: false,
+    deck_status: { size: 0, unseen: 0, completed: 0, recycle_threshold: 0, recycling: false },
     defaultCity: true,
   };
 }
@@ -82,6 +89,16 @@ export interface CityModel {
   attackRecap: AttackRecapModel;
   defaultCity?: boolean;
   ranked: boolean;
+  deck_status: DeckStatusModel;
+}
+
+// Pioche de la ville : plans jamais tirés et recyclage des bâtiments terminés
+export interface DeckStatusModel {
+  size: number;
+  unseen: number;
+  completed: number;
+  recycle_threshold: number;
+  recycling: boolean;
 }
 
 export interface AttackRecapModel {
@@ -121,6 +138,7 @@ export function createDefaultBuildingModel(): BuildingModel {
     rarity: 'common',
     selected: false,
     defense_ratio_percentage: -22,
+    recycled: false,
   };
 }
 
@@ -137,6 +155,34 @@ export interface BuildingModel {
   rarity: Rarity;
   selected: boolean;
   defense_ratio_percentage: number;
+  // Offre de l'architecte : bâtiment terminé revenu dans la pioche (lvl_max inclut déjà les niveaux gagnés)
+  recycled: boolean;
+}
+
+// Plan du catalogue, hors partie (collection, deck, boosters)
+export interface CatalogBuildingModel {
+  id: number;
+  name: string;
+  rarity: Rarity;
+  defense: number;
+  lvl_max: number;
+  time: number;
+  inventory: Record<string, number>;
+}
+
+export type BoosterRarity = 'common' | 'rare' | 'epic';
+
+export interface BoosterModel {
+  id: number;
+  name: string;
+  price: number;
+  cards: number;
+  odds: Record<BoosterRarity, number>;
+}
+
+export interface BoosterCardModel {
+  building_id: number;
+  is_new: boolean;
 }
 
 export interface AdvancedBuildingModel {
@@ -240,6 +286,7 @@ export interface DefaultValuesModel {
   ZOMBIE_COEF_MIN: number;
   ZOMBIE_COEF_MAX: number;
   ARCHITECT_DISCOVERY_CHOICES: number;
+  DECK_SIZE: number;
 }
 
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
@@ -260,6 +307,7 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     ZOMBIE_COEF_MIN: 2,
     ZOMBIE_COEF_MAX: 4,
     ARCHITECT_DISCOVERY_CHOICES: 2,
+    DECK_SIZE: 20,
   };
 }
 

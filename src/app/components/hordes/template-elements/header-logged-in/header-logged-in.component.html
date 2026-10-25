@@ -1,6 +1,6 @@
 <div class="top-bar">
   @if (authService.isConnected()) {
-    <button type="button" class="coins" aria-label="Open the bonus shop" (click)="router.navigate([RoutesEnum.SHOP])">
+    <button type="button" class="coins" aria-label="Open the shop" (click)="router.navigate([RoutesEnum.SHOP])">
       <span class="coins-plus"><app-icon name="plus" [size]="18" /></span>
       <span class="coins-amount">{{ data().money }}</span>
       <app-icon class="coins-icon" name="money" [size]="18" />
@@ -16,6 +16,9 @@
   }
   <div class="spacer"></div>
   @if (authService.isConnected()) {
+    <a class="icon-btn" aria-label="Deck" [routerLink]="['/', RoutesEnum.DECK]" routerLinkActive="active">
+      <app-icon name="cards" />
+    </a>
     <a
       class="icon-btn"
       aria-label="Profile"

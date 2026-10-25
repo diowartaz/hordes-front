@@ -30,12 +30,14 @@ export function calculateAdvancedBuildings(
       enoughLvlMax: building.lvl < building.lvl_max,
       expirationCityTime: defaultValues.day_end_time - timeRequired,
     };
-    if (building.lvl < building.lvl_max) {
-      advancedBuildings.push(advancedBuilding);
-    }
+    advancedBuildings.push(advancedBuilding);
   }
 
+  // Les bâtiments terminés restent affichés en fin de liste : ils peuvent revenir dans la pioche
   advancedBuildings.sort((a, b) => {
+    if (a.enoughLvlMax !== b.enoughLvlMax) {
+      return a.enoughLvlMax ? -1 : 1;
+    }
     const resA = a.enoughRessources ? 1 : 0;
     const resB = b.enoughRessources ? 1 : 0;
 

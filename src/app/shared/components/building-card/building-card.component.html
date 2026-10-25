@@ -1,0 +1,36 @@
+<article
+  class="card"
+  [class.locked]="locked()"
+  [class.in-deck]="inDeck()"
+  [class.compact]="compact()"
+  [style.--c]="building().rarity | rarityToColor"
+>
+  <div class="head">
+    <span class="name">{{ building().name }}</span>
+    @if (locked()) {
+      <app-icon name="lock" [size]="14" />
+    } @else if (count() > 1) {
+      <span class="count">×{{ count() }}</span>
+    }
+  </div>
+  @if (!compact()) {
+    <span class="rarity">{{ building().rarity }}</span>
+  }
+  <div class="stats">
+    <span class="def"><app-icon name="shield" [size]="13" />{{ building().defense }}</span>
+    <span><app-icon name="trend" [size]="13" />{{ building().lvl_max }} lvl</span>
+    <span><app-icon name="clock" [size]="13" />{{ time() }}</span>
+  </div>
+  <div class="foot">
+    <div class="costs">
+      @for (item of building().inventory | keyvalue; track item.key) {
+        @if (item.value > 0) {
+          <span class="cost"><app-resource-gem [item]="item.key" [size]="9" />{{ item.value }}</span>
+        }
+      } @empty {
+        <span class="free">No resources</span>
+      }
+    </div>
+    <ng-content></ng-content>
+  </div>
+</article>

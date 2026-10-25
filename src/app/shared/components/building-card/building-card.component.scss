@@ -1,0 +1,112 @@
+:host {
+  display: block;
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+  box-shadow: inset 4px 0 0 var(--c);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    opacity 0.2s;
+
+  &.in-deck {
+    border-color: var(--c);
+    box-shadow:
+      inset 4px 0 0 var(--c),
+      0 0 16px color-mix(in srgb, var(--c) 35%, transparent);
+  }
+
+  &.compact {
+    gap: 4px;
+    padding: 8px 10px;
+    .name {
+      font-size: 14px;
+    }
+  }
+
+  &.locked {
+    opacity: 0.45;
+    filter: grayscale(0.6);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  .name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .count {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 12px;
+    color: var(--c);
+  }
+}
+
+.rarity {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-mute);
+  span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .def {
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: var(--yellow);
+  }
+}
+
+// Coûts à gauche, contenu projeté (pied de carte) aligné à droite sur la même ligne
+.foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.costs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  .cost {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .free {
+    color: var(--text-mute);
+    font-weight: 500;
+  }
+}

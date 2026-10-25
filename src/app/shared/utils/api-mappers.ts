@@ -2,7 +2,10 @@ import { components } from 'src/app/models/api';
 import {
   AttackRecapModel,
   BonusWithoutLvl,
+  BoosterCardModel,
+  BoosterModel,
   BuildingModel,
+  CatalogBuildingModel,
   CityModel,
   createDefaultCityModel,
   DefaultValuesModel,
@@ -26,6 +29,8 @@ export type ApiProfile = Schemas['ProfileResponse'];
 export type ApiMatch = Schemas['MatchResponse'];
 export type ApiLeaderboardEntry = Schemas['LeaderboardEntryResponse'];
 type ApiBuilding = Schemas['BuildingResponse'];
+type ApiBuildingOffer = Schemas['BuildingOfferResponse'];
+type ApiBoosterCard = Schemas['BoosterCardResponse'];
 type ApiSkill = Schemas['SkillResponse'];
 type ApiAttackRecap = Schemas['AttackRecapResponse'];
 type ApiItemQuantities = Schemas['ItemQuantitiesResponse'];
@@ -50,7 +55,7 @@ export function toInventory(items: ApiItemQuantities): InventoryModel {
   };
 }
 
-function toBuildingModel(building: ApiBuilding): BuildingModel {
+function toBuildingModel(building: ApiBuilding | ApiBuildingOffer): BuildingModel {
   return {
     id: building.id,
     name: building.name,
@@ -62,6 +67,7 @@ function toBuildingModel(building: ApiBuilding): BuildingModel {
     lvl_max: building.maxLevel,
     inventory: { ...building.cost },
     selected: false,
+    recycled: 'recycled' in building && building.recycled,
   };
 }
 
@@ -114,6 +120,13 @@ export function toCityModel(city: ApiCity): CityModel {
     state: stateFromCity(city),
     attackRecap: toAttackRecap(city.attackRecap),
     ranked: city.ranked,
+    deck_status: {
+      size: city.deckStatus.size,
+      unseen: city.deckStatus.unseen,
+      completed: city.deckStatus.completed,
+      recycle_threshold: city.deckStatus.recycleThreshold,
+      recycling: city.deckStatus.recycling,
+    },
   };
 }
 
@@ -125,7 +138,29 @@ export function toStatsModel(player: ApiPlayer): StatsModel {
     money: player.money,
     bonuses: Object.fromEntries(Object.entries(player.bonusLevels).map(([id, lvl]) => [Number(id), lvl])),
     ranked_points: player.rankedPoints,
+    collection: Object.fromEntries(Object.entries(player.collection).map(([id, count]) => [Number(id), count])),
+    deck: [...player.deck],
   };
+}
+
+export function toCatalogBuildings(catalog: ApiCatalog): CatalogBuildingModel[] {
+  return catalog.buildings.map((building) => ({
+    id: building.id,
+    name: building.name,
+    rarity: building.rarity,
+    defense: building.defense,
+    lvl_max: building.maxLevel,
+    time: building.buildTime,
+    inventory: { ...building.cost },
+  }));
+}
+
+export function toBoosters(catalog: ApiCatalog): BoosterModel[] {
+  return catalog.boosters.map((booster) => ({ ...booster, odds: { ...booster.odds } }));
+}
+
+export function toBoosterCards(cards: ApiBoosterCard[]): BoosterCardModel[] {
+  return cards.map((card) => ({ building_id: card.buildingId, is_new: card.isNew }));
 }
 
 export function toBonusReferences(catalog: ApiCatalog): Record<number, BonusWithoutLvl> {
@@ -164,6 +199,7 @@ export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
     ZOMBIE_COEF_MIN: rules['ZOMBIE_COEF_MIN'],
     ZOMBIE_COEF_MAX: rules['ZOMBIE_COEF_MAX'],
     ARCHITECT_DISCOVERY_CHOICES: rules['ARCHITECT_EXTRA_OFFERS'],
+    DECK_SIZE: rules['DECK_SIZE'],
   };
 }
 

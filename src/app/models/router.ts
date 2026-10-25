@@ -14,6 +14,7 @@ export enum RoutesEnum {
   CREATE_CITY = 'create-city',
   DEATH_RECAP = 'death-recap',
   SHOP = 'shop',
+  DECK = 'deck',
 }
 
 export enum UserState {
@@ -51,6 +52,7 @@ export const STATE_LESS_ROUTES: string[] = [
   RoutesEnum.WIKI,
   RoutesEnum.LEADERBOARD,
   RoutesEnum.SHOP,
+  RoutesEnum.DECK,
   RoutesEnum.SETTINGS,
 ];
 

@@ -6,7 +6,10 @@ import {
   AdvancedBuildingModel,
   AdvancedSkillModel,
   BonusWithoutLvl,
+  BoosterCardModel,
+  BoosterModel,
   BuildingModel,
+  CatalogBuildingModel,
   CityModel,
   createDefaultCityModel,
   createDefaultDefaultValuesModel,
@@ -25,7 +28,7 @@ import { runRequest } from 'src/app/shared/utils/http';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 import { StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { GameApiService, PlayerSnapshot } from '../game-api/game-api.service';
+import { GameApiService, GameCatalog, PlayerSnapshot } from '../game-api/game-api.service';
 
 // Source de vérité de l'état de la partie. La navigation qui découle d'un changement de `state`
 // est gérée par RedirectionService, jamais ici.
@@ -43,6 +46,10 @@ export class CityService {
   playerLoaded = computed<boolean>(() => this.state() !== UserState.NOT_LOADED_PLAYER);
 
   referencesBonuses = signal<Record<number, BonusWithoutLvl>>({});
+  catalogBuildings = signal<CatalogBuildingModel[]>([]);
+  boosters = signal<BoosterModel[]>([]);
+  // Plans du dernier booster ouvert, affichés jusqu'à fermeture de la révélation
+  lastBoosterCards = signal<BoosterCardModel[] | null>(null);
   defaultValues = signal<DefaultValuesModel>(createDefaultDefaultValuesModel());
   stats = signal<StatsModel>(createDefaultStatsModel());
   city = signal<CityModel>(createDefaultCityModel());
@@ -59,6 +66,9 @@ export class CityService {
   advancedBuildings = computed<AdvancedBuildingModel[]>(() =>
     calculateAdvancedBuildings(this.city(), this.bonuses(), this.defaultValues()),
   );
+
+  collection = computed<Record<number, number>>(() => this.stats().collection);
+  deck = computed<number[]>(() => this.stats().deck);
 
   skills = computed<SkillModel[]>(() => this.city().skills);
   advancedSkills = computed<AdvancedSkillModel[]>(() =>
@@ -78,6 +88,8 @@ export class CityService {
   playerLoading = signal<boolean>(false);
   buyBonusLoading = signal<boolean>(false);
   referencesBonusesLoading = signal<boolean>(false);
+  saveDeckLoading = signal<boolean>(false);
+  openBoosterLoading = signal<boolean>(false);
 
   constructor() {
     this.cityTimeSeconds = this.setCityTimeSeconds();
@@ -132,7 +144,7 @@ export class CityService {
   loadPlayer(): void {
     runRequest(this.playerLoading, this.api.loadPlayer(), ({ player, catalog }) => {
       this.defaultValues.set(catalog.defaultValues);
-      this.referencesBonuses.set(catalog.bonuses);
+      this.applyCatalog(catalog);
       this.applyPlayer(player);
     });
   }
@@ -185,13 +197,28 @@ export class CityService {
   }
 
   loadReferencesBonuses(): void {
-    runRequest(this.referencesBonusesLoading, this.api.getCatalog(), (catalog) =>
-      this.referencesBonuses.set(catalog.bonuses),
-    );
+    runRequest(this.referencesBonusesLoading, this.api.getCatalog(), (catalog) => this.applyCatalog(catalog));
+  }
+
+  saveDeck(buildingIds: number[]): void {
+    runRequest(this.saveDeckLoading, this.api.saveDeck(buildingIds), (stats) => this.stats.set(stats));
+  }
+
+  openBooster(id: number): void {
+    runRequest(this.openBoosterLoading, this.api.openBooster(id), ({ stats, cards }) => {
+      this.stats.set(stats);
+      this.lastBoosterCards.set(cards);
+    });
   }
 
   buyBonus(id: number): void {
     runRequest(this.buyBonusLoading, this.api.buyBonus(id), (stats) => this.stats.set(stats));
+  }
+
+  private applyCatalog(catalog: GameCatalog): void {
+    this.referencesBonuses.set(catalog.bonuses);
+    this.catalogBuildings.set(catalog.buildings);
+    this.boosters.set(catalog.boosters);
   }
 
   private applyPlayer(player: PlayerSnapshot): void {

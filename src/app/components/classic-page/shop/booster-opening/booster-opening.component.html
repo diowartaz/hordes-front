@@ -1,0 +1,39 @@
+<div class="backdrop" role="dialog" aria-modal="true" [attr.aria-label]="boosterName() + ' booster'">
+  <div class="panel">
+    <h2 class="neon-title" style="--glow: var(--yellow)">{{ boosterName() }} booster</h2>
+    <div class="cards">
+      @for (card of shownCards(); track $index) {
+        @if ($index < revealed() && card.building) {
+          <div class="revealed">
+            @if (card.is_new) {
+              <span class="neon-chip badge" style="--c: var(--green)">New</span>
+            } @else {
+              <span class="neon-chip badge" style="--c: var(--text-mute)">Duplicate</span>
+            }
+            <app-building-card [building]="card.building" [count]="card.count" />
+          </div>
+        } @else {
+          <button type="button" class="hidden-card" aria-label="Reveal the next plan" (click)="reveal($index)">
+            <app-icon name="sparkle" [size]="32" />
+          </button>
+        }
+      }
+    </div>
+    <div class="actions">
+      @if (!allRevealed()) {
+        <button type="button" class="ghost-btn" (click)="revealAll()">Reveal all</button>
+      } @else {
+        <button
+          type="button"
+          class="ghost-btn"
+          style="--c: var(--yellow)"
+          [disabled]="!canOpenAnother() || cityService.openBoosterLoading()"
+          (click)="again()"
+        >
+          <app-icon name="refresh" [size]="16" />Open another
+        </button>
+        <button type="button" class="ghost-btn" (click)="closed.emit()">Done</button>
+      }
+    </div>
+  </div>
+</div>

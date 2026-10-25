@@ -3,6 +3,11 @@
   <div class="body">
     <div class="row">
       <span class="name">{{ building.name }}</span>
+      @if (building.recycled) {
+        <span class="neon-chip recycled" style="--c: var(--cyan)" title="Back from the draw pile"
+          ><app-icon name="recycle" [size]="12" />+{{ building.lvl_max - building.lvl }} lvl</span
+        >
+      }
       <span class="def"><app-icon name="shield" [size]="13" />{{ building.defense }}</span>
       <span
         class="percentdef"

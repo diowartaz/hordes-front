@@ -7,6 +7,27 @@
   padding: 8px 16px 20px;
 }
 
+.deck-summary {
+  gap: 10px;
+  .deck-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--cyan);
+    h2 {
+      flex: 1;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+  }
+  .ghost-btn {
+    min-height: 44px;
+  }
+}
+
 // Pousse le lien du guide et les boutons en bas de la page
 .go-to-wiki {
   margin-top: auto;

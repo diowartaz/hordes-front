@@ -1,43 +1,121 @@
-<app-classic-page [title]="'Bonus shop'" [subtitle]="'Permanent upgrades'" [glow]="'var(--yellow)'">
+<app-classic-page [title]="'Shop'" [subtitle]="'Plans and permanent upgrades'" [glow]="'var(--yellow)'">
   <ng-container icon><app-icon name="sparkle" [size]="32" /></ng-container>
   <ng-container content>
-    <div class="cards">
-      @for (item of cityService.bonuses() | keyvalue; track item.key) {
-        <article class="bonus" [style.--c]="item.value.icon | bonusToColor">
-          <div class="bonus-head">
-            <div class="icon-tile"><app-icon [name]="item.value.icon | bonusToIcon" [size]="28" /></div>
-            <div class="bonus-text">
-              <div class="bonus-title">
-                <h3>{{ item.value.name }}</h3>
-                <span class="lvl">LV {{ item.value.lvl }}/{{ item.value.lvl_max }}</span>
-              </div>
-              <p>{{ item.value.description }}</p>
-            </div>
-          </div>
-          <div class="pips">
-            @for (pip of pipsOf(item.value.lvl_max); track $index) {
-              <span class="pip" [class.on]="$index < item.value.lvl"></span>
-            }
-          </div>
-          @if (item.value.lvl < item.value.lvl_max) {
-            <div class="bonus-foot">
-              <span class="price-hint" [class.short]="!item.value.enoughMoney">
-                {{ item.value.enoughMoney ? 'Ready to buy' : 'Not enough coins' }}
-              </span>
-              <button
-                type="button"
-                class="buy-btn"
-                (click)="buyItem(item.value.id)"
-                [disabled]="cityService.buyBonusLoading() || !item.value.enoughLvlMax || !item.value.enoughMoney"
-              >
-                <app-icon name="money" [size]="16" />{{ item.value.nextPrice }} · Buy
-              </button>
-            </div>
-          } @else {
-            <span class="neon-chip maxed" style="--c: var(--green)">Max level</span>
-          }
-        </article>
-      }
+    <div class="tabs" role="tablist">
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        [class.active]="tab() === 'boosters'"
+        [attr.aria-selected]="tab() === 'boosters'"
+        (click)="tab.set('boosters')"
+      >
+        <app-icon name="cards" [size]="16" />Boosters
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        [class.active]="tab() === 'bonuses'"
+        [attr.aria-selected]="tab() === 'bonuses'"
+        (click)="tab.set('bonuses')"
+      >
+        <app-icon name="shield-plus" [size]="16" />Bonuses
+      </button>
     </div>
+    <div class="balance" aria-label="Your coins">
+      <span class="balance-icon"><app-icon name="money" [size]="18" /></span>
+      <span class="balance-amount">{{ money() }}</span>
+      <span class="balance-unit">coins</span>
+    </div>
+
+    @if (tab() === 'boosters') {
+      <div class="cards">
+        @for (booster of cityService.boosters(); track booster.id) {
+          <article class="booster">
+            <div class="booster-head">
+              <div class="icon-tile"><app-icon name="cards" [size]="28" /></div>
+              <div>
+                <h3>{{ booster.name }}</h3>
+                <p>{{ booster.cards }} random plans, duplicates possible</p>
+              </div>
+            </div>
+            <div class="odds">
+              @for (odds of oddsOf(booster); track odds.rarity) {
+                <span class="neon-chip" [style.--c]="odds.rarity | rarityToColor"
+                  >{{ odds.rarity }} {{ odds.percent }}%</span
+                >
+              }
+            </div>
+            <button
+              type="button"
+              class="buy-btn"
+              [disabled]="cityService.openBoosterLoading() || cityService.stats().money < booster.price"
+              (click)="openBooster(booster)"
+            >
+              <app-icon name="money" [size]="16" />{{ booster.price }} · Open
+            </button>
+          </article>
+        }
+      </div>
+      <div class="collection-summary">
+        <span>Collection {{ ownedCount() }}/{{ cityService.catalogBuildings().length }}</span>
+        <span>Duplicates {{ duplicates() }} <small>(selling and trading coming soon)</small></span>
+        <button type="button" class="text-btn" (click)="goToDeck()">
+          <app-icon name="cards" [size]="16" />Edit deck
+        </button>
+      </div>
+    } @else {
+      <div class="cards">
+        @for (item of cityService.bonuses() | keyvalue; track item.key) {
+          <article class="bonus" [style.--c]="item.value.icon | bonusToColor">
+            <div class="bonus-head">
+              <div class="icon-tile"><app-icon [name]="item.value.icon | bonusToIcon" [size]="28" /></div>
+              <div class="bonus-text">
+                <div class="bonus-title">
+                  <h3>{{ item.value.name }}</h3>
+                  <span class="lvl">LV {{ item.value.lvl }}/{{ item.value.lvl_max }}</span>
+                </div>
+                <p>{{ item.value.description }}</p>
+              </div>
+            </div>
+            <div class="pips">
+              @for (pip of pipsOf(item.value.lvl_max); track $index) {
+                <span class="pip" [class.on]="$index < item.value.lvl"></span>
+              }
+            </div>
+            @if (item.value.lvl < item.value.lvl_max) {
+              <div class="bonus-foot">
+                <span class="price-hint" [class.short]="!item.value.enoughMoney">
+                  {{ item.value.enoughMoney ? 'Ready to buy' : 'Not enough coins' }}
+                </span>
+                <button
+                  type="button"
+                  class="buy-btn"
+                  (click)="buyItem(item.value.id)"
+                  [disabled]="cityService.buyBonusLoading() || !item.value.enoughLvlMax || !item.value.enoughMoney"
+                >
+                  <app-icon name="money" [size]="16" />{{ item.value.nextPrice }} · Buy
+                </button>
+              </div>
+            } @else {
+              <span class="neon-chip maxed" style="--c: var(--green)">Max level</span>
+            }
+          </article>
+        }
+      </div>
+    }
+
+    @if (openedBooster(); as booster) {
+      @if (cityService.lastBoosterCards(); as cards) {
+        <app-booster-opening
+          [cards]="cards"
+          [boosterName]="booster.name"
+          [canOpenAnother]="cityService.stats().money >= booster.price"
+          (openAnother)="openBooster(booster)"
+          (closed)="closeBooster()"
+        />
+      }
+    }
   </ng-container>
 </app-classic-page>

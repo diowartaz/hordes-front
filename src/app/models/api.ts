@@ -4,1184 +4,1331 @@
  */
 
 export interface paths {
-  '/api/v1/health': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["HealthController_check"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations['HealthController_check'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/signup': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/signup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_signup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['AuthController_signup'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/signin': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/signin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_signin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['AuthController_signin'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/guest': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/guest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crée un compte invité, jouable immédiatement */
+        post: operations["AuthController_createGuest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Crée un compte invité, jouable immédiatement */
-    post: operations['AuthController_createGuest'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/guest/upgrade': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/guest/upgrade": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Convertit le compte invité courant en compte normal (email + mot de passe) */
+        post: operations["AuthController_upgradeGuest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Convertit le compte invité courant en compte normal (email + mot de passe) */
-    post: operations['AuthController_upgradeGuest'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/logout-all': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/logout-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Révoque tous les tokens du compte, y compris celui de la requête */
+        post: operations["AuthController_logoutAll"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Révoque tous les tokens du compte, y compris celui de la requête */
-    post: operations['AuthController_logoutAll'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/password': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["AuthController_changePassword"];
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch: operations['AuthController_changePassword'];
-    trace?: never;
-  };
-  '/api/v1/me': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Compte, progression et ville en cours (null si aucune) du joueur connecté */
+        get: operations["MeController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["AuthController_deleteAccount"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Compte, progression et ville en cours (null si aucune) du joueur connecté */
-    get: operations['MeController_get'];
-    put?: never;
-    post?: never;
-    delete: operations['AuthController_deleteAccount'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/bonuses/{bonusId}/level-up': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/bonuses/{bonusId}/level-up": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Achète le niveau suivant d'un bonus permanent */
+        post: operations["PlayersController_buyBonusLevel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Achète le niveau suivant d'un bonus permanent */
-    post: operations['PlayersController_buyBonusLevel'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/players/{id}/profile': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/players/{id}/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Profil public d'un joueur */
+        get: operations["PlayersController_getProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Profil public d'un joueur */
-    get: operations['PlayersController_getProfile'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CitiesController_get"];
+        put?: never;
+        post: operations["CitiesController_create"];
+        /** Possible uniquement après la chute de la ville (phase deathRecap) */
+        delete: operations["CitiesController_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations['CitiesController_get'];
-    put?: never;
-    post: operations['CitiesController_create'];
-    /** Possible uniquement après la chute de la ville (phase deathRecap) */
-    delete: operations['CitiesController_delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city/dig': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city/dig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CitiesController_dig"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['CitiesController_dig'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city/buildings/{id}/upgrade': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city/buildings/{id}/upgrade": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CitiesController_build"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['CitiesController_build'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city/skills/{id}/upgrade': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city/skills/{id}/upgrade": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CitiesController_learn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['CitiesController_learn'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city/day/end': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city/day/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Attaque de la horde : la ville passe en dayRecap (survie) ou deathRecap (chute) */
+        post: operations["CitiesController_endDay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Attaque de la horde : la ville passe en dayRecap (survie) ou deathRecap (chute) */
-    post: operations['CitiesController_endDay'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/me/city/day/start': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/city/day/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CitiesController_startDay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['CitiesController_startDay'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/leaderboards/best-day': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/deck": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Remplace le deck, joué à chaque nouvelle partie (422 INVALID_DECK) */
+        put: operations["CollectionController_setDeck"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Meilleur jour atteint, puis plus grosse attaque survécue */
-    get: operations['LeaderboardsController_bestDay'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/leaderboards/ranked': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/me/boosters/{boosterId}/open": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Achète et ouvre un booster (voir GET /catalog) : ses plans rejoignent la collection, doublons compris */
+        post: operations["CollectionController_openBooster"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations['LeaderboardsController_ranked'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/catalog': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/leaderboards/best-day": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Meilleur jour atteint, puis plus grosse attaque survécue */
+        get: operations["LeaderboardsController_bestDay"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations['CatalogController_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/v1/leaderboards/ranked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LeaderboardsController_ranked"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CatalogController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    SignupDto: {
-      /** Format: email */
-      email: string;
-      username: string;
-      password: string;
+    schemas: {
+        SignupDto: {
+            /** Format: email */
+            email: string;
+            username: string;
+            password: string;
+        };
+        AccountResponse: {
+            id: string;
+            username: string;
+            email: string;
+            /** @enum {string} */
+            role: "user" | "admin";
+            isGuest: boolean;
+        };
+        AuthResponse: {
+            /** @description JWT à envoyer dans l'en-tête Authorization: Bearer <token> */
+            token: string;
+            account: components["schemas"]["AccountResponse"];
+        };
+        SigninDto: {
+            /** @description Email ou pseudo */
+            login: string;
+            password: string;
+        };
+        UpgradeGuestDto: {
+            /** Format: email */
+            email: string;
+            /** @description Garde le pseudo invité si absent */
+            username?: string;
+            password: string;
+        };
+        ChangePasswordDto: {
+            currentPassword: string;
+            newPassword: string;
+        };
+        DeleteAccountDto: {
+            /** @description Obligatoire, sauf pour un compte invité */
+            password?: string;
+        };
+        PersonalBestResponse: {
+            day: number;
+            /** @description Plus grosse attaque survécue */
+            zombies: number;
+        };
+        PlayerResponse: {
+            xp: number;
+            level: number;
+            money: number;
+            /** @description Niveau acheté par id de bonus (voir GET /catalog) */
+            bonusLevels: {
+                [key: string]: number;
+            };
+            /** @description Plans possédés : nombre d'exemplaires par id de bâtiment (voir GET /catalog) */
+            collection: {
+                [key: string]: number;
+            };
+            /** @description Ids des plans du deck, joué à chaque partie */
+            deck: number[];
+            personalBest: components["schemas"]["PersonalBestResponse"];
+            rankedPoints: number;
+        };
+        MatchPlayerResponse: {
+            playerId: string;
+            username: string;
+            day: number;
+            zombies: number;
+            defense: number;
+        };
+        MatchResponse: {
+            /** Format: date-time */
+            playedAt: string;
+            ranked: boolean;
+            /** @description Variation des points ranked ; null tant que l'adversaire n'a pas terminé */
+            rankedPointsDelta: number | null;
+            day: number;
+            zombies: number;
+            defense: number;
+            opponent: components["schemas"]["MatchPlayerResponse"] | null;
+            /**
+             * @description Issue ranked pour ce joueur ; null hors ranked ou tant que l'adversaire n'a pas terminé
+             * @enum {string|null}
+             */
+            outcome: "win" | "loss" | "draw" | null;
+            /** @description Partie ranked réglée par l'inactivité d'un des deux joueurs */
+            forfeit: boolean;
+        };
+        ProfileResponse: {
+            id: string;
+            username: string;
+            level: number;
+            xp: number;
+            /** @description Rang au classement du meilleur jour */
+            rank: number;
+            rankedPoints: number;
+            personalBest: components["schemas"]["PersonalBestResponse"];
+            /** Format: date-time */
+            createdAt: string;
+            /** @description Dernières parties, de la plus récente à la plus ancienne */
+            matches: components["schemas"]["MatchResponse"][];
+        };
+        InventoryResponse: {
+            wood: number;
+            metal: number;
+            stone: number;
+            screw: number;
+            patch: number;
+        };
+        SpeedsResponse: {
+            build: number;
+            learn: number;
+            dig: number;
+            insomniac: number;
+        };
+        DeckStatusResponse: {
+            size: number;
+            /** @description Plans du deck jamais tirés */
+            unseen: number;
+            /** @description Bâtiments du deck au niveau max */
+            completed: number;
+            /** @description Bâtiments terminés nécessaires pour qu'ils reviennent dans la pioche */
+            recycleThreshold: number;
+            recycling: boolean;
+        };
+        ItemQuantitiesResponse: {
+            wood?: number;
+            metal?: number;
+            stone?: number;
+            screw?: number;
+            patch?: number;
+        };
+        BuildingResponse: {
+            id: number;
+            name: string;
+            /** @enum {string} */
+            rarity: "base" | "common" | "rare" | "epic" | "legendary";
+            level: number;
+            maxLevel: number;
+            /** @description Défense apportée par niveau construit */
+            defense: number;
+            defenseVariancePercent: number;
+            /** @description Ressources consommées par niveau */
+            cost: components["schemas"]["ItemQuantitiesResponse"];
+            /** @description Temps de construction de base d'un niveau, avant vitesses et bonus */
+            buildTime: number;
+            /** @description Durée du prochain niveau en secondes de jeu, avec les vitesses et bonus actuels */
+            nextLevelDuration: number;
+        };
+        SkillResponse: {
+            id: number;
+            name: string;
+            /** @enum {string} */
+            speed: "build" | "learn" | "dig" | "insomniac";
+            level: number;
+            /** @description Niveau débloqué par la bibliothèque */
+            maxLevel: number;
+            /** @description Plafond absolu de la compétence */
+            levelCap: number;
+            speedGainPerLevel: number;
+            /** @description Durée de base du premier niveau, avant vitesses et bonus */
+            learnTime: number;
+            /** @description Insomniaque : secondes gagnées au réveil par niveau */
+            wakeUpEarlierSeconds?: number;
+            nextLevelDuration: number;
+        };
+        ZombiesResponse: {
+            history: number[];
+            lastAttack: number;
+            nextAttackMin: number;
+            nextAttackMax: number;
+        };
+        BuildingOfferResponse: {
+            id: number;
+            name: string;
+            /** @enum {string} */
+            rarity: "base" | "common" | "rare" | "epic" | "legendary";
+            level: number;
+            maxLevel: number;
+            /** @description Défense apportée par niveau construit */
+            defense: number;
+            defenseVariancePercent: number;
+            /** @description Ressources consommées par niveau */
+            cost: components["schemas"]["ItemQuantitiesResponse"];
+            /** @description Temps de construction de base d'un niveau, avant vitesses et bonus */
+            buildTime: number;
+            /** @description Durée du prochain niveau en secondes de jeu, avec les vitesses et bonus actuels */
+            nextLevelDuration: number;
+            /** @description Bâtiment terminé revenu dans la pioche : le choisir augmente son niveau max (déjà inclus dans maxLevel) */
+            recycled: boolean;
+        };
+        SkillDiscoveryResponse: {
+            skillId: number;
+            name: string;
+            levels: number;
+        };
+        DeathRewardsResponse: {
+            baseMoney: number;
+            rankedMoney: number;
+            bonusMoney: number;
+            totalMoney: number;
+        };
+        AttackRecapResponse: {
+            day: number;
+            zombies: number;
+            defense: number;
+            survived: boolean;
+            buildingOffers: components["schemas"]["BuildingOfferResponse"][];
+            /** @description Nombre de bâtiments à choisir parmi les offres */
+            buildingPicks: number;
+            skillDiscoveries: components["schemas"]["SkillDiscoveryResponse"][];
+            rewards: components["schemas"]["DeathRewardsResponse"] | null;
+        };
+        CityResponse: {
+            /** @enum {string} */
+            phase: "playing" | "dayRecap" | "deathRecap";
+            ranked: boolean;
+            day: number;
+            defense: number;
+            /** @description Heure de jeu, en secondes depuis minuit */
+            time: number;
+            inventory: components["schemas"]["InventoryResponse"];
+            speeds: components["schemas"]["SpeedsResponse"];
+            /** @description Ids des plans du deck joué */
+            deck: number[];
+            deckStatus: components["schemas"]["DeckStatusResponse"];
+            buildings: components["schemas"]["BuildingResponse"][];
+            skills: components["schemas"]["SkillResponse"][];
+            zombies: components["schemas"]["ZombiesResponse"];
+            /** Format: date-time */
+            lastActivityAt: string;
+            /** @description Durée d'une fouille, en secondes de jeu */
+            digDuration: number;
+            attackRecap: components["schemas"]["AttackRecapResponse"] | null;
+        };
+        MeResponse: {
+            account: components["schemas"]["AccountResponse"];
+            player: components["schemas"]["PlayerResponse"];
+            city: components["schemas"]["CityResponse"] | null;
+        };
+        CreateCityDto: {
+            /** @description Partie classée contre un autre joueur, avec les mêmes tirages */
+            ranked?: boolean;
+        };
+        DigDto: {
+            count: number;
+        };
+        DigResponse: {
+            city: components["schemas"]["CityResponse"];
+            found: components["schemas"]["ItemQuantitiesResponse"];
+        };
+        StartDayDto: {
+            /** @description Bâtiments retenus parmi attackRecap.buildingOffers, au nombre de attackRecap.buildingPicks */
+            chosenBuildingIds: number[];
+        };
+        SetDeckDto: {
+            /** @description Plans du deck : exactement rules.DECK_SIZE ids distincts de la collection (voir GET /catalog) */
+            buildingIds: number[];
+        };
+        BoosterCardResponse: {
+            buildingId: number;
+            /** @description Plan absent de la collection avant l'ouverture */
+            isNew: boolean;
+        };
+        BoosterOpeningResponse: {
+            /** @description Joueur après l'achat : monnaie débitée, plans ajoutés à la collection */
+            player: components["schemas"]["PlayerResponse"];
+            cards: components["schemas"]["BoosterCardResponse"][];
+        };
+        LeaderboardEntryResponse: {
+            rank: number;
+            playerId: string;
+            username: string;
+            bestDay: number;
+            bestZombies: number;
+            rankedPoints: number;
+        };
+        LeaderboardResponse: {
+            entries: components["schemas"]["LeaderboardEntryResponse"][];
+        };
+        CatalogBuildingResponse: {
+            id: number;
+            name: string;
+            /** @enum {string} */
+            rarity: "base" | "common" | "rare" | "epic" | "legendary";
+            /** @description Défense de base par niveau, avant bonus et variation aléatoire */
+            defense: number;
+            maxLevel: number;
+            /** @description Temps de construction d'un niveau, en secondes de jeu */
+            buildTime: number;
+            cost: components["schemas"]["ItemQuantitiesResponse"];
+        };
+        CatalogSkillResponse: {
+            id: number;
+            name: string;
+            /** @enum {string} */
+            speed: "build" | "learn" | "dig" | "insomniac";
+            levelCap: number;
+            /** @description Durée d'apprentissage du premier niveau, en secondes de jeu */
+            learnTime: number;
+            speedGainPerLevel: number;
+            wakeUpEarlierSeconds?: number;
+        };
+        CatalogBonusResponse: {
+            id: number;
+            name: string;
+            description: string;
+            icon: string;
+            /** @description Prix du premier niveau, doublé à chaque niveau */
+            price: number;
+            maxLevel: number;
+            value: number;
+        };
+        BoosterOddsResponse: {
+            common: number;
+            rare: number;
+            epic: number;
+        };
+        CatalogBoosterResponse: {
+            id: number;
+            name: string;
+            price: number;
+            /** @description Nombre de plans tirés */
+            cards: number;
+            /** @description Probabilité de chaque rareté pour chaque plan */
+            odds: components["schemas"]["BoosterOddsResponse"];
+        };
+        CatalogResponse: {
+            items: ("wood" | "metal" | "stone" | "screw" | "patch")[];
+            /** @description Bâtiments présents dans toute nouvelle ville */
+            baseBuildings: components["schemas"]["CatalogBuildingResponse"][];
+            /** @description Bâtiments qui peuvent être découverts */
+            buildings: components["schemas"]["CatalogBuildingResponse"][];
+            skills: components["schemas"]["CatalogSkillResponse"][];
+            bonuses: components["schemas"]["CatalogBonusResponse"][];
+            boosters: components["schemas"]["CatalogBoosterResponse"][];
+            /** @description Collection et deck de départ de tout nouveau joueur */
+            starterBuildingIds: number[];
+            /** @description Constantes d'équilibrage (durées en secondes de jeu) */
+            rules: {
+                [key: string]: number;
+            };
+        };
     };
-    AccountResponse: {
-      id: string;
-      username: string;
-      email: string;
-      /** @enum {string} */
-      role: 'user' | 'admin';
-      isGuest: boolean;
-    };
-    AuthResponse: {
-      /** @description JWT à envoyer dans l'en-tête Authorization: Bearer <token> */
-      token: string;
-      account: components['schemas']['AccountResponse'];
-    };
-    SigninDto: {
-      /** @description Email ou pseudo */
-      login: string;
-      password: string;
-    };
-    UpgradeGuestDto: {
-      /** Format: email */
-      email: string;
-      /** @description Garde le pseudo invité si absent */
-      username?: string;
-      password: string;
-    };
-    ChangePasswordDto: {
-      currentPassword: string;
-      newPassword: string;
-    };
-    DeleteAccountDto: {
-      /** @description Obligatoire, sauf pour un compte invité */
-      password?: string;
-    };
-    PersonalBestResponse: {
-      day: number;
-      /** @description Plus grosse attaque survécue */
-      zombies: number;
-    };
-    PlayerResponse: {
-      xp: number;
-      level: number;
-      money: number;
-      /** @description Niveau acheté par id de bonus (voir GET /catalog) */
-      bonusLevels: {
-        [key: string]: number;
-      };
-      personalBest: components['schemas']['PersonalBestResponse'];
-      rankedPoints: number;
-    };
-    MatchPlayerResponse: {
-      playerId: string;
-      username: string;
-      day: number;
-      zombies: number;
-      defense: number;
-    };
-    MatchResponse: {
-      /** Format: date-time */
-      playedAt: string;
-      ranked: boolean;
-      /** @description Variation des points ranked ; null tant que l'adversaire n'a pas terminé */
-      rankedPointsDelta: number | null;
-      day: number;
-      zombies: number;
-      defense: number;
-      opponent: components['schemas']['MatchPlayerResponse'] | null;
-      /**
-       * @description Issue ranked pour ce joueur ; null hors ranked ou tant que l'adversaire n'a pas terminé
-       * @enum {string|null}
-       */
-      outcome: 'win' | 'loss' | 'draw' | null;
-      /** @description Partie ranked réglée par l'inactivité d'un des deux joueurs */
-      forfeit: boolean;
-    };
-    ProfileResponse: {
-      id: string;
-      username: string;
-      level: number;
-      xp: number;
-      /** @description Rang au classement du meilleur jour */
-      rank: number;
-      rankedPoints: number;
-      personalBest: components['schemas']['PersonalBestResponse'];
-      /** Format: date-time */
-      createdAt: string;
-      /** @description Dernières parties, de la plus récente à la plus ancienne */
-      matches: components['schemas']['MatchResponse'][];
-    };
-    InventoryResponse: {
-      wood: number;
-      metal: number;
-      stone: number;
-      screw: number;
-      patch: number;
-    };
-    SpeedsResponse: {
-      build: number;
-      learn: number;
-      dig: number;
-      insomniac: number;
-    };
-    ItemQuantitiesResponse: {
-      wood?: number;
-      metal?: number;
-      stone?: number;
-      screw?: number;
-      patch?: number;
-    };
-    BuildingResponse: {
-      id: number;
-      name: string;
-      /** @enum {string} */
-      rarity: 'base' | 'common' | 'rare' | 'epic' | 'legendary';
-      level: number;
-      maxLevel: number;
-      /** @description Défense apportée par niveau construit */
-      defense: number;
-      defenseVariancePercent: number;
-      /** @description Ressources consommées par niveau */
-      cost: components['schemas']['ItemQuantitiesResponse'];
-      /** @description Temps de construction de base d'un niveau, avant vitesses et bonus */
-      buildTime: number;
-      /** @description Durée du prochain niveau en secondes de jeu, avec les vitesses et bonus actuels */
-      nextLevelDuration: number;
-    };
-    SkillResponse: {
-      id: number;
-      name: string;
-      /** @enum {string} */
-      speed: 'build' | 'learn' | 'dig' | 'insomniac';
-      level: number;
-      /** @description Niveau débloqué par la bibliothèque */
-      maxLevel: number;
-      /** @description Plafond absolu de la compétence */
-      levelCap: number;
-      speedGainPerLevel: number;
-      /** @description Durée de base du premier niveau, avant vitesses et bonus */
-      learnTime: number;
-      /** @description Insomniaque : secondes gagnées au réveil par niveau */
-      wakeUpEarlierSeconds?: number;
-      nextLevelDuration: number;
-    };
-    ZombiesResponse: {
-      history: number[];
-      lastAttack: number;
-      nextAttackMin: number;
-      nextAttackMax: number;
-    };
-    SkillDiscoveryResponse: {
-      skillId: number;
-      name: string;
-      levels: number;
-    };
-    DeathRewardsResponse: {
-      baseMoney: number;
-      rankedMoney: number;
-      bonusMoney: number;
-      totalMoney: number;
-    };
-    AttackRecapResponse: {
-      day: number;
-      zombies: number;
-      defense: number;
-      survived: boolean;
-      buildingOffers: components['schemas']['BuildingResponse'][];
-      /** @description Nombre de bâtiments à choisir parmi les offres */
-      buildingPicks: number;
-      skillDiscoveries: components['schemas']['SkillDiscoveryResponse'][];
-      rewards: components['schemas']['DeathRewardsResponse'] | null;
-    };
-    CityResponse: {
-      /** @enum {string} */
-      phase: 'playing' | 'dayRecap' | 'deathRecap';
-      ranked: boolean;
-      day: number;
-      defense: number;
-      /** @description Heure de jeu, en secondes depuis minuit */
-      time: number;
-      inventory: components['schemas']['InventoryResponse'];
-      speeds: components['schemas']['SpeedsResponse'];
-      buildings: components['schemas']['BuildingResponse'][];
-      skills: components['schemas']['SkillResponse'][];
-      zombies: components['schemas']['ZombiesResponse'];
-      /** Format: date-time */
-      lastActivityAt: string;
-      /** @description Durée d'une fouille, en secondes de jeu */
-      digDuration: number;
-      attackRecap: components['schemas']['AttackRecapResponse'] | null;
-    };
-    MeResponse: {
-      account: components['schemas']['AccountResponse'];
-      player: components['schemas']['PlayerResponse'];
-      city: components['schemas']['CityResponse'] | null;
-    };
-    CreateCityDto: {
-      /** @description Partie classée contre un autre joueur, avec les mêmes tirages */
-      ranked?: boolean;
-    };
-    DigDto: {
-      count: number;
-    };
-    DigResponse: {
-      city: components['schemas']['CityResponse'];
-      found: components['schemas']['ItemQuantitiesResponse'];
-    };
-    StartDayDto: {
-      /** @description Bâtiments retenus parmi attackRecap.buildingOffers, au nombre de attackRecap.buildingPicks */
-      chosenBuildingIds: number[];
-    };
-    LeaderboardEntryResponse: {
-      rank: number;
-      playerId: string;
-      username: string;
-      bestDay: number;
-      bestZombies: number;
-      rankedPoints: number;
-    };
-    LeaderboardResponse: {
-      entries: components['schemas']['LeaderboardEntryResponse'][];
-    };
-    CatalogBuildingResponse: {
-      id: number;
-      name: string;
-      /** @enum {string} */
-      rarity: 'base' | 'common' | 'rare' | 'epic' | 'legendary';
-      /** @description Défense de base par niveau, avant bonus et variation aléatoire */
-      defense: number;
-      maxLevel: number;
-      /** @description Temps de construction d'un niveau, en secondes de jeu */
-      buildTime: number;
-      cost: components['schemas']['ItemQuantitiesResponse'];
-    };
-    CatalogSkillResponse: {
-      id: number;
-      name: string;
-      /** @enum {string} */
-      speed: 'build' | 'learn' | 'dig' | 'insomniac';
-      levelCap: number;
-      /** @description Durée d'apprentissage du premier niveau, en secondes de jeu */
-      learnTime: number;
-      speedGainPerLevel: number;
-      wakeUpEarlierSeconds?: number;
-    };
-    CatalogBonusResponse: {
-      id: number;
-      name: string;
-      description: string;
-      icon: string;
-      /** @description Prix du premier niveau, doublé à chaque niveau */
-      price: number;
-      maxLevel: number;
-      value: number;
-    };
-    CatalogResponse: {
-      items: ('wood' | 'metal' | 'stone' | 'screw' | 'patch')[];
-      /** @description Bâtiments présents dans toute nouvelle ville */
-      baseBuildings: components['schemas']['CatalogBuildingResponse'][];
-      /** @description Bâtiments qui peuvent être découverts */
-      buildings: components['schemas']['CatalogBuildingResponse'][];
-      skills: components['schemas']['CatalogSkillResponse'][];
-      bonuses: components['schemas']['CatalogBonusResponse'][];
-      /** @description Constantes d'équilibrage (durées en secondes de jeu) */
-      rules: {
-        [key: string]: number;
-      };
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  HealthController_check: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description The Health Check is successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    HealthController_check: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': {
-            /**
-             * @example ok
-             * @enum {string}
-             */
-            status?: 'ok' | 'degraded';
-            /**
-             * @example {
-             *       "database": {
-             *         "status": "up",
-             *         "responseTime": 12
-             *       }
-             *     }
-             */
-            info?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
-            } | null;
-            /** @example {} */
-            error?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
-            } | null;
-            /**
-             * @example {
-             *       "database": {
-             *         "status": "up",
-             *         "responseTime": 12
-             *       }
-             *     }
-             */
-            details?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
+        requestBody?: never;
+        responses: {
+            /** @description The Health Check is successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @example ok
+                         * @enum {string}
+                         */
+                        status?: "ok" | "degraded";
+                        /**
+                         * @example {
+                         *       "database": {
+                         *         "status": "up",
+                         *         "responseTime": 12
+                         *       }
+                         *     }
+                         */
+                        info?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @example {} */
+                        error?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /**
+                         * @example {
+                         *       "database": {
+                         *         "status": "up",
+                         *         "responseTime": 12
+                         *       }
+                         *     }
+                         */
+                        details?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        };
+                    };
+                };
             };
-          };
-        };
-      };
-      /** @description The Health Check is not successful */
-      503: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            /**
-             * @example error
-             * @enum {string}
-             */
-            status?: 'error' | 'shutting_down';
-            /**
-             * @example {
-             *       "database": {
-             *         "status": "up",
-             *         "responseTime": 12
-             *       }
-             *     }
-             */
-            info?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
-            } | null;
-            /**
-             * @example {
-             *       "redis": {
-             *         "status": "down",
-             *         "message": "Could not connect",
-             *         "responseTime": 3005
-             *       }
-             *     }
-             */
-            error?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
-            } | null;
-            /**
-             * @example {
-             *       "database": {
-             *         "status": "up",
-             *         "responseTime": 12
-             *       },
-             *       "redis": {
-             *         "status": "down",
-             *         "message": "Could not connect",
-             *         "responseTime": 3005
-             *       }
-             *     }
-             */
-            details?: {
-              [key: string]: {
-                /** @enum {string} */
-                status: 'up' | 'degraded' | 'down';
-                /** @description Time the health indicator took to respond, in ms */
-                responseTime?: number;
-              } & {
-                [key: string]: unknown;
-              };
+            /** @description The Health Check is not successful */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @example error
+                         * @enum {string}
+                         */
+                        status?: "error" | "shutting_down";
+                        /**
+                         * @example {
+                         *       "database": {
+                         *         "status": "up",
+                         *         "responseTime": 12
+                         *       }
+                         *     }
+                         */
+                        info?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /**
+                         * @example {
+                         *       "redis": {
+                         *         "status": "down",
+                         *         "message": "Could not connect",
+                         *         "responseTime": 3005
+                         *       }
+                         *     }
+                         */
+                        error?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /**
+                         * @example {
+                         *       "database": {
+                         *         "status": "up",
+                         *         "responseTime": 12
+                         *       },
+                         *       "redis": {
+                         *         "status": "down",
+                         *         "message": "Could not connect",
+                         *         "responseTime": 3005
+                         *       }
+                         *     }
+                         */
+                        details?: {
+                            [key: string]: {
+                                /** @enum {string} */
+                                status: "up" | "degraded" | "down";
+                                /** @description Time the health indicator took to respond, in ms */
+                                responseTime?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        };
+                    };
+                };
             };
-          };
         };
-      };
     };
-  };
-  AuthController_signup: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['SignupDto'];
-      };
-    };
-    responses: {
-      201: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_signup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['AuthResponse'];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignupDto"];
+            };
         };
-      };
-    };
-  };
-  AuthController_signin: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['SigninDto'];
-      };
-    };
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
         };
-        content: {
-          'application/json': components['schemas']['AuthResponse'];
+    };
+    AuthController_signin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-  };
-  AuthController_createGuest: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      201: {
-        headers: {
-          [name: string]: unknown;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SigninDto"];
+            };
         };
-        content: {
-          'application/json': components['schemas']['AuthResponse'];
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  AuthController_upgradeGuest: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UpgradeGuestDto'];
-      };
-    };
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_createGuest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['AuthResponse'];
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  AuthController_logoutAll: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      204: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_upgradeGuest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content?: never;
-      };
-    };
-  };
-  AuthController_changePassword: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ChangePasswordDto'];
-      };
-    };
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpgradeGuestDto"];
+            };
         };
-        content: {
-          'application/json': components['schemas']['AuthResponse'];
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  MeController_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_logoutAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['MeResponse'];
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
-      };
     };
-  };
-  AuthController_deleteAccount: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['DeleteAccountDto'];
-      };
-    };
-    responses: {
-      204: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_changePassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content?: never;
-      };
-    };
-  };
-  PlayersController_buyBonusLevel: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        bonusId: number;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordDto"];
+            };
         };
-        content: {
-          'application/json': components['schemas']['PlayerResponse'];
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  PlayersController_getProfile: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Id du joueur (celui de son compte) */
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    MeController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['ProfileResponse'];
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  CitiesController_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    AuthController_deleteAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountDto"];
+            };
         };
-      };
-    };
-  };
-  CitiesController_create: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateCityDto'];
-      };
-    };
-    responses: {
-      201: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
+    };
+    PlayersController_buyBonusLevel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                bonusId: number;
+            };
+            cookie?: never;
         };
-      };
-    };
-  };
-  CitiesController_delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      204: {
-        headers: {
-          [name: string]: unknown;
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlayerResponse"];
+                };
+            };
         };
-        content?: never;
-      };
     };
-  };
-  CitiesController_dig: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['DigDto'];
-      };
-    };
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    PlayersController_getProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id du joueur (celui de son compte) */
+                id: string;
+            };
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['DigResponse'];
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  CitiesController_build: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: number;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    CitiesController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  CitiesController_learn: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: number;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    CitiesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCityDto"];
+            };
         };
-      };
-    };
-  };
-  CitiesController_endDay: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
+    };
+    CitiesController_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-  };
-  CitiesController_startDay: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['StartDayDto'];
-      };
-    };
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
-        content: {
-          'application/json': components['schemas']['CityResponse'];
-        };
-      };
     };
-  };
-  LeaderboardsController_bestDay: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    CitiesController_dig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['LeaderboardResponse'];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DigDto"];
+            };
         };
-      };
-    };
-  };
-  LeaderboardsController_ranked: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DigResponse"];
+                };
+            };
         };
-        content: {
-          'application/json': components['schemas']['LeaderboardResponse'];
-        };
-      };
     };
-  };
-  CatalogController_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
+    CitiesController_build: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['CatalogResponse'];
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
         };
-      };
     };
-  };
+    CitiesController_learn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
+        };
+    };
+    CitiesController_endDay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
+        };
+    };
+    CitiesController_startDay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StartDayDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CityResponse"];
+                };
+            };
+        };
+    };
+    CollectionController_setDeck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetDeckDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlayerResponse"];
+                };
+            };
+        };
+    };
+    CollectionController_openBooster: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                boosterId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BoosterOpeningResponse"];
+                };
+            };
+        };
+    };
+    LeaderboardsController_bestDay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaderboardResponse"];
+                };
+            };
+        };
+    };
+    LeaderboardsController_ranked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaderboardResponse"];
+                };
+            };
+        };
+    };
+    CatalogController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogResponse"];
+                };
+            };
+        };
+    };
 }

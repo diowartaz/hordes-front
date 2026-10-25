@@ -1,0 +1,162 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+.deck {
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.deck-head,
+.collection-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  h2 {
+    flex: 1;
+  }
+}
+
+// Bouton secondaire bordé (Autocomplete, Clear, Get more plans)
+.outline-btn {
+  --c: var(--cyan);
+  height: 32px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--c) 70%, transparent);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  color: color-mix(in srgb, var(--c) 35%, white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  &:hover:not(:disabled) {
+    border-color: var(--c);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--c) 40%, transparent);
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+  gap: 6px;
+}
+
+.slot {
+  --c: var(--line-strong);
+  min-height: 34px;
+  padding: 4px 8px;
+  border-radius: var(--radius-s);
+  border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &.empty {
+    display: flex;
+    align-items: center;
+    border-style: dashed;
+    background: none;
+    color: var(--text-mute);
+    font-weight: 500;
+  }
+}
+
+.deck-foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  .problems {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+    color: var(--orange-light);
+    span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+}
+
+.collection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filter {
+  --c: var(--cyan);
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+  background: none;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: capitalize;
+  &.active {
+    color: var(--text-dark);
+    background: var(--c);
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 8px;
+}
+
+.card-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.card-foot {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-mute);
+}

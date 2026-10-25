@@ -1,0 +1,136 @@
+<app-classic-page [title]="'Deck'" [subtitle]="'Plans drawn in every game'" [glow]="'var(--cyan)'">
+  <ng-container icon><app-icon name="cards" [size]="32" /></ng-container>
+  <ng-container content>
+    <section class="neon-card deck">
+      <div class="deck-head">
+        <h2>My deck</h2>
+        <span class="neon-chip" [style.--c]="draft().length === size() ? 'var(--green)' : 'var(--orange)'"
+          >{{ draft().length }}/{{ size() }}</span
+        >
+        <button
+          type="button"
+          class="outline-btn"
+          [disabled]="!canAutocomplete()"
+          title="Fill the empty slots: rarest plans first, keeping resources balanced"
+          (click)="autocomplete()"
+        >
+          <app-icon name="sparkle" [size]="14" />Autocomplete
+        </button>
+        <button
+          type="button"
+          class="outline-btn"
+          [style.--c]="'var(--orange)'"
+          [disabled]="draft().length === 0"
+          (click)="clear()"
+        >
+          <app-icon name="trash" [size]="14" />Clear
+        </button>
+      </div>
+
+      <div class="slots">
+        @for (building of draftBuildings(); track building.id) {
+          <button
+            type="button"
+            class="slot"
+            [style.--c]="building.rarity | rarityToColor"
+            [title]="'Remove ' + building.name"
+            (click)="toggle(building.id)"
+          >
+            {{ building.name }}
+          </button>
+        }
+        @for (slot of emptySlots(); track $index) {
+          <span class="slot empty">empty</span>
+        }
+      </div>
+
+      <h3 class="label">Resources needed (digs give 20% of each)</h3>
+      <app-resource-shares [buildings]="draftBuildings()" />
+
+      <div class="deck-foot">
+        <span class="problems">
+          @for (problem of problems(); track problem) {
+            <span><app-icon name="info" [size]="14" />{{ problem }}</span>
+          }
+        </span>
+        <button type="button" class="text-btn" [disabled]="!dirty()" (click)="reset()">Cancel</button>
+        <button
+          type="button"
+          class="mini-cta"
+          [disabled]="!dirty() || problems().length > 0 || cityService.saveDeckLoading()"
+          (click)="save()"
+        >
+          <app-icon name="check" [size]="16" />Save
+        </button>
+      </div>
+    </section>
+
+    <section class="collection">
+      <div class="collection-head">
+        <h2>Collection {{ ownedCount() }}/{{ cityService.catalogBuildings().length }}</h2>
+        <button type="button" class="outline-btn" (click)="goToShop()">
+          <app-icon name="sparkle" [size]="16" />Get more plans
+        </button>
+      </div>
+      <div class="filters" role="group" aria-label="Filter by rarity">
+        <button type="button" class="filter" [class.active]="rarityFilter() === 'all'" (click)="setRarityFilter('all')">
+          All
+        </button>
+        @for (rarity of rarities; track rarity) {
+          <button
+            type="button"
+            class="filter"
+            [style.--c]="rarity | rarityToColor"
+            [class.active]="rarityFilter() === rarity"
+            (click)="setRarityFilter(rarity)"
+          >
+            {{ rarity }}
+          </button>
+        }
+      </div>
+      <div class="filters" role="group" aria-label="Filter by resource">
+        <button type="button" class="filter" [class.active]="itemFilter() === 'all'" (click)="setItemFilter('all')">
+          Any resource
+        </button>
+        @for (item of items; track item) {
+          <button type="button" class="filter" [class.active]="itemFilter() === item" (click)="setItemFilter(item)">
+            {{ item }}
+          </button>
+        }
+      </div>
+
+      <div class="cards">
+        @for (building of collection(); track building.id) {
+          <button
+            type="button"
+            class="card-btn"
+            [disabled]="owned(building.id) === 0"
+            [attr.aria-pressed]="inDraft(building.id)"
+            (click)="toggle(building.id)"
+          >
+            <app-building-card
+              [building]="building"
+              [count]="owned(building.id)"
+              [inDeck]="inDraft(building.id)"
+              [compact]="true"
+            >
+              <span class="card-foot">
+                @if (owned(building.id) === 0) {
+                  Find it in boosters
+                } @else if (inDraft(building.id)) {
+                  <app-icon name="check" [size]="14" />In deck
+                } @else if (draft().length < size()) {
+                  <app-icon name="plus" [size]="14" />Add
+                } @else {
+                  Deck full
+                }
+              </span>
+            </app-building-card>
+          </button>
+        } @empty {
+          <div class="empty-state">No plan matches these filters</div>
+        }
+      </div>
+    </section>
+  </ng-container>
+</app-classic-page>

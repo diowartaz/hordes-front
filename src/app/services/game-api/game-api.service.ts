@@ -4,6 +4,9 @@ import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { components } from 'src/app/models/api';
 import {
   BonusWithoutLvl,
+  BoosterCardModel,
+  BoosterModel,
+  CatalogBuildingModel,
   CityModel,
   DefaultValuesModel,
   GameHistoryModel,
@@ -20,6 +23,9 @@ import {
   ApiProfile,
   stateFromCity,
   toBonusReferences,
+  toBoosterCards,
+  toBoosters,
+  toCatalogBuildings,
   toCityModel,
   toDefaultValues,
   toGameHistory,
@@ -43,6 +49,13 @@ export interface PlayerSnapshot {
 export interface GameCatalog {
   defaultValues: DefaultValuesModel;
   bonuses: Record<number, BonusWithoutLvl>;
+  buildings: CatalogBuildingModel[];
+  boosters: BoosterModel[];
+}
+
+export interface BoosterOpening {
+  stats: StatsModel;
+  cards: BoosterCardModel[];
 }
 
 export interface CityWithState {
@@ -72,9 +85,14 @@ export class GameApiService {
   }
 
   getCatalog(): Observable<GameCatalog> {
-    return this.httpClient
-      .get<ApiCatalog>(this.API_URL + 'catalog')
-      .pipe(map((catalog) => ({ defaultValues: toDefaultValues(catalog), bonuses: toBonusReferences(catalog) })));
+    return this.httpClient.get<ApiCatalog>(this.API_URL + 'catalog').pipe(
+      map((catalog) => ({
+        defaultValues: toDefaultValues(catalog),
+        bonuses: toBonusReferences(catalog),
+        buildings: toCatalogBuildings(catalog),
+        boosters: toBoosters(catalog),
+      })),
+    );
   }
 
   loadPlayer(): Observable<{ player: PlayerSnapshot; catalog: GameCatalog }> {
@@ -116,6 +134,16 @@ export class GameApiService {
 
   buyBonus(id: number): Observable<StatsModel> {
     return this.httpClient.post<ApiPlayer>(this.API_URL + `me/bonuses/${id}/level-up`, {}).pipe(map(toStatsModel));
+  }
+
+  saveDeck(buildingIds: number[]): Observable<StatsModel> {
+    return this.httpClient.put<ApiPlayer>(this.API_URL + 'me/deck', { buildingIds }).pipe(map(toStatsModel));
+  }
+
+  openBooster(id: number): Observable<BoosterOpening> {
+    return this.httpClient
+      .post<Schemas['BoosterOpeningResponse']>(this.API_URL + `me/boosters/${id}/open`, {})
+      .pipe(map((response) => ({ stats: toStatsModel(response.player), cards: toBoosterCards(response.cards) })));
   }
 
   getLeaderboardBestDay(): Observable<LeaderboardElement[]> {

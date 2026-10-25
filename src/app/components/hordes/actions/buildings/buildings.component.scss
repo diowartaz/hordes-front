@@ -9,6 +9,48 @@
   letter-spacing: 0.08em;
 }
 
+.deck-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--text-dim);
+  span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .track {
+    width: 80px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(159, 168, 217, 0.15);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    max-width: 100%;
+    background: var(--cyan);
+  }
+  p {
+    flex-basis: 100%;
+    font-size: 13px;
+    color: var(--text-mute);
+  }
+  &.recycling {
+    border-color: color-mix(in srgb, var(--cyan) 60%, transparent);
+    p {
+      color: var(--cyan-light);
+    }
+  }
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));

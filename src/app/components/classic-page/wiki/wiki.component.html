@@ -121,6 +121,28 @@
       </section>
 
       <section>
+        <h2><app-icon class="ic cyan" name="cards" [size]="18" /> Deck and collection</h2>
+        <p>
+          Your <strong>collection</strong> holds every building plan you own. Before each game, your
+          <strong>deck</strong> of <strong>20 plans</strong> (5 epic at most) is the only pile your starting plans and
+          the Blueprint Workshop discoveries are drawn from.
+        </p>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="sparkle" [size]="18" />Get new plans by opening <strong>boosters</strong> in
+          the shop. Duplicates are kept for later.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="dig" [size]="18" />Digs find every resource with the
+          <strong>same probability</strong>: a deck that needs a bit of every resource builds faster.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic cyan" name="recycle" [size]="18" />Once <strong>15 buildings</strong> of your deck reach
+          their max level, every completed building goes back into the draw pile. Picking one again unlocks a new set of
+          levels for it.
+        </div>
+      </section>
+
+      <section>
         <h2><app-icon class="ic cyan" name="book" [size]="18" />Skills</h2>
         <p>Each skill improves a specific aspect of survival. Effects are linear per level.</p>
         <table>
@@ -161,25 +183,26 @@
           >
         </p>
         <p>
-          A ranked game is a duel: two players play <strong>the exact same city</strong>, one after the other, and the
+          A ranked game is a duel: two players face <strong>the exact same hordes</strong>, one after the other, and the
           best survivor wins <app-icon class="ic pink" name="ranked" [size]="18" />ranked points.
         </p>
 
         <p><strong>Finding an opponent</strong></p>
         <div class="inline-div">
           When you start a ranked game, you join the oldest game whose first player has
-          <strong>already finished</strong>. You play their city, but you won't see their score until you fall too.
+          <strong>already finished</strong>. You face their hordes, but you won't see their score until you fall too.
         </div>
         <div class="inline-div">
           If no game is waiting, a new one is created and <strong>you play first</strong>: your result waits for the
           next ranked player to take up the challenge.
         </div>
 
-        <p><strong>The same city for both players</strong></p>
+        <p><strong>The same hordes for both players</strong></p>
         <div class="inline-div">
-          Both players share the same random seeds: same starting building plans and skills, same zombie waves
-          <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same random draws. Only your
-          choices make the difference.
+          Both players share the same random seeds: same zombie waves
+          <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same starting skills, same resources
+          found dig after dig. Each player brings their own <app-icon class="ic cyan" name="cards" [size]="18" />deck:
+          building it well is part of the duel.
         </div>
         <div class="inline-div">
           Your permanent <app-icon class="ic yellow" name="sparkle" [size]="18" />bonuses still apply in ranked.

@@ -1,0 +1,109 @@
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { ItemModel, Rarity } from 'src/app/models/hordes';
+import { RoutesEnum } from 'src/app/models/router';
+import { CityService } from 'src/app/services/city/city.service';
+import { BuildingCardComponent } from 'src/app/shared/components/building-card/building-card.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { ResourceSharesComponent } from 'src/app/shared/components/resource-shares/resource-shares.component';
+import { RarityToColorPipe } from 'src/app/shared/pipes/rarity-to-color.pipe';
+import {
+  autocompleteDeck,
+  buildingsOf,
+  byRarityDesc,
+  deckProblems,
+  ITEMS,
+  RARITIES_DESC,
+} from 'src/app/shared/utils/deck';
+import { ClassicPageComponent } from '../classic-page.component';
+
+// Éditeur de deck : le brouillon est local jusqu'à l'enregistrement
+@Component({
+  selector: 'app-deck',
+  imports: [ClassicPageComponent, IconComponent, BuildingCardComponent, ResourceSharesComponent, RarityToColorPipe],
+  templateUrl: './deck.component.html',
+  styleUrls: ['./deck.component.scss'],
+})
+export class DeckComponent {
+  readonly cityService = inject(CityService);
+  private readonly router = inject(Router);
+
+  readonly rarities = RARITIES_DESC;
+  readonly items = ITEMS;
+
+  // Repart du deck enregistré à chaque fois que celui-ci change (chargement, enregistrement)
+  draft = linkedSignal(() => this.cityService.deck());
+  rarityFilter = signal<Rarity | 'all'>('all');
+  itemFilter = signal<ItemModel | 'all'>('all');
+
+  size = computed(() => this.cityService.defaultValues().DECK_SIZE);
+  rules = computed(() => ({ size: this.size() }));
+  // Affichées par rareté décroissante (l'ordre du deck n'a pas d'importance)
+  draftBuildings = computed(() => buildingsOf(this.draft(), this.cityService.catalogBuildings()).sort(byRarityDesc));
+  emptySlots = computed(() => Array.from({ length: Math.max(0, this.size() - this.draft().length) }));
+  problems = computed(() => deckProblems(this.draft(), this.cityService.collection(), this.rules()));
+  dirty = computed(() => {
+    const saved = new Set(this.cityService.deck());
+    return this.draft().length !== saved.size || this.draft().some((id) => !saved.has(id));
+  });
+
+  autocompleted = computed(() =>
+    autocompleteDeck(this.draft(), this.cityService.collection(), this.cityService.catalogBuildings(), this.size()),
+  );
+  canAutocomplete = computed(() => this.autocompleted().length > this.draft().length);
+
+  ownedCount = computed(() => this.cityService.catalogBuildings().filter((b) => this.owned(b.id) > 0).length);
+
+  // Plans possédés d'abord, puis par rareté décroissante et par nom
+  collection = computed(() =>
+    this.cityService
+      .catalogBuildings()
+      .filter((b) => this.rarityFilter() === 'all' || b.rarity === this.rarityFilter())
+      .filter((b) => this.itemFilter() === 'all' || (b.inventory[this.itemFilter()] ?? 0) > 0)
+      .sort((a, b) => Number(this.owned(b.id) > 0) - Number(this.owned(a.id) > 0) || byRarityDesc(a, b)),
+  );
+
+  owned(id: number): number {
+    return this.cityService.collection()[id] ?? 0;
+  }
+
+  inDraft(id: number): boolean {
+    return this.draft().includes(id);
+  }
+
+  toggle(id: number): void {
+    if (this.inDraft(id)) {
+      this.draft.update((ids) => ids.filter((other) => other !== id));
+    } else if (this.owned(id) > 0 && this.draft().length < this.size()) {
+      this.draft.update((ids) => [...ids, id]);
+    }
+  }
+
+  setRarityFilter(value: string): void {
+    this.rarityFilter.set(value as Rarity | 'all');
+  }
+
+  setItemFilter(value: string): void {
+    this.itemFilter.set(value as ItemModel | 'all');
+  }
+
+  autocomplete(): void {
+    this.draft.set(this.autocompleted());
+  }
+
+  clear(): void {
+    this.draft.set([]);
+  }
+
+  reset(): void {
+    this.draft.set(this.cityService.deck());
+  }
+
+  save(): void {
+    this.cityService.saveDeck(this.draft());
+  }
+
+  goToShop(): void {
+    this.router.navigate([RoutesEnum.SHOP]);
+  }
+}
