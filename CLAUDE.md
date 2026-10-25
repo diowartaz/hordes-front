@@ -30,5 +30,6 @@ npm run api:types  # régénère src/app/models/api.ts depuis ../hordes-api/open
 - Sélecteurs de composants préfixés `app-` ; `any` autorisé par ESLint.
 - L'URL de l'API vient de `src/environments/environment*.ts`.
 - Gestionnaire de paquets : npm uniquement (`package-lock.json`).
+- Git : pas de branches pour le moment, tout se fait directement sur `rework` (branche principale).
 
 Détails d'architecture : @.github/copilot-instructions.md

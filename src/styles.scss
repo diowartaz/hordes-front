@@ -96,10 +96,10 @@ button {
   }
 }
 
-// Pour que les double click ne zoom pas
-button,
-a,
-input {
+// Pour que les double tap ne zooment pas : appliqué partout (spécificité nulle),
+// car un tap rapide peut tomber hors d'un bouton (div cliquable, bouton retiré ou
+// désactivé entre deux taps, zone entre deux boutons). Le pincement reste possible.
+:where(*) {
   touch-action: manipulation;
 }
 
