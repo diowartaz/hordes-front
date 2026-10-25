@@ -10,74 +10,91 @@
 <div class="play-content">
   <h1 class="neon-title dig-title">Dig for items</h1>
 
-  <section class="offer">
-    <span class="label">Next dig · pick your find</span>
-    <div class="offer-grid">
-      @for (item of digOffer(); track item) {
-        <button
-          type="button"
-          class="offer-card"
-          [style.--c]="item | itemToColor"
-          [attr.aria-label]="'Dig and keep ' + item"
-          (click)="pick(item)"
-          [disabled]="cityService.digLoading()"
-          [class.disabled]="!enoughTimeForPick()"
-        >
-          <app-resource-gem [item]="item" [size]="34" />
-          <span class="name">{{ item }}</span>
-          <span class="stock">stock: {{ cityService.city().inventory[item] }}</span>
-          <span class="time">{{ digTimeString() }} · → {{ pickEndTimeString() }}</span>
-        </button>
-      }
-    </div>
-  </section>
-
-  <div class="separator"><span>or</span></div>
-
-  <section class="random">
-    <span class="label">Random dig</span>
-    <div class="stepper">
-      <button
-        type="button"
-        class="step-btn"
-        aria-label="Dig fewer items"
-        (click)="addDigs(-1)"
-        [disabled]="disableMinusDigs()"
-      >
-        <app-icon name="minus" [size]="22" />
-      </button>
-      <div class="step-value">
-        <span class="qty">{{ nbDigs() }}</span>
-        <span class="label">Items to dig</span>
-      </div>
-      <button type="button" class="step-btn plus" aria-label="Dig more items" (click)="addDigs(1)">
-        <app-icon name="plus" [size]="22" />
-      </button>
-    </div>
-
+  <div class="tabs" role="tablist" aria-label="Dig mode">
     <button
       type="button"
-      class="cta dig-btn"
-      (click)="dig()"
-      [disabled]="cityService.digLoading()"
-      [class.disabled]="!enoughTime()"
+      role="tab"
+      class="tab"
+      [class.active]="mode() === 'pick'"
+      [attr.aria-selected]="mode() === 'pick'"
+      (click)="setMode('pick')"
     >
-      <span class="dig-main">🎲 Dig ×{{ nbDigs() }} · {{ totalRequiredTimeString() }}</span>
-      @if (enoughTime()) {
-        <span class="dig-sub">Done at {{ endTimeString() }}</span>
-      } @else {
-        <span class="dig-sub">Not enough time today</span>
-      }
+      Pick
     </button>
-    @if (digOffer().length === 2) {
-      <p class="random-hint">
-        1st: {{ digOffer()[0] }} or {{ digOffer()[1] }}, at random
-        @if (nbDigs() > 1) {
-          <br />Next {{ nbDigs() - 1 }}: any resource
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.active]="mode() === 'random'"
+      [attr.aria-selected]="mode() === 'random'"
+      (click)="setMode('random')"
+    >
+      🎲 Random
+    </button>
+  </div>
+
+  @if (mode() === 'pick') {
+    <section class="offer" role="tabpanel">
+      <div class="offer-grid">
+        @for (item of digOffer(); track item) {
+          <button
+            type="button"
+            class="offer-card"
+            [style.--c]="item | itemToColor"
+            [attr.aria-label]="'Dig and keep ' + item"
+            (click)="pick(item)"
+            [disabled]="cityService.digLoading()"
+            [class.disabled]="!enoughTimeForPick()"
+          >
+            <app-resource-gem [item]="item" [size]="34" />
+            <span class="name">{{ item }}</span>
+            <span class="stock">stock: {{ cityService.city().inventory[item] }}</span>
+            <span class="time">{{ digTimeString() }} · → {{ pickEndTimeString() }}</span>
+          </button>
         }
-      </p>
-    }
-  </section>
+      </div>
+      <p class="hint">Dig once and keep the resource you pick</p>
+    </section>
+  } @else {
+    <section class="random" role="tabpanel">
+      <div class="dig-row">
+        <button
+          type="button"
+          class="step-btn"
+          aria-label="Dig fewer items"
+          (click)="addDigs(-1)"
+          [disabled]="disableMinusDigs()"
+        >
+          <app-icon name="minus" [size]="22" />
+        </button>
+        <button
+          type="button"
+          class="cta dig-btn"
+          (click)="dig()"
+          [disabled]="cityService.digLoading()"
+          [class.disabled]="!enoughTime()"
+        >
+          <span class="dig-main">Dig ×{{ nbDigs() }} · {{ totalRequiredTimeString() }}</span>
+          @if (enoughTime()) {
+            <span class="dig-sub">Done at {{ endTimeString() }}</span>
+          } @else {
+            <span class="dig-sub">Not enough time today</span>
+          }
+        </button>
+        <button type="button" class="step-btn plus" aria-label="Dig more items" (click)="addDigs(1)">
+          <app-icon name="plus" [size]="22" />
+        </button>
+      </div>
+      @if (digOffer().length === 2) {
+        <p class="hint">
+          1st: {{ digOffer()[0] }} or {{ digOffer()[1] }}, at random
+          @if (nbDigs() > 1) {
+            <br />Next {{ nbDigs() - 1 }}: any resource
+          }
+        </p>
+      }
+    </section>
+  }
 
   <section class="inventory">
     <span class="label">Inventory</span>

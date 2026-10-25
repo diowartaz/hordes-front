@@ -4,6 +4,7 @@ export enum StorageKey {
   LOGIN = 'login',
   PLAY_ROUTE = 'play-route',
   NB_DIG = 'nb-dig',
+  DIG_MODE = 'dig-mode',
 }
 
 export function readStorage(key: StorageKey): string | null {

@@ -9,6 +9,9 @@ import { bonusEffect } from 'src/app/shared/utils/bonuses';
 import { enoughTime, formatTimeToString } from 'src/app/shared/utils/time';
 import { readStorage, StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 
+// Écran de fouille : choisir une ressource de la paire, ou fouiller au hasard
+export type DigMode = 'pick' | 'random';
+
 @Component({
   selector: 'app-diggings',
   imports: [KeyValuePipe, IconComponent, ResourceGemComponent, ItemToColorPipe],
@@ -21,6 +24,7 @@ export class DiggingsComponent {
   dialogMessage = signal('');
   snackBarOpened = signal(false);
   nbDigs = signal(Number(readStorage(StorageKey.NB_DIG)) || 1);
+  mode = signal<DigMode>(readStorage(StorageKey.DIG_MODE) === 'random' ? 'random' : 'pick');
   private snackBarTimeout: ReturnType<typeof setTimeout> | undefined;
   // Nombre de fouilles de la dernière action, pour repérer les ressources en plus de Lucky Digger
   private lastDigCount = 0;
@@ -61,6 +65,11 @@ export class DiggingsComponent {
   enoughTime = computed(() => this.hasTimeFor(this.totalRequiredTime()));
 
   disableMinusDigs = computed(() => this.nbDigs() - 1 < 1);
+
+  setMode(mode: DigMode) {
+    this.mode.set(mode);
+    writeStorage(StorageKey.DIG_MODE, mode);
+  }
 
   addDigs(nb: number) {
     this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
