@@ -3,7 +3,6 @@ export enum StorageKey {
   TOKEN = 'token',
   LOGIN = 'login',
   PLAY_ROUTE = 'play-route',
-  NB_DIG = 'nb-dig',
   DIG_MODE = 'dig-mode',
 }
 

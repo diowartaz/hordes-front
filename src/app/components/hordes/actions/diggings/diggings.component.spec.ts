@@ -43,13 +43,29 @@ describe('DiggingsComponent', () => {
     expect(cityService.findItems).toHaveBeenCalledWith(1, 'screw');
   });
 
-  it('fouille au hasard autant de fois que demandé, en mode Random', () => {
+  it('fouille une fois au hasard, en mode Random', () => {
     fixture.nativeElement.querySelectorAll('.tab')[1].click();
-    component.nbDigs.set(3);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.offer-card')).toBeNull();
     fixture.nativeElement.querySelector('.dig-btn').click();
-    expect(cityService.findItems).toHaveBeenCalledWith(3);
+    expect(cityService.findItems).toHaveBeenCalledWith(1);
+  });
+
+  it('fouille au hasard le maximum de fois avant l’attaque', () => {
+    component.setMode('random');
+    fixture.detectChanges();
+    // 8h → fin de journée, fouilles de 2 h
+    expect(component.maxDigs()).toBe(8);
+    fixture.nativeElement.querySelector('.dig-btn.max').click();
+    expect(cityService.findItems).toHaveBeenCalledWith('max');
+  });
+
+  it('masque le bouton maximum quand une seule fouille est possible', () => {
+    cityService.cityTimeSeconds = signal(22 * 3600);
+    component.setMode('random');
+    fixture.detectChanges();
+    expect(component.maxDigs()).toBe(1);
+    expect(fixture.nativeElement.querySelector('.dig-btn.max')).toBeNull();
   });
 
   it('mémorise le mode choisi', () => {

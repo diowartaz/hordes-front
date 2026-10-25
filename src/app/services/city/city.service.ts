@@ -150,7 +150,7 @@ export class CityService {
     });
   }
 
-  findItems(nb: number, pick?: ItemModel): void {
+  findItems(nb: number | 'max', pick?: ItemModel): void {
     runRequest(this.digLoading, this.api.findItems(nb, pick), (response) => {
       this.city.set(response.city);
       this.inventoryItemFound.set(response.found);
@@ -159,7 +159,6 @@ export class CityService {
 
   newCity(ranked: boolean): void {
     runRequest(this.newCityLoading, this.api.newCity(ranked), (response) => {
-      writeStorage(StorageKey.NB_DIG, '1');
       writeStorage(StorageKey.PLAY_ROUTE, 'dig');
       this.inventoryItemFound.set(createEmptyInventory());
       this.city.set(response.city);

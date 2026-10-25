@@ -600,7 +600,10 @@ export interface components {
             ranked?: boolean;
         };
         DigDto: {
-            count: number;
+            /** @description Nombre de fouilles, requis sauf avec max */
+            count?: number;
+            /** @description Autant de fouilles que possible avant la fin de journée, calculé au moment de la requête (count ignoré) */
+            max?: boolean;
             /**
              * @description Ressource choisie dans digOffer pour la première fouille ; absente : l'une des deux au hasard
              * @enum {string}

@@ -100,10 +100,12 @@ export class GameApiService {
     return forkJoin({ player: this.getMe(), catalog: this.getCatalog() });
   }
 
-  // pick : ressource choisie dans la paire proposée pour la première fouille, sinon l'une des deux au hasard
-  findItems(count: number, pick?: ItemModel): Observable<{ city: CityModel; found: InventoryModel }> {
+  // pick : ressource choisie dans la paire proposée pour la première fouille, sinon l'une des deux au hasard.
+  // 'max' : autant de fouilles que possible avant l'attaque, calculé par le serveur au moment de la requête
+  findItems(count: number | 'max', pick?: ItemModel): Observable<{ city: CityModel; found: InventoryModel }> {
+    const body: Schemas['DigDto'] = count === 'max' ? { max: true, pick } : { count, pick };
     return this.httpClient
-      .post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', { count, pick })
+      .post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', body)
       .pipe(map((response) => ({ city: toCityModel(response.city), found: toInventory(response.found) })));
   }
 

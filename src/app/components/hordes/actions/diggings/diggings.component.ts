@@ -23,7 +23,6 @@ export class DiggingsComponent {
 
   dialogMessage = signal('');
   snackBarOpened = signal(false);
-  nbDigs = signal(Number(readStorage(StorageKey.NB_DIG)) || 1);
   mode = signal<DigMode>(readStorage(StorageKey.DIG_MODE) === 'random' ? 'random' : 'pick');
   private snackBarTimeout: ReturnType<typeof setTimeout> | undefined;
   // Nombre de fouilles de la dernière action, pour repérer les ressources en plus de Lucky Digger
@@ -56,24 +55,20 @@ export class DiggingsComponent {
 
   enoughTimeForPick = computed(() => this.hasTimeFor(this.digTime()));
 
-  totalRequiredTime = computed(() => this.nbDigs() * this.digTime());
+  // Fouilles possibles d'ici l'attaque de fin de journée, pour l'affichage : le serveur refait le calcul
+  // à la réception, avec le temps réel écoulé entre-temps
+  maxDigs = computed(() => {
+    const remaining = this.cityService.defaultValues().day_end_time - (this.cityService.cityTimeSeconds() || 0);
+    return Math.max(0, Math.floor(remaining / this.digTime()));
+  });
 
-  totalRequiredTimeString = computed(() => formatTimeToString(this.totalRequiredTime()));
+  maxDigsTimeString = computed(() => formatTimeToString(this.maxDigs() * this.digTime()));
 
-  endTimeString = computed(() => this.endTimeAfter(this.totalRequiredTime()));
-
-  enoughTime = computed(() => this.hasTimeFor(this.totalRequiredTime()));
-
-  disableMinusDigs = computed(() => this.nbDigs() - 1 < 1);
+  maxDigsEndTimeString = computed(() => this.endTimeAfter(this.maxDigs() * this.digTime()));
 
   setMode(mode: DigMode) {
     this.mode.set(mode);
     writeStorage(StorageKey.DIG_MODE, mode);
-  }
-
-  addDigs(nb: number) {
-    this.nbDigs.set(Math.max(this.nbDigs() + nb, 1));
-    writeStorage(StorageKey.NB_DIG, this.nbDigs().toString());
   }
 
   castKey(key: string): ItemModel {
@@ -104,14 +99,24 @@ export class DiggingsComponent {
     this.cityService.findItems(1, item);
   }
 
-  // Fouilles au hasard : la première dans la paire, les suivantes parmi toutes les ressources
-  dig() {
-    if (!this.enoughTime()) {
+  // Fouille au hasard dans la paire
+  digOnce() {
+    if (!this.enoughTimeForPick()) {
       this.openSnackBar('Not enough time');
       return;
     }
-    this.lastDigCount = this.nbDigs();
-    this.cityService.findItems(this.nbDigs());
+    this.lastDigCount = 1;
+    this.cityService.findItems(1);
+  }
+
+  // Fouilles au hasard jusqu'à l'attaque : la première dans la paire, les suivantes parmi toutes les ressources
+  digMax() {
+    if (this.maxDigs() < 1) {
+      this.openSnackBar('Not enough time');
+      return;
+    }
+    this.lastDigCount = this.maxDigs();
+    this.cityService.findItems('max');
   }
 
   // Heure de la ville après une durée donnée

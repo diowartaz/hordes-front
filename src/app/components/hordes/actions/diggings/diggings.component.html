@@ -57,39 +57,33 @@
     </section>
   } @else {
     <section class="random" role="tabpanel">
-      <div class="dig-row">
-        <button
-          type="button"
-          class="step-btn"
-          aria-label="Dig fewer items"
-          (click)="addDigs(-1)"
-          [disabled]="disableMinusDigs()"
-        >
-          <app-icon name="minus" [size]="22" />
-        </button>
+      <div class="dig-buttons">
         <button
           type="button"
           class="cta dig-btn"
-          (click)="dig()"
+          (click)="digOnce()"
           [disabled]="cityService.digLoading()"
-          [class.disabled]="!enoughTime()"
+          [class.disabled]="!enoughTimeForPick()"
         >
-          <span class="dig-main">Dig ×{{ nbDigs() }} · {{ totalRequiredTimeString() }}</span>
-          @if (enoughTime()) {
-            <span class="dig-sub">Done at {{ endTimeString() }}</span>
+          <span class="dig-main">Dig ×1</span>
+          @if (enoughTimeForPick()) {
+            <span class="dig-sub">{{ digTimeString() }} · → {{ pickEndTimeString() }}</span>
           } @else {
-            <span class="dig-sub">Not enough time today</span>
+            <span class="dig-sub">Not enough time</span>
           }
         </button>
-        <button type="button" class="step-btn plus" aria-label="Dig more items" (click)="addDigs(1)">
-          <app-icon name="plus" [size]="22" />
-        </button>
+        @if (maxDigs() > 1) {
+          <button type="button" class="cta dig-btn max" (click)="digMax()" [disabled]="cityService.digLoading()">
+            <span class="dig-main">Max ×{{ maxDigs() }}</span>
+            <span class="dig-sub">{{ maxDigsTimeString() }} · → {{ maxDigsEndTimeString() }}</span>
+          </button>
+        }
       </div>
       @if (digOffer().length === 2) {
         <p class="hint">
           1st: {{ digOffer()[0] }} or {{ digOffer()[1] }}, at random
-          @if (nbDigs() > 1) {
-            <br />Next {{ nbDigs() - 1 }}: any resource
+          @if (maxDigs() > 1) {
+            <br />Next ones: any resource
           }
         </p>
       }

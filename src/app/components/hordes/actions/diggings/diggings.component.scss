@@ -110,37 +110,12 @@
   }
 }
 
-// Fouille au hasard : − [bouton] + sur une seule ligne
-.dig-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  .step-btn {
-    flex: none;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border-radius: var(--radius-m);
-    border: 1px solid var(--yellow);
-    background: rgba(255, 214, 10, 0.12);
-    color: var(--yellow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &.plus {
-      border: 0;
-      background: var(--yellow);
-      color: #2a1500;
-      box-shadow: 0 0 14px var(--yellow);
-    }
-    &:disabled {
-      opacity: 0.35;
-    }
-  }
-  .dig-btn {
-    flex: 1;
-    min-width: 0;
-  }
+// Fouille au hasard : une fouille, ou le maximum avant l'attaque
+.dig-buttons {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
 }
 
 .dig-btn {
@@ -151,6 +126,10 @@
   color: #1a0a00;
   background: var(--grad-dig);
   box-shadow: 0 0 26px rgba(255, 159, 90, 0.6);
+  &.max {
+    background: var(--grad-sunset);
+    color: #fff;
+  }
   .dig-main {
     font-size: 17px;
   }
