@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Version simplifiée du logo (tête + anneau) pour la favicon -->
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f8f52"/>
+      <stop offset="1" stop-color="#2f4a2c"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="128" cy="128" r="118" fill="#0c0614" stroke="#7a0f2e" stroke-width="16"/>
+
+  <!-- Tête de zombie -->
+  <g transform="translate(128 134) scale(0.95)">
+    <path d="M-78 -10 C-82 -80 -40 -112 0 -112 C44 -112 84 -82 78 -14 C76 18 66 34 56 46 L52 82 C30 96 -30 96 -52 82 L-56 46 C-68 32 -78 16 -78 -10 Z"
+          fill="url(#skin)" stroke="#05030a" stroke-width="6"/>
+    <!-- Cicatrice cousue -->
+    <path d="M-46 -84 L-14 -54 M-42 -64 L-30 -76 M-30 -54 L-20 -66" stroke="#05030a" stroke-width="6" stroke-linecap="round"/>
+    <!-- Yeux -->
+    <ellipse cx="-32" cy="-4" rx="24" ry="22" fill="#05030a"/>
+    <ellipse cx="32" cy="-2" rx="20" ry="24" fill="#05030a"/>
+    <circle cx="-30" cy="-2" r="9" fill="#c4143a"/>
+    <circle cx="34" cy="0" r="8" fill="#c4143a"/>
+    <!-- Nez -->
+    <path d="M-7 28 L0 14 L7 28 Z" fill="#05030a"/>
+    <!-- Bouche cousue -->
+    <path d="M-36 50 Q0 62 36 50" stroke="#05030a" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M-20 45 L-19 64 M0 50 L0 68 M20 45 L19 64" stroke="#05030a" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -29,15 +29,31 @@
 
       <div class="slots">
         @for (building of draftBuildings(); track building.id) {
-          <button
-            type="button"
-            class="slot"
-            [style.--c]="building.rarity | rarityToColor"
-            [title]="'Remove ' + building.name"
-            (click)="toggle(building.id)"
+          <div
+            class="slot-wrap"
+            (mouseenter)="showPreview(building.id, $event)"
+            (mouseleave)="hidePreview()"
+            (focusin)="showPreview(building.id, $event)"
+            (focusout)="hidePreview()"
           >
-            {{ building.name }}
-          </button>
+            <button
+              type="button"
+              class="slot"
+              [style.--c]="building.rarity | rarityToColor"
+              [attr.aria-label]="'Remove ' + building.name"
+              (click)="toggle(building.id)"
+            >
+              {{ building.name }}
+            </button>
+            @if (previewId() === building.id) {
+              <div class="preview" role="tooltip" [class.right]="previewAlign() === 'right'">
+                <app-building-card [building]="building" [count]="owned(building.id)" [inDeck]="true" />
+                @if (building.effect; as effect) {
+                  <p class="preview-effect"><app-icon name="sparkle" [size]="13" />{{ effectText(effect) }}</p>
+                }
+              </div>
+            }
+          </div>
         }
         @for (slot of emptySlots(); track $index) {
           <span class="slot empty">empty</span>

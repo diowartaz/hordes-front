@@ -57,12 +57,6 @@
         }
       </section>
     </ng-container>
-
-    <div footer class="actions">
-      <a class="cta cta-pink" [routerLink]="['/', RoutesEnum.LEADERBOARD]">
-        <app-icon name="trophy" [size]="18" />See leaderboard
-      </a>
-    </div>
   </app-classic-page>
 } @else if (getProfilLoading()) {
   <div class="loading"><mat-spinner diameter="40"></mat-spinner></div>

@@ -1,7 +1,7 @@
 <app-classic-page [title]="'Shop'" [subtitle]="'Plans and permanent upgrades'" [glow]="'var(--yellow)'">
   <ng-container icon><app-icon name="sparkle" [size]="32" /></ng-container>
   <ng-container content>
-    <div class="tabs" role="tablist">
+    <div class="tabs" role="tablist" aria-label="Shop section" [class.right]="tab() === 'bonuses'">
       <button
         type="button"
         role="tab"

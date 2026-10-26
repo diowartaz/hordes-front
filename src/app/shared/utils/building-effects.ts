@@ -22,7 +22,7 @@ export function buildingEffectText(
     case 'nightlyGrowth':
       return `Each night survived: +${value} permanent defense per level.`;
     case 'compoundGrowth':
-      return `Each night survived: +${percent(value)} of the city's defense per level, permanently.`;
+      return `Each night survived: +${value} × √(city defense) permanent defense per level. Grows with your defense, but slower.`;
     case 'buildDayScaling':
       return (
         `Each level built gives ${value} × the current day in defense.` +

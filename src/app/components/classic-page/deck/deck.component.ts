@@ -1,12 +1,13 @@
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ItemModel, Rarity } from 'src/app/models/hordes';
+import { BuildingEffectModel, ItemModel, Rarity } from 'src/app/models/hordes';
 import { RoutesEnum } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { BuildingCardComponent } from 'src/app/shared/components/building-card/building-card.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { ResourceSharesComponent } from 'src/app/shared/components/resource-shares/resource-shares.component';
 import { RarityToColorPipe } from 'src/app/shared/pipes/rarity-to-color.pipe';
+import { buildingEffectText } from 'src/app/shared/utils/building-effects';
 import {
   autocompleteDeck,
   buildingsOf,
@@ -35,6 +36,9 @@ export class DeckComponent {
   draft = linkedSignal(() => this.cityService.deck());
   rarityFilter = signal<Rarity | 'all'>('all');
   itemFilter = signal<ItemModel | 'all'>('all');
+  // Emplacement survolé : sa carte complète s'affiche en bulle, ancrée à droite dans la moitié droite de l'écran
+  previewId = signal<number | null>(null);
+  previewAlign = signal<'left' | 'right'>('left');
 
   size = computed(() => this.cityService.defaultValues().DECK_SIZE);
   rules = computed(() => ({ size: this.size() }));
@@ -77,6 +81,21 @@ export class DeckComponent {
     } else if (this.owned(id) > 0 && this.draft().length < this.size()) {
       this.draft.update((ids) => [...ids, id]);
     }
+  }
+
+  showPreview(id: number, event: Event): void {
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this.previewAlign.set(rect.left + rect.width / 2 > window.innerWidth / 2 ? 'right' : 'left');
+    this.previewId.set(id);
+  }
+
+  hidePreview(): void {
+    this.previewId.set(null);
+  }
+
+  // Le bouton « Effect » de la carte n'est pas cliquable dans la bulle : l'effet y est écrit en clair
+  effectText(effect: BuildingEffectModel): string {
+    return buildingEffectText(effect, undefined, this.cityService.defaultValues().effect_rules);
   }
 
   setRarityFilter(value: string): void {

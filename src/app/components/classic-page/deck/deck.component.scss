@@ -57,8 +57,54 @@ h2 {
   gap: 6px;
 }
 
+.slot-wrap {
+  position: relative;
+  min-width: 0;
+  display: flex;
+}
+
+// Carte complète du plan survolé (pas d'interaction : le clic reste sur l'emplacement)
+.preview {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  width: min(240px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  &.right {
+    left: auto;
+    right: 0;
+  }
+  app-building-card {
+    display: block;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.preview-effect {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--yellow) 45%, transparent);
+  background: var(--surface-solid);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.4;
+  app-icon {
+    color: var(--yellow);
+    margin-right: 4px;
+    vertical-align: -2px;
+  }
+}
+
 .slot {
   --c: var(--line-strong);
+  flex: 1;
+  min-width: 0;
   min-height: 34px;
   padding: 4px 8px;
   border-radius: var(--radius-s);

@@ -1,6 +1,6 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GameApiService } from 'src/app/services/game-api/game-api.service';
@@ -8,13 +8,12 @@ import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClassicPageComponent } from '../classic-page.component';
 import { ProfilModel } from 'src/app/models/hordes';
-import { RoutesEnum } from 'src/app/models/router';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 
 @Component({
   selector: 'app-profil',
-  imports: [GameComponent, MatProgressSpinnerModule, ClassicPageComponent, IconComponent, RouterLink],
+  imports: [GameComponent, MatProgressSpinnerModule, ClassicPageComponent, IconComponent],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })
@@ -23,8 +22,6 @@ export class ProfilComponent implements OnInit {
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
-
-  readonly RoutesEnum = RoutesEnum;
 
   getProfilLoading = signal(false);
   profil = signal<ProfilModel | null>(null);
