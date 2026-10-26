@@ -47,7 +47,7 @@ const OVERWEIGHT_SHARE = 0.3;
     .track {
       height: 6px;
       border-radius: 3px;
-      background: rgba(159, 168, 217, 0.15);
+      background: color-mix(in srgb, var(--text-mute) 15%, transparent);
       overflow: hidden;
     }
     .fill {

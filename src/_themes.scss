@@ -1,0 +1,318 @@
+// Propositions de thèmes sombres (comparaison temporaire via le sélecteur en bas de page).
+// Chaque thème redéfinit les jetons de styles.scss sur :root[data-theme='…'] ; le thème
+// « Néon Arcade » reste celui par défaut tant qu'aucun n'a été choisi.
+
+// Grain de pellicule (bruit SVG)
+$grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.32 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+@keyframes crtFlicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 0.92;
+  }
+  49% {
+    opacity: 1;
+  }
+  83% {
+    opacity: 0.85;
+  }
+  84% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseAlarm {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// =====================================================================
+// 1. QUARANTAINE — zone contaminée : kaki, vert toxique, jaune danger
+// =====================================================================
+:root[data-theme='quarantine'] {
+  --bg: #0a0c08;
+  --surface: rgba(22, 26, 17, 0.88);
+  --surface-2: rgba(24, 28, 19, 0.94);
+  --surface-solid: #171b12;
+  --surface-nav: rgba(11, 13, 9, 0.97);
+  --line: rgba(176, 186, 140, 0.18);
+  --line-strong: rgba(176, 186, 140, 0.36);
+
+  --text: #e3e6d3;
+  --text-dim: #c1c6aa;
+  --text-mute: #8a9076;
+  --text-dark: #0b0d08;
+  --text-strong: #f2f5e3;
+  --text-on-gold: #171200;
+  --cta-text: #121704;
+
+  --pink: #a8e22a;
+  --pink-light: #cdf575;
+  --cyan: #7fb3a2;
+  --cyan-light: #a8d3c5;
+  --cyan-pale: #d0e8e0;
+  --yellow: #f0bf2a;
+  --yellow-light: #f6d76c;
+  --green: #6cb84a;
+  --green-dark: #0e1907;
+  --orange: #d4722a;
+  --orange-light: #e8a16b;
+  --violet: #78689a;
+  --violet-light: #a596c2;
+  --violet-pale: #c6bcda;
+  --danger: #e2452e;
+  --danger-light: #f07c69;
+  --silver: #b6baa6;
+
+  --font-display: 'Black Ops One', sans-serif;
+  --font-body: 'Barlow Condensed', sans-serif;
+  --font-title: var(--font-display);
+
+  --grad-pink: linear-gradient(90deg, #7fb51b, var(--pink));
+  --grad-sunset: linear-gradient(90deg, var(--pink), var(--yellow));
+
+  --radius-xs: 3px;
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 8px;
+  --radius-xl: 10px;
+  --radius-pill: 4px;
+
+  --page-bg:
+    radial-gradient(ellipse at 50% -10%, color-mix(in srgb, var(--pink) 14%, transparent), transparent 55%),
+    radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--yellow) 7%, transparent), transparent 45%), var(--bg);
+  --page-overlay: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%), #{$grain};
+
+  font-synthesis: none;
+
+  .neon-title {
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-shadow:
+      0 2px 0 rgba(0, 0, 0, 0.8),
+      0 0 18px color-mix(in srgb, var(--glow) 35%, transparent);
+  }
+  .display,
+  .cta,
+  .ghost-btn,
+  .mini-cta {
+    font-weight: 400;
+  }
+  // Bouton principal : bande de signalisation
+  .cta {
+    box-shadow:
+      0 3px 0 rgba(0, 0, 0, 0.6),
+      0 0 18px color-mix(in srgb, var(--pink) 25%, transparent);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-image:
+      repeating-linear-gradient(-45deg, transparent 0 14px, rgba(0, 0, 0, 0.1) 14px 28px), var(--grad-sunset);
+  }
+  .icon-tile {
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+  }
+  .neon-card,
+  .stat-tile {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+}
+
+// =====================================================================
+// 2. HÉMORRAGIE — horreur : noir sang, os, rouille, grain et vignette
+// =====================================================================
+:root[data-theme='blood'] {
+  --bg: #090606;
+  --surface: rgba(26, 15, 14, 0.88);
+  --surface-2: rgba(29, 17, 16, 0.94);
+  --surface-solid: #1b100f;
+  --surface-nav: rgba(12, 7, 7, 0.97);
+  --line: rgba(205, 170, 150, 0.15);
+  --line-strong: rgba(205, 170, 150, 0.32);
+
+  --text: #ebe0d0;
+  --text-dim: #c9bba8;
+  --text-mute: #8f8172;
+  --text-dark: #120a08;
+  --text-strong: #f7eee0;
+  --text-on-gold: #1a0f02;
+  --cta-text: #f7eee0;
+
+  --pink: #c2141c;
+  --pink-light: #e65a5e;
+  --cyan: #8a9ea8;
+  --cyan-light: #b3c4cc;
+  --cyan-pale: #dbe4e8;
+  --yellow: #d6a23f;
+  --yellow-light: #e7c47b;
+  --green: #8da84a;
+  --green-dark: #121a07;
+  --orange: #c95f2a;
+  --orange-light: #e0976b;
+  --violet: #7c3a6c;
+  --violet-light: #a8699a;
+  --violet-pale: #c9a1be;
+  --danger: #ee3a32;
+  --danger-light: #f57a70;
+  --silver: #c2b8ab;
+
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Barlow Condensed', sans-serif;
+  --font-title: 'Nosifer', 'Oswald', sans-serif;
+
+  --grad-pink: linear-gradient(90deg, #6e0a0f, var(--pink));
+  --grad-sunset: linear-gradient(180deg, #d3242b, #8a0c12);
+
+  --radius-xs: 3px;
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 8px;
+  --radius-xl: 8px;
+  --radius-pill: 4px;
+
+  --page-bg:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--pink) 20%, transparent), transparent 50%),
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--pink) 10%, transparent), transparent 40%), var(--bg);
+  --page-overlay: radial-gradient(ellipse at center, transparent 45%, rgba(20, 0, 0, 0.7) 100%), #{$grain};
+
+  .neon-title {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text-strong);
+    text-shadow:
+      0 3px 0 #000,
+      0 0 22px color-mix(in srgb, var(--pink) 55%, transparent);
+  }
+  .display {
+    font-weight: 700;
+  }
+  .cta {
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border: 1px solid #4a0508;
+    box-shadow:
+      0 4px 0 #3a0306,
+      0 0 24px color-mix(in srgb, var(--pink) 35%, transparent);
+  }
+  .icon-tile {
+    box-shadow: 0 0 10px color-mix(in srgb, var(--c, var(--cyan)) 30%, transparent);
+  }
+  .ghost-btn {
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+}
+
+// =====================================================================
+// 3. SIGNAL — terminal d'urgence : écran CRT ambre, scanlines, alerte
+// =====================================================================
+:root[data-theme='signal'] {
+  --bg: #0b0804;
+  --surface: rgba(26, 19, 9, 0.88);
+  --surface-2: rgba(24, 18, 8, 0.94);
+  --surface-solid: #1a1308;
+  --surface-nav: rgba(12, 9, 4, 0.97);
+  --line: rgba(255, 176, 0, 0.2);
+  --line-strong: rgba(255, 176, 0, 0.42);
+
+  --text: #ffdca6;
+  --text-dim: #e6c48f;
+  --text-mute: #9e8460;
+  --text-dark: #120c02;
+  --text-strong: #fff0d2;
+  --text-on-gold: #160f00;
+  --cta-text: #160f00;
+
+  --pink: #ffa600;
+  --pink-light: #ffc95a;
+  --cyan: #74d68e;
+  --cyan-light: #a3e8b5;
+  --cyan-pale: #d1f5da;
+  --yellow: #ffd65c;
+  --yellow-light: #ffe598;
+  --green: #a1d65c;
+  --green-dark: #0d1605;
+  --orange: #ff6d1f;
+  --orange-light: #ffa56d;
+  --violet: #a08ad0;
+  --violet-light: #bfaee2;
+  --violet-pale: #ddd2f2;
+  --danger: #ff3b2b;
+  --danger-light: #ff7b6e;
+  --silver: #cfc2a8;
+
+  --font-display: 'VT323', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+  --font-title: var(--font-display);
+
+  --grad-pink: linear-gradient(90deg, var(--orange), var(--pink));
+  --grad-sunset: linear-gradient(90deg, var(--pink), var(--orange));
+
+  --radius-xs: 0;
+  --radius-s: 2px;
+  --radius-m: 2px;
+  --radius-l: 3px;
+  --radius-xl: 3px;
+  --radius-pill: 2px;
+
+  --page-bg:
+    radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--pink) 9%, transparent), transparent 70%), var(--bg);
+  --page-overlay:
+    radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.65) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+  --page-overlay-anim: crtFlicker 6s infinite;
+
+  font-synthesis: none;
+
+  body {
+    font-weight: 400;
+    font-size: 15px;
+  }
+  .neon-title {
+    font-weight: 400;
+    font-size: 34px;
+    letter-spacing: 0.08em;
+    color: var(--pink-light);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--pink) 70%, transparent);
+    &::before {
+      content: '> ';
+      color: var(--pink);
+    }
+  }
+  .display,
+  .cta,
+  .ghost-btn,
+  .mini-cta {
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+  }
+  .stat-tile .stat-value {
+    font-weight: 400;
+    font-size: 28px;
+  }
+  .cta {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--pink) 40%, transparent);
+  }
+  .icon-tile {
+    box-shadow: 0 0 8px color-mix(in srgb, var(--c, var(--cyan)) 45%, transparent);
+  }
+  .percentdef-red {
+    animation: pulseAlarm 1.2s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme] {
+    --page-overlay-anim: none;
+    .percentdef-red {
+      animation: none;
+    }
+  }
+}

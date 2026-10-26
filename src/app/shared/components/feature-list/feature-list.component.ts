@@ -61,7 +61,7 @@ import { IconComponent, IconName } from '../icon/icon.component';
       .icon-tile {
         width: 34px;
         height: 34px;
-        border-radius: 10px;
+        border-radius: var(--radius-m);
         box-shadow: 0 0 10px var(--c);
       }
     }

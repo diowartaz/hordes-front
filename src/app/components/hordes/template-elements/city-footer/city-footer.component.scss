@@ -12,7 +12,7 @@
   .footer-btn {
     position: relative;
     height: 60px;
-    border-radius: 14px;
+    border-radius: var(--radius-l);
     border: 1px solid transparent;
     background: transparent;
     color: var(--text-mute);
@@ -29,7 +29,7 @@
       background 0.2s,
       box-shadow 0.2s;
     &.is-active {
-      color: #fff;
+      color: var(--text-strong);
       border-color: var(--c);
       background: color-mix(in srgb, var(--c) 15%, transparent);
       box-shadow: 0 0 18px color-mix(in srgb, var(--c) 45%, transparent);

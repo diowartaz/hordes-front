@@ -34,7 +34,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border-radius: 10px;
+  border-radius: var(--radius-m);
   border: 1px solid color-mix(in srgb, var(--c) 70%, transparent);
   background: color-mix(in srgb, var(--c) 10%, transparent);
   color: color-mix(in srgb, var(--c) 35%, white);
@@ -87,7 +87,7 @@ h2 {
 .preview-effect {
   margin: 0;
   padding: 8px 10px;
-  border-radius: 10px;
+  border-radius: var(--radius-m);
   border: 1px solid color-mix(in srgb, var(--yellow) 45%, transparent);
   background: var(--surface-solid);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
@@ -164,7 +164,7 @@ h2 {
   --c: var(--cyan);
   height: 30px;
   padding: 0 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
   background: none;
   color: var(--text-dim);

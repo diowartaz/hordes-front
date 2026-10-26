@@ -8,12 +8,12 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
   padding: 4px;
-  border-radius: 14px;
+  border-radius: var(--radius-l);
   background: var(--surface);
   border: 1px solid var(--line);
   button {
     height: 40px;
-    border-radius: 10px;
+    border-radius: var(--radius-m);
     border: 0;
     background: transparent;
     color: var(--text-mute);
@@ -23,9 +23,9 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     &.active {
-      color: #fff;
+      color: var(--text-strong);
       background: var(--grad-pink);
-      box-shadow: 0 0 16px rgba(255, 46, 196, 0.6);
+      box-shadow: 0 0 16px color-mix(in srgb, var(--pink) 60%, transparent);
     }
   }
 }
@@ -99,7 +99,7 @@
     .block {
       width: 100%;
       height: var(--h);
-      border-radius: 12px 12px 0 0;
+      border-radius: var(--radius-m) var(--radius-m) 0 0;
       background: linear-gradient(
         180deg,
         color-mix(in srgb, var(--c) 38%, transparent),
@@ -138,15 +138,15 @@
     padding: 0 12px;
     border-radius: var(--radius-m);
     background: var(--surface-2);
-    border: 1px solid rgba(34, 230, 255, 0.18);
+    border: 1px solid color-mix(in srgb, var(--cyan) 18%, transparent);
     color: var(--text);
     text-align: left;
     &:hover {
-      border-color: rgba(34, 230, 255, 0.5);
+      border-color: color-mix(in srgb, var(--cyan) 50%, transparent);
     }
     &.me {
       border-color: var(--pink);
-      box-shadow: 0 0 12px rgba(255, 46, 196, 0.35);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--pink) 35%, transparent);
     }
     .rank {
       width: 26px;
@@ -178,7 +178,7 @@
       width: 40px;
       height: 5px;
       border-radius: 3px;
-      background: rgba(61, 255, 143, 0.15);
+      background: color-mix(in srgb, var(--green) 15%, transparent);
       overflow: hidden;
       span {
         display: block;
@@ -198,10 +198,14 @@
   height: 52px;
   margin: 0 16px 16px;
   padding: 0 14px;
-  border-radius: 14px;
-  background: linear-gradient(90deg, rgba(255, 46, 196, 0.35), rgba(139, 61, 255, 0.35));
+  border-radius: var(--radius-l);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--pink) 35%, transparent),
+    color-mix(in srgb, var(--violet) 35%, transparent)
+  );
   border: 1px solid var(--pink);
-  box-shadow: 0 0 18px rgba(255, 46, 196, 0.45);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pink) 45%, transparent);
   .rank {
     font-family: var(--font-display);
     font-weight: 900;

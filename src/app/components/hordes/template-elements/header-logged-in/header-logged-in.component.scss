@@ -14,18 +14,18 @@
     gap: 8px;
     height: 44px;
     padding: 0 12px 0 4px;
-    border-radius: 14px;
+    border-radius: var(--radius-l);
     background: var(--surface);
-    border: 1px solid rgba(255, 214, 10, 0.45);
-    box-shadow: 0 0 16px rgba(255, 214, 10, 0.25);
+    border: 1px solid color-mix(in srgb, var(--yellow) 45%, transparent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--yellow) 25%, transparent);
     color: var(--yellow);
 
     .coins-plus {
       width: 36px;
       height: 36px;
-      border-radius: 10px;
+      border-radius: var(--radius-m);
       background: var(--pink);
-      color: #fff;
+      color: var(--text-strong);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -35,7 +35,7 @@
       font-family: var(--font-display);
       font-weight: 900;
       font-size: 18px;
-      text-shadow: 0 0 10px rgba(255, 214, 10, 0.6);
+      text-shadow: 0 0 10px color-mix(in srgb, var(--yellow) 60%, transparent);
     }
     .coins-badge {
       position: absolute;
@@ -44,7 +44,7 @@
       min-width: 22px;
       height: 22px;
       padding: 0 4px;
-      border-radius: 11px;
+      border-radius: var(--radius-m);
       background: var(--green);
       color: var(--green-dark);
       font-weight: 700;
@@ -108,11 +108,11 @@
       height: 36px;
       gap: 4px;
       padding: 0 8px 0 3px;
-      border-radius: 12px;
+      border-radius: var(--radius-m);
       .coins-plus {
         width: 28px;
         height: 28px;
-        border-radius: 8px;
+        border-radius: var(--radius-s);
       }
       .coins-amount {
         font-size: 14px;

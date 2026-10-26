@@ -25,7 +25,7 @@
     align-items: center;
     gap: 6px;
     padding: 18px 8px;
-    border-radius: 18px;
+    border-radius: var(--radius-xl);
     background: var(--surface-2);
     border: 1px solid var(--c);
     box-shadow: 0 0 22px color-mix(in srgb, var(--c) 32%, transparent);
@@ -46,7 +46,7 @@
       font-family: var(--font-display);
       font-weight: 900;
       font-size: 44px;
-      color: #fff;
+      color: var(--text-strong);
       text-shadow: 0 0 14px var(--c);
     }
   }
@@ -63,7 +63,7 @@
     font-weight: 900;
     font-size: 16px;
     color: var(--yellow);
-    box-shadow: 0 0 18px rgba(255, 214, 10, 0.6);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--yellow) 60%, transparent);
   }
 }
 
@@ -72,7 +72,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 12px 14px;
-  border-radius: 14px;
+  border-radius: var(--radius-l);
   background: var(--surface);
   border: 1px solid var(--line);
   .balance-head {
@@ -95,7 +95,7 @@
     display: flex;
     gap: 2px;
     height: 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     overflow: hidden;
     .def {
       background: var(--cyan);

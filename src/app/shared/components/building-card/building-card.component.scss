@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 10px;
-  border-radius: 14px;
+  border-radius: var(--radius-l);
   background: var(--surface-2);
   border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
   box-shadow: inset 4px 0 0 var(--c);

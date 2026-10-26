@@ -22,8 +22,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 4px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 214, 10, 0.4);
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--yellow) 40%, transparent);
   background: rgba(0, 0, 0, 0.35);
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
   &::before {
@@ -33,9 +33,9 @@
     bottom: 4px;
     left: 4px;
     width: calc(50% - 4px);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--grad-gold);
-    box-shadow: 0 0 12px rgba(255, 214, 10, 0.45);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--yellow) 45%, transparent);
     transition: transform 0.25s ease;
   }
   &.right::before {
@@ -53,7 +53,7 @@
   justify-content: center;
   gap: 6px;
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: none;
   color: var(--text-dim);
   font-family: var(--font-display);
@@ -64,7 +64,7 @@
   cursor: pointer;
   transition: color 0.25s ease;
   &.active {
-    color: #2a1500;
+    color: var(--text-on-gold);
   }
 }
 
@@ -99,7 +99,7 @@
   background: var(--surface-2);
   border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
   box-shadow: 0 0 14px color-mix(in srgb, var(--c) 30%, transparent);
-  color: #fff;
+  color: var(--text-strong);
   transition:
     filter 0.2s,
     box-shadow 0.2s;
@@ -146,12 +146,12 @@
   gap: 0;
   min-height: 64px;
   padding: 8px;
-  color: #1a0a00;
+  color: var(--text-on-gold);
   background: var(--grad-dig);
-  box-shadow: 0 0 26px rgba(255, 159, 90, 0.6);
+  box-shadow: 0 0 26px color-mix(in srgb, var(--orange) 60%, transparent);
   &.max {
     background: var(--grad-sunset);
-    color: #fff;
+    color: var(--text-strong);
   }
   .dig-main {
     font-size: 17px;
@@ -204,7 +204,7 @@
       top: -8px;
       right: -4px;
       padding: 0 6px;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       background: var(--green);
       color: var(--green-dark);
       font-size: 12px;

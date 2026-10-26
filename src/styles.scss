@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use 'themes';
 
 @include mat.elevation-classes();
 
@@ -10,14 +11,17 @@
   --surface-2: rgba(22, 14, 51, 0.92);
   --surface-solid: #160e33;
   --surface-nav: rgba(14, 8, 34, 0.96);
-  --line: rgba(159, 168, 217, 0.25);
-  --line-strong: rgba(159, 168, 217, 0.45);
+  --line: color-mix(in srgb, var(--text-mute) 25%, transparent);
+  --line-strong: color-mix(in srgb, var(--text-mute) 45%, transparent);
 
   // === Texte ===
   --text: #eaf6ff;
   --text-dim: #c9cff2;
   --text-mute: #9fa8d9;
   --text-dark: #0b0718;
+  --text-strong: #fff;
+  --text-on-gold: #1a0a00;
+  --cta-text: #fff;
 
   // === Accents ===
   --pink: #ff2ec4;
@@ -41,6 +45,7 @@
   // === Typographie ===
   --font-display: 'Orbitron', sans-serif;
   --font-body: 'Rajdhani', sans-serif;
+  --font-title: var(--font-display);
 
   // === Dégradés ===
   --grad-pink: linear-gradient(90deg, var(--pink), var(--violet));
@@ -50,10 +55,19 @@
   --grad-sunset: linear-gradient(90deg, var(--pink), var(--orange));
 
   // === Rayons ===
+  --radius-xs: 6px;
   --radius-s: 8px;
   --radius-m: 12px;
   --radius-l: 16px;
   --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  // === Fond de page et texture superposée ===
+  --page-bg:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--pink) 22%, transparent), transparent 45%),
+    radial-gradient(circle at 100% 45%, color-mix(in srgb, var(--cyan) 16%, transparent), transparent 45%),
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--violet) 18%, transparent), transparent 40%), var(--bg);
+  --page-overlay: none;
 }
 
 html,
@@ -118,12 +132,12 @@ button {
 
 .neon-title {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-title);
   font-weight: 900;
   font-size: 24px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--text-strong);
   --glow: var(--pink);
   text-shadow:
     0 0 12px var(--glow),
@@ -170,7 +184,7 @@ button {
   align-items: center;
   gap: 6px;
   padding: 2px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -186,7 +200,7 @@ button {
   gap: 12px;
   padding: 14px;
   border-radius: var(--radius-l);
-  border: 1px dashed rgba(159, 168, 217, 0.4);
+  border: 1px dashed color-mix(in srgb, var(--text-mute) 40%, transparent);
   color: var(--text-mute);
   font-size: 16px;
 }
@@ -238,7 +252,7 @@ button {
     flex: 1;
     height: 6px;
     border-radius: 3px;
-    background: rgba(159, 168, 217, 0.22);
+    background: color-mix(in srgb, var(--text-mute) 22%, transparent);
     &.on {
       background: var(--c, var(--cyan));
       box-shadow: 0 0 6px var(--c, var(--cyan));
@@ -250,7 +264,7 @@ button {
 .bar {
   height: 10px;
   border-radius: 5px;
-  background: rgba(159, 168, 217, 0.18);
+  background: color-mix(in srgb, var(--text-mute) 18%, transparent);
   overflow: hidden;
   .fill {
     display: block;
@@ -270,13 +284,13 @@ button {
   height: 44px;
   padding: 0;
   border-radius: var(--radius-m);
-  border: 1px solid rgba(34, 230, 255, 0.35);
-  background: rgba(20, 12, 48, 0.8);
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
+  background: var(--surface);
   color: var(--cyan-pale);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 12px rgba(34, 230, 255, 0.18) inset;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 18%, transparent) inset;
   transition:
     box-shadow 0.2s,
     border-color 0.2s;
@@ -284,7 +298,7 @@ button {
   &.active {
     border-color: var(--pink);
     color: var(--pink-light);
-    box-shadow: 0 0 14px rgba(255, 46, 196, 0.55);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--pink) 55%, transparent);
   }
 }
 
@@ -299,15 +313,15 @@ button {
   min-height: 56px;
   padding: 8px 16px;
   border: 0;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 14px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--cta-text);
   background: var(--grad-sunset);
-  box-shadow: 0 0 26px rgba(255, 46, 196, 0.5);
+  box-shadow: 0 0 26px color-mix(in srgb, var(--pink) 50%, transparent);
   transition:
     filter 0.2s,
     box-shadow 0.2s;
@@ -322,13 +336,13 @@ button {
 }
 .cta-gold,
 .yellow-button {
-  color: #1a0a00;
+  color: var(--text-on-gold);
   background: var(--grad-gold);
-  box-shadow: 0 0 22px rgba(255, 159, 90, 0.5);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--orange) 50%, transparent);
 }
 .cta-pink {
   background: var(--grad-pink);
-  box-shadow: 0 0 18px rgba(255, 46, 196, 0.55);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pink) 55%, transparent);
 }
 
 // Bouton contour
@@ -360,7 +374,7 @@ button {
   height: 40px;
   padding: 0 16px;
   border: 0;
-  border-radius: 10px;
+  border-radius: var(--radius-m);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -372,10 +386,10 @@ button {
   text-transform: uppercase;
   color: var(--green-dark);
   background: var(--grad-learn);
-  box-shadow: 0 0 14px rgba(34, 230, 255, 0.6);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--cyan) 60%, transparent);
   &:disabled {
     color: var(--text-mute);
-    background: rgba(159, 168, 217, 0.15);
+    background: color-mix(in srgb, var(--text-mute) 15%, transparent);
     box-shadow: none;
   }
 }
@@ -390,7 +404,7 @@ button {
   padding: 0 14px;
   border-radius: var(--radius-m);
   background: var(--surface-2);
-  border: 1px solid rgba(34, 230, 255, 0.3);
+  border: 1px solid color-mix(in srgb, var(--cyan) 30%, transparent);
   color: var(--text-mute);
   transition:
     border-color 0.2s,
@@ -398,7 +412,7 @@ button {
   &:focus-within {
     border-color: var(--cyan);
     color: var(--cyan);
-    box-shadow: 0 0 14px rgba(34, 230, 255, 0.35);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--cyan) 35%, transparent);
   }
   &.invalid {
     border-color: var(--danger);
@@ -425,9 +439,9 @@ input[type='checkbox'] {
   width: 22px;
   height: 22px;
   appearance: none;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   border: 1px solid var(--cyan);
-  background: rgba(34, 230, 255, 0.08);
+  background: color-mix(in srgb, var(--cyan) 8%, transparent);
   cursor: pointer;
   &:checked {
     background: var(--cyan);
@@ -452,19 +466,19 @@ input[type='checkbox'] {
   display: inline-block;
   min-width: 42px;
   padding: 1px 6px;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   font-size: 12px;
   font-weight: 700;
   text-align: center;
 }
 .percentdef-green {
   color: var(--green);
-  background: rgba(61, 255, 143, 0.12);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
   border: 1px solid var(--green);
 }
 .percentdef-red {
   color: var(--danger);
-  background: rgba(255, 92, 138, 0.12);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
   border: 1px solid var(--danger);
 }
 
@@ -506,7 +520,7 @@ input[type='checkbox'] {
   background: var(--surface-solid);
   border: 1px solid var(--pink);
   border-radius: var(--radius-m);
-  box-shadow: 0 0 18px rgba(255, 46, 196, 0.45);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pink) 45%, transparent);
   span {
     cursor: pointer;
   }
@@ -523,7 +537,7 @@ input[type='checkbox'] {
 @keyframes glowBlink {
   from,
   to {
-    box-shadow: 0 0 6px rgba(139, 61, 255, 0.3);
+    box-shadow: 0 0 6px color-mix(in srgb, var(--violet) 30%, transparent);
   }
   50% {
     box-shadow: 0 0 24px var(--violet);
@@ -568,7 +582,7 @@ input[type='checkbox'] {
   --mat-snack-bar-supporting-text-font: var(--font-body);
   .mat-mdc-snackbar-surface {
     border: 1px solid var(--danger);
-    box-shadow: 0 0 18px rgba(255, 92, 138, 0.4);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--danger) 40%, transparent);
   }
   .mdc-snackbar__label,
   button {
@@ -588,7 +602,7 @@ input[type='checkbox'] {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(34, 230, 255, 0.35);
+  background-color: color-mix(in srgb, var(--cyan) 35%, transparent);
   border-radius: 2px;
 }
 
@@ -620,7 +634,7 @@ a.ghost-btn {
   display: flex;
   padding: 4px;
   border: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   background: transparent;
   color: var(--pink-light);
 }
@@ -636,8 +650,8 @@ a.ghost-btn {
   padding: 24px 18px 18px;
   border-radius: var(--radius-xl);
   background: var(--surface-2);
-  border: 1px solid rgba(34, 230, 255, 0.35);
-  box-shadow: 0 0 30px rgba(34, 230, 255, 0.15);
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--cyan) 15%, transparent);
 
   .auth-head {
     display: flex;

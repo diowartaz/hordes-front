@@ -10,8 +10,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 4px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 214, 10, 0.4);
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--yellow) 40%, transparent);
   background: rgba(0, 0, 0, 0.35);
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
   &::before {
@@ -21,9 +21,9 @@
     bottom: 4px;
     left: 4px;
     width: calc(50% - 4px);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--grad-gold);
-    box-shadow: 0 0 12px rgba(255, 214, 10, 0.45);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--yellow) 45%, transparent);
     transition: transform 0.25s ease;
   }
   &.right::before {
@@ -39,26 +39,26 @@
   gap: 8px;
   height: 40px;
   padding: 0 14px 0 4px;
-  border-radius: 14px;
+  border-radius: var(--radius-l);
   background: var(--surface);
-  border: 1px solid rgba(255, 214, 10, 0.45);
-  box-shadow: 0 0 16px rgba(255, 214, 10, 0.2);
+  border: 1px solid color-mix(in srgb, var(--yellow) 45%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--yellow) 20%, transparent);
   color: var(--yellow);
 
   .balance-icon {
     width: 32px;
     height: 32px;
-    border-radius: 10px;
+    border-radius: var(--radius-m);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 214, 10, 0.14);
+    background: color-mix(in srgb, var(--yellow) 14%, transparent);
   }
   .balance-amount {
     font-family: var(--font-display);
     font-weight: 900;
     font-size: 17px;
-    text-shadow: 0 0 10px rgba(255, 214, 10, 0.6);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--yellow) 60%, transparent);
   }
   .balance-unit {
     font-size: 12px;
@@ -82,7 +82,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: none;
   color: var(--text-dim);
   font-family: var(--font-display);
@@ -93,7 +93,7 @@
   cursor: pointer;
   transition: color 0.25s ease;
   &.active {
-    color: #2a1500;
+    color: var(--text-on-gold);
   }
 }
 
@@ -102,10 +102,10 @@
   flex-direction: column;
   gap: 12px;
   padding: 14px;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   background: var(--surface-2);
-  border: 1px solid rgba(255, 214, 10, 0.4);
-  box-shadow: 0 0 22px rgba(255, 214, 10, 0.12);
+  border: 1px solid color-mix(in srgb, var(--yellow) 40%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--yellow) 12%, transparent);
   .booster-head {
     display: flex;
     gap: 12px;
@@ -157,7 +157,7 @@
   flex-direction: column;
   gap: 10px;
   padding: 14px;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   background: var(--surface-2);
   border: 1px solid color-mix(in srgb, var(--c) 50%, transparent);
   box-shadow: 0 0 22px color-mix(in srgb, var(--c) 13%, transparent);
@@ -168,7 +168,7 @@
     .icon-tile {
       width: 54px;
       height: 54px;
-      border-radius: 14px;
+      border-radius: var(--radius-l);
     }
   }
   .bonus-text {
@@ -234,12 +234,12 @@
     font-weight: 900;
     font-size: 14px;
     text-transform: uppercase;
-    color: #2a1500;
+    color: var(--text-on-gold);
     background: var(--grad-gold);
-    box-shadow: 0 0 16px rgba(255, 214, 10, 0.55);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--yellow) 55%, transparent);
     &:disabled {
       color: var(--text-mute);
-      background: rgba(159, 168, 217, 0.15);
+      background: color-mix(in srgb, var(--text-mute) 15%, transparent);
       box-shadow: none;
     }
   }
