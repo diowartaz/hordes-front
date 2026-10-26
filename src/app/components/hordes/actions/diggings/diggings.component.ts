@@ -43,9 +43,10 @@ export class DiggingsComponent {
 
   // Durée d'une fouille, en secondes de jeu
   digTime = computed(() => {
+    const flatBonusMinutes = bonusEffect(this.cityService.bonuses()[6]);
     const percentBonus = bonusEffect(this.cityService.bonuses()[7]);
     const { dig } = this.cityService.city().speeds;
-    return this.cityService.defaultValues().digging_time * dig * (1 - percentBonus);
+    return this.cityService.defaultValues().digging_time * dig * (1 - percentBonus) - flatBonusMinutes * 60;
   });
 
   digTimeString = computed(() => formatTimeToString(this.digTime()));

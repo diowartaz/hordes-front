@@ -138,11 +138,11 @@ describe('buildings', () => {
 
   it('applique les bonus de construction au temps requis', () => {
     const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
-    // 3600 × (1 - 5 × 2 %) = 3240 s
-    const [result] = calculateAdvancedBuildings(city, { 5: bonus(5, 0.02, 5) }, defaultValues);
+    // 3600 × (1 - 5 × 2 %) - 2 min = 3120 s
+    const [result] = calculateAdvancedBuildings(city, { 4: bonus(4, 1, 2), 5: bonus(5, 0.02, 5) }, defaultValues);
 
-    expect(result.timeString).toBe('00h54');
-    expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3240);
+    expect(result.timeString).toBe('00h52');
+    expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3120);
   });
 
   it('fonctionne avant le chargement des bonus', () => {

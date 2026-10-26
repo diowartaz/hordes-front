@@ -17,9 +17,10 @@ export function calculateAdvancedBuildings(
   defaultValues: DefaultValuesModel,
 ): AdvancedBuildingModel[] {
   const advancedBuildings: AdvancedBuildingModel[] = [];
+  const flatBonusMinutes = bonusEffect(bonuses[4]);
   const percentBonus = bonusEffect(bonuses[5]);
   for (const building of city.buildings) {
-    const timeRequired = building.time * city.speeds.build * (1 - percentBonus);
+    const timeRequired = building.time * city.speeds.build * (1 - percentBonus) - flatBonusMinutes * 60;
 
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,
