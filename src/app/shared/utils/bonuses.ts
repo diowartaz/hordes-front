@@ -1,8 +1,8 @@
 import { AdvancedBonus, BonusWithoutLvl, DefaultValuesModel, StatsModel } from 'src/app/models/hordes';
 
-// Prix du prochain niveau, même formule que le back (playerController.buyBonus)
+// Prix du prochain niveau, même formule que l'API (bonusLevelPrice) : prix × n ^ exposant, arrondi à la dizaine
 export function bonusPrice(bonus: BonusWithoutLvl, lvl: number, defaultValues: DefaultValuesModel): number {
-  return bonus.price * defaultValues.BONUS_PRICE_MULTIPLIER ** lvl;
+  return Math.round((bonus.price * (lvl + 1) ** defaultValues.BONUS_PRICE_EXPONENT) / 10) * 10;
 }
 
 // Effet total d'un bonus (valeur × niveau), 0 tant que les références ne sont pas chargées

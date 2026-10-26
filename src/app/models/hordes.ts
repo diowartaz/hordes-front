@@ -285,7 +285,7 @@ export interface DefaultValuesModel {
   randomPercentageDefBuilding: number;
   bonuses: Record<string, BonusWithoutLvl>;
   SKILL_TIME_MULTIPLIER: number;
-  BONUS_PRICE_MULTIPLIER: number;
+  BONUS_PRICE_EXPONENT: number;
   ZOMBIE_COEF_MIN: number;
   ZOMBIE_COEF_MAX: number;
   ARCHITECT_DISCOVERY_CHOICES: number;
@@ -306,7 +306,7 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     randomPercentageDefBuilding: 20,
     bonuses: {},
     SKILL_TIME_MULTIPLIER: 1.5,
-    BONUS_PRICE_MULTIPLIER: 2,
+    BONUS_PRICE_EXPONENT: 1.5,
     ZOMBIE_COEF_MIN: 2,
     ZOMBIE_COEF_MAX: 4,
     ARCHITECT_DISCOVERY_CHOICES: 2,

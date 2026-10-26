@@ -89,23 +89,26 @@ describe('xp', () => {
 });
 
 describe('bonuses', () => {
-  const defaultValues = { ...createDefaultDefaultValuesModel(), BONUS_PRICE_MULTIPLIER: 2 };
+  const defaultValues = { ...createDefaultDefaultValuesModel(), BONUS_PRICE_EXPONENT: 1.5 };
   const references: Record<number, BonusWithoutLvl> = {
     1: { id: 1, name: 'Money Maker', description: '', icon: '', price: 500, lvl_max: 20, value: 0.05 },
     2: { id: 2, name: 'Defenser', description: '', icon: '', price: 1000, lvl_max: 2, value: 1 },
   };
 
-  it('calcule le prix comme le back (prix × multiplicateur ^ niveau)', () => {
+  it('calcule le prix comme l’API (prix × n ^ exposant, arrondi à la dizaine)', () => {
     expect(bonusPrice(references[1], 0, defaultValues)).toBe(500);
+    // 500 × 2 ^ 1,5 ≈ 1414 ; 500 × 4 ^ 1,5 = 4000
+    expect(bonusPrice(references[1], 1, defaultValues)).toBe(1410);
     expect(bonusPrice(references[1], 3, defaultValues)).toBe(4000);
   });
 
   it('associe chaque bonus à son niveau par id', () => {
-    const stats = { ...createDefaultStatsModel(), money: 2000, bonuses: { 1: 2, 2: 2 } };
+    const stats = { ...createDefaultStatsModel(), money: 2600, bonuses: { 1: 2, 2: 2 } };
     const bonuses = computeBonuses(stats, defaultValues, references);
 
     expect(bonuses[1].lvl).toBe(2);
-    expect(bonuses[1].nextPrice).toBe(2000);
+    // 500 × 3 ^ 1,5 ≈ 2598
+    expect(bonuses[1].nextPrice).toBe(2600);
     expect(bonuses[1].enoughMoney).toBeTrue();
     expect(bonuses[2].enoughLvlMax).toBeFalse();
     expect(bonuses[2].enoughMoney).toBeFalse();
@@ -135,11 +138,11 @@ describe('buildings', () => {
 
   it('applique les bonus de construction au temps requis', () => {
     const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
-    // 3600 × (1 - 5 × 2 %) - 2 min = 3120 s
-    const [result] = calculateAdvancedBuildings(city, { 4: bonus(4, 1, 2), 5: bonus(5, 0.02, 5) }, defaultValues);
+    // 3600 × (1 - 5 × 2 %) = 3240 s
+    const [result] = calculateAdvancedBuildings(city, { 5: bonus(5, 0.02, 5) }, defaultValues);
 
-    expect(result.timeString).toBe('00h52');
-    expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3120);
+    expect(result.timeString).toBe('00h54');
+    expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3240);
   });
 
   it('fonctionne avant le chargement des bonus', () => {

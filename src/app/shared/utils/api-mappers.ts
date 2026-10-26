@@ -196,7 +196,7 @@ export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
     randomPercentageDefBuilding: rules['BUILDING_DEFENSE_VARIANCE_PERCENT'],
     bonuses: toBonusReferences(catalog),
     SKILL_TIME_MULTIPLIER: rules['SKILL_TIME_MULTIPLIER'],
-    BONUS_PRICE_MULTIPLIER: rules['BONUS_PRICE_MULTIPLIER'],
+    BONUS_PRICE_EXPONENT: rules['BONUS_PRICE_EXPONENT'],
     ZOMBIE_COEF_MIN: rules['ZOMBIE_COEF_MIN'],
     ZOMBIE_COEF_MAX: rules['ZOMBIE_COEF_MAX'],
     ARCHITECT_DISCOVERY_CHOICES: rules['ARCHITECT_EXTRA_OFFERS'],
