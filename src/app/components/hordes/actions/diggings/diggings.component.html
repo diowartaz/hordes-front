@@ -10,7 +10,7 @@
 <div class="play-content">
   <h1 class="neon-title dig-title">Dig for items</h1>
 
-  <div class="tabs" role="tablist" aria-label="Dig mode">
+  <div class="tabs" role="tablist" aria-label="Dig mode" [class.right]="mode() === 'random'">
     <button
       type="button"
       role="tab"

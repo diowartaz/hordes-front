@@ -15,23 +15,45 @@
     0 0 26px var(--orange);
 }
 
-// Choix du mode de fouille : contrôle segmenté, comme dans la boutique
+// Choix du mode de fouille : interrupteur à deux positions, une seule piste
+// et un curseur doré qui glisse sous l'option active
 .tabs {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 10, 0.4);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    border-radius: 999px;
+    background: var(--grad-gold);
+    box-shadow: 0 0 12px rgba(255, 214, 10, 0.45);
+    transition: transform 0.25s ease;
+  }
+  &.right::before {
+    transform: translateX(100%);
+  }
 }
 
 .tab {
+  position: relative;
   min-width: 0;
-  height: 38px;
+  height: 34px;
   padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  border: none;
   border-radius: 999px;
-  border: 1px solid rgba(255, 214, 10, 0.4);
   background: none;
   color: var(--text-dim);
   font-family: var(--font-display);
@@ -39,9 +61,10 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s ease;
   &.active {
     color: #2a1500;
-    background: var(--grad-gold);
   }
 }
 
