@@ -3,48 +3,63 @@
   <ng-container content>
     <section class="neon-card deck">
       <div class="deck-head">
-        <h2>My deck</h2>
-        <span class="neon-chip" [style.--c]="draft().length === size() ? 'var(--green)' : 'var(--orange)'"
-          >{{ draft().length }}/{{ size() }}</span
-        >
-        <button
-          type="button"
-          class="outline-btn"
-          [disabled]="!canAutocomplete()"
-          title="Fill the empty slots: rarest plans first, keeping resources balanced"
-          (click)="autocomplete()"
-        >
-          <app-icon name="sparkle" [size]="14" />Autocomplete
-        </button>
-        <button
-          type="button"
-          class="outline-btn"
-          [style.--c]="'var(--orange)'"
-          [disabled]="draft().length === 0"
-          (click)="clear()"
-        >
-          <app-icon name="trash" [size]="14" />Clear
-        </button>
+        <div class="deck-title">
+          <h2>My deck</h2>
+          <span class="neon-chip" [style.--c]="draft().length === size() ? 'var(--green)' : 'var(--orange)'"
+            >{{ draft().length }}/{{ size() }}</span
+          >
+        </div>
+        <div class="deck-actions">
+          <button
+            type="button"
+            class="outline-btn"
+            [disabled]="!canAutocomplete()"
+            title="Fill the empty slots: rarest plans first, keeping resources balanced"
+            (click)="autocomplete()"
+          >
+            <app-icon name="sparkle" [size]="14" />Autocomplete
+          </button>
+          <button
+            type="button"
+            class="outline-btn"
+            [style.--c]="'var(--orange)'"
+            [disabled]="draft().length === 0"
+            (click)="clear()"
+          >
+            <app-icon name="trash" [size]="14" />Clear
+          </button>
+        </div>
       </div>
 
       <div class="slots">
         @for (building of draftBuildings(); track building.id) {
           <div
             class="slot-wrap"
-            (mouseenter)="showPreview(building.id, $event)"
-            (mouseleave)="hidePreview()"
-            (focusin)="showPreview(building.id, $event)"
-            (focusout)="hidePreview()"
+            (pointerenter)="showPreview(building.id, $event)"
+            (pointerleave)="hidePreview($event)"
           >
-            <button
-              type="button"
-              class="slot"
-              [style.--c]="building.rarity | rarityToColor"
-              [attr.aria-label]="'Remove ' + building.name"
-              (click)="toggle(building.id)"
-            >
-              {{ building.name }}
-            </button>
+            <span class="slot" [style.--c]="building.rarity | rarityToColor">{{ building.name }}</span>
+            <span class="slot-actions">
+              <button
+                type="button"
+                class="slot-action slot-info"
+                [style.--c]="building.rarity | rarityToColor"
+                [attr.aria-expanded]="previewId() === building.id"
+                [attr.aria-label]="'Show details of ' + building.name"
+                (click)="togglePreview(building.id, $event)"
+              >
+                <app-icon name="info" [size]="14" />
+              </button>
+              <button
+                type="button"
+                class="slot-action slot-remove"
+                [attr.aria-label]="'Remove ' + building.name"
+                title="Remove from deck"
+                (click)="toggle(building.id)"
+              >
+                <app-icon name="trash" [size]="14" />
+              </button>
+            </span>
             @if (previewId() === building.id) {
               <div class="preview" role="tooltip" [class.right]="previewAlign() === 'right'">
                 <app-building-card [building]="building" [count]="owned(building.id)" [inDeck]="true" />

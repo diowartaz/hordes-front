@@ -81,4 +81,17 @@ describe('SettingsComponent', () => {
       password: 'password1',
     });
   });
+
+  it('change le thème appliqué à la page', async () => {
+    const buttons = (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLButtonElement>('.theme-option');
+    expect(buttons.length).toBe(component.themes.length);
+
+    buttons[2].click();
+    await fixture.whenStable();
+    expect(document.documentElement.dataset['theme']).toBe(component.themes[2].id);
+    expect(buttons[2].classList).toContain('active');
+
+    component.themeService.setTheme('neon');
+    await fixture.whenStable();
+  });
 });

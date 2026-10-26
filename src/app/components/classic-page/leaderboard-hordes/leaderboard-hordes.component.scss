@@ -130,6 +130,23 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition: opacity 0.15s;
+  &.loading {
+    opacity: 0.5;
+  }
+  .empty {
+    margin: 16px 0;
+    text-align: center;
+    color: var(--text-mute);
+    .link {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--cyan);
+      font: inherit;
+      text-decoration: underline;
+    }
+  }
   .row {
     display: flex;
     align-items: center;
@@ -149,7 +166,9 @@
       box-shadow: 0 0 12px color-mix(in srgb, var(--pink) 35%, transparent);
     }
     .rank {
-      width: 26px;
+      // Rangs à plusieurs chiffres au-delà de la première page
+      min-width: 26px;
+      font-variant-numeric: tabular-nums;
       font-family: var(--font-display);
       font-weight: 900;
       font-size: 14px;
@@ -191,6 +210,40 @@
   }
 }
 
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 12px 0 4px;
+  button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border-radius: var(--radius-m);
+    border: 1px solid color-mix(in srgb, var(--cyan) 18%, transparent);
+    background: var(--surface-2);
+    color: var(--text-dim);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    &.active {
+      color: var(--text-strong);
+      background: var(--grad-pink);
+      border-color: transparent;
+    }
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+  .gap {
+    color: var(--text-mute);
+    padding: 0 2px;
+  }
+}
+
 .my-rank {
   display: flex;
   align-items: center;
@@ -219,6 +272,18 @@
   }
   .score {
     font-size: 15px;
+  }
+  .jump {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius-m);
+    border: 1px solid var(--pink-light);
+    background: transparent;
+    color: var(--pink-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   .hint {
     font-size: 12px;

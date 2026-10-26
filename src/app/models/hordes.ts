@@ -267,7 +267,8 @@ export interface XPToLVL {
 }
 export interface ProfilModel {
   username: string;
-  rank: number;
+  // null tant que le joueur n'a terminé aucune partie
+  rank: number | null;
   xp: number;
   creation_date: string;
   personal_best_day: number;
@@ -380,4 +381,23 @@ export interface LeaderboardElement {
   personal_best_zb: number;
   rank: number;
   ranked_points: number;
+}
+
+export type LeaderboardBoard = 'best-day' | 'ranked';
+
+export interface LeaderboardPage {
+  entries: LeaderboardElement[];
+  // Page affichée, à partir de 1
+  page: number;
+  page_size: number;
+  // Nombre de joueurs classés
+  total: number;
+  // Premier du classement, quelle que soit la page
+  leader: LeaderboardElement | null;
+}
+
+// Rang du joueur connecté, null tant qu'il n'a pas terminé de partie dans ce mode
+export interface LeaderboardPosition {
+  rank: number | null;
+  page: number | null;
 }

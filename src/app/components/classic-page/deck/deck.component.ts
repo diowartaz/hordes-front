@@ -24,6 +24,10 @@ import { ClassicPageComponent } from '../classic-page.component';
   imports: [ClassicPageComponent, IconComponent, BuildingCardComponent, ResourceSharesComponent, RarityToColorPipe],
   templateUrl: './deck.component.html',
   styleUrls: ['./deck.component.scss'],
+  host: {
+    '(document:click)': 'closeOutside($event)',
+    '(document:keydown.escape)': 'previewId.set(null)',
+  },
 })
 export class DeckComponent {
   readonly cityService = inject(CityService);
@@ -83,14 +87,40 @@ export class DeckComponent {
     }
   }
 
-  showPreview(id: number, event: Event): void {
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    this.previewAlign.set(rect.left + rect.width / 2 > window.innerWidth / 2 ? 'right' : 'left');
-    this.previewId.set(id);
+  // Survol à la souris uniquement : un toucher émet aussi un pointerenter, qui ouvrirait la bulle
+  // juste avant que le clic sur le bouton « i » la referme
+  showPreview(id: number, event: PointerEvent): void {
+    if (event.pointerType === 'mouse') {
+      this.openPreview(id, event.currentTarget as HTMLElement);
+    }
   }
 
-  hidePreview(): void {
-    this.previewId.set(null);
+  hidePreview(event: PointerEvent): void {
+    if (event.pointerType === 'mouse') {
+      this.previewId.set(null);
+    }
+  }
+
+  // Bouton « i » : seul moyen d'ouvrir la bulle au toucher ou au clavier
+  togglePreview(id: number, event: Event): void {
+    event.stopPropagation();
+    if (this.previewId() === id) {
+      this.previewId.set(null);
+    } else {
+      this.openPreview(id, (event.currentTarget as HTMLElement).closest('.slot-wrap') as HTMLElement);
+    }
+  }
+
+  closeOutside(event: Event): void {
+    if (this.previewId() !== null && !(event.target as HTMLElement).closest?.('.slot-wrap')) {
+      this.previewId.set(null);
+    }
+  }
+
+  private openPreview(id: number, slot: HTMLElement): void {
+    const rect = slot.getBoundingClientRect();
+    this.previewAlign.set(rect.left + rect.width / 2 > window.innerWidth / 2 ? 'right' : 'left');
+    this.previewId.set(id);
   }
 
   // Le bouton « Effect » de la carte n'est pas cliquable dans la bulle : l'effet y est écrit en clair

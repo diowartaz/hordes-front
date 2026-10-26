@@ -9,7 +9,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { RoutesEnum } from '../../models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { readStorage, StorageKey } from 'src/app/shared/utils/storage';
 
 interface SignInForm {
   login: FormControl<string>;
@@ -37,7 +36,8 @@ export class LoginComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    const savedLogin: string = readStorage(StorageKey.LOGIN) ?? '';
+    // L'email technique d'un compte invité (<uuid>@temp.invalid) n'est pas un identifiant à proposer
+    const savedLogin = this.authService.tempAccount() ? '' : (this.authService.email() ?? '');
     this.formgroup = new FormGroup<SignInForm>({
       login: new FormControl(savedLogin, {
         nonNullable: true,

@@ -52,6 +52,18 @@ describe('deck', () => {
     expect(autocompleteDeck([10], { 10: 1, 13: 1 }, pool, 5)).toEqual([10, 13]);
   });
 
+  it("n'ajoute pas les bâtiments spéciaux, mais garde ceux déjà dans le deck", () => {
+    const special = (id: number, rarity: Rarity): CatalogBuildingModel => ({
+      ...plan(id, rarity, { wood: 1 }),
+      defense: 0,
+      effect: { kind: 'stockDefense', value: 1 } as CatalogBuildingModel['effect'],
+    });
+    const pool = [plan(10, 'common', { wood: 1 }), special(20, 'epic'), special(21, 'legendary')];
+    const all = { 10: 1, 20: 1, 21: 1 };
+    expect(autocompleteDeck([], all, pool, 3)).toEqual([10]);
+    expect(autocompleteDeck([20], all, pool, 3)).toEqual([20, 10]);
+  });
+
   it('compte les plans par rareté', () => {
     expect(rarityCounts(catalog)).toEqual({ common: 1, rare: 1, epic: 2 });
   });

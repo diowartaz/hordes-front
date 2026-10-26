@@ -21,9 +21,25 @@ h2 {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  h2 {
+  > h2 {
     flex: 1;
   }
+}
+
+// Titre et compteur restent ensemble ; les boutons passent dessous, groupés, quand la place manque
+.deck-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  h2 {
+    white-space: nowrap;
+  }
+}
+
+.deck-actions {
+  display: flex;
+  gap: 8px;
 }
 
 // Bouton secondaire bordé (Autocomplete, Clear, Get more plans)
@@ -118,6 +134,12 @@ h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  // Nom seul, inerte : un toucher par erreur ne retire plus rien, la place à droite va aux boutons
+  .slot-wrap & {
+    display: block;
+    line-height: 24px;
+    padding-right: 64px;
+  }
   &.empty {
     display: flex;
     align-items: center;
@@ -125,6 +147,37 @@ h2 {
     background: none;
     color: var(--text-mute);
     font-weight: 500;
+  }
+}
+
+.slot-actions {
+  position: absolute;
+  top: 50%;
+  right: 3px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 2px;
+}
+
+// « i » ouvre la bulle au toucher (pas de survol sur téléphone) ou au clavier ; la poubelle retire le plan
+.slot-action {
+  --c: var(--cyan);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-mute);
+  &:hover,
+  &[aria-expanded='true'] {
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+  }
+  &.slot-remove {
+    --c: var(--orange);
   }
 }
 

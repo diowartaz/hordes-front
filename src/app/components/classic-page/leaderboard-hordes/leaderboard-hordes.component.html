@@ -1,6 +1,6 @@
 <app-classic-page
   [title]="'Leaderboard'"
-  [subtitle]="ranked() ? 'Top players · Ranked points' : 'Top players · Days survived'"
+  [subtitle]="ranked() ? 'All players · Ranked points' : 'All players · Days survived'"
 >
   <ng-container icon><app-icon name="trophy" [size]="28" /></ng-container>
   <ng-container content>
@@ -49,7 +49,7 @@
       </div>
     }
 
-    <div class="list">
+    <div class="list" [class.loading]="leaderboardService.pageLoading()">
       @for (user of others(); track user.user_id) {
         <button
           type="button"
@@ -67,20 +67,69 @@
           }
           <span class="meter"><span [style.width.%]="ratioOf(user)"></span></span>
         </button>
+      } @empty {
+        @if (loaded() && !leaderboardService.pageLoading() && leaderboard().length === 0) {
+          <p class="empty">
+            @if (total() === 0) {
+              No ranked players yet.
+            } @else {
+              This page is empty. <button type="button" class="link" (click)="goToPage(1)">Back to the top</button>
+            }
+          </p>
+        }
       }
     </div>
+
+    @if (lastPage() > 1) {
+      <nav class="pager" aria-label="Leaderboard pages">
+        <button
+          type="button"
+          aria-label="Previous page"
+          [disabled]="currentPage() <= 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          ‹
+        </button>
+        @for (page of pages(); track $index) {
+          @if (page === null) {
+            <span class="gap">…</span>
+          } @else {
+            <button
+              type="button"
+              [class.active]="page === currentPage()"
+              [attr.aria-current]="page === currentPage() ? 'page' : null"
+              (click)="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+          }
+        }
+        <button
+          type="button"
+          aria-label="Next page"
+          [disabled]="currentPage() >= lastPage()"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          ›
+        </button>
+      </nav>
+    }
   </ng-container>
 
   @if (authService.isConnected()) {
     <div footer class="my-rank">
-      @if (me(); as me) {
-        <span class="rank">#{{ me.rank }}</span>
+      @if (myPosition()?.rank; as rank) {
+        <span class="rank">#{{ rank }}</span>
         <span class="name">You</span>
-        <span class="score">{{ scoreOf(me) }}</span>
+        @if (me(); as me) {
+          <span class="score">{{ scoreOf(me) }}</span>
+        } @else {
+          <button type="button" class="jump" (click)="goToPage(myPosition()?.page)">Go to my rank</button>
+        }
       } @else {
         <span class="rank">#—</span>
         <span class="name">You</span>
-        <span class="hint">Not in the top yet</span>
+        <span class="hint">Not ranked yet</span>
       }
     </div>
   }

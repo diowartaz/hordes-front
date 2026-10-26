@@ -15,6 +15,7 @@ import { UpgradeGuestParams } from 'src/app/models/auth';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ClassicPageComponent } from '../classic-page.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { THEMES, ThemeService } from 'src/app/services/theme/theme.service';
 
 interface UpgradeForm {
   email: FormControl<string>;
@@ -40,6 +41,8 @@ const passwordsMatch: ValidatorFn = (group: AbstractControl): ValidationErrors |
 })
 export class SettingsComponent {
   authService = inject(AuthService);
+  themeService = inject(ThemeService);
+  themes = THEMES;
 
   goBackButton = false;
 

@@ -59,7 +59,9 @@ function imbalance(buildings: CatalogBuildingModel[]): number {
 }
 
 // Complète le deck jusqu'à `size` plans parmi ceux possédés, un par un : le plus rare d'abord,
-// puis à rareté égale celui qui équilibre le mieux les ressources, puis le plus défensif
+// puis à rareté égale celui qui équilibre le mieux les ressources, puis le plus défensif.
+// Les bâtiments spéciaux (à effet) ne sont jamais ajoutés : leur valeur dépend du reste du deck,
+// c'est au joueur de les choisir
 export function autocompleteDeck(
   deck: number[],
   collection: Record<number, number>,
@@ -68,7 +70,7 @@ export function autocompleteDeck(
 ): number[] {
   const result = [...deck];
   const chosen = buildingsOf(result, catalog);
-  const candidates = catalog.filter((b) => collection[b.id] && !result.includes(b.id));
+  const candidates = catalog.filter((b) => collection[b.id] && !b.effect && !result.includes(b.id));
   while (result.length < size && candidates.length > 0) {
     const scored = candidates.map((b) => ({ b, imbalance: imbalance([...chosen, b]) }));
     scored.sort(

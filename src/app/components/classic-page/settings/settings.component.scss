@@ -34,3 +34,62 @@
     color: var(--text-mute);
   }
 }
+
+// Choix du thème : une tuile par thème avec un aperçu de ses couleurs
+.theme-card {
+  margin-bottom: 12px;
+
+  .label {
+    margin: 0;
+  }
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.theme-option {
+  --c: var(--cyan);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 6px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--line-strong);
+  }
+
+  &.active {
+    border-color: var(--c);
+    color: var(--text-strong);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--c) 40%, transparent);
+  }
+
+  .swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 36px;
+    border-radius: var(--radius-xs);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+  }
+}

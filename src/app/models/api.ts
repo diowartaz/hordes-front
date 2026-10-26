@@ -335,6 +335,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/leaderboards/best-day/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rang et page du joueur connecté au classement du meilleur jour */
+        get: operations["LeaderboardsController_myBestDay"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leaderboards/ranked/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LeaderboardsController_myRanked"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/catalog": {
         parameters: {
             query?: never;
@@ -446,8 +479,8 @@ export interface components {
             username: string;
             level: number;
             xp: number;
-            /** @description Rang au classement du meilleur jour */
-            rank: number;
+            /** @description Rang au classement du meilleur jour (null tant qu'aucune partie n'est terminée) */
+            rank: number | null;
             rankedPoints: number;
             personalBest: components["schemas"]["PersonalBestResponse"];
             /** Format: date-time */
@@ -675,6 +708,19 @@ export interface components {
         };
         LeaderboardResponse: {
             entries: components["schemas"]["LeaderboardEntryResponse"][];
+            /** @description Page demandée, à partir de 1 (vide au-delà de la dernière) */
+            page: number;
+            pageSize: number;
+            /** @description Nombre de joueurs classés */
+            total: number;
+            /** @description Premier du classement, quelle que soit la page (null si personne n'est classé) */
+            leader: components["schemas"]["LeaderboardEntryResponse"] | null;
+        };
+        LeaderboardPositionResponse: {
+            /** @description null tant que le joueur n'a pas terminé de partie dans ce mode */
+            rank: number | null;
+            /** @description Page du classement où figure le joueur */
+            page: number | null;
         };
         CatalogBuildingResponse: {
             id: number;
@@ -1321,7 +1367,10 @@ export interface operations {
     };
     LeaderboardsController_bestDay: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Page à partir de 1 (25 joueurs par page) */
+                page?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1340,7 +1389,10 @@ export interface operations {
     };
     LeaderboardsController_ranked: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Page à partir de 1 (25 joueurs par page) */
+                page?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1353,6 +1405,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LeaderboardResponse"];
+                };
+            };
+        };
+    };
+    LeaderboardsController_myBestDay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaderboardPositionResponse"];
+                };
+            };
+        };
+    };
+    LeaderboardsController_myRanked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaderboardPositionResponse"];
                 };
             };
         };

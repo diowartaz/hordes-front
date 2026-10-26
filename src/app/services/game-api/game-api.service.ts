@@ -13,7 +13,9 @@ import {
   GameHistoryModel,
   InventoryModel,
   ItemModel,
-  LeaderboardElement,
+  LeaderboardBoard,
+  LeaderboardPage,
+  LeaderboardPosition,
   ProfilModel,
   StatsModel,
 } from 'src/app/models/hordes';
@@ -32,7 +34,7 @@ import {
   toDefaultValues,
   toGameHistory,
   toInventory,
-  toLeaderboard,
+  toLeaderboardPage,
   toProfil,
   toStatsModel,
 } from 'src/app/shared/utils/api-mappers';
@@ -170,16 +172,14 @@ export class GameApiService {
       .pipe(map((response) => ({ stats: toStatsModel(response.player), cards: toBoosterCards(response.cards) })));
   }
 
-  getLeaderboardBestDay(): Observable<LeaderboardElement[]> {
+  getLeaderboard(board: LeaderboardBoard, page: number): Observable<LeaderboardPage> {
     return this.httpClient
-      .get<Schemas['LeaderboardResponse']>(this.API_URL + 'leaderboards/best-day')
-      .pipe(map((response) => toLeaderboard(response.entries)));
+      .get<Schemas['LeaderboardResponse']>(this.API_URL + `leaderboards/${board}`, { params: { page } })
+      .pipe(map(toLeaderboardPage));
   }
 
-  getLeaderboardRanked(): Observable<LeaderboardElement[]> {
-    return this.httpClient
-      .get<Schemas['LeaderboardResponse']>(this.API_URL + 'leaderboards/ranked')
-      .pipe(map((response) => toLeaderboard(response.entries)));
+  getMyLeaderboardPosition(board: LeaderboardBoard): Observable<LeaderboardPosition> {
+    return this.httpClient.get<Schemas['LeaderboardPositionResponse']>(this.API_URL + `leaderboards/${board}/me`);
   }
 
   getProfil(id: string): Observable<ProfilModel> {

@@ -19,10 +19,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<!-- Sélecteur temporaire pour comparer les thèmes -->
-<select class="theme-picker" (change)="theme.set($any($event.target).value)">
-  @for (t of themes; track t.id) {
-    <option [value]="t.id" [selected]="t.id === theme()">{{ t.label }}</option>
-  }
-</select>

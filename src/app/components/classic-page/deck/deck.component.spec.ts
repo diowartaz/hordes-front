@@ -48,25 +48,70 @@ describe('DeckComponent', () => {
     return [...host.querySelectorAll<HTMLElement>('.slot-wrap')].find((el) => el.textContent?.includes(name))!;
   }
 
-  it("affiche la carte complète du plan survolé, et la masque à la sortie", async () => {
+  function pointer(name: string, type: 'pointerenter' | 'pointerleave', pointerType = 'mouse'): Promise<void> {
+    slotWrap(name).dispatchEvent(new PointerEvent(type, { pointerType }));
+    return fixture.whenStable();
+  }
+
+  function clickInfo(name: string): Promise<void> {
+    slotWrap(name).querySelector<HTMLButtonElement>('.slot-info')!.click();
+    return fixture.whenStable();
+  }
+
+  it('affiche la carte complète du plan survolé, et la masque à la sortie', async () => {
     expect(host.querySelector('.preview')).toBeNull();
 
-    slotWrap('Scrap Wall').dispatchEvent(new MouseEvent('mouseenter'));
-    await fixture.whenStable();
+    await pointer('Scrap Wall', 'pointerenter');
     const preview = host.querySelector('.preview')!;
     expect(preview.querySelector('app-building-card')?.textContent).toContain('Scrap Wall');
     expect(preview.textContent).toContain('common');
     expect(preview.textContent).toContain('×2');
     expect(preview.querySelector('.preview-effect')).toBeNull();
 
-    slotWrap('Scrap Wall').dispatchEvent(new MouseEvent('mouseleave'));
-    await fixture.whenStable();
+    await pointer('Scrap Wall', 'pointerleave');
+    expect(host.querySelector('.preview')).toBeNull();
+  });
+
+  it("n'ouvre rien au simple toucher d'un emplacement", async () => {
+    await pointer('Scrap Wall', 'pointerenter', 'touch');
     expect(host.querySelector('.preview')).toBeNull();
   });
 
   it("écrit en clair l'effet d'un bâtiment spécial", async () => {
-    slotWrap('Night Totem').dispatchEvent(new MouseEvent('mouseenter'));
-    await fixture.whenStable();
+    await pointer('Night Totem', 'pointerenter');
     expect(host.querySelector('.preview-effect')?.textContent).toContain('+3 permanent defense');
+  });
+
+  it('le bouton « i » ouvre et ferme la bulle sans retirer le bâtiment', async () => {
+    await clickInfo('Scrap Wall');
+    expect(host.querySelector('.preview')?.textContent).toContain('Scrap Wall');
+    expect(fixture.componentInstance.draft()).toEqual([1, 2]);
+
+    await clickInfo('Scrap Wall');
+    expect(host.querySelector('.preview')).toBeNull();
+  });
+
+  it('seule la poubelle retire le bâtiment, pas un clic sur son nom', async () => {
+    slotWrap('Scrap Wall').querySelector<HTMLElement>('.slot')!.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.draft()).toEqual([1, 2]);
+
+    await clickInfo('Scrap Wall');
+    slotWrap('Scrap Wall').querySelector<HTMLButtonElement>('.slot-remove')!.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.draft()).toEqual([2]);
+    expect(host.querySelector('.preview')).toBeNull();
+  });
+
+  it('la bulle se ferme au toucher ailleurs et avec Échap', async () => {
+    await clickInfo('Scrap Wall');
+    document.body.click();
+    await fixture.whenStable();
+    expect(host.querySelector('.preview')).toBeNull();
+
+    await clickInfo('Scrap Wall');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await fixture.whenStable();
+    expect(host.querySelector('.preview')).toBeNull();
   });
 });

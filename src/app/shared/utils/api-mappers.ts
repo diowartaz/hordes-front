@@ -12,6 +12,7 @@ import {
   GameHistoryModel,
   InventoryModel,
   LeaderboardElement,
+  LeaderboardPage,
   ProfilModel,
   SkillModel,
   StatsModel,
@@ -220,6 +221,16 @@ export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
 }
 
 const USERNAME_DISPLAY_MAX = 22;
+
+export function toLeaderboardPage(response: Schemas['LeaderboardResponse']): LeaderboardPage {
+  return {
+    entries: toLeaderboard(response.entries),
+    page: response.page,
+    page_size: response.pageSize,
+    total: response.total,
+    leader: response.leader ? toLeaderboard([response.leader])[0] : null,
+  };
+}
 
 export function toLeaderboard(entries: ApiLeaderboardEntry[]): LeaderboardElement[] {
   return entries.map((entry) => ({

@@ -8,7 +8,7 @@
         <h2 class="username">{{ profil.username }}</h2>
         <div class="chips">
           <span class="neon-chip" style="--c: var(--violet-pale)">Level {{ level().lvl }}</span>
-          <span class="neon-chip" style="--c: var(--yellow)">Rank #{{ profil.rank }}</span>
+          <span class="neon-chip" style="--c: var(--yellow)">Rank #{{ profil.rank ?? '—' }}</span>
         </div>
         <div class="xp">
           <div class="xp-head label">
@@ -22,7 +22,7 @@
         <div class="stat-tile" style="--c: var(--yellow)">
           <div class="icon-tile"><app-icon name="trophy" [size]="22" /></div>
           <div class="tile-text">
-            <span class="stat-label">Rank</span><span class="stat-value">#{{ profil.rank }}</span>
+            <span class="stat-label">Rank</span><span class="stat-value">#{{ profil.rank ?? '—' }}</span>
           </div>
         </div>
         <div class="stat-tile" style="--c: var(--cyan)">

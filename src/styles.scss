@@ -430,6 +430,14 @@ button {
     &::placeholder {
       color: var(--text-mute);
     }
+    // Le remplissage automatique du navigateur impose un fond clair et un texte noir : on garde le thème
+    &:-webkit-autofill,
+    &:autofill {
+      -webkit-text-fill-color: var(--text);
+      caret-color: var(--text);
+      // Le fond imposé ne peut pas être surchargé : on retarde indéfiniment sa transition
+      transition: background-color 600000s 0s;
+    }
   }
 }
 

@@ -111,6 +111,29 @@
         </form>
       }
 
+      <section class="neon-card theme-card">
+        <h3 class="label">Theme</h3>
+        <div class="theme-grid" role="radiogroup" aria-label="Theme">
+          @for (t of themes; track t.id) {
+            <button
+              type="button"
+              role="radio"
+              class="theme-option"
+              [class.active]="themeService.theme() === t.id"
+              [attr.aria-checked]="themeService.theme() === t.id"
+              (click)="themeService.setTheme(t.id)"
+            >
+              <span class="swatch" [style.background]="t.swatch[0]">
+                @for (c of t.swatch.slice(1); track c) {
+                  <span class="dot" [style.background]="c" [style.color]="c"></span>
+                }
+              </span>
+              <span class="theme-name">{{ t.label }}</span>
+            </button>
+          }
+        </div>
+      </section>
+
       <button type="button" class="ghost-btn" (click)="authService.logOut()">
         <app-icon name="logout" [size]="18" />Log out
       </button>
