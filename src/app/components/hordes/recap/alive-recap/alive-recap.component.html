@@ -2,6 +2,13 @@
   <div class="scroll">
     <app-recap-header></app-recap-header>
 
+    @if (overnightEffects().length > 0) {
+      <section class="neon-card">
+        <h2 class="label">Overnight</h2>
+        <app-effect-reports [reports]="overnightEffects()" />
+      </section>
+    }
+
     @if (nbMaxChoices() > 0) {
       <section class="neon-card">
         <h2 class="label">

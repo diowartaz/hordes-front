@@ -1,14 +1,28 @@
-import { BuildingEffectModel } from 'src/app/models/hordes';
+import {
+  BuildingEffectModel,
+  createDefaultDefaultValuesModel,
+  EffectReportModel,
+  EffectRulesModel,
+  ItemModel,
+} from 'src/app/models/hordes';
 
-// Description d'un effet de bâtiment spécial (règles dans hordes-api, src/game/city/building-effects.ts).
+const percent = (value: number) => `${Math.round(value * 100)}%`;
+const minutes = (seconds: number) => `${Math.round(seconds / 60)} min`;
+
+// Description d'un effet de bâtiment spécial (règles dans hordes-api, src/game/city/effects/handlers/).
 // `day` : jour de la ville en cours, pour afficher la valeur actuelle des effets qui en dépendent.
-export function buildingEffectText(effect: BuildingEffectModel, day?: number): string {
+// `rules` : paramètres secondaires des effets, venus du catalogue.
+export function buildingEffectText(
+  effect: BuildingEffectModel,
+  day?: number,
+  rules: EffectRulesModel = createDefaultDefaultValuesModel().effect_rules,
+): string {
   const { value } = effect;
   switch (effect.kind) {
     case 'nightlyGrowth':
       return `Each night survived: +${value} permanent defense per level.`;
     case 'compoundGrowth':
-      return `Each night survived: +${Math.round(value * 100)}% of the city's defense per level, permanently.`;
+      return `Each night survived: +${percent(value)} of the city's defense per level, permanently.`;
     case 'buildDayScaling':
       return (
         `Each level built gives ${value} × the current day in defense.` +
@@ -20,5 +34,57 @@ export function buildingEffectText(effect: BuildingEffectModel, day?: number): s
       return `Tonight only: +${value} defense per resource in stock, per level.`;
     case 'randomNightDefense':
       return `Tonight only: random defense between 0 and ${value} per level.`;
+    case 'hordeTrophy':
+      return `Each night survived: +${value} × √(zombies repelled) permanent defense per level. Grows with the horde, but slower.`;
+    case 'otherBuildDefense':
+      return `Each level you build on another building gives +${value} defense per level.`;
+    case 'surplusDefense':
+      return `Each night survived: +${value} × √(spare defense) permanent defense per level, spare defense being your defense minus the zombies.`;
+    case 'stockToDefense':
+      return `Each night survived: uses ${rules.larder_items_per_level} of your most plentiful resource per level, +${value} permanent defense for each.`;
+    case 'digDefense':
+      return `Each dig gives +${value} permanent defense per level.`;
+    case 'idleNightDefense':
+      return `Tonight only: +${value} defense per level for each full hour left when you go to sleep.`;
+    case 'extraAttackRolls':
+      return `The horde size is rolled ${value} more time per level; the smallest roll is kept.`;
+    case 'extraDigItem':
+      return `Each dig has a ${percent(value)} chance per level to bring back one more resource.`;
+    case 'buildRefund':
+      return `Each build has a ${percent(value)} chance per level to give back one of the resources spent.`;
+    case 'morningItems':
+      return `Each night survived: ${value} random resource per level.`;
+    case 'digTimeReduction':
+      return `Digging takes ${percent(value)} less time per level.`;
+    case 'buildTimeReduction':
+      return `Building takes ${percent(value)} less time per level.`;
+    case 'repeatBuildTimeReduction':
+      return `Building the same building as your previous action takes ${percent(value)} less time per level.`;
+    case 'earlierWakeUp':
+      return `You wake up ${minutes(value)} earlier per level.`;
+    case 'sleepRecovery':
+      return `Going to sleep early gives back ${percent(value)} more of the remaining time per level, up to ${minutes(rules.dormitory_max_sleep_bonus_per_level)} more per level.`;
+    case 'extraArchitectOffers':
+      return `The Blueprint Workshop shows ${value} more building per level to choose from.`;
+    case 'skillLevelCap':
+      return `Every skill can be unlocked ${value} level higher per level.`;
+    case 'nightLearning':
+      return `Each night survived: ${percent(value)} chance per level to learn an unlocked skill level for free.`;
   }
+}
+
+function itemsText(items: EffectReportModel['itemsGained'], sign: '+' | '−'): string[] {
+  return (Object.entries(items) as [ItemModel, number | undefined][])
+    .filter(([, quantity]) => quantity)
+    .map(([item, quantity]) => `${sign}${quantity} ${item}`);
+}
+
+// Résumé de ce qu'un bâtiment spécial a fait : « +4 defense, +1 wood, Digger +1 level »
+export function effectReportText(report: EffectReportModel): string {
+  return [
+    ...(report.defense ? [`+${report.defense} defense`] : []),
+    ...itemsText(report.itemsGained, '+'),
+    ...itemsText(report.itemsSpent, '−'),
+    ...report.skillLevels.map((s) => `${s.name} +${s.levels} level${s.levels > 1 ? 's' : ''}`),
+  ].join(', ');
 }

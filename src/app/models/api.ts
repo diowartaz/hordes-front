@@ -487,7 +487,7 @@ export interface components {
         };
         BuildingEffectResponse: {
             /** @enum {string} */
-            kind: "nightlyGrowth" | "compoundGrowth" | "buildDayScaling" | "skillDefense" | "stockDefense" | "randomNightDefense";
+            kind: "nightlyGrowth" | "compoundGrowth" | "buildDayScaling" | "skillDefense" | "stockDefense" | "randomNightDefense" | "hordeTrophy" | "otherBuildDefense" | "surplusDefense" | "stockToDefense" | "digDefense" | "idleNightDefense" | "extraAttackRolls" | "extraDigItem" | "buildRefund" | "morningItems" | "digTimeReduction" | "buildTimeReduction" | "repeatBuildTimeReduction" | "earlierWakeUp" | "sleepRecovery" | "extraArchitectOffers" | "skillLevelCap" | "nightLearning";
             value: number;
         };
         BuildingResponse: {
@@ -517,7 +517,7 @@ export interface components {
             level: number;
             /** @description Niveau débloqué par la bibliothèque */
             maxLevel: number;
-            /** @description Plafond absolu de la compétence */
+            /** @description Plafond des niveaux que la bibliothèque peut débloquer, bâtiments spéciaux compris */
             levelCap: number;
             speedGainPerLevel: number;
             /** @description Durée de base du premier niveau, avant vitesses et bonus */
@@ -535,6 +535,7 @@ export interface components {
         NightDefenseResponse: {
             min: number;
             max: number;
+            perIdleHour: number;
         };
         BuildingOfferResponse: {
             id: number;
@@ -562,6 +563,16 @@ export interface components {
             name: string;
             levels: number;
         };
+        EffectReportResponse: {
+            buildingId: number;
+            name: string;
+            /** @description Défense permanente gagnée */
+            defense: number;
+            itemsGained: components["schemas"]["ItemQuantitiesResponse"];
+            itemsSpent: components["schemas"]["ItemQuantitiesResponse"];
+            /** @description Niveaux de compétences appris sans y passer de temps */
+            skillLevels: components["schemas"]["SkillDiscoveryResponse"][];
+        };
         DeathRewardsResponse: {
             baseMoney: number;
             rankedMoney: number;
@@ -577,6 +588,8 @@ export interface components {
             /** @description Nombre de bâtiments à choisir parmi les offres */
             buildingPicks: number;
             skillDiscoveries: components["schemas"]["SkillDiscoveryResponse"][];
+            /** @description Effets des bâtiments spéciaux après la nuit survécue */
+            effects: components["schemas"]["EffectReportResponse"][];
             rewards: components["schemas"]["DeathRewardsResponse"] | null;
         };
         CityResponse: {
@@ -625,8 +638,14 @@ export interface components {
             pick?: "wood" | "metal" | "stone" | "screw" | "patch";
         };
         DigResponse: {
-            city: components["schemas"]["CityResponse"];
+            /** @description Ressources trouvées par les fouilles (celles des bâtiments spéciaux sont dans effects) */
             found: components["schemas"]["ItemQuantitiesResponse"];
+            city: components["schemas"]["CityResponse"];
+            effects: components["schemas"]["EffectReportResponse"][];
+        };
+        ActionResponse: {
+            city: components["schemas"]["CityResponse"];
+            effects: components["schemas"]["EffectReportResponse"][];
         };
         StartDayDto: {
             /** @description Bâtiments retenus parmi attackRecap.buildingOffers, au nombre de attackRecap.buildingPicks */
@@ -1188,7 +1207,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CityResponse"];
+                    "application/json": components["schemas"]["ActionResponse"];
                 };
             };
         };
@@ -1209,7 +1228,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CityResponse"];
+                    "application/json": components["schemas"]["ActionResponse"];
                 };
             };
         };

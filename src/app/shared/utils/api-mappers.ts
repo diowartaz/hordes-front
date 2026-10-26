@@ -69,6 +69,7 @@ function toBuildingModel(building: ApiBuilding | ApiBuildingOffer): BuildingMode
     selected: false,
     recycled: 'recycled' in building && building.recycled,
     effect: building.effect,
+    next_level_duration: building.nextLevelDuration,
   };
 }
 
@@ -83,6 +84,7 @@ function toSkillModel(skill: ApiSkill): SkillModel {
     time: skill.learnTime,
     avantage_per_lvl: skill.speedGainPerLevel,
     reduce_time_seconds: skill.wakeUpEarlierSeconds ?? 0,
+    next_level_duration: skill.nextLevelDuration,
   };
 }
 
@@ -101,6 +103,7 @@ function toAttackRecap(recap: ApiAttackRecap | null): AttackRecapModel {
     bonus_money: recap.rewards?.bonusMoney ?? 0,
     total_money: recap.rewards?.totalMoney ?? 0,
     day: recap.day,
+    effects: recap.effects,
   };
 }
 
@@ -129,7 +132,12 @@ export function toCityModel(city: ApiCity): CityModel {
       recycle_threshold: city.deckStatus.recycleThreshold,
       recycling: city.deckStatus.recycling,
     },
-    night_defense: { ...city.nightDefense },
+    night_defense: {
+      min: city.nightDefense.min,
+      max: city.nightDefense.max,
+      per_idle_hour: city.nightDefense.perIdleHour,
+    },
+    dig_duration: city.digDuration,
   };
 }
 
@@ -204,6 +212,10 @@ export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
     ZOMBIE_COEF_MAX: rules['ZOMBIE_COEF_MAX'],
     ARCHITECT_DISCOVERY_CHOICES: rules['ARCHITECT_EXTRA_OFFERS'],
     DECK_SIZE: rules['DECK_SIZE'],
+    effect_rules: {
+      larder_items_per_level: rules['LARDER_ITEMS_PER_LEVEL'],
+      dormitory_max_sleep_bonus_per_level: rules['DORMITORY_MAX_SLEEP_BONUS_PER_LEVEL'],
+    },
   };
 }
 

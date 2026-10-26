@@ -1,5 +1,4 @@
-import { AdvancedBonus, AdvancedBuildingModel, CityModel, DefaultValuesModel, Rarity } from 'src/app/models/hordes';
-import { bonusEffect } from './bonuses';
+import { AdvancedBuildingModel, CityModel, DefaultValuesModel, Rarity } from 'src/app/models/hordes';
 import { contains } from './inventory';
 import { formatTimeToString } from './time';
 
@@ -13,14 +12,12 @@ const rarityOrder: Record<Rarity, number> = {
 
 export function calculateAdvancedBuildings(
   city: CityModel,
-  bonuses: Record<number, AdvancedBonus>,
   defaultValues: DefaultValuesModel,
 ): AdvancedBuildingModel[] {
   const advancedBuildings: AdvancedBuildingModel[] = [];
-  const flatBonusMinutes = bonusEffect(bonuses[4]);
-  const percentBonus = bonusEffect(bonuses[5]);
   for (const building of city.buildings) {
-    const timeRequired = building.time * city.speeds.build * (1 - percentBonus) - flatBonusMinutes * 60;
+    // Durée calculée par le serveur : vitesses, bonus et bâtiments spéciaux compris
+    const timeRequired = building.next_level_duration;
 
     const advancedBuilding: AdvancedBuildingModel = {
       ...building,

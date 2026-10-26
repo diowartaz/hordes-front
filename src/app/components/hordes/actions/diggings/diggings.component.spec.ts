@@ -18,7 +18,12 @@ describe('DiggingsComponent', () => {
     }).compileComponents();
 
     cityService = TestBed.inject(CityService);
-    cityService.city.set({ ...createDefaultCityModel(), time: 8 * 3600, dig_offer: ['metal', 'screw'] });
+    cityService.city.set({
+      ...createDefaultCityModel(),
+      time: 8 * 3600,
+      dig_offer: ['metal', 'screw'],
+      dig_duration: 2 * 3600,
+    });
     spyOn(cityService, 'findItems');
     cityService.cityTimeSeconds = signal(8 * 3600);
     fixture = TestBed.createComponent(DiggingsComponent);

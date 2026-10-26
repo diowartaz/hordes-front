@@ -47,6 +47,7 @@ function skill(overrides: Partial<SkillModel>): SkillModel {
     time: 3600,
     avantage_per_lvl: 0.1,
     reduce_time_seconds: 600,
+    next_level_duration: 3600,
     ...overrides,
   };
 }
@@ -136,19 +137,15 @@ describe('bonuses', () => {
 describe('buildings', () => {
   const defaultValues = createDefaultDefaultValuesModel();
 
-  it('applique les bonus de construction au temps requis', () => {
-    const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
-    // 3600 × (1 - 5 × 2 %) - 2 min = 3120 s
-    const [result] = calculateAdvancedBuildings(city, { 4: bonus(4, 1, 2), 5: bonus(5, 0.02, 5) }, defaultValues);
+  it('reprend la durée du prochain niveau calculée par le serveur', () => {
+    const city: CityModel = {
+      ...createDefaultCityModel(),
+      buildings: [building({ time: 3600, next_level_duration: 3120 })],
+    };
+    const [result] = calculateAdvancedBuildings(city, defaultValues);
 
     expect(result.timeString).toBe('00h52');
     expect(result.expirationCityTime).toBe(defaultValues.day_end_time - 3120);
-  });
-
-  it('fonctionne avant le chargement des bonus', () => {
-    const city: CityModel = { ...createDefaultCityModel(), buildings: [building({ time: 3600 })] };
-    const [result] = calculateAdvancedBuildings(city, {}, defaultValues);
-    expect(result.timeString).toBe('01h00');
   });
 
   it('trie les constructibles en premier et garde les bâtiments au niveau max en fin de liste', () => {
@@ -161,7 +158,7 @@ describe('buildings', () => {
         building({ id: 3, name: 'maxed', lvl: 5, lvl_max: 5 }),
       ],
     };
-    const result = calculateAdvancedBuildings(city, {}, defaultValues);
+    const result = calculateAdvancedBuildings(city, defaultValues);
 
     expect(result.map((b) => b.name)).toEqual(['affordable', 'too expensive', 'maxed']);
     expect(result[0].enoughRessources).toBeTrue();
@@ -171,26 +168,16 @@ describe('buildings', () => {
 describe('skills', () => {
   const defaultValues = createDefaultDefaultValuesModel();
 
-  it('applique le bonus Efficient Learner selon son niveau', () => {
-    const city: CityModel = { ...createDefaultCityModel(), skills: [skill({ time: 3600, lvl: 0 })] };
-
-    const [withoutBonus] = calculateAdvancedSkills(city, { 9: bonus(9, 0.02, 0) }, defaultValues);
-    const [withBonus] = calculateAdvancedSkills(city, { 9: bonus(9, 0.02, 5) }, defaultValues);
-
-    expect(withoutBonus.expirationCityTime).toBe(defaultValues.day_end_time - 3600);
-    expect(withBonus.expirationCityTime).toBe(defaultValues.day_end_time - 3240);
-  });
-
-  it('multiplie le temps à chaque niveau et ignore les compétences non débloquées', () => {
+  it('reprend la durée du prochain niveau calculée par le serveur et ignore les compétences non débloquées', () => {
     const city: CityModel = {
       ...createDefaultCityModel(),
-      skills: [skill({ id: 1, lvl: 2 }), skill({ id: 2, lvl_max: 0 })],
+      skills: [skill({ id: 1, lvl: 2, next_level_duration: 8100 }), skill({ id: 2, lvl_max: 0 })],
     };
-    const result = calculateAdvancedSkills(city, {}, defaultValues);
+    const result = calculateAdvancedSkills(city, defaultValues);
 
     expect(result.length).toBe(1);
-    // 3600 × 1.5² = 8100 s
     expect(result[0].timeString).toBe('02h15');
+    expect(result[0].expirationCityTime).toBe(defaultValues.day_end_time - 8100);
     expect(result[0].percentageEfficacityStringBefore).toBe('80%');
     expect(result[0].percentageEfficacityStringAfter).toBe('70%');
   });

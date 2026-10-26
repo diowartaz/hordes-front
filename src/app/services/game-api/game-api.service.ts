@@ -9,6 +9,7 @@ import {
   CatalogBuildingModel,
   CityModel,
   DefaultValuesModel,
+  EffectReportModel,
   GameHistoryModel,
   InventoryModel,
   ItemModel,
@@ -59,6 +60,17 @@ export interface BoosterOpening {
   cards: BoosterCardModel[];
 }
 
+// Résultat d'une action de journée : la ville et ce que les bâtiments spéciaux ont fait pendant l'action
+export interface ActionResult {
+  city: CityModel;
+  effects: EffectReportModel[];
+}
+
+const toActionResult = (response: Schemas['ActionResponse']): ActionResult => ({
+  city: toCityModel(response.city),
+  effects: response.effects,
+});
+
 export interface CityWithState {
   city: CityModel;
   state: UserState;
@@ -102,11 +114,15 @@ export class GameApiService {
 
   // pick : ressource choisie dans la paire proposée pour la première fouille, sinon l'une des deux au hasard.
   // 'max' : autant de fouilles que possible avant l'attaque, calculé par le serveur au moment de la requête
-  findItems(count: number | 'max', pick?: ItemModel): Observable<{ city: CityModel; found: InventoryModel }> {
+  findItems(count: number | 'max', pick?: ItemModel): Observable<ActionResult & { found: InventoryModel }> {
     const body: Schemas['DigDto'] = count === 'max' ? { max: true, pick } : { count, pick };
-    return this.httpClient
-      .post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', body)
-      .pipe(map((response) => ({ city: toCityModel(response.city), found: toInventory(response.found) })));
+    return this.httpClient.post<Schemas['DigResponse']>(this.API_URL + 'me/city/dig', body).pipe(
+      map((response) => ({
+        city: toCityModel(response.city),
+        effects: response.effects,
+        found: toInventory(response.found),
+      })),
+    );
   }
 
   newCity(ranked: boolean): Observable<CityWithState> {
@@ -117,12 +133,16 @@ export class GameApiService {
     return this.httpClient.delete(this.API_URL + 'me/city');
   }
 
-  build(id: number): Observable<CityModel> {
-    return this.httpClient.post<ApiCity>(this.API_URL + `me/city/buildings/${id}/upgrade`, {}).pipe(map(toCityModel));
+  build(id: number): Observable<ActionResult> {
+    return this.httpClient
+      .post<Schemas['ActionResponse']>(this.API_URL + `me/city/buildings/${id}/upgrade`, {})
+      .pipe(map(toActionResult));
   }
 
-  learn(id: number): Observable<CityModel> {
-    return this.httpClient.post<ApiCity>(this.API_URL + `me/city/skills/${id}/upgrade`, {}).pipe(map(toCityModel));
+  learn(id: number): Observable<ActionResult> {
+    return this.httpClient
+      .post<Schemas['ActionResponse']>(this.API_URL + `me/city/skills/${id}/upgrade`, {})
+      .pipe(map(toActionResult));
   }
 
   // Fin de journée, puis relecture du joueur : gains et records changent si la ville tombe

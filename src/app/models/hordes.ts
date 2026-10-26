@@ -68,10 +68,12 @@ export function createDefaultCityModel(): CityModel {
       ranked_money: 0,
       total_money: 0,
       day: 0,
+      effects: [],
     },
     ranked: false,
     deck_status: { size: 0, unseen: 0, completed: 0, recycle_threshold: 0, recycling: false },
-    night_defense: { min: 0, max: 0 },
+    night_defense: { min: 0, max: 0, per_idle_hour: 0 },
+    dig_duration: 0,
     defaultCity: true,
   };
 }
@@ -96,9 +98,15 @@ export interface CityModel {
   defaultCity?: boolean;
   ranked: boolean;
   deck_status: DeckStatusModel;
-  // Défense ajoutée pour la prochaine nuit seulement (Armory, Gambler's Gate)
-  night_defense: { min: number; max: number };
+  // Défense ajoutée pour la prochaine nuit seulement (Armory, Gambler's Gate), plus per_idle_hour par heure
+  // de jeu entière non utilisée au moment de dormir (Night Owl Perch)
+  night_defense: { min: number; max: number; per_idle_hour: number };
+  // Durée d'une fouille en secondes de jeu, calculée par le serveur (vitesses, bonus, bâtiments spéciaux)
+  dig_duration: number;
 }
+
+// Ce qu'un bâtiment spécial a fait automatiquement (pendant une action ou après la nuit)
+export type EffectReportModel = components['schemas']['EffectReportResponse'];
 
 // Pioche de la ville : plans jamais tirés et recyclage des bâtiments terminés
 export interface DeckStatusModel {
@@ -121,6 +129,8 @@ export interface AttackRecapModel {
   ranked_money: number;
   total_money: number;
   day: number;
+  // Effets des bâtiments spéciaux après la nuit survécue
+  effects: EffectReportModel[];
 }
 
 export interface SpeedsModel {
@@ -147,6 +157,7 @@ export function createDefaultBuildingModel(): BuildingModel {
     selected: false,
     defense_ratio_percentage: -22,
     recycled: false,
+    next_level_duration: 3600,
   };
 }
 
@@ -169,6 +180,8 @@ export interface BuildingModel {
   // Offre de l'architecte : bâtiment terminé revenu dans la pioche (lvl_max inclut déjà les niveaux gagnés)
   recycled: boolean;
   effect?: BuildingEffectModel;
+  // Durée du prochain niveau en secondes de jeu, calculée par le serveur
+  next_level_duration: number;
 }
 
 // Plan du catalogue, hors partie (collection, deck, boosters)
@@ -226,6 +239,8 @@ export interface SkillModel {
   time: number;
   avantage_per_lvl: number;
   reduce_time_seconds: number;
+  // Durée du prochain niveau en secondes de jeu, calculée par le serveur
+  next_level_duration: number;
 }
 
 export interface AdvancedSkillModel {
@@ -301,6 +316,13 @@ export interface DefaultValuesModel {
   ZOMBIE_COEF_MAX: number;
   ARCHITECT_DISCOVERY_CHOICES: number;
   DECK_SIZE: number;
+  // Paramètres secondaires des bâtiments spéciaux (la valeur par niveau est dans l'effet)
+  effect_rules: EffectRulesModel;
+}
+
+export interface EffectRulesModel {
+  larder_items_per_level: number;
+  dormitory_max_sleep_bonus_per_level: number;
 }
 
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
@@ -322,6 +344,7 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     ZOMBIE_COEF_MAX: 4,
     ARCHITECT_DISCOVERY_CHOICES: 2,
     DECK_SIZE: 20,
+    effect_rules: { larder_items_per_level: 1, dormitory_max_sleep_bonus_per_level: 3600 },
   };
 }
 

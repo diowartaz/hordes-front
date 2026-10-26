@@ -1,20 +1,11 @@
-import { AdvancedBonus, AdvancedSkillModel, CityModel, DefaultValuesModel, SkillModel } from 'src/app/models/hordes';
-import { bonusEffect } from './bonuses';
+import { AdvancedSkillModel, CityModel, DefaultValuesModel, SkillModel } from 'src/app/models/hordes';
 import { formatTimeToString } from './time';
 
-export function calculateAdvancedSkills(
-  city: CityModel,
-  bonuses: Record<number, AdvancedBonus>,
-  defaultValues: DefaultValuesModel,
-): AdvancedSkillModel[] {
+export function calculateAdvancedSkills(city: CityModel, defaultValues: DefaultValuesModel): AdvancedSkillModel[] {
   const advancedSkills: AdvancedSkillModel[] = [];
-  const percentBonus = bonusEffect(bonuses[9]);
   for (const skill of city.skills) {
-    const timeRequired =
-      (1 - percentBonus) *
-      skill.time *
-      city.speeds.learn *
-      defaultValues.SKILL_TIME_MULTIPLIER ** skill.lvl;
+    // Durée calculée par le serveur : vitesses, bonus et bâtiments spéciaux compris
+    const timeRequired = skill.next_level_duration;
     const advancedSkill: AdvancedSkillModel = {
       ...skill,
       expirationCityTime: defaultValues.day_end_time - timeRequired,

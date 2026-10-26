@@ -4,10 +4,11 @@ import { RecapHeaderComponent } from '../recap-header/recap-header.component';
 import { BuildingRecapComponent } from './building-recap/building-recap.component';
 import { SkillRecapComponent, SkillDiscovery } from './skill-recap/skill-recap.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { EffectReportsComponent } from 'src/app/shared/components/effect-reports/effect-reports.component';
 
 @Component({
   selector: 'app-alive-recap',
-  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, IconComponent],
+  imports: [RecapHeaderComponent, BuildingRecapComponent, SkillRecapComponent, IconComponent, EffectReportsComponent],
   templateUrl: './alive-recap.component.html',
   styleUrls: ['./alive-recap.component.scss'],
 })
@@ -20,6 +21,8 @@ export class AliveRecapComponent {
   architectBuildings = computed(() => this.cityService.city().attackRecap.architect_shelter_buildings);
   nbChoicesAvailable = computed(() => this.architectBuildings().length);
   nbMaxChoices = computed(() => this.cityService.city().attackRecap.building_picks);
+  // Ce que les bâtiments spéciaux ont fait pendant la nuit
+  overnightEffects = computed(() => this.cityService.city().attackRecap.effects);
 
   libraryDiscoveries = computed<SkillDiscovery[]>(() => {
     const city = this.cityService.city();

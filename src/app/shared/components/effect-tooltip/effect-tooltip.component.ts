@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, signal } from '@angular/core';
 import { BuildingEffectModel } from 'src/app/models/hordes';
+import { CityService } from 'src/app/services/city/city.service';
 import { buildingEffectText } from '../../utils/building-effects';
 import { IconComponent } from '../icon/icon.component';
 
@@ -31,13 +32,14 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class EffectTooltipComponent {
   private host = inject(ElementRef<HTMLElement>);
+  private cityService = inject(CityService);
 
   effect = input.required<BuildingEffectModel>();
   // Jour de la ville en cours : affiche la valeur actuelle des effets qui en dépendent
   day = input<number>();
 
   open = signal(false);
-  text = computed(() => buildingEffectText(this.effect(), this.day()));
+  text = computed(() => buildingEffectText(this.effect(), this.day(), this.cityService.defaultValues().effect_rules));
 
   toggle(event: Event) {
     event.stopPropagation();

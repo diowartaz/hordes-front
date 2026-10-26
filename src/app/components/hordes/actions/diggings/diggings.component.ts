@@ -5,7 +5,6 @@ import { ItemModel } from 'src/app/models/hordes';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { ResourceGemComponent } from 'src/app/shared/components/resource-gem/resource-gem.component';
 import { ItemToColorPipe } from 'src/app/shared/pipes/item-to-color.pipe';
-import { bonusEffect } from 'src/app/shared/utils/bonuses';
 import { enoughTime, formatTimeToString } from 'src/app/shared/utils/time';
 import { readStorage, StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 
@@ -42,12 +41,7 @@ export class DiggingsComponent {
   digOffer = computed(() => this.cityService.city().dig_offer);
 
   // Durée d'une fouille, en secondes de jeu
-  digTime = computed(() => {
-    const flatBonusMinutes = bonusEffect(this.cityService.bonuses()[6]);
-    const percentBonus = bonusEffect(this.cityService.bonuses()[7]);
-    const { dig } = this.cityService.city().speeds;
-    return this.cityService.defaultValues().digging_time * dig * (1 - percentBonus) - flatBonusMinutes * 60;
-  });
+  digTime = computed(() => this.cityService.city().dig_duration);
 
   digTimeString = computed(() => formatTimeToString(this.digTime()));
 

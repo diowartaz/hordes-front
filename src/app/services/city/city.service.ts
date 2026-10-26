@@ -17,6 +17,7 @@ import {
   createEmptyInventory,
   DefaultValuesModel,
   GameHistoryModel,
+  EffectReportModel,
   InventoryModel,
   ItemModel,
   SkillModel,
@@ -29,7 +30,7 @@ import { runRequest } from 'src/app/shared/utils/http';
 import { calculateAdvancedSkills } from 'src/app/shared/utils/skills';
 import { StorageKey, writeStorage } from 'src/app/shared/utils/storage';
 import { formatTimeToString } from 'src/app/shared/utils/time';
-import { GameApiService, GameCatalog, PlayerSnapshot } from '../game-api/game-api.service';
+import { ActionResult, GameApiService, GameCatalog, PlayerSnapshot } from '../game-api/game-api.service';
 
 // Source de vérité de l'état de la partie. La navigation qui découle d'un changement de `state`
 // est gérée par RedirectionService, jamais ici.
@@ -55,6 +56,8 @@ export class CityService {
   stats = signal<StatsModel>(createDefaultStatsModel());
   city = signal<CityModel>(createDefaultCityModel());
   inventoryItemFound = signal<InventoryModel>(createEmptyInventory());
+  // Ce que les bâtiments spéciaux ont fait pendant la dernière action, affiché puis effacé par EffectToastComponent
+  actionEffects = signal<EffectReportModel[]>([]);
 
   bonuses = computed<Record<number, AdvancedBonus>>(() =>
     computeBonuses(this.stats(), this.defaultValues(), this.referencesBonuses()),
@@ -65,19 +68,26 @@ export class CityService {
 
   buildings = computed<BuildingModel[]>(() => this.city().buildings);
   advancedBuildings = computed<AdvancedBuildingModel[]>(() =>
-    calculateAdvancedBuildings(this.city(), this.bonuses(), this.defaultValues()),
+    calculateAdvancedBuildings(this.city(), this.defaultValues()),
   );
 
   collection = computed<Record<number, number>>(() => this.stats().collection);
   deck = computed<number[]>(() => this.stats().deck);
 
   skills = computed<SkillModel[]>(() => this.city().skills);
-  advancedSkills = computed<AdvancedSkillModel[]>(() =>
-    calculateAdvancedSkills(this.city(), this.bonuses(), this.defaultValues()),
-  );
+  advancedSkills = computed<AdvancedSkillModel[]>(() => calculateAdvancedSkills(this.city(), this.defaultValues()));
 
   public cityTimeSeconds: Signal<number | undefined>;
   public cityTimeString = computed(() => formatTimeToString(this.cityTimeSeconds() || 0));
+
+  // Défense ajoutée pour la nuit si le joueur dort maintenant : les heures entières non utilisées
+  // comptent pour Night Owl Perch, le reste vient du serveur
+  nightDefenseNow = computed<{ min: number; max: number }>(() => {
+    const { min, max, per_idle_hour } = this.city().night_defense;
+    const remaining = Math.max(0, this.defaultValues().day_end_time - (this.cityTimeSeconds() || 0));
+    const idle = Math.floor(remaining / 3600) * per_idle_hour;
+    return { min: min + idle, max: max + idle };
+  });
 
   buildLoading = signal<boolean>(false);
   learnLoading = signal<boolean>(false);
@@ -138,6 +148,7 @@ export class CityService {
     this.city.set(createDefaultCityModel());
     this.stats.set(createDefaultStatsModel());
     this.inventoryItemFound.set(createEmptyInventory());
+    this.actionEffects.set([]);
     this.accountId.set(undefined);
     this.lastGame.set(undefined);
   }
@@ -154,6 +165,7 @@ export class CityService {
     runRequest(this.digLoading, this.api.findItems(nb, pick), (response) => {
       this.city.set(response.city);
       this.inventoryItemFound.set(response.found);
+      this.actionEffects.set(response.effects);
     });
   }
 
@@ -174,11 +186,16 @@ export class CityService {
   }
 
   build(id: number): void {
-    runRequest(this.buildLoading, this.api.build(id), (city) => this.city.set(city));
+    runRequest(this.buildLoading, this.api.build(id), (result) => this.applyAction(result));
   }
 
   learn(id: number): void {
-    runRequest(this.learnLoading, this.api.learn(id), (city) => this.city.set(city));
+    runRequest(this.learnLoading, this.api.learn(id), (result) => this.applyAction(result));
+  }
+
+  private applyAction({ city, effects }: ActionResult): void {
+    this.city.set(city);
+    this.actionEffects.set(effects);
   }
 
   endDay(): void {

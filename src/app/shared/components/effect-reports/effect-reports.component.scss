@@ -1,0 +1,25 @@
+.reports {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    color: var(--yellow);
+    font-size: 14px;
+  }
+
+  .name {
+    font-weight: 700;
+  }
+
+  .text {
+    color: var(--text, inherit);
+  }
+}

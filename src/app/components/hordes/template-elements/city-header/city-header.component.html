@@ -11,7 +11,7 @@
       </div>
       <div class="stat" style="--c: var(--yellow)">
         <span class="stat-label">Def</span>
-        @let night = cityService.city().night_defense;
+        @let night = cityService.nightDefenseNow();
         <span class="stat-value"
           >{{ cityService.city().defense }}
           @if (night.max > 0) {

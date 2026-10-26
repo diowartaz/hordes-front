@@ -1,0 +1,8 @@
+// Au-dessus des messages des écrans d'action (.dialog-class en bas d'écran)
+.effect-toast {
+  top: 12px;
+  bottom: auto;
+  text-align: left;
+  border-color: var(--yellow);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--yellow) 45%, transparent);
+}
