@@ -17,7 +17,11 @@
     <span class="rarity">{{ building().rarity }}</span>
   }
   <div class="stats">
-    <span class="def"><app-icon name="shield" [size]="13" />{{ building().defense }}</span>
+    @if (building().effect; as effect) {
+      <app-effect-tooltip [effect]="effect" />
+    } @else {
+      <span class="def"><app-icon name="shield" [size]="13" />{{ building().defense }}</span>
+    }
     <span><app-icon name="trend" [size]="13" />{{ building().lvl_max }} lvl</span>
     <span><app-icon name="clock" [size]="13" />{{ time() }}</span>
   </div>

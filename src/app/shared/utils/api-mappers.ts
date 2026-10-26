@@ -68,6 +68,7 @@ function toBuildingModel(building: ApiBuilding | ApiBuildingOffer): BuildingMode
     inventory: { ...building.cost },
     selected: false,
     recycled: 'recycled' in building && building.recycled,
+    effect: building.effect,
   };
 }
 
@@ -128,6 +129,7 @@ export function toCityModel(city: ApiCity): CityModel {
       recycle_threshold: city.deckStatus.recycleThreshold,
       recycling: city.deckStatus.recycling,
     },
+    night_defense: { ...city.nightDefense },
   };
 }
 
@@ -153,6 +155,7 @@ export function toCatalogBuildings(catalog: ApiCatalog): CatalogBuildingModel[] 
     lvl_max: building.maxLevel,
     time: building.buildTime,
     inventory: { ...building.cost },
+    effect: building.effect,
   }));
 }
 

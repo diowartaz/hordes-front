@@ -45,13 +45,17 @@
         <div class="body">
           <div class="row">
             <span class="name">{{ building.name }}</span>
-            <span class="def"><app-icon name="shield" [size]="13" />{{ building.defense }}</span>
-            <span
-              class="percentdef"
-              [class.percentdef-green]="building.defense_ratio_percentage >= 0"
-              [class.percentdef-red]="building.defense_ratio_percentage < 0"
-              >{{ building.defense_ratio_percentage >= 0 ? '+' : '' }}{{ building.defense_ratio_percentage }}%</span
-            >
+            @if (building.effect; as effect) {
+              <app-effect-tooltip [effect]="effect" [day]="cityService.city().day" />
+            } @else {
+              <span class="def"><app-icon name="shield" [size]="13" />{{ building.defense }}</span>
+              <span
+                class="percentdef"
+                [class.percentdef-green]="building.defense_ratio_percentage >= 0"
+                [class.percentdef-red]="building.defense_ratio_percentage < 0"
+                >{{ building.defense_ratio_percentage >= 0 ? '+' : '' }}{{ building.defense_ratio_percentage }}%</span
+              >
+            }
           </div>
           @if (building.lvl !== building.lvl_max) {
             <div class="row costs">

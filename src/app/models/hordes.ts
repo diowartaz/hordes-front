@@ -1,3 +1,5 @@
+import { components } from './api';
+
 // ---------- Modèles du jeu ----------
 
 export function createDefaultStatsModel(): StatsModel {
@@ -69,6 +71,7 @@ export function createDefaultCityModel(): CityModel {
     },
     ranked: false,
     deck_status: { size: 0, unseen: 0, completed: 0, recycle_threshold: 0, recycling: false },
+    night_defense: { min: 0, max: 0 },
     defaultCity: true,
   };
 }
@@ -93,6 +96,8 @@ export interface CityModel {
   defaultCity?: boolean;
   ranked: boolean;
   deck_status: DeckStatusModel;
+  // Défense ajoutée pour la prochaine nuit seulement (Armory, Gambler's Gate)
+  night_defense: { min: number; max: number };
 }
 
 // Pioche de la ville : plans jamais tirés et recyclage des bâtiments terminés
@@ -147,6 +152,9 @@ export function createDefaultBuildingModel(): BuildingModel {
 
 export type Rarity = 'base' | 'common' | 'rare' | 'epic' | 'legendary';
 
+// Effet d'un bâtiment spécial (défense 0), proportionnel à son niveau construit
+export type BuildingEffectModel = components['schemas']['BuildingEffectResponse'];
+
 export interface BuildingModel {
   id: number;
   defense: number;
@@ -160,6 +168,7 @@ export interface BuildingModel {
   defense_ratio_percentage: number;
   // Offre de l'architecte : bâtiment terminé revenu dans la pioche (lvl_max inclut déjà les niveaux gagnés)
   recycled: boolean;
+  effect?: BuildingEffectModel;
 }
 
 // Plan du catalogue, hors partie (collection, deck, boosters)
@@ -171,6 +180,7 @@ export interface CatalogBuildingModel {
   lvl_max: number;
   time: number;
   inventory: Record<string, number>;
+  effect?: BuildingEffectModel;
 }
 
 export type BoosterRarity = 'common' | 'rare' | 'epic';
@@ -203,6 +213,7 @@ export interface AdvancedBuildingModel {
   enoughLvlMax: boolean;
   expirationCityTime: number;
   defense_ratio_percentage: number;
+  effect?: BuildingEffectModel;
 }
 
 export interface SkillModel {

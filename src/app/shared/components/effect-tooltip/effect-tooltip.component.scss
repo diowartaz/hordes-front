@@ -1,0 +1,43 @@
+:host {
+  position: relative;
+  display: inline-flex;
+}
+
+.effect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 7px;
+  border: 1px solid color-mix(in srgb, var(--yellow) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--yellow) 12%, transparent);
+  color: var(--yellow);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    background: color-mix(in srgb, var(--yellow) 25%, transparent);
+  }
+}
+
+.bubble {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  width: max-content;
+  max-width: 220px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--yellow) 45%, transparent);
+  background: var(--surface-solid);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  color: var(--text, #fff);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+}

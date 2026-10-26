@@ -11,11 +11,21 @@
       </div>
       <div class="stat" style="--c: var(--yellow)">
         <span class="stat-label">Def</span>
-        <span class="stat-value">{{ cityService.city().defense }}</span>
+        @let night = cityService.city().night_defense;
+        <span class="stat-value"
+          >{{ cityService.city().defense }}
+          @if (night.max > 0) {
+            <span class="night" title="Extra defense for tonight only"
+              >+{{ night.min === night.max ? night.min : night.min + '–' + night.max }}</span
+            >
+          }
+        </span>
       </div>
       <div class="stat" style="--c: var(--danger-light)">
         <span class="stat-label">Threat</span>
-        <span class="stat-value" [class.danger]="cityService.city().nb_zb_next_attack_max > cityService.city().defense"
+        <span
+          class="stat-value"
+          [class.danger]="cityService.city().nb_zb_next_attack_max > cityService.city().defense + night.min"
           >{{ cityService.city().nb_zb_next_attack_min }}–{{ cityService.city().nb_zb_next_attack_max }}</span
         >
       </div>

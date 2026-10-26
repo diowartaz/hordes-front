@@ -3,13 +3,14 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { CatalogBuildingModel } from 'src/app/models/hordes';
 import { RarityToColorPipe } from '../../pipes/rarity-to-color.pipe';
 import { formatTimeToString } from '../../utils/time';
+import { EffectTooltipComponent } from '../effect-tooltip/effect-tooltip.component';
 import { IconComponent } from '../icon/icon.component';
 import { ResourceGemComponent } from '../resource-gem/resource-gem.component';
 
 // Carte d'un plan du catalogue (collection, deck, boosters). Le contenu projeté s'affiche en pied de carte.
 @Component({
   selector: 'app-building-card',
-  imports: [KeyValuePipe, IconComponent, ResourceGemComponent, RarityToColorPipe],
+  imports: [KeyValuePipe, IconComponent, EffectTooltipComponent, ResourceGemComponent, RarityToColorPipe],
   templateUrl: './building-card.component.html',
   styleUrls: ['./building-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

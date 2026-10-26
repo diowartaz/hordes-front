@@ -485,6 +485,11 @@ export interface components {
             screw?: number;
             patch?: number;
         };
+        BuildingEffectResponse: {
+            /** @enum {string} */
+            kind: "nightlyGrowth" | "compoundGrowth" | "buildDayScaling" | "skillDefense" | "stockDefense" | "randomNightDefense";
+            value: number;
+        };
         BuildingResponse: {
             id: number;
             name: string;
@@ -501,6 +506,8 @@ export interface components {
             buildTime: number;
             /** @description Durée du prochain niveau en secondes de jeu, avec les vitesses et bonus actuels */
             nextLevelDuration: number;
+            /** @description Bâtiment spécial : sa défense vient de cet effet */
+            effect?: components["schemas"]["BuildingEffectResponse"];
         };
         SkillResponse: {
             id: number;
@@ -525,6 +532,10 @@ export interface components {
             nextAttackMin: number;
             nextAttackMax: number;
         };
+        NightDefenseResponse: {
+            min: number;
+            max: number;
+        };
         BuildingOfferResponse: {
             id: number;
             name: string;
@@ -541,6 +552,8 @@ export interface components {
             buildTime: number;
             /** @description Durée du prochain niveau en secondes de jeu, avec les vitesses et bonus actuels */
             nextLevelDuration: number;
+            /** @description Bâtiment spécial : sa défense vient de cet effet */
+            effect?: components["schemas"]["BuildingEffectResponse"];
             /** @description Bâtiment terminé revenu dans la pioche : le choisir augmente son niveau max (déjà inclus dans maxLevel) */
             recycled: boolean;
         };
@@ -588,6 +601,7 @@ export interface components {
             lastActivityAt: string;
             /** @description Durée d'une fouille, en secondes de jeu */
             digDuration: number;
+            nightDefense: components["schemas"]["NightDefenseResponse"];
             attackRecap: components["schemas"]["AttackRecapResponse"] | null;
         };
         MeResponse: {
@@ -654,6 +668,8 @@ export interface components {
             /** @description Temps de construction d'un niveau, en secondes de jeu */
             buildTime: number;
             cost: components["schemas"]["ItemQuantitiesResponse"];
+            /** @description Bâtiment spécial : sa défense (0) vient uniquement de cet effet */
+            effect?: components["schemas"]["BuildingEffectResponse"];
         };
         CatalogSkillResponse: {
             id: number;
