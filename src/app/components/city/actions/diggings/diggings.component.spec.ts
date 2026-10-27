@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CityService } from 'src/app/services/city/city.service';
-import { createDefaultCityModel } from 'src/app/models/hordes';
+import { createDefaultCityModel } from 'src/app/models/game';
 import { removeStorage, StorageKey } from 'src/app/shared/utils/storage';
 
 import { DiggingsComponent } from './diggings.component';

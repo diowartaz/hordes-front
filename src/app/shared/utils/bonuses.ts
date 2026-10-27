@@ -1,4 +1,4 @@
-import { AdvancedBonus, BonusWithoutLvl, DefaultValuesModel, StatsModel } from 'src/app/models/hordes';
+import { AdvancedBonus, BonusWithoutLvl, DefaultValuesModel, StatsModel } from 'src/app/models/game';
 
 // Prix du prochain niveau, même formule que l'API (bonusLevelPrice) : prix × n ^ exposant, arrondi à la dizaine
 export function bonusPrice(bonus: BonusWithoutLvl, lvl: number, defaultValues: DefaultValuesModel): number {

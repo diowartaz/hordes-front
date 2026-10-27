@@ -7,7 +7,7 @@ import { GameApiService } from 'src/app/services/game-api/game-api.service';
 import { GameComponent } from './game/game.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClassicPageComponent } from '../classic-page.component';
-import { ProfilModel } from 'src/app/models/hordes';
+import { ProfilModel } from 'src/app/models/game';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { XPToLVLandXP } from 'src/app/shared/utils/xp';
 

@@ -20,7 +20,7 @@ function errorMessage(error: HttpErrorResponse): string {
   if (error.status === 401) {
     return 'Your session has expired, please log in again';
   }
-  // Format de hordes-api : { statusCode, code, message, details? }
+  // Format de the-black-hour-api : { statusCode, code, message, details? }
   const backendMessage = error.error?.message;
   return typeof backendMessage === 'string' ? backendMessage : 'Something went wrong, please try again';
 }

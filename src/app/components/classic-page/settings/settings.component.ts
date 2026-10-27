@@ -24,7 +24,7 @@ interface UpgradeForm {
   confirmPassword: FormControl<string>;
 }
 
-// Mêmes règles que UpgradeGuestDto côté hordes-api
+// Mêmes règles que UpgradeGuestDto côté the-black-hour-api
 const USERNAME_PATTERN = /^[a-zA-Z0-9_-]+$/;
 const PASSWORD_MAX = 72;
 

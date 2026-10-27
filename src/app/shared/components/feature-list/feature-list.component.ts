@@ -8,7 +8,7 @@ import { IconComponent, IconName } from '../icon/icon.component';
   template: `
     <header class="brand">
       <app-icon name="skull" [size]="44" />
-      <h1 class="neon-title">Zombie Waves</h1>
+      <h1 class="neon-title">The Black Hour</h1>
       <span class="label">Survive one more night</span>
     </header>
     <ul class="features">

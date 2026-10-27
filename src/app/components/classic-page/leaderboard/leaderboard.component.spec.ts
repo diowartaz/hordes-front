@@ -5,7 +5,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { BehaviorSubject } from 'rxjs';
 import { components } from 'src/app/models/api';
 
-import { LeaderboardHordesComponent } from './leaderboard-hordes.component';
+import { LeaderboardComponent } from './leaderboard.component';
 
 type Entry = components['schemas']['LeaderboardEntryResponse'];
 
@@ -26,9 +26,9 @@ const response = (page: number, count: number, total: number): components['schem
   leader: total > 0 ? entry(1) : null,
 });
 
-describe('LeaderboardHordesComponent', () => {
-  let component: LeaderboardHordesComponent;
-  let fixture: ComponentFixture<LeaderboardHordesComponent>;
+describe('LeaderboardComponent', () => {
+  let component: LeaderboardComponent;
+  let fixture: ComponentFixture<LeaderboardComponent>;
   let http: HttpTestingController;
   const queryParams = new BehaviorSubject(convertToParamMap({}));
 
@@ -41,7 +41,7 @@ describe('LeaderboardHordesComponent', () => {
   beforeEach(async () => {
     queryParams.next(convertToParamMap({}));
     await TestBed.configureTestingModule({
-      imports: [LeaderboardHordesComponent],
+      imports: [LeaderboardComponent],
       providers: [
         provideRouter([]),
         provideHttpClient(),
@@ -51,7 +51,7 @@ describe('LeaderboardHordesComponent', () => {
     }).compileComponents();
 
     http = TestBed.inject(HttpTestingController);
-    fixture = TestBed.createComponent(LeaderboardHordesComponent);
+    fixture = TestBed.createComponent(LeaderboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

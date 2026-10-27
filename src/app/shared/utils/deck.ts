@@ -1,4 +1,4 @@
-import { CatalogBuildingModel, ItemModel, Rarity } from 'src/app/models/hordes';
+import { CatalogBuildingModel, ItemModel, Rarity } from 'src/app/models/game';
 
 export const ITEMS: ItemModel[] = ['wood', 'metal', 'stone', 'screw', 'patch'];
 

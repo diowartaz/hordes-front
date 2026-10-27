@@ -1,6 +1,6 @@
 import { KeyValuePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { CatalogBuildingModel } from 'src/app/models/hordes';
+import { CatalogBuildingModel } from 'src/app/models/game';
 import { RarityToColorPipe } from '../../pipes/rarity-to-color.pipe';
 import { formatTimeToString } from '../../utils/time';
 import { EffectTooltipComponent } from '../effect-tooltip/effect-tooltip.component';

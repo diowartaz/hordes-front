@@ -1,4 +1,4 @@
-import { XPToLVL } from '../../models/hordes';
+import { XPToLVL } from '../../models/game';
 
 export function XPToLVLandXP(xp: number): XPToLVL {
   const lvl = xpToLvl(xp);

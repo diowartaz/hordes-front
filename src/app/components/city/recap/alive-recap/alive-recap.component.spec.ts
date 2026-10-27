@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createDefaultCityModel } from 'src/app/models/hordes';
+import { createDefaultCityModel } from 'src/app/models/game';
 import { CityService } from 'src/app/services/city/city.service';
 
 import { AliveRecapComponent } from './alive-recap.component';

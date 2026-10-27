@@ -1,6 +1,6 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, computed, inject, input, OnDestroy, signal } from '@angular/core';
-import { BuildingEffectModel } from 'src/app/models/hordes';
+import { BuildingEffectModel } from 'src/app/models/game';
 import { CityService } from 'src/app/services/city/city.service';
 import { buildingEffectText } from '../../utils/building-effects';
 import { IconComponent } from '../icon/icon.component';

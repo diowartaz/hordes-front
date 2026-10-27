@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { CatalogBuildingModel } from 'src/app/models/hordes';
+import { CatalogBuildingModel } from 'src/app/models/game';
 import { CityService } from 'src/app/services/city/city.service';
 
 import { DeckComponent } from './deck.component';

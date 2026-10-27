@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { GameHistoryPlayerModel, GameOutcome } from 'src/app/models/hordes';
+import { GameHistoryPlayerModel, GameOutcome } from 'src/app/models/game';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({

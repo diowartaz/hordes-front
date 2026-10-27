@@ -1,4 +1,4 @@
-import { AdvancedBuildingModel, CityModel, DefaultValuesModel, Rarity } from 'src/app/models/hordes';
+import { AdvancedBuildingModel, CityModel, DefaultValuesModel, Rarity } from 'src/app/models/game';
 import { contains } from './inventory';
 import { formatTimeToString } from './time';
 

@@ -18,7 +18,7 @@ import {
   LeaderboardPosition,
   ProfilModel,
   StatsModel,
-} from 'src/app/models/hordes';
+} from 'src/app/models/game';
 import { UserState } from 'src/app/models/router';
 import {
   ApiCatalog,
@@ -88,7 +88,7 @@ const toSnapshot = (me: Schemas['MeResponse']): PlayerSnapshot => ({
 
 const withState = (city: ApiCity): CityWithState => ({ city: toCityModel(city), state: stateFromCity(city) });
 
-// Appels HTTP vers hordes-api, sans état ni effet de bord. Les réponses sont converties
+// Appels HTTP vers the-black-hour-api, sans état ni effet de bord. Les réponses sont converties
 // vers les modèles du front (shared/utils/api-mappers.ts).
 @Injectable({ providedIn: 'root' })
 export class GameApiService {

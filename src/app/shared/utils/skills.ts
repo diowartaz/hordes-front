@@ -1,4 +1,4 @@
-import { AdvancedSkillModel, CityModel, DefaultValuesModel, SkillModel } from 'src/app/models/hordes';
+import { AdvancedSkillModel, CityModel, DefaultValuesModel, SkillModel } from 'src/app/models/game';
 import { formatTimeToString } from './time';
 
 export function calculateAdvancedSkills(city: CityModel, defaultValues: DefaultValuesModel): AdvancedSkillModel[] {

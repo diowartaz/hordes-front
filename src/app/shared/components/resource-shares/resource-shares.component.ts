@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { CatalogBuildingModel } from 'src/app/models/hordes';
+import { CatalogBuildingModel } from 'src/app/models/game';
 import { ITEMS, resourceShares } from '../../utils/deck';
 import { ITEM_THEME } from '../../utils/theme';
 import { ResourceGemComponent } from '../resource-gem/resource-gem.component';

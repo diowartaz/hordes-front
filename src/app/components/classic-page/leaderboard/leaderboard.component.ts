@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, untracked } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeaderboardBoard, LeaderboardElement } from 'src/app/models/hordes';
+import { LeaderboardBoard, LeaderboardElement } from 'src/app/models/game';
 import { RoutesEnum } from 'src/app/models/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LeaderboardService } from 'src/app/services/leaderboard/leaderboard.service';
@@ -10,12 +10,12 @@ import { pageWindow } from 'src/app/shared/utils/pagination';
 import { ClassicPageComponent } from '../classic-page.component';
 
 @Component({
-  selector: 'app-leaderboard-hordes',
+  selector: 'app-leaderboard',
   imports: [ClassicPageComponent, IconComponent],
-  templateUrl: './leaderboard-hordes.component.html',
-  styleUrls: ['./leaderboard-hordes.component.scss'],
+  templateUrl: './leaderboard.component.html',
+  styleUrls: ['./leaderboard.component.scss'],
 })
-export class LeaderboardHordesComponent {
+export class LeaderboardComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   leaderboardService = inject(LeaderboardService);

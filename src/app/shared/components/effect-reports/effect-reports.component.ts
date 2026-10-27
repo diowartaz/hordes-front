@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { EffectReportModel } from 'src/app/models/hordes';
+import { EffectReportModel } from 'src/app/models/game';
 import { effectReportText } from '../../utils/building-effects';
 import { IconComponent } from '../icon/icon.component';
 

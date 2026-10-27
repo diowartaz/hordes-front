@@ -22,7 +22,7 @@ import {
   ItemModel,
   SkillModel,
   StatsModel,
-} from 'src/app/models/hordes';
+} from 'src/app/models/game';
 import { UserState } from 'src/app/models/router';
 import { computeBonuses } from 'src/app/shared/utils/bonuses';
 import { calculateAdvancedBuildings } from 'src/app/shared/utils/buildings';

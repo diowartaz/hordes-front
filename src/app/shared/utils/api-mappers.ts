@@ -16,11 +16,11 @@ import {
   ProfilModel,
   SkillModel,
   StatsModel,
-} from 'src/app/models/hordes';
+} from 'src/app/models/game';
 import { UserState } from 'src/app/models/router';
 
-// Conversion des réponses de hordes-api (types générés depuis openapi.json) vers les modèles du front.
-// Les composants ne manipulent que les modèles de src/app/models/hordes.ts.
+// Conversion des réponses de the-black-hour-api (types générés depuis openapi.json) vers les modèles du front.
+// Les composants ne manipulent que les modèles de src/app/models/game.ts.
 
 type Schemas = components['schemas'];
 export type ApiCity = Schemas['CityResponse'];

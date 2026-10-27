@@ -4,9 +4,9 @@ import { RouterOutlet } from '@angular/router';
 import { EffectToastComponent } from './template-elements/effect-toast/effect-toast.component';
 
 @Component({
-  selector: 'app-hordes',
-  templateUrl: './hordes.component.html',
-  styleUrls: ['./hordes.component.scss'],
+  selector: 'app-city',
+  templateUrl: './city.component.html',
+  styleUrls: ['./city.component.scss'],
   imports: [CityFooterComponent, RouterOutlet, EffectToastComponent],
 })
-export class HordesComponent {}
+export class CityComponent {}

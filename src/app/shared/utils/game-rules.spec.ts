@@ -8,7 +8,7 @@ import {
   createDefaultDefaultValuesModel,
   createDefaultStatsModel,
   SkillModel,
-} from 'src/app/models/hordes';
+} from 'src/app/models/game';
 import { bonusEffect, bonusPrice, computeBonuses } from './bonuses';
 import { calculateAdvancedBuildings } from './buildings';
 import { contains } from './inventory';

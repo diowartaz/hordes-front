@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { CityService } from 'src/app/services/city/city.service';
 import { SkillToColorPipe, SkillToIconPipe } from 'src/app/shared/pipes/skill-to-icon.pipe';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
-import { AdvancedSkillModel } from 'src/app/models/hordes';
+import { AdvancedSkillModel } from 'src/app/models/game';
 
 @Component({
   selector: 'app-skills',

@@ -1,6 +1,6 @@
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BuildingEffectModel, ItemModel, Rarity } from 'src/app/models/hordes';
+import { BuildingEffectModel, ItemModel, Rarity } from 'src/app/models/game';
 import { RoutesEnum } from 'src/app/models/router';
 import { CityService } from 'src/app/services/city/city.service';
 import { BuildingCardComponent } from 'src/app/shared/components/building-card/building-card.component';

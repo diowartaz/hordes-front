@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
-import { AdvancedBuildingModel, ItemModel } from 'src/app/models/hordes';
+import { AdvancedBuildingModel, ItemModel } from 'src/app/models/game';
 import { EffectTooltipComponent } from 'src/app/shared/components/effect-tooltip/effect-tooltip.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { ResourceGemComponent } from 'src/app/shared/components/resource-gem/resource-gem.component';

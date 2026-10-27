@@ -4,12 +4,12 @@ import {
   EffectReportModel,
   EffectRulesModel,
   ItemModel,
-} from 'src/app/models/hordes';
+} from 'src/app/models/game';
 
 const percent = (value: number) => `${Math.round(value * 100)}%`;
 const minutes = (seconds: number) => `${Math.round(seconds / 60)} min`;
 
-// Description d'un effet de bâtiment spécial (règles dans hordes-api, src/game/city/effects/handlers/).
+// Description d'un effet de bâtiment spécial (règles dans the-black-hour-api, src/game/city/effects/handlers/).
 // `day` : jour de la ville en cours, pour afficher la valeur actuelle des effets qui en dépendent.
 // `rules` : paramètres secondaires des effets, venus du catalogue.
 export function buildingEffectText(

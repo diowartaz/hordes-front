@@ -1,4 +1,4 @@
-import { createDefaultDefaultValuesModel } from 'src/app/models/hordes';
+import { createDefaultDefaultValuesModel } from 'src/app/models/game';
 import { buildingEffectText, effectReportText } from './building-effects';
 
 describe('building effects', () => {

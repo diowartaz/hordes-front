@@ -1,7 +1,7 @@
 import { KeyValuePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BoosterModel } from 'src/app/models/hordes';
+import { BoosterModel } from 'src/app/models/game';
 import { RoutesEnum } from 'src/app/models/router';
 import { ClassicPageComponent } from '../classic-page.component';
 import { CityService } from 'src/app/services/city/city.service';

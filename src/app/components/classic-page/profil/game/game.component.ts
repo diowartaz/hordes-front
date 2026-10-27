@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SubgameComponent } from './subgame/subgame.component';
 
-import { GameHistoryModel, GameOutcome } from 'src/app/models/hordes';
+import { GameHistoryModel, GameOutcome } from 'src/app/models/game';
 
 const OPPOSITE: Record<GameOutcome, GameOutcome> = { win: 'loss', loss: 'win', draw: 'draw' };
 

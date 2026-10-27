@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal, DestroyRef } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { CityService } from 'src/app/services/city/city.service';
-import { ItemModel } from 'src/app/models/hordes';
+import { ItemModel } from 'src/app/models/game';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { ResourceGemComponent } from 'src/app/shared/components/resource-gem/resource-gem.component';
 import { ItemToColorPipe } from 'src/app/shared/pipes/item-to-color.pipe';

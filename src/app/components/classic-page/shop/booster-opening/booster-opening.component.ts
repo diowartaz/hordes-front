@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
-import { BoosterCardModel } from 'src/app/models/hordes';
+import { BoosterCardModel } from 'src/app/models/game';
 import { CityService } from 'src/app/services/city/city.service';
 import { BuildingCardComponent } from 'src/app/shared/components/building-card/building-card.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';

@@ -1,4 +1,4 @@
-import { CatalogBuildingModel, Rarity } from 'src/app/models/hordes';
+import { CatalogBuildingModel, Rarity } from 'src/app/models/game';
 import { autocompleteDeck, byRarityDesc, deckProblems, rarityCounts, resourceShares } from './deck';
 
 function plan(id: number, rarity: Rarity, inventory: Record<string, number>, lvl_max = 1): CatalogBuildingModel {

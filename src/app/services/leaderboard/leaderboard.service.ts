@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { finalize, Subscription } from 'rxjs';
-import { LeaderboardBoard, LeaderboardPage, LeaderboardPosition } from 'src/app/models/hordes';
+import { LeaderboardBoard, LeaderboardPage, LeaderboardPosition } from 'src/app/models/game';
 import { runRequest } from 'src/app/shared/utils/http';
 import { GameApiService } from '../game-api/game-api.service';
 

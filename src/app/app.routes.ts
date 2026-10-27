@@ -36,14 +36,14 @@ export const routes: Routes = [
   {
     path: RoutesEnum.RECAP,
     loadComponent: () =>
-      import('./components/hordes/recap/alive-recap/alive-recap.component').then((m) => m.AliveRecapComponent),
+      import('./components/city/recap/alive-recap/alive-recap.component').then((m) => m.AliveRecapComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.RECAP] },
   },
   {
     path: RoutesEnum.DEATH_RECAP,
     loadComponent: () =>
-      import('./components/hordes/recap/death-recap/death-recap.component').then((m) => m.DeathRecapComponent),
+      import('./components/city/recap/death-recap/death-recap.component').then((m) => m.DeathRecapComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.DEATH_RECAP] },
   },
@@ -56,8 +56,8 @@ export const routes: Routes = [
   {
     path: RoutesEnum.LEADERBOARD,
     loadComponent: () =>
-      import('./components/classic-page/leaderboard-hordes/leaderboard-hordes.component').then(
-        (m) => m.LeaderboardHordesComponent,
+      import('./components/classic-page/leaderboard/leaderboard.component').then(
+        (m) => m.LeaderboardComponent,
       ),
   },
   {
@@ -80,24 +80,24 @@ export const routes: Routes = [
   },
   {
     path: RoutesEnum.PLAY,
-    loadComponent: () => import('./components/hordes/hordes.component').then((m) => m.HordesComponent),
+    loadComponent: () => import('./components/city/city.component').then((m) => m.CityComponent),
     canActivate: [authGuard, gameLoadedGuard, stateGuard],
     data: { allowedStates: [UserState.PLAYING] },
     children: [
       {
         path: 'dig',
         loadComponent: () =>
-          import('./components/hordes/actions/diggings/diggings.component').then((m) => m.DiggingsComponent),
+          import('./components/city/actions/diggings/diggings.component').then((m) => m.DiggingsComponent),
       },
       {
         path: 'learn',
         loadComponent: () =>
-          import('./components/hordes/actions/skills/skills.component').then((m) => m.SkillsComponent),
+          import('./components/city/actions/skills/skills.component').then((m) => m.SkillsComponent),
       },
       {
         path: 'build',
         loadComponent: () =>
-          import('./components/hordes/actions/buildings/buildings.component').then((m) => m.BuildingsComponent),
+          import('./components/city/actions/buildings/buildings.component').then((m) => m.BuildingsComponent),
       },
       {
         path: '',

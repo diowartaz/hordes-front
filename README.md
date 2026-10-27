@@ -2,18 +2,18 @@
 
 | Category            | Value                                            |
 | ------------------- | ------------------------------------------------ |
-| Game Name           | **Hordes**                                       |
+| Game Name           | **The Black Hour**                               |
 | Genre               | **Single-player survival (asynchronous ranked)** |
 | Front-end           | **Angular 22**                                   |
 | Back-end            | **Node.js + Express**                            |
 | Database            | **MongoDB**                                      |
 | Target Distribution | **Android (Google Play / APK)**                  |
 
-# 🧟 HORDES — Official Game Wiki
+# 🧟 THE BLACK HOUR — Official Game Wiki
 
 ## Overview
 
-**Hordes** is a single-player survival strategy game where you are the last human alive in a ruined city.  
+**The Black Hour** is a single-player survival strategy game where you are the last human alive in a ruined city.  
 Each night, waves of zombies attack your defenses. Each day, you scavenge, build, and learn in an effort to survive one more night.
 
 How long can you last before the horde overwhelms you?
