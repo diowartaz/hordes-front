@@ -128,6 +128,7 @@ export function toCityModel(city: ApiCity): CityModel {
     state: stateFromCity(city),
     attackRecap: toAttackRecap(city.attackRecap),
     ranked: city.ranked,
+    ranked_deadline: city.rankedDeadline ? Date.parse(city.rankedDeadline) : null,
     deck_status: {
       size: city.deckStatus.size,
       unseen: city.deckStatus.unseen,

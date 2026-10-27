@@ -542,7 +542,7 @@ export interface components {
              * @enum {string|null}
              */
             outcome: "win" | "loss" | "draw" | null;
-            /** @description Partie ranked réglée par l'inactivité d'un des deux joueurs */
+            /** @description Partie ranked réglée par abandon : le second joueur n'a pas terminé avant son échéance */
             forfeit: boolean;
         };
         ProfileResponse: {
@@ -746,6 +746,12 @@ export interface components {
             /** @enum {string} */
             phase: "playing" | "dayRecap" | "deathRecap";
             ranked: boolean;
+            /**
+             * Format: date-time
+             * @description Échéance du joueur d'une ranked : passé ce moment, il perd par abandon s'il a rejoint en second,
+             *     sinon (premier joueur, ou contre un bot) la partie est annulée et continue en normal ; null hors ranked
+             */
+            rankedDeadline: string | null;
             day: number;
             defense: number;
             /** @description Heure de jeu, en secondes depuis minuit */

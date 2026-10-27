@@ -71,6 +71,7 @@ export function createDefaultCityModel(): CityModel {
       effects: [],
     },
     ranked: false,
+    ranked_deadline: null,
     deck_status: { size: 0, unseen: 0, completed: 0, recycle_threshold: 0, recycling: false },
     night_defense: { min: 0, max: 0, per_idle_hour: 0 },
     dig_duration: 0,
@@ -97,6 +98,8 @@ export interface CityModel {
   attackRecap: AttackRecapModel;
   defaultCity?: boolean;
   ranked: boolean;
+  // Échéance (timestamp) du joueur d'une ranked : passé ce moment, abandon s'il est second, sinon partie annulée
+  ranked_deadline: number | null;
   deck_status: DeckStatusModel;
   // Défense ajoutée pour la prochaine nuit seulement (Armory, Gambler's Gate), plus per_idle_hour par heure
   // de jeu entière non utilisée au moment de dormir (Night Owl Perch)

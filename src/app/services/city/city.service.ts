@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, Injector, Signal, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { filter, interval, map, startWith, switchMap, takeWhile } from 'rxjs';
+import { filter, interval, map, of, startWith, switchMap, takeWhile, tap } from 'rxjs';
 import {
   AdvancedBonus,
   AdvancedBuildingModel,
@@ -89,6 +89,11 @@ export class CityService {
     return { min: min + idle, max: max + idle };
   });
 
+  // Temps réel restant au joueur d'une ranked avant son échéance (null sans échéance).
+  // À l'échéance, le joueur est rechargé : l'API constate l'abandon (second joueur) ou l'annulation (premier joueur,
+  // contre un bot) et la ville devient une partie normale.
+  rankedTimeLeftMs: Signal<number | null>;
+
   buildLoading = signal<boolean>(false);
   learnLoading = signal<boolean>(false);
   endDayLoading = signal<boolean>(false);
@@ -104,6 +109,7 @@ export class CityService {
 
   constructor() {
     this.cityTimeSeconds = this.setCityTimeSeconds();
+    this.rankedTimeLeftMs = this.setRankedTimeLeftMs();
   }
 
   // Horloge de jeu : extrapole l'heure de la ville depuis la dernière réponse du serveur
@@ -139,6 +145,29 @@ export class CityService {
           );
         }),
       ),
+    );
+  }
+
+  setRankedTimeLeftMs(): Signal<number | null> {
+    const deadline = computed(() => this.city().ranked_deadline);
+    return toSignal(
+      toObservable(deadline, { injector: this.appInjector }).pipe(
+        switchMap((at) =>
+          at === null
+            ? of(null)
+            : interval(1000).pipe(
+                startWith(0),
+                map(() => Math.max(0, at - Date.now())),
+                takeWhile((left) => left > 0, true),
+                tap((left) => {
+                  if (left === 0) {
+                    this.loadPlayer();
+                  }
+                }),
+              ),
+        ),
+      ),
+      { injector: this.appInjector, initialValue: null },
     );
   }
 

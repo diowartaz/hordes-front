@@ -41,4 +41,17 @@
       Sleep
     </button>
   </div>
+  @let rankedLeft = cityService.rankedTimeLeftMs();
+  @if (rankedLeft !== null) {
+    <div
+      class="ranked-timer"
+      [class.danger]="rankedLeft < rankedUrgentMs"
+      title="Finish your game before this delay: past it, the game no longer counts as ranked (forfeit loss if you joined second)"
+    >
+      <app-icon name="clock" [size]="16" />
+      <span>Ranked</span>
+      <strong>{{ formatCountdown(rankedLeft) }}</strong>
+      <span class="hint">left to finish</span>
+    </div>
+  }
 }
