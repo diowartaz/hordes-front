@@ -40,6 +40,11 @@ export class DeckComponent {
   draft = linkedSignal(() => this.cityService.deck());
   rarityFilter = signal<Rarity | 'all'>('all');
   itemFilter = signal<ItemModel | 'all'>('all');
+  // Spécial = plan à effet
+  readonly kinds = ['all', 'normal', 'special'] as const;
+  kindFilter = signal<'all' | 'normal' | 'special'>('all');
+  // Recherche dans le nom ou le texte de l'effet
+  search = signal('');
   // Emplacement survolé : sa carte complète s'affiche en bulle, ancrée à droite dans la moitié droite de l'écran
   previewId = signal<number | null>(null);
   previewAlign = signal<'left' | 'right'>('left');
@@ -63,13 +68,21 @@ export class DeckComponent {
   ownedCount = computed(() => this.cityService.catalogBuildings().filter((b) => this.owned(b.id) > 0).length);
 
   // Plans possédés d'abord, puis par rareté décroissante et par nom
-  collection = computed(() =>
-    this.cityService
+  collection = computed(() => {
+    const query = normalize(this.search().trim());
+    return this.cityService
       .catalogBuildings()
       .filter((b) => this.rarityFilter() === 'all' || b.rarity === this.rarityFilter())
       .filter((b) => this.itemFilter() === 'all' || (b.inventory[this.itemFilter()] ?? 0) > 0)
-      .sort((a, b) => Number(this.owned(b.id) > 0) - Number(this.owned(a.id) > 0) || byRarityDesc(a, b)),
-  );
+      .filter((b) => this.kindFilter() === 'all' || !!b.effect === (this.kindFilter() === 'special'))
+      .filter(
+        (b) =>
+          !query ||
+          normalize(b.name).includes(query) ||
+          (!!b.effect && normalize(this.effectText(b.effect)).includes(query)),
+      )
+      .sort((a, b) => Number(this.owned(b.id) > 0) - Number(this.owned(a.id) > 0) || byRarityDesc(a, b));
+  });
 
   owned(id: number): number {
     return this.cityService.collection()[id] ?? 0;
@@ -136,6 +149,10 @@ export class DeckComponent {
     this.itemFilter.set(value as ItemModel | 'all');
   }
 
+  setKindFilter(value: 'all' | 'normal' | 'special'): void {
+    this.kindFilter.set(value);
+  }
+
   autocomplete(): void {
     this.draft.set(this.autocompleted());
   }
@@ -155,4 +172,12 @@ export class DeckComponent {
   goToShop(): void {
     this.router.navigate([RoutesEnum.SHOP]);
   }
+}
+
+// Minuscules sans accents, pour une recherche tolérante
+function normalize(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '');
 }

@@ -3,6 +3,7 @@
 }
 
 .card {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -36,6 +37,22 @@
     opacity: 0.45;
     filter: grayscale(0.6);
   }
+}
+
+// Pastille cochée en coin : repère « dans le deck » lisible d'un coup d'œil
+.deck-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c);
+  color: var(--bg);
+  box-shadow: 0 0 0 2px var(--bg);
 }
 
 .head {

@@ -5,6 +5,9 @@
   [class.compact]="compact()"
   [style.--c]="building().rarity | rarityToColor"
 >
+  @if (inDeck()) {
+    <span class="deck-badge" aria-hidden="true"><app-icon name="check" [size]="12" /></span>
+  }
   <div class="head">
     <span class="name">{{ building().name }}</span>
     @if (locked()) {

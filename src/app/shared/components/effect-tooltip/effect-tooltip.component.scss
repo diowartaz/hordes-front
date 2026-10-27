@@ -1,5 +1,4 @@
 :host {
-  position: relative;
   display: inline-flex;
 }
 
@@ -23,11 +22,9 @@
   }
 }
 
+// Rendue dans l'overlay du CDK, positionnée par lui
 .bubble {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  z-index: 20;
+  display: block;
   width: max-content;
   max-width: 220px;
   padding: 8px 10px;

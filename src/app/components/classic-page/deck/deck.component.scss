@@ -207,6 +207,26 @@ h2 {
   gap: 10px;
 }
 
+.search {
+  width: min(320px, 100%);
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-m);
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  background: none;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  &::placeholder {
+    color: var(--text-mute);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 40%, transparent);
+  }
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -247,6 +267,32 @@ h2 {
   &:disabled {
     cursor: default;
   }
+  app-building-card {
+    display: block;
+    height: 100%;
+    transition:
+      opacity 0.2s,
+      filter 0.2s;
+  }
+  // Cartes possédées hors deck estompées : celles du deck ressortent par contraste
+  &[aria-pressed='false']:not(:disabled) app-building-card {
+    opacity: 0.5;
+    filter: saturate(0.4);
+  }
+  &[aria-pressed='false']:not(:disabled):is(:hover, :focus-visible) app-building-card {
+    opacity: 0.85;
+    filter: none;
+  }
+  // Au survol d'une carte du deck, le pied annonce le retrait
+  &:is(:hover, :focus-visible) .card-foot.in {
+    background: var(--orange);
+    .foot-idle {
+      display: none;
+    }
+    .foot-hover {
+      display: flex;
+    }
+  }
 }
 
 .card-foot {
@@ -258,4 +304,26 @@ h2 {
   font-weight: 700;
   white-space: nowrap;
   color: var(--text-mute);
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .foot-hover {
+    display: none;
+  }
+  &.in,
+  &.add {
+    padding: 2px 8px;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  &.in {
+    background: var(--c);
+    color: var(--bg);
+  }
+  &.add {
+    border: 1px solid var(--text-mute);
+    color: var(--text);
+  }
 }

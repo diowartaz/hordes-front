@@ -114,4 +114,28 @@ describe('DeckComponent', () => {
     await fixture.whenStable();
     expect(host.querySelector('.preview')).toBeNull();
   });
+
+  function collectionNames(): string[] {
+    return fixture.componentInstance.collection().map((b) => b.name);
+  }
+
+  it('filtre la collection entre plans normaux et spéciaux', () => {
+    const deck = fixture.componentInstance;
+    deck.setKindFilter('special');
+    expect(collectionNames()).toEqual(['Night Totem']);
+    deck.setKindFilter('normal');
+    expect(collectionNames()).toEqual(['Scrap Wall']);
+    deck.setKindFilter('all');
+    expect(collectionNames().length).toBe(2);
+  });
+
+  it("recherche dans le nom (sans casse) ou dans le texte de l'effet", () => {
+    const deck = fixture.componentInstance;
+    deck.search.set('  scrap ');
+    expect(collectionNames()).toEqual(['Scrap Wall']);
+    deck.search.set('PERMANENT');
+    expect(collectionNames()).toEqual(['Night Totem']);
+    deck.search.set('nothing like this');
+    expect(collectionNames()).toEqual([]);
+  });
 });

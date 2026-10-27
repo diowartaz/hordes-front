@@ -33,11 +33,7 @@
 
       <div class="slots">
         @for (building of draftBuildings(); track building.id) {
-          <div
-            class="slot-wrap"
-            (pointerenter)="showPreview(building.id, $event)"
-            (pointerleave)="hidePreview($event)"
-          >
+          <div class="slot-wrap" (pointerenter)="showPreview(building.id, $event)" (pointerleave)="hidePreview($event)">
             <span class="slot" [style.--c]="building.rarity | rarityToColor">{{ building.name }}</span>
             <span class="slot-actions">
               <button
@@ -103,6 +99,27 @@
           <app-icon name="sparkle" [size]="16" />Get more plans
         </button>
       </div>
+      <input
+        type="search"
+        class="search"
+        placeholder="Search name or effect"
+        aria-label="Search plans"
+        [value]="search()"
+        (input)="search.set($any($event.target).value)"
+      />
+      <div class="filters" role="group" aria-label="Filter by kind">
+        @for (kind of kinds; track kind) {
+          <button
+            type="button"
+            class="filter"
+            [style.--c]="kind === 'special' ? 'var(--yellow)' : null"
+            [class.active]="kindFilter() === kind"
+            (click)="setKindFilter(kind)"
+          >
+            {{ kind }}
+          </button>
+        }
+      </div>
       <div class="filters" role="group" aria-label="Filter by rarity">
         <button type="button" class="filter" [class.active]="rarityFilter() === 'all'" (click)="setRarityFilter('all')">
           All
@@ -145,17 +162,18 @@
               [inDeck]="inDraft(building.id)"
               [compact]="true"
             >
-              <span class="card-foot">
-                @if (owned(building.id) === 0) {
-                  Find it in boosters
-                } @else if (inDraft(building.id)) {
-                  <app-icon name="check" [size]="14" />In deck
-                } @else if (draft().length < size()) {
-                  <app-icon name="plus" [size]="14" />Add
-                } @else {
-                  Deck full
-                }
-              </span>
+              @if (owned(building.id) === 0) {
+                <span class="card-foot">Find it in boosters</span>
+              } @else if (inDraft(building.id)) {
+                <span class="card-foot in">
+                  <span class="foot-idle"><app-icon name="check" [size]="14" />In deck</span>
+                  <span class="foot-hover"><app-icon name="trash" [size]="14" />Remove</span>
+                </span>
+              } @else if (draft().length < size()) {
+                <span class="card-foot add"><app-icon name="plus" [size]="14" />Add</span>
+              } @else {
+                <span class="card-foot">Deck full</span>
+              }
             </app-building-card>
           </button>
         } @empty {
