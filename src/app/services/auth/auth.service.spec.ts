@@ -11,7 +11,7 @@ const UPGRADE_URL = `${environment.API_URL}auth/guest/upgrade`;
 
 const upgraded: AuthResponse = {
   token: 'new-token',
-  account: { id: '1', username: 'player', email: 'player@example.com', role: 'user', isGuest: false },
+  account: { id: '1', username: 'player', email: 'player@example.com', isGuest: false },
 };
 
 describe('AuthService', () => {

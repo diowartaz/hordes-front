@@ -398,8 +398,6 @@ export interface components {
             id: string;
             username: string;
             email: string;
-            /** @enum {string} */
-            role: "user" | "admin";
             isGuest: boolean;
         };
         AuthResponse: {

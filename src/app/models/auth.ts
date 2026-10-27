@@ -7,7 +7,6 @@ export interface AccountModel {
   id: string;
   username: string;
   email: string;
-  role: 'user' | 'admin';
   isGuest: boolean;
 }
 
