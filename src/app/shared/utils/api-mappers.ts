@@ -14,6 +14,7 @@ import {
   LeaderboardElement,
   LeaderboardPage,
   ProfilModel,
+  ReferralModel,
   SkillModel,
   StatsModel,
 } from 'src/app/models/game';
@@ -29,6 +30,7 @@ export type ApiCatalog = Schemas['CatalogResponse'];
 export type ApiProfile = Schemas['ProfileResponse'];
 export type ApiMatch = Schemas['MatchResponse'];
 export type ApiLeaderboardEntry = Schemas['LeaderboardEntryResponse'];
+export type ApiReferral = Schemas['ReferralResponse'];
 type ApiBuilding = Schemas['BuildingResponse'];
 type ApiBuildingOffer = Schemas['BuildingOfferResponse'];
 type ApiBoosterCard = Schemas['BoosterCardResponse'];
@@ -276,5 +278,13 @@ export function toProfil(profile: ApiProfile): ProfilModel {
     personal_best_zb: profile.personalBest.zombies,
     // L'API renvoie la plus récente en premier, le profil affiche l'historique du plus ancien au plus récent
     match_history: profile.matches.map((match) => toGameHistory(match, profile)).reverse(),
+  };
+}
+
+export function toReferral(referral: ApiReferral): ReferralModel {
+  return {
+    ...referral,
+    sponsor: referral.sponsor ? { ...referral.sponsor } : null,
+    referees: referral.referees.map((referee) => ({ ...referee })),
   };
 }

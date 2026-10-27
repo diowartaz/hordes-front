@@ -1,0 +1,111 @@
+<app-classic-page [title]="'Invite friends'" [subtitle]="'Referral'" [glow]="'var(--green)'">
+  <ng-container icon><app-icon name="user-plus" [size]="28" /></ng-container>
+  <ng-container content>
+    @if (referral(); as referral) {
+      <div class="referral">
+        <section class="neon-card">
+          <h3 class="label">Your invite code</h3>
+          <p class="hint">
+            Each friend who picks you as sponsor earns you <strong>{{ dividendPercent() }}%</strong> of their
+            end-of-game coins, forever. They get <strong>{{ referral.welcomeGift | number }} coins</strong> when they
+            pick their first sponsor.
+          </p>
+          <div class="code" aria-label="Your invite code">{{ referral.code }}</div>
+          <input class="link" type="text" readonly [value]="link()" aria-label="Invite link" />
+          <div class="actions">
+            <button type="button" class="cta" (click)="copyLink()">
+              <app-icon [name]="copied() ? 'check' : 'friends'" [size]="18" />
+              {{ copied() ? 'Link copied' : 'Copy invite link' }}
+            </button>
+            <button
+              type="button"
+              class="ghost-btn"
+              [disabled]="referralService.regenerateCodeLoading()"
+              (click)="regenerateCode()"
+            >
+              <app-icon name="refresh" [size]="18" />New code
+            </button>
+          </div>
+        </section>
+
+        <section class="neon-card">
+          <div class="section-head">
+            <h3 class="label">Your referees</h3>
+            <span class="neon-chip">{{ referral.referees.length }}/{{ referral.maxReferees }}</span>
+          </div>
+          @if (referral.referees.length === 0) {
+            <p class="hint">No referees yet: share your invite link.</p>
+          } @else {
+            <ul class="referees">
+              @for (referee of referral.referees; track referee.playerId) {
+                <li class="referee">
+                  <button type="button" class="text-btn name" (click)="goToProfil(referee.playerId)">
+                    {{ referee.username }}
+                  </button>
+                  <span class="since">since {{ referee.since | date: 'mediumDate' }}</span>
+                  <span class="earnings"> +{{ referee.earnings | number }}<app-icon name="money" [size]="14" /> </span>
+                  <button
+                    type="button"
+                    class="icon-btn remove"
+                    [attr.aria-label]="'Remove ' + referee.username"
+                    [disabled]="referralService.removeRefereeLoading()"
+                    (click)="removeReferee(referee)"
+                  >
+                    <app-icon name="trash" [size]="18" />
+                  </button>
+                </li>
+              }
+            </ul>
+            <p class="total">
+              Total earned: <strong>{{ totalEarnings() | number }}</strong> <app-icon name="money" [size]="14" />
+            </p>
+          }
+        </section>
+
+        <section class="neon-card">
+          <h3 class="label">Your sponsor</h3>
+          @if (referral.sponsor; as sponsor) {
+            <p class="sponsor">
+              <button type="button" class="text-btn name" (click)="goToProfil(sponsor.playerId)">
+                {{ sponsor.username }}
+              </button>
+              <span class="since">since {{ sponsor.since | date: 'mediumDate' }}</span>
+            </p>
+            @if (referralService.lastGift() > 0) {
+              <p class="gift">+{{ referralService.lastGift() | number }} coins received!</p>
+            }
+          } @else {
+            <p class="hint">
+              @if (!referral.welcomeGiftReceived) {
+                Enter a friend's code to get <strong>{{ referral.welcomeGift | number }} coins</strong>.
+              }
+              Your sponsor's account must be older than yours, and you can't change sponsor afterwards.
+            </p>
+            <form class="sponsor-form" [formGroup]="sponsorForm" (ngSubmit)="setSponsor()">
+              <label class="neon-field" [class.invalid]="sponsorCode.touched && sponsorCode.invalid">
+                <app-icon name="key" [size]="20" />
+                <input
+                  type="text"
+                  placeholder="Sponsor code"
+                  autocomplete="off"
+                  maxlength="32"
+                  formControlName="code"
+                />
+              </label>
+              <button type="submit" class="cta cta-pink">
+                @if (referralService.setSponsorLoading()) {
+                  <mat-spinner diameter="22"></mat-spinner>
+                } @else {
+                  <app-icon name="check" [size]="20" />
+                }
+                Confirm
+              </button>
+            </form>
+          }
+        </section>
+      </div>
+    } @else if (referralService.loadLoading()) {
+      <div class="loading"><mat-spinner diameter="36"></mat-spinner></div>
+    }
+  </ng-container>
+</app-classic-page>

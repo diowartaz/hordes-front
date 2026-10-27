@@ -15,12 +15,15 @@ import { Router } from '@angular/router';
 import { finalize, take } from 'rxjs';
 import { RoutesEnum } from '../../models/router';
 import { AuthService, SignUpResult } from 'src/app/services/auth/auth.service';
+import { SignUpParams } from 'src/app/models/auth';
+import { clearPendingReferralCode, normalizeReferralCode, pendingReferralCode } from 'src/app/shared/utils/referral';
 
 interface SignUpForm {
   email: FormControl<string>;
   username: FormControl<string>;
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
+  referralCode: FormControl<string>;
 }
 
 @Component({
@@ -66,6 +69,11 @@ export class SignUpComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required, this.confirmPasswordMatchValidator()],
       }),
+      // Facultatif, prérempli par un lien d'invitation (?ref=CODE)
+      referralCode: new FormControl(pendingReferralCode(), {
+        nonNullable: true,
+        validators: [Validators.maxLength(32)],
+      }),
     });
   }
 
@@ -78,11 +86,15 @@ export class SignUpComponent implements OnInit {
       return;
     }
     this.loading.set(true);
-    const params = {
+    const params: SignUpParams = {
       email: this.formgroup.controls.email.value,
       username: this.formgroup.controls.username.value,
       password: this.formgroup.controls.password.value,
     };
+    const referralCode = normalizeReferralCode(this.formgroup.controls.referralCode.value);
+    if (referralCode) {
+      params.referralCode = referralCode;
+    }
     this.authService
       .signUp(params)
       .pipe(
@@ -97,6 +109,7 @@ export class SignUpComponent implements OnInit {
             this.emailAlreadyExists.set(result.error.emailAlreadyExists);
             this.usernameAlreadyExists.set(result.error.usernameAlreadyExists);
           } else {
+            clearPendingReferralCode();
             this.router.navigate([RoutesEnum.SIGNIN]);
           }
         },

@@ -30,6 +30,18 @@
     />
   </label>
 
+  <label class="neon-field">
+    <app-icon name="key" [size]="20" />
+    <input
+      type="text"
+      placeholder="Sponsor code (optional)"
+      autocomplete="off"
+      maxlength="32"
+      class="referral-input"
+      formControlName="referralCode"
+    />
+  </label>
+
   <div class="auth-errors" aria-live="polite">
     @if (fieldHasError('email')) {
       @if (formgroup.controls.email.errors?.['required']) {

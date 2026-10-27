@@ -15,6 +15,7 @@ export enum RoutesEnum {
   DEATH_RECAP = 'death-recap',
   SHOP = 'shop',
   DECK = 'deck',
+  REFERRAL = 'referral',
 }
 
 export enum UserState {
@@ -53,6 +54,7 @@ export const STATE_LESS_ROUTES: string[] = [
   RoutesEnum.LEADERBOARD,
   RoutesEnum.SHOP,
   RoutesEnum.DECK,
+  RoutesEnum.REFERRAL,
   RoutesEnum.SETTINGS,
 ];
 

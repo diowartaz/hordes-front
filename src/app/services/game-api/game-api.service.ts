@@ -17,6 +17,7 @@ import {
   LeaderboardPage,
   LeaderboardPosition,
   ProfilModel,
+  ReferralModel,
   StatsModel,
 } from 'src/app/models/game';
 import { UserState } from 'src/app/models/router';
@@ -25,6 +26,7 @@ import {
   ApiCity,
   ApiPlayer,
   ApiProfile,
+  ApiReferral,
   stateFromCity,
   toBonusReferences,
   toBoosterCards,
@@ -36,6 +38,7 @@ import {
   toInventory,
   toLeaderboardPage,
   toProfil,
+  toReferral,
   toStatsModel,
 } from 'src/app/shared/utils/api-mappers';
 import { environment } from 'src/environments/environment';
@@ -72,6 +75,13 @@ const toActionResult = (response: Schemas['ActionResponse']): ActionResult => ({
   city: toCityModel(response.city),
   effects: response.effects,
 });
+
+// Choix du parrain : le don de bienvenue éventuel est crédité dans les stats
+export interface SponsorLink {
+  referral: ReferralModel;
+  giftAwarded: number;
+  stats: StatsModel;
+}
 
 export interface CityWithState {
   city: CityModel;
@@ -184,6 +194,28 @@ export class GameApiService {
 
   getProfil(id: string): Observable<ProfilModel> {
     return this.httpClient.get<ApiProfile>(this.API_URL + `players/${id}/profile`).pipe(map(toProfil));
+  }
+
+  getReferral(): Observable<ReferralModel> {
+    return this.httpClient.get<ApiReferral>(this.API_URL + 'me/referral').pipe(map(toReferral));
+  }
+
+  setSponsor(code: string): Observable<SponsorLink> {
+    return this.httpClient.put<Schemas['SponsorLinkResponse']>(this.API_URL + 'me/referral/sponsor', { code }).pipe(
+      map((response) => ({
+        referral: toReferral(response.referral),
+        giftAwarded: response.giftAwarded,
+        stats: toStatsModel(response.player),
+      })),
+    );
+  }
+
+  removeReferee(playerId: string): Observable<ReferralModel> {
+    return this.httpClient.delete<ApiReferral>(this.API_URL + `me/referral/referees/${playerId}`).pipe(map(toReferral));
+  }
+
+  regenerateReferralCode(): Observable<ReferralModel> {
+    return this.httpClient.post<ApiReferral>(this.API_URL + 'me/referral/code', {}).pipe(map(toReferral));
   }
 
   // Dernière partie terminée du joueur (écran de fin de partie)

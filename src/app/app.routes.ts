@@ -56,9 +56,7 @@ export const routes: Routes = [
   {
     path: RoutesEnum.LEADERBOARD,
     loadComponent: () =>
-      import('./components/classic-page/leaderboard/leaderboard.component').then(
-        (m) => m.LeaderboardComponent,
-      ),
+      import('./components/classic-page/leaderboard/leaderboard.component').then((m) => m.LeaderboardComponent),
   },
   {
     path: RoutesEnum.PROFIL,
@@ -71,6 +69,12 @@ export const routes: Routes = [
   {
     path: RoutesEnum.SHOP,
     loadComponent: () => import('./components/classic-page/shop/shop.component').then((m) => m.ShopComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: RoutesEnum.REFERRAL,
+    loadComponent: () =>
+      import('./components/classic-page/referral/referral.component').then((m) => m.ReferralComponent),
     canActivate: [authGuard],
   },
   {
@@ -91,8 +95,7 @@ export const routes: Routes = [
       },
       {
         path: 'learn',
-        loadComponent: () =>
-          import('./components/city/actions/skills/skills.component').then((m) => m.SkillsComponent),
+        loadComponent: () => import('./components/city/actions/skills/skills.component').then((m) => m.SkillsComponent),
       },
       {
         path: 'build',

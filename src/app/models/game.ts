@@ -396,6 +396,29 @@ export interface LeaderboardPage {
   leader: LeaderboardElement | null;
 }
 
+// Parrainage du joueur connecté : son code, son parrain et ses filleuls
+export interface ReferralSponsorModel {
+  playerId: string;
+  username: string;
+  since: string;
+}
+
+export interface RefereeModel extends ReferralSponsorModel {
+  // Total versé au parrain par ce filleul depuis le lien
+  earnings: number;
+}
+
+export interface ReferralModel {
+  code: string;
+  maxReferees: number;
+  // 0.1 pour 10 %
+  dividendRate: number;
+  welcomeGift: number;
+  welcomeGiftReceived: boolean;
+  sponsor: ReferralSponsorModel | null;
+  referees: RefereeModel[];
+}
+
 // Rang du joueur connecté, null tant qu'il n'a pas terminé de partie dans ce mode
 export interface LeaderboardPosition {
   rank: number | null;

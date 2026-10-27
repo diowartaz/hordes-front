@@ -19,6 +19,7 @@ export interface SignUpParams {
   email: string;
   password: string;
   username: string;
+  referralCode?: string;
 }
 
 export interface SignInParams {

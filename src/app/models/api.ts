@@ -170,6 +170,77 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/referral": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Code de parrainage, parrain et filleuls du joueur connecté */
+        get: operations["ReferralsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/referral/sponsor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Choisit son parrain, une seule fois (404 REFERRAL_CODE_NOT_FOUND ; 422 ALREADY_SPONSORED, SELF_REFERRAL,
+         *     SPONSOR_NOT_OLDER, SPONSOR_FULL). Le premier lien verse le don de bienvenue.
+         */
+        put: operations["ReferralsController_setSponsor"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/referral/referees/{playerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Retire un filleul (404 REFEREE_NOT_FOUND) : il pourra revenir avec le code actuel, sauf s'il est régénéré */
+        delete: operations["ReferralsController_removeReferee"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/referral/code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Régénère le code de parrainage : l'ancien ne marche plus, les filleuls actuels restent */
+        post: operations["ReferralsController_regenerateCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/city": {
         parameters: {
             query?: never;
@@ -393,6 +464,8 @@ export interface components {
             email: string;
             username: string;
             password: string;
+            /** @description Code de parrainage facultatif : un code inconnu ou refusé fait échouer l'inscription */
+            referralCode?: string;
         };
         AccountResponse: {
             id: string;
@@ -485,6 +558,52 @@ export interface components {
             createdAt: string;
             /** @description Dernières parties, de la plus récente à la plus ancienne */
             matches: components["schemas"]["MatchResponse"][];
+        };
+        ReferralSponsorResponse: {
+            playerId: string;
+            username: string;
+            /**
+             * Format: date-time
+             * @description Date du lien
+             */
+            since: string;
+        };
+        RefereeResponse: {
+            playerId: string;
+            username: string;
+            /**
+             * Format: date-time
+             * @description Date du lien
+             */
+            since: string;
+            /** @description Total versé au parrain par ce filleul depuis le lien */
+            earnings: number;
+        };
+        ReferralResponse: {
+            /** @description Code à donner aux futurs filleuls */
+            code: string;
+            /** @description Nombre maximal de filleuls */
+            maxReferees: number;
+            /** @description Part des gains de fin de partie d'un filleul versée au parrain (0.1 pour 10 %) */
+            dividendRate: number;
+            /** @description Don versé au filleul à son premier parrain */
+            welcomeGift: number;
+            welcomeGiftReceived: boolean;
+            /** @description Parrain du joueur, null s'il n'en a pas (il peut alors en choisir un) */
+            sponsor: components["schemas"]["ReferralSponsorResponse"] | null;
+            /** @description Filleuls actuels, du plus ancien lien au plus récent */
+            referees: components["schemas"]["RefereeResponse"][];
+        };
+        SetSponsorDto: {
+            /** @description Code de parrainage du futur parrain */
+            code: string;
+        };
+        SponsorLinkResponse: {
+            referral: components["schemas"]["ReferralResponse"];
+            /** @description Don de bienvenue versé par ce lien (0 s'il avait déjà été reçu) */
+            giftAwarded: number;
+            /** @description Joueur après le lien : monnaie créditée du don */
+            player: components["schemas"]["PlayerResponse"];
         };
         InventoryResponse: {
             wood: number;
@@ -1149,6 +1268,89 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProfileResponse"];
+                };
+            };
+        };
+    };
+    ReferralsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReferralResponse"];
+                };
+            };
+        };
+    };
+    ReferralsController_setSponsor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetSponsorDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SponsorLinkResponse"];
+                };
+            };
+        };
+    };
+    ReferralsController_removeReferee: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id du filleul */
+                playerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReferralResponse"];
+                };
+            };
+        };
+    };
+    ReferralsController_regenerateCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReferralResponse"];
                 };
             };
         };
