@@ -273,6 +273,7 @@ export function toProfil(profile: ApiProfile): ProfilModel {
   return {
     username: profile.username,
     rank: profile.rank,
+    ranked_points: profile.rankedPoints,
     xp: profile.xp,
     creation_date: profile.createdAt,
     personal_best_day: profile.personalBest.day,

@@ -18,29 +18,31 @@
         </div>
       </section>
 
-      <div class="tiles">
-        <div class="stat-tile" style="--c: var(--yellow)">
-          <div class="icon-tile"><app-icon name="trophy" [size]="22" /></div>
-          <div class="tile-text">
-            <span class="stat-label">Rank</span><span class="stat-value">#{{ profil.rank ?? '—' }}</span>
+      <div class="stats">
+        <div class="tiles">
+          <div class="stat-tile" style="--c: var(--yellow)">
+            <div class="icon-tile"><app-icon name="trophy" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Rank</span><span class="stat-value">#{{ profil.rank ?? '—' }}</span>
+            </div>
           </div>
-        </div>
-        <div class="stat-tile" style="--c: var(--cyan)">
-          <div class="icon-tile"><app-icon name="sparkle" [size]="22" /></div>
-          <div class="tile-text">
-            <span class="stat-label">XP</span><span class="stat-value">{{ profil.xp }}</span>
+          <div class="stat-tile" style="--c: var(--cyan)">
+            <div class="icon-tile"><app-icon name="ranked" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Ranked points</span><span class="stat-value">{{ profil.ranked_points }}</span>
+            </div>
           </div>
-        </div>
-        <div class="stat-tile" style="--c: var(--pink)">
-          <div class="icon-tile"><app-icon name="calendar" [size]="22" /></div>
-          <div class="tile-text">
-            <span class="stat-label">Best days</span><span class="stat-value">{{ profil.personal_best_day }}</span>
+          <div class="stat-tile" style="--c: var(--pink)">
+            <div class="icon-tile"><app-icon name="calendar" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Best days</span><span class="stat-value">{{ profil.personal_best_day }}</span>
+            </div>
           </div>
-        </div>
-        <div class="stat-tile" style="--c: var(--danger)">
-          <div class="icon-tile"><app-icon name="zombie" [size]="22" /></div>
-          <div class="tile-text">
-            <span class="stat-label">Zombies</span><span class="stat-value">{{ profil.personal_best_zb }}</span>
+          <div class="stat-tile" style="--c: var(--danger)">
+            <div class="icon-tile"><app-icon name="zombie" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Zombies</span><span class="stat-value">{{ profil.personal_best_zb }}</span>
+            </div>
           </div>
         </div>
       </div>

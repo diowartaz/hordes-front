@@ -24,19 +24,23 @@
   }
   .stats {
     display: flex;
+    flex-shrink: 0;
     gap: 12px;
+    // Largeurs fixes (icône 14px + gap 4px + chiffres) : les icônes restent alignées d'une ligne à l'autre
     .stat {
       display: flex;
       align-items: center;
       gap: 4px;
+      width: calc(18px + 3ch);
       font-size: 15px;
+      font-variant-numeric: tabular-nums;
       color: var(--text-dim);
       &.def {
+        width: calc(18px + 4ch);
         color: var(--yellow);
       }
       &.pts {
-        min-width: 44px;
-        justify-content: flex-end;
+        width: calc(18px + 4ch);
         color: var(--pink-light);
       }
     }

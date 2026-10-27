@@ -272,6 +272,7 @@ export interface ProfilModel {
   username: string;
   // null tant que le joueur n'a terminé aucune partie
   rank: number | null;
+  ranked_points: number;
   xp: number;
   creation_date: string;
   personal_best_day: number;

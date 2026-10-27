@@ -9,6 +9,7 @@ import { WakeUpService } from './services/wake-up/wake-up.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { ThemeService } from './services/theme/theme.service';
+import { ReturnUrlService } from './services/navigation/return-url.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
   wakeUpService = inject(WakeUpService);
   // Instancié dès le démarrage pour appliquer le thème mémorisé
   private themeService = inject(ThemeService);
+  // Instancié dès le démarrage pour suivre l'écran d'origine des pages secondaires
+  private returnUrlService = inject(ReturnUrlService);
 
   ngOnInit(): void {
     this.cityService.loadReferencesBonuses();

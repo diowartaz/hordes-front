@@ -2,44 +2,10 @@
   <ng-container icon><app-icon name="bookmark" [size]="28" /></ng-container>
   <ng-container content>
     <div class="wiki-container">
-      <section class="summary">
-        <h2><app-icon class="ic cyan" name="info" [size]="18" /> Summary</h2>
-        <table>
-          <tr>
-            <th>Category</th>
-            <th>Value</th>
-          </tr>
-          <tr>
-            <td>Game Name</td>
-            <td><strong>The Black Hour</strong></td>
-          </tr>
-          <tr>
-            <td>Genre</td>
-            <td>Incremental game</td>
-          </tr>
-          <tr>
-            <td>Front-end</td>
-            <td>Angular 22</td>
-          </tr>
-          <tr>
-            <td>Back-end</td>
-            <td>NestJS (Node.js)</td>
-          </tr>
-          <tr>
-            <td>Database</td>
-            <td>MongoDB</td>
-          </tr>
-          <tr>
-            <td>Target Distribution</td>
-            <td>Android (Google Play / APK)</td>
-          </tr>
-        </table>
-      </section>
-
       <section>
         <h2>Overview</h2>
 
-        <p style="margin-top: 16px">You are the last human alive in a ruined city.</p>
+        <p>You are the last human alive in a ruined city.</p>
         <div class="inline-div">
           Each night, waves of zombies<app-icon class="ic danger" name="zombie" [size]="18" />attack your
           defenses<app-icon class="ic yellow" name="shield" [size]="18" />.
@@ -49,11 +15,14 @@
             class="ic orange"
             name="build"
             [size]="18"
-          />, and learn <app-icon class="ic cyan" name="book" [size]="18" /><span style="white-space: normal"
+          />, and learn<app-icon class="ic cyan" name="book" [size]="18" /><span style="white-space: normal"
             >in an effort to survive one more night.</span
           >
         </div>
-
+        <div class="inline-div">
+          When your city falls, you earn <app-icon class="ic yellow" name="money" [size]="18" />coins to buy new
+          building plans and permanent bonuses for your next games.
+        </div>
         <div class="inline-div">
           <strong>Are you ready to climb the ranks and dominate the leaderboard?</strong>
           <app-icon class="ic yellow" name="trophy" [size]="18" />
@@ -61,53 +30,135 @@
       </section>
 
       <section>
-        <h2><app-icon class="ic danger" name="shield" [size]="18" /> Defense and Attacks</h2>
+        <h2><app-icon class="ic cyan" name="clock" [size]="18" /> A day in the city</h2>
         <div class="inline-div">
-          <app-icon class="ic orange" name="build" [size]="18" />All buildings (except special ones) add defense points.
+          You wake up at <strong>8:00</strong> and the day ends at <strong>midnight</strong>. An action that would end
+          after midnight can't be started.
         </div>
         <div class="inline-div">
-          <app-icon class="ic danger" name="zombie" [size]="18" />The zombie wave increases nightly.
+          <app-icon class="ic danger" name="clock" [size]="18" />Time flows for real: a full day lasts
+          <strong>5 real minutes</strong>. The time you spend thinking between two actions is added to the next one, so
+          don't wait too long!
+        </div>
+        <div class="inline-div">The three tabs at the bottom of the screen are your actions:</div>
+        <table>
+          <tr>
+            <th>Action</th>
+            <th>What it does</th>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" />Dig</td>
+            <td>Find resources. A dig takes <strong>2 hours</strong> (less with skills and bonuses).</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="book" [size]="18" />Learn</td>
+            <td>Learn a skill level you have unlocked.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic orange" name="build" [size]="18" />Build</td>
+            <td>Spend resources to build or upgrade a building.</td>
+          </tr>
+        </table>
+        <p><strong>The city header</strong></p>
+        <table>
+          <tr>
+            <th>Indicator</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="calendar" [size]="18" />Day</td>
+            <td>The current day of your city.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="clock" [size]="18" />Time</td>
+            <td>The current time in your city.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="shield" [size]="18" />Def</td>
+            <td>
+              Your defense. A <strong>+min–max</strong> next to it is extra defense that only counts for tonight's
+              attack.
+            </td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic danger" name="zombie" [size]="18" />Threat</td>
+            <td>
+              How many zombies will attack tonight (min–max). It turns <strong>red</strong> when the attack could break
+              through your defense.
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic violet" name="moon" [size]="18" /> Sleeping</h2>
+        <div class="inline-div"><strong>Can't fit another action before midnight?</strong></div>
+        <div class="inline-div">
+          End the day with this button:
+          <span class="sleep-sample"><app-icon name="moon" [size]="16" />Sleep</span>
+        </div>
+        <div class="inline-div">
+          Half of the time left before midnight is given back the next morning: you wake up earlier, by up to
+          <strong>3 hours</strong>. For example, sleeping at 10pm (2h left) wakes you up 1h earlier; sleeping at 6pm or
+          earlier gives the full 3h.
+        </div>
+        <div class="inline-div">Some special buildings improve your sleep.</div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic danger" name="zombie" [size]="18" /> Defense and attacks</h2>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="shield" [size]="18" />Your city starts with <strong>20 defense</strong>.
+          Buildings add more.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic danger" name="zombie" [size]="18" />The horde grows every night: it is the previous
+          night's horde, plus a random number of zombies between <strong>day × 2</strong> and <strong>day × 4</strong>.
+          From <strong>day 15</strong>, this growth increases by another <strong>10% per day</strong>.
         </div>
         <div class="inline-div">
           <app-icon class="ic yellow" name="shield" [size]="18" /> ≥
-          <app-icon class="ic danger" name="zombie" [size]="18" /> → You survive.
+          <app-icon class="ic danger" name="zombie" [size]="18" /> → You survive (a tie is enough).
         </div>
         <div class="inline-div">
           <app-icon class="ic yellow" name="shield" [size]="18" /> <
-          <app-icon class="ic danger" name="zombie" [size]="18" /> → You die.
+          <app-icon class="ic danger" name="zombie" [size]="18" /> → Your city falls and the game ends.
+        </div>
+        <div class="inline-div">
+          After each attack, a recap shows your defense against the zombies and the margin you had.
+        </div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic yellow" name="dig" [size]="18" /> Digging</h2>
+        <div class="inline-div">
+          There are <strong>5 resources</strong>: wood, metal, stone, screw and patch. Buildings need them.
+        </div>
+        <div class="inline-div">
+          <strong>Pick:</strong> each dig offers <strong>two resources</strong>. Choose the one you keep.
+        </div>
+        <div class="inline-div">
+          <strong>Random:</strong> dig once, or as many times as you can before midnight (Max). The first dig gives one
+          of the two offered resources at random. The next ones give any resource, each with the
+          <strong>same probability</strong>.
+        </div>
+        <div class="inline-div">A new pair of resources is offered after every dig action.</div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="sparkle" [size]="18" />With the Lucky Digger bonus, a dig can find one more
+          resource. On the first dig, you get both offered resources.
         </div>
       </section>
 
       <section>
         <h2><app-icon class="ic orange" name="build" [size]="18" /> Buildings</h2>
         <p>
-          Buildings cost <strong>resources</strong> and <strong>time</strong> to construct. The buildings increase the
-          <strong>defense</strong> of your city.
-        </p>
-        <table>
-          <tr>
-            <th>Building</th>
-            <th>Description</th>
-            <th>Detail</th>
-          </tr>
-          <tr>
-            <td><app-icon class="ic silver" name="build" [size]="18" />Blueprint Workshop</td>
-            <td>Increases discovery odds for new building plans (probability is 0.7 per level).</td>
-            <td>You will have a choice for your discoveries</td>
-          </tr>
-          <tr>
-            <td><app-icon class="ic silver" name="build" [size]="18" /> Archives</td>
-            <td>Increases discovery odds for new skill levels (probability is 0.5 per level).</td>
-            <td>No choice</td>
-          </tr>
-        </table>
-        <p style="margin-top: 16px">
-          A <strong>building's defense</strong><app-icon class="ic yellow" name="shield" [size]="18" /> value is subject
-          to a degree of <strong>random variability</strong>, which can fluctuate by up to <strong>±20%</strong> from
-          one game to the next.
+          Each building plan has a <strong>cost</strong> in resources, a <strong>build time</strong> and a number of
+          <strong>levels</strong>. Every level you build adds its <strong>defense</strong> to your city.
         </p>
         <p>
-          These variations will be displayed by a small percentage indicator next to the building's defense rating.
+          A building's defense <app-icon class="ic yellow" name="shield" [size]="18" /> varies by up to
+          <strong>±20%</strong> from one game to the next. It stays the same for the whole game, and is shown next to
+          the defense:
           <span class="def-sample"
             ><app-icon class="ic yellow" name="shield" [size]="14" />52
             <span class="percentdef percentdef-green">+19%</span></span
@@ -118,91 +169,252 @@
             <span class="percentdef percentdef-red">-7%</span></span
           >
         </p>
+        <div class="inline-div">
+          <app-icon class="ic pink" name="sparkle" [size]="18" /><strong>Special buildings</strong> give no defense but
+          have an effect: tap them to read it. What they did shows up in a pop-up after your action, and in the
+          <strong>Overnight</strong> part of the attack recap.
+        </div>
+
+        <p><strong>Discovering plans</strong></p>
+        <div class="inline-div">You start with <strong>7 plans</strong> drawn from your deck.</div>
+        <div class="inline-div">
+          <app-icon class="ic silver" name="build" [size]="18" />Every city has a <strong>Blueprint Workshop</strong>.
+          After each night survived, each of its levels has a <strong>70%</strong> chance to discover a plan. If it
+          discovers N plans, you choose up to N among <strong>N + 2</strong> plans drawn from your deck.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic cyan" name="recycle" [size]="18" />When <strong>15 buildings</strong> of your deck (75%)
+          reach their max level, every completed building goes back into the draw pile. Picking one again unlocks a new
+          set of levels for it, with the same defense.
+        </div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic cyan" name="book" [size]="18" /> Skills</h2>
+        <p>Each skill improves a specific aspect of survival. Effects are linear per level.</p>
+        <table>
+          <tr>
+            <th>Skill</th>
+            <th>Effect per level</th>
+            <th class="hide-sm">Max level</th>
+            <th>1st level</th>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" />Digger</td>
+            <td>Digging takes 10% less time.</td>
+            <td class="hide-sm">5 (time ÷ 2)</td>
+            <td>6h</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic orange" name="build" [size]="18" />Builder</td>
+            <td>Building takes 10% less time.</td>
+            <td class="hide-sm">5 (time ÷ 2)</td>
+            <td>3h</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="bolt" [size]="18" />Fast Learner</td>
+            <td>Learning takes 10% less time.</td>
+            <td class="hide-sm">5 (time ÷ 2)</td>
+            <td>2h</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic violet" name="moon" [size]="18" />Insomniac</td>
+            <td>Wake up 15 min earlier.</td>
+            <td class="hide-sm">8 (2h earlier)</td>
+            <td>3h</td>
+          </tr>
+        </table>
+        <div class="inline-div">Each level takes <strong>1.5 times longer</strong> to learn than the previous one.</div>
+        <div class="inline-div">
+          A skill level must be <strong>unlocked</strong> before you can learn it. You start with
+          <strong>9 levels</strong> unlocked at random.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic silver" name="build" [size]="18" />Every city has <strong>Archives</strong>. After each
+          night survived, each of its levels has a <strong>50%</strong> chance to unlock a random skill level (no
+          choice).
+        </div>
+        <div class="inline-div">Some special buildings raise the max level of skills.</div>
       </section>
 
       <section>
         <h2><app-icon class="ic cyan" name="cards" [size]="18" /> Deck and collection</h2>
         <p>
-          Your <strong>collection</strong> holds every building plan you own. Before each game, your
-          <strong>deck</strong> of <strong>20 plans</strong> (5 epic at most) is the only pile your starting plans and
-          the Blueprint Workshop discoveries are drawn from.
+          Your <strong>collection</strong> holds every building plan you own. Your <strong>deck</strong> is made of
+          <strong>exactly 20 different plans</strong>, with no limit on rarity: your starting plans and your Blueprint
+          Workshop discoveries are drawn from it.
         </p>
         <div class="inline-div">
-          <app-icon class="ic yellow" name="sparkle" [size]="18" />Get new plans by opening <strong>boosters</strong> in
-          the shop. Duplicates are kept for later.
+          Plans are <strong>common</strong>, <strong>rare</strong> or <strong>epic</strong>. You start with 20 plans (14
+          common and 6 rare).
         </div>
         <div class="inline-div">
-          <app-icon class="ic yellow" name="dig" [size]="18" />Each dig offers <strong>two resources</strong>: pick the
-          one you keep, or dig at random. A random dig of several items takes the first one from the pair, then every
-          other resource with the <strong>same probability</strong>. Lucky Digger on the first dig gives you both.
+          <app-icon class="ic yellow" name="sparkle" [size]="18" /><strong>Autocomplete</strong> fills your deck with
+          your rarest plans while keeping resources balanced. The <strong>Resources needed</strong> bar shows what your
+          deck will ask for: digs give each resource 20% of the time.
         </div>
-        <div class="inline-div">
-          <app-icon class="ic cyan" name="recycle" [size]="18" />Once <strong>15 buildings</strong> of your deck reach
-          their max level, every completed building goes back into the draw pile. Picking one again unlocks a new set of
-          levels for it.
-        </div>
+        <div class="inline-div">Your deck is locked in when you create a city: changes apply to your next city.</div>
+        <div class="inline-div">Duplicates are kept in your collection, but have no use yet.</div>
       </section>
 
       <section>
-        <h2><app-icon class="ic cyan" name="book" [size]="18" />Skills</h2>
-        <p>Each skill improves a specific aspect of survival. Effects are linear per level.</p>
+        <h2><app-icon class="ic yellow" name="money" [size]="18" /> Shop</h2>
+        <p><strong>Boosters</strong></p>
+        <p>Each booster contains <strong>3 random plans</strong>. Duplicates are possible.</p>
         <table>
           <tr>
-            <th>Skill</th>
-            <th>Effect per Level</th>
-            <th>Level max Effect</th>
+            <th>Rarity</th>
+            <th>Basic · 500</th>
+            <th>Premium · 1,500</th>
           </tr>
           <tr>
-            <td><app-icon class="ic violet" name="moon" [size]="18" /> Insomniac</td>
-            <td>Wake up 15 min earlier each day.</td>
-            <td>2 hours earlier wake-up.</td>
+            <td>Common</td>
+            <td>70%</td>
+            <td>0%</td>
           </tr>
           <tr>
-            <td><app-icon class="ic yellow" name="dig" [size]="18" /> Digger</td>
-            <td>Reduce search time linearly.</td>
-            <td>Action time divided by 2.</td>
+            <td>Rare</td>
+            <td>25%</td>
+            <td>70%</td>
           </tr>
           <tr>
-            <td><app-icon class="ic orange" name="build" [size]="18" />Builder</td>
-            <td>Reduce building time linearly.</td>
-            <td>Action time divided by 2.</td>
+            <td>Epic</td>
+            <td>5%</td>
+            <td>30%</td>
+          </tr>
+        </table>
+
+        <p><strong>Permanent bonuses</strong></p>
+        <p>
+          Bonuses are <strong>automatically applied</strong> to all your future games, ranked included. The price of
+          level N is the level 1 price × N<sup>1.5</sup>. The badge on your coins shows how many bonuses you can buy.
+        </p>
+        <table>
+          <tr>
+            <th>Bonus</th>
+            <th>Effect per level</th>
+            <th>Max</th>
+            <th>Level 1</th>
           </tr>
           <tr>
-            <td><app-icon class="ic cyan" name="book" [size]="18" />Fast Learner</td>
-            <td>Reduce learning time linearly.</td>
-            <td>Action time divided by 2.</td>
+            <td><app-icon class="ic yellow" name="money" [size]="18" />Money Maker</td>
+            <td>+3% coins at the end of a game</td>
+            <td>10</td>
+            <td>360</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="shield-plus" [size]="18" />Efficient defenser 1</td>
+            <td>+2% defense for each building</td>
+            <td>10</td>
+            <td>450</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="shield-plus" [size]="18" />Efficient defenser 2</td>
+            <td>+1 defense for each building level</td>
+            <td>5</td>
+            <td>600</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic orange" name="build" [size]="18" />Efficient builder 1</td>
+            <td>Building takes 2% less time</td>
+            <td>10</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic orange" name="build" [size]="18" />Efficient builder 2</td>
+            <td>Building takes 1 min less</td>
+            <td>10</td>
+            <td>180</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" />Efficient Digger 1</td>
+            <td>Digging takes 2% less time</td>
+            <td>10</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" />Efficient Digger 2</td>
+            <td>Digging takes 1 min less</td>
+            <td>10</td>
+            <td>180</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="dig" [size]="18" />Lucky Digger</td>
+            <td>2% chance to find 1 more resource per dig</td>
+            <td>10</td>
+            <td>240</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="book" [size]="18" />Efficient Learner 1</td>
+            <td>Learning takes 3% less time</td>
+            <td>10</td>
+            <td>180</td>
           </tr>
         </table>
       </section>
 
       <section>
-        <h2><app-icon class="ic pink" name="ranked" [size]="18" /> Ranked Mode</h2>
+        <h2><app-icon class="ic yellow" name="trophy" [size]="18" /> Rewards and XP</h2>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="money" [size]="18" />You start with <strong>1,000 coins</strong>.
+        </div>
+        <div class="inline-div">
+          When your city falls, each night survived pays: the 1st night 34 coins, the 2nd 38, the 3rd 42… (30 + 4 per
+          night). That's <strong>520 coins</strong> for 10 nights, <strong>1,440</strong> for 20 and
+          <strong>2,760</strong> for 30.
+        </div>
+        <table>
+          <tr>
+            <th>Reward</th>
+            <th>Amount</th>
+          </tr>
+          <tr>
+            <td>Base</td>
+            <td>Coins for the nights survived.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic pink" name="ranked" [size]="18" />Ranked</td>
+            <td>+50% of the base, in ranked games.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic yellow" name="sparkle" [size]="18" />Bonus</td>
+            <td>+3% per Money Maker level.</td>
+          </tr>
+        </table>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="sparkle" [size]="18" />Every coin earned in a game is also earned as
+          <strong>XP</strong>. Your XP raises your level, shown on your profile.
+        </div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic pink" name="ranked" [size]="18" /> Ranked mode</h2>
         <p>
           <strong
-            >Don't hesitate to play in ranked to get more
+            >Don't hesitate to play ranked to earn more
             <app-icon class="ic yellow" name="money" [size]="18" /> (+50%)!</strong
           >
         </p>
         <p>
-          A ranked game is a duel: two players face <strong>the exact same zombie waves</strong>, one after the other, and the
-          best survivor wins <app-icon class="ic pink" name="ranked" [size]="18" />ranked points.
+          A ranked game is a duel: two players face <strong>the exact same zombie waves</strong>, one after the other,
+          and the best survivor wins <app-icon class="ic pink" name="ranked" [size]="18" />ranked points.
         </p>
 
         <p><strong>Finding an opponent</strong></p>
         <div class="inline-div">
-          When you start a ranked game, you are matched with an opponent who faces
-          <strong>the exact same zombie waves</strong>. If they have already fallen, you won't see their score until you fall
-          too.
+          When you start a ranked game, you join a game whose first player has already fallen. You won't see their score
+          until you fall too.
         </div>
         <div class="inline-div">
-          Otherwise, <strong>you play first</strong>: your result waits for your opponent to take up the challenge.
+          If no game is waiting, <strong>you play first</strong>: your result waits for an opponent to take up the
+          challenge.
         </div>
 
         <p><strong>The same zombie waves for both players</strong></p>
         <div class="inline-div">
-          Both players share the same random seeds: same zombie waves
+          Both players share the same random draws: same zombie waves
           <app-icon class="ic danger" name="zombie" [size]="18" />night after night, same starting skills, same
-          resources found dig after dig. Each player brings their own
+          resources offered dig after dig, same building defense variations. Each player brings their own
           <app-icon class="ic cyan" name="cards" [size]="18" />deck: building it well is part of the duel.
         </div>
         <div class="inline-div">
@@ -238,8 +450,8 @@
         <p><strong>Ranked points</strong></p>
         <div class="inline-div">
           Every player starts with <strong>500</strong> <app-icon class="ic pink" name="ranked" [size]="18" />points.
-          Points are computed like chess Elo: what the winner earns, the loser loses (at most 48 per game). Beating a
-          stronger player earns more, losing to them costs less.
+          Points are computed like chess Elo: what the winner earns, the loser loses (always less than 48 per game).
+          Beating a stronger player earns more, losing to them costs less.
         </div>
         <table>
           <tr>
@@ -265,85 +477,120 @@
         </table>
         <div class="inline-div">
           Points are given once <strong>both players</strong> have fallen. Until then, the game shows as pending in your
-          <app-icon class="ic cyan" name="history" [size]="18" />history, then as <strong>Victory</strong>,
+          <app-icon class="ic cyan" name="history" [size]="18" />match history, then as <strong>Victory</strong>,
           <strong>Defeat</strong> or <strong>Draw</strong>.
         </div>
 
-        <p><strong>Ranked money</strong></p>
+        <p><strong>Ranked coins</strong></p>
         <div class="inline-div">
-          <app-icon class="ic yellow" name="money" [size]="18" />At the fall of your city, you earn 50% more money (half
-          of the zombies repelled), win or lose. It is credited right away, without waiting for your opponent.
+          <app-icon class="ic yellow" name="money" [size]="18" />When your city falls, you earn
+          <strong>50% more coins</strong>, win or lose. They are credited right away, without waiting for your opponent.
         </div>
 
         <p><strong>Time limit</strong></p>
         <div class="inline-div">
-          <app-icon class="ic danger" name="clock" [size]="18" />You have <strong>4 hours</strong> from the moment you
-          enter a ranked game to finish it: a countdown is shown above your city. Your city is never lost: past this
-          delay, it goes on as a normal game, without ranked money.
+          <app-icon class="ic danger" name="clock" [size]="18" />You have <strong>4 real hours</strong> from the moment
+          you enter a ranked game to finish it. A countdown is shown above your city and turns red in the last 30
+          minutes. Your city is never lost: past this delay, it goes on as a normal game, without ranked coins.
         </div>
         <div class="inline-div">
           If you joined as the second player, you <strong>lose by forfeit</strong>, with your city's current day and
           defense. If you play first, the ranked game is <strong>cancelled</strong>, without ranked points.
         </div>
+      </section>
 
+      <section>
+        <h2><app-icon class="ic yellow" name="trophy" [size]="18" /> Leaderboards and profile</h2>
+        <table>
+          <tr>
+            <th>Leaderboard</th>
+            <th>Ranking</th>
+          </tr>
+          <tr>
+            <td><app-icon class="ic pink" name="ranked" [size]="18" />Ranked</td>
+            <td>By ranked points. You appear after your first completed ranked game.</td>
+          </tr>
+          <tr>
+            <td><app-icon class="ic cyan" name="calendar" [size]="18" />Normal</td>
+            <td>By best day reached. Players on the same day are ranked by the biggest attack they survived.</td>
+          </tr>
+        </table>
         <div class="inline-div">
-          <app-icon class="ic yellow" name="trophy" [size]="18" />Climb the ranked leaderboard!
+          <app-icon class="ic cyan" name="friends" [size]="18" />Tap a player to open their <strong>profile</strong>:
+          level, XP, rank, ranked points, records and their last <strong>20 games</strong>, with each ranked duel's
+          opponent and result.
         </div>
       </section>
 
       <section>
-        <h2><app-icon class="ic yellow" name="sparkle" [size]="18" /> Bonuses</h2>
-        <p style="margin-top: 16px">
-          Use the money <app-icon class="ic yellow" name="money" [size]="18" /> you accumulate across all your games in
-          the shop to purchase powerful
-          <strong>permanent bonuses <app-icon class="ic yellow" name="sparkle" [size]="18" /></strong>. Any bonus bought
-          will enhance your abilities in all future games.
-        </p>
-        <p style="margin-top: 16px">
-          These bonuses will be <strong>automatically applied</strong> to all your <strong>future games</strong>, giving
-          you a strategic advantage.
-        </p>
-      </section>
-
-      <section>
-        <h2><app-icon class="ic violet" name="moon" [size]="18" /> Sleeping</h2>
-
-        <div class="inline-div"><strong>Can't fit another action before midnight?</strong></div>
-        <div class="inline-div" style="margin-top: 6px; display: flex">
-          Sleep early to carry time over to the next day. By pressing this button:
-          <span class="sleep-sample"><app-icon name="moon" [size]="16" />Sleep</span>
-        </div>
-        <div class="inline-div" style="margin-top: 6px">
-          <strong>Note:</strong> only half the time is recovered, up to 3h (e.g., sleep at 10pm = 2h saved = 1h bonus
-          tomorrow; sleep at 6pm or earlier = 3h bonus).
-        </div>
-      </section>
-
-      <section>
-        <h2><app-icon class="ic pink" name="sparkle" [size]="18" /> Strategy Tips</h2>
+        <h2><app-icon class="ic green" name="user-plus" [size]="18" /> Invite friends</h2>
         <div class="inline-div">
-          <app-icon class="ic silver" name="build" [size]="18" />
-          Upgrade Libraries to unlock higher skill caps.
+          Share your invite code or link (menu <strong>Invite friends</strong>). A friend who signs up with it becomes
+          your referee:
         </div>
-
         <div class="inline-div">
-          <app-icon class="ic silver" name="build" [size]="18" />Blueprint Workshops unlock stronger defense plans.
+          <app-icon class="ic yellow" name="money" [size]="18" />You earn <strong>10%</strong> of the coins they earn at
+          the end of each of their games, forever. It takes nothing from their own coins.
         </div>
-
-        <p style="margin-top: 16px"><app-icon class="ic yellow" name="sparkle" [size]="18" /> Buy strong bonuses</p>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="sparkle" [size]="18" />They get a welcome gift of
+          <strong>2,500 coins</strong>.
+        </div>
+        <div class="inline-div">
+          You can have up to <strong>3 referees</strong>, and remove one to free a spot. A sponsor's account must be
+          older than yours, and your sponsor can't be changed once set.
+        </div>
       </section>
 
       <section>
-        <h2><app-icon class="ic cyan" name="mail" [size]="18" /> Contact me</h2>
-        <p style="margin-top: 16px">
-          If you have any ideas to improve the game or just want to discuss about it, join the discord or send me an
-          email to <strong>{{ 'dowartaz@gmail.com' }}</strong>
+        <h2><app-icon class="ic cyan" name="settings" [size]="18" /> Account and settings</h2>
+        <div class="inline-div">
+          <app-icon class="ic cyan" name="user" [size]="18" />You can play as a <strong>guest</strong>, without an
+          account. Your progress is not saved online: open <strong>Settings</strong> and use
+          <strong>Save my account</strong> to keep it.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic pink" name="sparkle" [size]="18" />Pick your theme in Settings: Neon Arcade, Quarantine,
+          Hemorrhage or Signal.
+        </div>
+        <div class="inline-div">You can also log out or delete your account there.</div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic pink" name="sparkle" [size]="18" /> Strategy tips</h2>
+        <div class="inline-div">
+          <app-icon class="ic silver" name="build" [size]="18" />Upgrade the Blueprint Workshop and the Archives early:
+          more plans and more skills for the rest of the game.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic danger" name="zombie" [size]="18" />Keep an eye on the Threat: when it turns red, build
+          defense before anything else.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic violet" name="moon" [size]="18" />Don't waste the end of the day: if no action fits before
+          midnight, sleep to wake up earlier.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="dig" [size]="18" />Pick the resources your next buildings need, and keep a
+          deck with balanced resource needs.
+        </div>
+        <div class="inline-div">
+          <app-icon class="ic yellow" name="money" [size]="18" />Play ranked for 50% more coins, and buy Money Maker
+          early to earn more from every game.
+        </div>
+      </section>
+
+      <section>
+        <h2><app-icon class="ic cyan" name="mail" [size]="18" /> Contact</h2>
+        <p>
+          Have an idea to improve the game, or just want to talk about it?
+          <a class="link" href="https://discord.gg/qFnSBa8P9Z" target="_blank" rel="noopener">Join the Discord</a>.
         </p>
       </section>
 
       <section>
-        <h2><app-icon class="ic orange" name="build" [size]="18" /> Coming Soon</h2>
-        <p>Would you like to have this game on the Play Store?</p>
+        <h2><app-icon class="ic orange" name="rocket" [size]="18" /> On mobile</h2>
+        <p>An Android version of the game will probably come one day.</p>
       </section>
 
       <footer>

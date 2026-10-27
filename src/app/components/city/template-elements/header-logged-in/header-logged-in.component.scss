@@ -56,6 +56,20 @@
     }
   }
 
+  // Bouton « ⋯ » : seulement sur petit écran, où il remplace les liens repliables
+  .more-btn {
+    display: none;
+    cursor: pointer;
+  }
+  @media (max-width: 559px) {
+    .collapsible {
+      display: none;
+    }
+    .more-btn {
+      display: flex;
+    }
+  }
+
   .no-cloud-save {
     font-size: 11px;
     font-weight: 700;
@@ -116,13 +130,44 @@
       }
       .coins-amount {
         font-size: 14px;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     }
     .no-cloud-save {
       font-size: 8px;
       padding: 2px 3px;
+    }
+  }
+}
+
+// Menu « ⋯ », rendu dans l'overlay du CDK et positionné par lui
+.more-menu {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 6px;
+  border-radius: var(--radius-l);
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
+  background: var(--surface-solid);
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--cyan) 25%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+
+  .more-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-m);
+    color: var(--cyan-pale);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    &:hover {
+      background: color-mix(in srgb, var(--cyan) 12%, transparent);
+    }
+    &.active {
+      color: var(--pink-light);
+      background: color-mix(in srgb, var(--pink) 15%, transparent);
     }
   }
 }

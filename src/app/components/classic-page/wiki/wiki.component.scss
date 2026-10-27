@@ -61,6 +61,13 @@
         padding: 8px 10px;
         text-align: left;
         vertical-align: middle;
+        @media (max-width: 480px) {
+          padding: 8px 6px;
+          // Colonne secondaire masquée sur petit écran pour éviter le débordement
+          &.hide-sm {
+            display: none;
+          }
+        }
       }
       th {
         font-family: var(--font-display);
@@ -143,6 +150,12 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+
+  .link {
+    font-weight: 700;
+    color: var(--cyan);
+    text-decoration: underline;
   }
 
   footer {

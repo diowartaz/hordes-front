@@ -1,6 +1,12 @@
 <div class="top-bar">
   @if (authService.isConnected()) {
-    <button type="button" class="coins" aria-label="Open the shop" (click)="router.navigate([RoutesEnum.SHOP])">
+    <button
+      type="button"
+      class="coins"
+      [attr.aria-label]="data().exactMoney + ' coins, open the shop'"
+      [title]="data().exactMoney"
+      (click)="router.navigate([RoutesEnum.SHOP])"
+    >
       <span class="coins-plus"><app-icon name="plus" [size]="18" /></span>
       <span class="coins-amount">{{ data().money }}</span>
       <app-icon class="coins-icon" name="money" [size]="18" />
@@ -15,32 +21,56 @@
     }
   }
   <div class="spacer"></div>
-  @if (authService.isConnected()) {
-    <a class="icon-btn" aria-label="Deck" [routerLink]="['/', RoutesEnum.DECK]" routerLinkActive="active">
-      <app-icon name="cards" />
-    </a>
-    <a class="icon-btn" aria-label="Invite friends" [routerLink]="['/', RoutesEnum.REFERRAL]" routerLinkActive="active">
-      <app-icon name="user-plus" />
-    </a>
+  @for (link of links(); track link.label) {
     <a
       class="icon-btn"
-      aria-label="Profile"
-      [routerLink]="['/', RoutesEnum.PROFIL]"
-      [queryParams]="{ user_id: authService.userId() }"
+      [class.collapsible]="link.collapsible"
+      [attr.aria-label]="link.label"
+      [routerLink]="link.link"
+      [queryParams]="link.queryParams"
       routerLinkActive="active"
     >
-      <app-icon name="friends" />
+      <app-icon [name]="link.icon" />
     </a>
   }
-  <a class="icon-btn" aria-label="Leaderboard" [routerLink]="['/', RoutesEnum.LEADERBOARD]" routerLinkActive="active">
-    <app-icon name="trophy" />
-  </a>
-  <a class="icon-btn" aria-label="Guide" [routerLink]="['/', RoutesEnum.WIKI]" routerLinkActive="active">
-    <app-icon name="bookmark" />
-  </a>
-  @if (authService.isConnected()) {
-    <a class="icon-btn" aria-label="Settings" [routerLink]="['/', RoutesEnum.SETTINGS]" routerLinkActive="active">
-      <app-icon name="settings" />
-    </a>
+  @if (menuLinks().length) {
+    <button
+      #moreButton
+      type="button"
+      class="icon-btn more-btn"
+      [class.active]="menuOpen() || menuLinkActive()"
+      aria-label="More"
+      aria-haspopup="menu"
+      [attr.aria-expanded]="menuOpen()"
+      cdkOverlayOrigin
+      #moreOrigin="cdkOverlayOrigin"
+      (click)="toggleMenu()"
+    >
+      <app-icon name="more" />
+    </button>
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="moreOrigin"
+      [cdkConnectedOverlayOpen]="menuOpen()"
+      [cdkConnectedOverlayPositions]="menuPositions"
+      (overlayOutsideClick)="closeMenuOutside($event, moreButton)"
+      (detach)="closeMenu()"
+    >
+      <nav class="more-menu" role="menu">
+        @for (link of menuLinks(); track link.label) {
+          <a
+            class="more-item"
+            role="menuitem"
+            [routerLink]="link.link"
+            [queryParams]="link.queryParams"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            <app-icon [name]="link.icon" />
+            {{ link.label }}
+          </a>
+        }
+      </nav>
+    </ng-template>
   }
 </div>

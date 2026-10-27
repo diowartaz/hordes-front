@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
+import { ReturnUrlService } from 'src/app/services/navigation/return-url.service';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 @Component({
@@ -9,14 +9,15 @@ import { IconComponent } from 'src/app/shared/components/icon/icon.component';
   styleUrls: ['./classic-page.component.scss'],
 })
 export class ClassicPageComponent {
-  private location = inject(Location);
+  private returnUrlService = inject(ReturnUrlService);
 
   @Input() title = '';
   @Input() subtitle = '';
   // Couleur du halo du titre
   @Input() glow = 'var(--pink)';
 
+  // Retour direct à l'écran d'origine, sans repasser par les pages secondaires enchaînées
   goBack() {
-    this.location.back();
+    this.returnUrlService.back();
   }
 }
