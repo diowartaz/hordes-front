@@ -277,6 +277,9 @@ export interface ProfilModel {
   creation_date: string;
   personal_best_day: number;
   personal_best_zb: number;
+  // Guilde du joueur, null s'il n'en a pas
+  guild: GuildRefModel | null;
+  today: TodayEarningsModel;
   match_history: GameHistoryModel[];
 }
 
@@ -328,6 +331,10 @@ export interface DefaultValuesModel {
 export interface EffectRulesModel {
   larder_items_per_level: number;
   dormitory_max_sleep_bonus_per_level: number;
+  trophy_nights_per_point: number;
+  carrion_surplus_step: number;
+  carrion_max_steps: number;
+  vault_max_defense_per_level: number;
 }
 
 export function createDefaultDefaultValuesModel(): DefaultValuesModel {
@@ -349,7 +356,14 @@ export function createDefaultDefaultValuesModel(): DefaultValuesModel {
     ZOMBIE_COEF_MAX: 4,
     ARCHITECT_DISCOVERY_CHOICES: 2,
     DECK_SIZE: 20,
-    effect_rules: { larder_items_per_level: 1, dormitory_max_sleep_bonus_per_level: 3600 },
+    effect_rules: {
+      larder_items_per_level: 1,
+      dormitory_max_sleep_bonus_per_level: 3600,
+      trophy_nights_per_point: 2,
+      carrion_surplus_step: 25,
+      carrion_max_steps: 8,
+      vault_max_defense_per_level: 30,
+    },
   };
 }
 
@@ -421,6 +435,85 @@ export interface ReferralModel {
   welcomeGiftReceived: boolean;
   sponsor: ReferralSponsorModel | null;
   referees: RefereeModel[];
+}
+
+export interface GuildMemberModel {
+  playerId: string;
+  username: string;
+  isLeader: boolean;
+  // Part de ses gains versée à la guilde au prochain versement (avant arrondi)
+  contribution: number;
+  // A terminé une partie depuis le dernier versement : touchera la cagnotte
+  eligible: boolean;
+}
+
+export interface GuildModel {
+  id: string;
+  name: string;
+  isPublic: boolean;
+  isLeader: boolean;
+  memberCount: number;
+  maxMembers: number;
+  // 0.01 pour 1 %
+  contributionRate: number;
+  // Versé à chaque membre éligible au prochain versement
+  pot: number;
+  members: GuildMemberModel[];
+}
+
+export interface GuildInvitationModel {
+  id: string;
+  guildId: string;
+  guildName: string;
+  memberCount: number;
+  maxMembers: number;
+  expiresAt: Date;
+}
+
+export interface GuildOverviewModel {
+  guild: GuildModel | null;
+  invitations: GuildInvitationModel[];
+  // Touché au versement d'aujourd'hui (gains de la veille)
+  lastPayout: number;
+}
+
+export interface GuildRefModel {
+  id: string;
+  name: string;
+}
+
+// Gains de fin de partie du jour d'un joueur, guilde ou non
+export interface TodayEarningsModel {
+  coins: number;
+  games: number;
+  // Part versée à la cagnotte de sa guilde (1 % des gains, avant arrondi), perdue sans guilde à minuit
+  contribution: number;
+}
+
+// Fiche publique d'une guilde, consultable sans en être membre
+export interface GuildProfileModel {
+  id: string;
+  name: string;
+  isPublic: boolean;
+  memberCount: number;
+  maxMembers: number;
+  createdAt: Date;
+  // 0.01 pour 1 %
+  contributionRate: number;
+  // Cagnotte du jour, versée après minuit à chaque membre éligible
+  pot: number;
+  // Meneur en premier
+  members: GuildMemberModel[];
+}
+
+export interface GuildSummaryModel {
+  id: string;
+  name: string;
+  memberCount: number;
+  maxMembers: number;
+  leaderUsername: string;
+  // Cagnotte du jour, versée après minuit à chaque membre éligible
+  pot: number;
 }
 
 // Rang du joueur connecté, null tant qu'il n'a pas terminé de partie dans ce mode

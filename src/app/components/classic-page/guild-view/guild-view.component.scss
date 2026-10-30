@@ -1,0 +1,113 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+.guild-view {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 460px;
+  margin: 16px auto 0;
+}
+
+.label {
+  margin: 0;
+}
+
+.neon-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.members {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'name contribution'
+      'status contribution';
+    align-items: center;
+    column-gap: 10px;
+    padding: 6px 8px;
+    border-radius: var(--radius-s);
+    border: 1px solid var(--line);
+  }
+  .name {
+    grid-area: name;
+    justify-self: start;
+    padding: 0;
+  }
+  .status {
+    grid-area: status;
+  }
+  .contribution {
+    grid-area: contribution;
+  }
+}
+
+.hint {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-mute);
+}
+
+.pot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+
+  strong {
+    font-size: 24px;
+    color: var(--yellow);
+  }
+}
+
+.status {
+  font-size: 13px;
+  color: var(--text-mute);
+
+  &.eligible {
+    color: var(--green);
+  }
+}
+
+.contribution {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.name {
+  min-width: 0;
+  font-weight: 700;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}

@@ -11,6 +11,9 @@ import { readStorage, StorageKey, writeStorage } from 'src/app/shared/utils/stor
 // Écran de fouille : choisir une ressource de la paire, ou fouiller au hasard
 export type DigMode = 'pick' | 'random';
 
+// Toggle Pick / Random masqué pour le moment : l'écran reste en mode Pick. Repasser à true pour le réactiver
+export const DIG_MODE_TOGGLE_ENABLED = false;
+
 @Component({
   selector: 'app-diggings',
   imports: [KeyValuePipe, IconComponent, ResourceGemComponent, ItemToColorPipe],
@@ -22,7 +25,10 @@ export class DiggingsComponent {
 
   dialogMessage = signal('');
   snackBarOpened = signal(false);
-  mode = signal<DigMode>(readStorage(StorageKey.DIG_MODE) === 'random' ? 'random' : 'pick');
+  readonly modeToggleEnabled = DIG_MODE_TOGGLE_ENABLED;
+  mode = signal<DigMode>(
+    this.modeToggleEnabled && readStorage(StorageKey.DIG_MODE) === 'random' ? 'random' : 'pick',
+  );
   private snackBarTimeout: ReturnType<typeof setTimeout> | undefined;
   // Nombre de fouilles de la dernière action, pour repérer les ressources en plus de Lucky Digger
   private lastDigCount = 0;

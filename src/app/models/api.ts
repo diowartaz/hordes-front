@@ -153,23 +153,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/players/{id}/profile": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Profil public d'un joueur */
-        get: operations["PlayersController_getProfile"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/me/referral": {
         parameters: {
             query?: never;
@@ -235,6 +218,161 @@ export interface paths {
         put?: never;
         /** Régénère le code de parrainage : l'ancien ne marche plus, les filleuls actuels restent */
         post: operations["ReferralsController_regenerateCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Guilde du joueur connecté (ou ses invitations s'il n'en a pas) et son dernier versement */
+        get: operations["GuildsController_overview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Meneur : guilde publique ou privée (403 NOT_GUILD_LEADER) */
+        patch: operations["GuildsController_update"];
+        trace?: never;
+    };
+    "/api/v1/guilds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Guildes publiques qui ont encore de la place, la plus grosse cagnotte du jour d'abord */
+        get: operations["GuildsController_list"];
+        put?: never;
+        /** Crée une guilde dont le joueur devient le meneur (409 ALREADY_IN_GUILD, GUILD_NAME_TAKEN) */
+        post: operations["GuildsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/{guildId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fiche publique d'une guilde : accès, cagnotte du jour et contribution de chaque membre (404 GUILD_NOT_FOUND) */
+        get: operations["GuildsController_profile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/me/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Quitte sa guilde ; si c'est le meneur, la guilde est dissoute */
+        post: operations["GuildsController_leave"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/me/members/{playerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Meneur : exclut un membre (404 MEMBER_NOT_FOUND) */
+        delete: operations["GuildsController_kick"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/me/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Meneur : invite un joueur sans guilde par son pseudo (404 PLAYER_NOT_FOUND, 409 PLAYER_IN_GUILD) */
+        post: operations["GuildsController_invite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/invitations/{invitationId}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accepte une invitation (404 INVITATION_NOT_FOUND, 422 GUILD_FULL : l'invitation reste alors valable) */
+        post: operations["GuildsController_accept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/invitations/{invitationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Refuse une invitation */
+        delete: operations["GuildsController_decline"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guilds/{guildId}/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Entre dans une guilde publique (403 GUILD_PRIVATE, 422 GUILD_FULL) */
+        post: operations["GuildsController_join"];
         delete?: never;
         options?: never;
         head?: never;
@@ -333,6 +471,23 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["CitiesController_startDay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/players/{id}/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Profil public d'un joueur */
+        get: operations["ProfilesController_getProfile"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -520,45 +675,6 @@ export interface components {
             personalBest: components["schemas"]["PersonalBestResponse"];
             rankedPoints: number;
         };
-        MatchPlayerResponse: {
-            playerId: string;
-            username: string;
-            day: number;
-            zombies: number;
-            defense: number;
-        };
-        MatchResponse: {
-            /** Format: date-time */
-            playedAt: string;
-            ranked: boolean;
-            /** @description Variation des points ranked ; null tant que l'adversaire n'a pas terminé */
-            rankedPointsDelta: number | null;
-            day: number;
-            zombies: number;
-            defense: number;
-            opponent: components["schemas"]["MatchPlayerResponse"] | null;
-            /**
-             * @description Issue ranked pour ce joueur ; null hors ranked ou tant que l'adversaire n'a pas terminé
-             * @enum {string|null}
-             */
-            outcome: "win" | "loss" | "draw" | null;
-            /** @description Partie ranked réglée par abandon : le second joueur n'a pas terminé avant son échéance */
-            forfeit: boolean;
-        };
-        ProfileResponse: {
-            id: string;
-            username: string;
-            level: number;
-            xp: number;
-            /** @description Rang au classement du meilleur jour (null tant qu'aucune partie n'est terminée) */
-            rank: number | null;
-            rankedPoints: number;
-            personalBest: components["schemas"]["PersonalBestResponse"];
-            /** Format: date-time */
-            createdAt: string;
-            /** @description Dernières parties, de la plus récente à la plus ancienne */
-            matches: components["schemas"]["MatchResponse"][];
-        };
         ReferralSponsorResponse: {
             playerId: string;
             username: string;
@@ -605,6 +721,89 @@ export interface components {
             /** @description Joueur après le lien : monnaie créditée du don */
             player: components["schemas"]["PlayerResponse"];
         };
+        GuildMemberResponse: {
+            playerId: string;
+            username: string;
+            isLeader: boolean;
+            /** @description Part de ses gains versée à la guilde au prochain versement (1 % des gains, avant arrondi) */
+            contribution: number;
+            /** @description A terminé une partie depuis le dernier versement : touchera la cagnotte */
+            eligible: boolean;
+        };
+        GuildResponse: {
+            id: string;
+            name: string;
+            isPublic: boolean;
+            /** @description Le joueur connecté est le meneur */
+            isLeader: boolean;
+            memberCount: number;
+            maxMembers: number;
+            /** @description Part des gains de fin de partie versée à la guilde (0.01 pour 1 %) */
+            contributionRate: number;
+            /** @description Somme versée à chaque membre éligible au prochain versement, si rien ne change d'ici là */
+            pot: number;
+            /** @description Membres, meneur en premier */
+            members: components["schemas"]["GuildMemberResponse"][];
+        };
+        GuildInvitationResponse: {
+            id: string;
+            guildId: string;
+            guildName: string;
+            memberCount: number;
+            maxMembers: number;
+            /** Format: date-time */
+            expiresAt: string;
+        };
+        GuildOverviewResponse: {
+            /** @description Guilde du joueur, null s'il n'en a pas */
+            guild: components["schemas"]["GuildResponse"] | null;
+            /** @description Invitations reçues encore valables (vide quand le joueur a une guilde) */
+            invitations: components["schemas"]["GuildInvitationResponse"][];
+            /** @description Montant touché au versement d'aujourd'hui (gains de la veille), 0 sinon */
+            lastPayout: number;
+        };
+        GuildSummaryResponse: {
+            id: string;
+            name: string;
+            memberCount: number;
+            maxMembers: number;
+            leaderUsername: string;
+            /** @description Cagnotte du jour, versée après minuit à chaque membre éligible */
+            pot: number;
+        };
+        GuildListResponse: {
+            page: number;
+            pageSize: number;
+            guilds: components["schemas"]["GuildSummaryResponse"][];
+        };
+        GuildProfileResponse: {
+            id: string;
+            name: string;
+            isPublic: boolean;
+            memberCount: number;
+            maxMembers: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @description Part des gains de fin de partie versée à la guilde (0.01 pour 1 %) */
+            contributionRate: number;
+            /** @description Cagnotte du jour : versée après minuit à chaque membre éligible, si rien ne change d'ici là */
+            pot: number;
+            /** @description Membres, meneur en premier */
+            members: components["schemas"]["GuildMemberResponse"][];
+        };
+        CreateGuildDto: {
+            /** @description Nom unique (à la casse près), définitif */
+            name: string;
+            /** @description Publique : n'importe qui peut entrer ; privée : sur invitation seulement */
+            isPublic: boolean;
+        };
+        UpdateGuildDto: {
+            isPublic: boolean;
+        };
+        InviteToGuildDto: {
+            /** @description Pseudo exact du joueur invité (à la casse près) */
+            username: string;
+        };
         InventoryResponse: {
             wood: number;
             metal: number;
@@ -637,7 +836,7 @@ export interface components {
         };
         BuildingEffectResponse: {
             /** @enum {string} */
-            kind: "nightlyGrowth" | "compoundGrowth" | "buildDayScaling" | "skillDefense" | "stockDefense" | "randomNightDefense" | "hordeTrophy" | "otherBuildDefense" | "surplusDefense" | "stockToDefense" | "digDefense" | "idleNightDefense" | "extraAttackRolls" | "extraDigItem" | "buildRefund" | "morningItems" | "digTimeReduction" | "buildTimeReduction" | "repeatBuildTimeReduction" | "earlierWakeUp" | "sleepRecovery" | "extraArchitectOffers" | "skillLevelCap" | "nightLearning";
+            kind: "nightlyGrowth" | "compoundGrowth" | "buildDayScaling" | "skillDefense" | "stockDefense" | "randomNightDefense" | "survivalTrophy" | "otherBuildDefense" | "surplusDefense" | "stockToDefense" | "digDefense" | "idleNightDefense" | "extraAttackRolls" | "extraDigItem" | "buildRefund" | "morningItems" | "digTimeReduction" | "buildTimeReduction" | "repeatBuildTimeReduction" | "earlierWakeUp" | "sleepRecovery" | "extraArchitectOffers" | "skillLevelCap" | "nightLearning";
             value: number;
         };
         BuildingResponse: {
@@ -806,6 +1005,61 @@ export interface components {
         StartDayDto: {
             /** @description Bâtiments retenus parmi attackRecap.buildingOffers, au nombre de attackRecap.buildingPicks */
             chosenBuildingIds: number[];
+        };
+        GuildRefResponse: {
+            id: string;
+            name: string;
+        };
+        TodayEarningsResponse: {
+            /** @description Gains de fin de partie */
+            coins: number;
+            /** @description Parties terminées */
+            games: number;
+            /** @description Part versée à la cagnotte de sa guilde (1 % des gains, avant arrondi) ; perdue s'il n'en a pas à minuit */
+            contribution: number;
+        };
+        MatchPlayerResponse: {
+            playerId: string;
+            username: string;
+            day: number;
+            zombies: number;
+            defense: number;
+        };
+        MatchResponse: {
+            /** Format: date-time */
+            playedAt: string;
+            ranked: boolean;
+            /** @description Variation des points ranked ; null tant que l'adversaire n'a pas terminé */
+            rankedPointsDelta: number | null;
+            day: number;
+            zombies: number;
+            defense: number;
+            opponent: components["schemas"]["MatchPlayerResponse"] | null;
+            /**
+             * @description Issue ranked pour ce joueur ; null hors ranked ou tant que l'adversaire n'a pas terminé
+             * @enum {string|null}
+             */
+            outcome: "win" | "loss" | "draw" | null;
+            /** @description Partie ranked réglée par abandon : le second joueur n'a pas terminé avant son échéance */
+            forfeit: boolean;
+        };
+        ProfileResponse: {
+            id: string;
+            username: string;
+            level: number;
+            xp: number;
+            /** @description Rang au classement du meilleur jour (null tant qu'aucune partie n'est terminée) */
+            rank: number | null;
+            rankedPoints: number;
+            personalBest: components["schemas"]["PersonalBestResponse"];
+            /** Format: date-time */
+            createdAt: string;
+            /** @description Guilde du joueur, null s'il n'en a pas */
+            guild: components["schemas"]["GuildRefResponse"] | null;
+            /** @description Gains de fin de partie du jour et part versée à la cagnotte de guilde */
+            today: components["schemas"]["TodayEarningsResponse"];
+            /** @description Dernières parties, de la plus récente à la plus ancienne */
+            matches: components["schemas"]["MatchResponse"][];
         };
         SetDeckDto: {
             /** @description Plans du deck : exactement rules.DECK_SIZE ids distincts de la collection (voir GET /catalog) */
@@ -1256,28 +1510,6 @@ export interface operations {
             };
         };
     };
-    PlayersController_getProfile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Id du joueur (celui de son compte) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProfileResponse"];
-                };
-            };
-        };
-    };
     ReferralsController_get: {
         parameters: {
             query?: never;
@@ -1357,6 +1589,242 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReferralResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_overview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateGuildDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_list: {
+        parameters: {
+            query?: {
+                /** @description Recherche dans le nom */
+                search?: string;
+                /** @description Page à partir de 1 (25 guildes par page) */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildListResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGuildDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_profile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                guildId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildProfileResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_leave: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_kick: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                playerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_invite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InviteToGuildDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_accept: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invitationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_decline: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invitationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
+                };
+            };
+        };
+    };
+    GuildsController_join: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                guildId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuildOverviewResponse"];
                 };
             };
         };
@@ -1523,6 +1991,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CityResponse"];
+                };
+            };
+        };
+    };
+    ProfilesController_getProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id du joueur (celui de son compte) */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileResponse"];
                 };
             };
         };

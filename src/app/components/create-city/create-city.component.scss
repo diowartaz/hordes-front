@@ -14,14 +14,22 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
+    row-gap: 6px;
     color: var(--cyan);
     h2 {
-      flex: 1;
+      // Le titre garde sa largeur : ce sont les chips qui passent à la ligne
+      flex: 1 0 auto;
+      white-space: nowrap;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 15px;
       color: var(--text);
     }
+  }
+  .deck-rarities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
   }
   .ghost-btn {
     min-height: 44px;

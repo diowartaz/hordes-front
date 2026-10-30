@@ -49,6 +49,13 @@
     display: flex;
     gap: 6px;
   }
+  .guild-chip {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+  }
   .xp {
     width: 100%;
     display: flex;
@@ -124,6 +131,20 @@
       flex: none;
       max-width: 60%;
     }
+  }
+}
+
+.today {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  container-type: inline-size;
+
+  .hint {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-mute);
   }
 }
 

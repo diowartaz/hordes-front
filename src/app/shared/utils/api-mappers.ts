@@ -10,6 +10,8 @@ import {
   createDefaultCityModel,
   DefaultValuesModel,
   GameHistoryModel,
+  GuildOverviewModel,
+  GuildProfileModel,
   InventoryModel,
   LeaderboardElement,
   LeaderboardPage,
@@ -31,6 +33,8 @@ export type ApiProfile = Schemas['ProfileResponse'];
 export type ApiMatch = Schemas['MatchResponse'];
 export type ApiLeaderboardEntry = Schemas['LeaderboardEntryResponse'];
 export type ApiReferral = Schemas['ReferralResponse'];
+export type ApiGuildOverview = Schemas['GuildOverviewResponse'];
+export type ApiGuildProfile = Schemas['GuildProfileResponse'];
 type ApiBuilding = Schemas['BuildingResponse'];
 type ApiBuildingOffer = Schemas['BuildingOfferResponse'];
 type ApiBoosterCard = Schemas['BoosterCardResponse'];
@@ -219,6 +223,10 @@ export function toDefaultValues(catalog: ApiCatalog): DefaultValuesModel {
     effect_rules: {
       larder_items_per_level: rules['LARDER_ITEMS_PER_LEVEL'],
       dormitory_max_sleep_bonus_per_level: rules['DORMITORY_MAX_SLEEP_BONUS_PER_LEVEL'],
+      trophy_nights_per_point: rules['TROPHY_NIGHTS_PER_POINT'],
+      carrion_surplus_step: rules['CARRION_SURPLUS_STEP'],
+      carrion_max_steps: rules['CARRION_MAX_STEPS'],
+      vault_max_defense_per_level: rules['VAULT_MAX_DEFENSE_PER_LEVEL'],
     },
   };
 }
@@ -278,6 +286,8 @@ export function toProfil(profile: ApiProfile): ProfilModel {
     creation_date: profile.createdAt,
     personal_best_day: profile.personalBest.day,
     personal_best_zb: profile.personalBest.zombies,
+    guild: profile.guild ? { ...profile.guild } : null,
+    today: { ...profile.today },
     // L'API renvoie la plus récente en premier, le profil affiche l'historique du plus ancien au plus récent
     match_history: profile.matches.map((match) => toGameHistory(match, profile)).reverse(),
   };
@@ -288,5 +298,21 @@ export function toReferral(referral: ApiReferral): ReferralModel {
     ...referral,
     sponsor: referral.sponsor ? { ...referral.sponsor } : null,
     referees: referral.referees.map((referee) => ({ ...referee })),
+  };
+}
+
+export function toGuildOverview(overview: ApiGuildOverview): GuildOverviewModel {
+  return {
+    guild: overview.guild ? { ...overview.guild, members: overview.guild.members.map((m) => ({ ...m })) } : null,
+    invitations: overview.invitations.map((i) => ({ ...i, expiresAt: new Date(i.expiresAt) })),
+    lastPayout: overview.lastPayout,
+  };
+}
+
+export function toGuildProfile(guild: ApiGuildProfile): GuildProfileModel {
+  return {
+    ...guild,
+    createdAt: new Date(guild.createdAt),
+    members: guild.members.map((m) => ({ ...m })),
   };
 }

@@ -49,7 +49,7 @@ describe('DiggingsComponent', () => {
   });
 
   it('fouille une fois au hasard, en mode Random', () => {
-    fixture.nativeElement.querySelectorAll('.tab')[1].click();
+    component.setMode('random');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.offer-card')).toBeNull();
     fixture.nativeElement.querySelector('.dig-btn').click();
@@ -73,9 +73,18 @@ describe('DiggingsComponent', () => {
     expect(fixture.nativeElement.querySelector('.dig-btn.max')).toBeNull();
   });
 
-  it('mémorise le mode choisi', () => {
+  // À réactiver avec le toggle Pick / Random (DIG_MODE_TOGGLE_ENABLED)
+  xit('mémorise le mode choisi', () => {
     component.setMode('random');
     const next = TestBed.createComponent(DiggingsComponent).componentInstance;
     expect(next.mode()).toBe('random');
+  });
+
+  it('masque le toggle et reste en mode Pick tant qu’il est désactivé', () => {
+    component.setMode('random');
+    const next = TestBed.createComponent(DiggingsComponent);
+    next.detectChanges();
+    expect(next.nativeElement.querySelector('.tabs')).toBeNull();
+    expect(next.componentInstance.mode()).toBe('pick');
   });
 });

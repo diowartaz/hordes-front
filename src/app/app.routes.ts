@@ -78,6 +78,17 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: RoutesEnum.GUILD,
+    loadComponent: () => import('./components/classic-page/guild/guild.component').then((m) => m.GuildComponent),
+    canActivate: [authGuard],
+  },
+  {
+    // Fiche publique d'une guilde : consultable sans compte, comme un profil
+    path: `${RoutesEnum.GUILD}/:id`,
+    loadComponent: () =>
+      import('./components/classic-page/guild-view/guild-view.component').then((m) => m.GuildViewComponent),
+  },
+  {
     path: RoutesEnum.DECK,
     loadComponent: () => import('./components/classic-page/deck/deck.component').then((m) => m.DeckComponent),
     canActivate: [authGuard],

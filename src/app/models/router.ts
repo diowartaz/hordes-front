@@ -16,6 +16,7 @@ export enum RoutesEnum {
   SHOP = 'shop',
   DECK = 'deck',
   REFERRAL = 'referral',
+  GUILD = 'guild',
 }
 
 export enum UserState {
@@ -37,9 +38,10 @@ export const statesToRoutes: Record<UserState, RoutesEnum> = {
   [UserState.RECAP]: RoutesEnum.RECAP,
 };
 
-// Routes accessibles sans être connecté
+// Routes accessibles sans être connecté (premier segment : /guild garde son authGuard, seul /guild/:id est public)
 export const PUBLIC_ROUTES: string[] = [
   RoutesEnum.PROFIL,
+  RoutesEnum.GUILD,
   RoutesEnum.WIKI,
   RoutesEnum.LEADERBOARD,
   RoutesEnum.HOME,
@@ -47,7 +49,9 @@ export const PUBLIC_ROUTES: string[] = [
   RoutesEnum.SIGNUP,
 ];
 
-// Routes qui ne dépendent pas de l'état de la partie (pas de redirection automatique au chargement)
+// Routes qui ne dépendent pas de l'état de la partie (pas de redirection automatique au chargement).
+// Toute page secondaire (ClassicPageComponent) doit y figurer : sinon ReturnUrlService la mémorise
+// comme écran d'origine (son bouton retour ne fait rien) et un rechargement renvoie vers l'écran du jeu.
 export const STATE_LESS_ROUTES: string[] = [
   RoutesEnum.PROFIL,
   RoutesEnum.WIKI,
@@ -55,6 +59,7 @@ export const STATE_LESS_ROUTES: string[] = [
   RoutesEnum.SHOP,
   RoutesEnum.DECK,
   RoutesEnum.REFERRAL,
+  RoutesEnum.GUILD,
   RoutesEnum.SETTINGS,
 ];
 

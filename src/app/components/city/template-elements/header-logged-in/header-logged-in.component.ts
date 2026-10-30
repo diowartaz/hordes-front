@@ -57,6 +57,7 @@ export class HeaderLoggedInComponent {
     }
     return [
       { label: 'Deck', icon: 'cards', link: ['/', RoutesEnum.DECK], collapsible: false },
+      { label: 'Guild', icon: 'shield', link: ['/', RoutesEnum.GUILD], collapsible: true },
       { label: 'Invite friends', icon: 'user-plus', link: ['/', RoutesEnum.REFERRAL], collapsible: true },
       {
         label: 'Profile',

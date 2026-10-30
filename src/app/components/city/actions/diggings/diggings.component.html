@@ -10,28 +10,30 @@
 <div class="play-content">
   <h1 class="neon-title dig-title">Dig for items</h1>
 
-  <div class="tabs" role="tablist" aria-label="Dig mode" [class.right]="mode() === 'random'">
-    <button
-      type="button"
-      role="tab"
-      class="tab"
-      [class.active]="mode() === 'pick'"
-      [attr.aria-selected]="mode() === 'pick'"
-      (click)="setMode('pick')"
-    >
-      Pick
-    </button>
-    <button
-      type="button"
-      role="tab"
-      class="tab"
-      [class.active]="mode() === 'random'"
-      [attr.aria-selected]="mode() === 'random'"
-      (click)="setMode('random')"
-    >
-      🎲 Random
-    </button>
-  </div>
+  @if (modeToggleEnabled) {
+    <div class="tabs" role="tablist" aria-label="Dig mode" [class.right]="mode() === 'random'">
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        [class.active]="mode() === 'pick'"
+        [attr.aria-selected]="mode() === 'pick'"
+        (click)="setMode('pick')"
+      >
+        Pick
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        [class.active]="mode() === 'random'"
+        [attr.aria-selected]="mode() === 'random'"
+        (click)="setMode('random')"
+      >
+        🎲 Random
+      </button>
+    </div>
+  }
 
   @if (mode() === 'pick') {
     <section class="offer" role="tabpanel">

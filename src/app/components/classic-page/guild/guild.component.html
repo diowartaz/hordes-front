@@ -1,0 +1,250 @@
+<app-classic-page [title]="'Guild'" [subtitle]="'Play together'" [glow]="'var(--yellow)'">
+  <ng-container icon><app-icon name="shield" [size]="28" /></ng-container>
+  <ng-container content>
+    @if (overview(); as overview) {
+      <div class="guild">
+        @if (overview.lastPayout > 0) {
+          <p class="payout neon-card">
+            <app-icon name="money" [size]="18" />
+            Received today from your guild: <strong>+{{ overview.lastPayout | number }} coins</strong>
+          </p>
+        }
+
+        @if (overview.guild; as guild) {
+          <section class="neon-card">
+            <div class="section-head">
+              <h3 class="label guild-name">
+                <a class="guild-link" [routerLink]="['/', guildRoute, guild.id]">{{ guild.name }}</a>
+              </h3>
+              <span class="neon-chip">{{ guild.memberCount }}/{{ guild.maxMembers }}</span>
+            </div>
+            <p class="hint">
+              Every finished game adds <strong>{{ percent(guild.contributionRate) }}%</strong> of its coins to the guild
+              pot. After midnight (Paris time), each member who finished a game that day receives the whole pot.
+            </p>
+            <p class="pot">
+              Next payout per eligible member: <strong>{{ guild.pot | number }}</strong>
+              <app-icon name="money" [size]="16" />
+            </p>
+          </section>
+
+          <section class="neon-card">
+            <h3 class="label">Members</h3>
+            <ul class="members">
+              @for (member of guild.members; track member.playerId) {
+                <li class="member">
+                  <button type="button" class="text-btn name" (click)="goToProfil(member.playerId)">
+                    @if (member.isLeader) {
+                      <app-icon name="crown" [size]="14" />
+                    }
+                    {{ member.username }}
+                  </button>
+                  <span class="status" [class.eligible]="member.eligible">
+                    {{ member.eligible ? 'Eligible' : 'No game yet' }}
+                  </span>
+                  <span class="contribution">
+                    +{{ member.contribution | number: '1.0-2' }}<app-icon name="money" [size]="14" />
+                  </span>
+                  @if (guild.isLeader && !member.isLeader) {
+                    <button
+                      type="button"
+                      class="icon-btn kick"
+                      [attr.aria-label]="'Kick ' + member.username"
+                      [disabled]="guildService.actionLoading()"
+                      (click)="kick(member)"
+                    >
+                      <app-icon name="trash" [size]="18" />
+                    </button>
+                  }
+                </li>
+              }
+            </ul>
+          </section>
+
+          @if (guild.isLeader) {
+            <section class="neon-card">
+              <h3 class="label">Leader tools</h3>
+              <div class="access" role="group" aria-label="Guild access">
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  [class.selected]="guild.isPublic"
+                  [disabled]="guildService.actionLoading() || guild.isPublic"
+                  (click)="guildService.setPublic(true)"
+                >
+                  <app-icon name="friends" [size]="18" />Public
+                </button>
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  [class.selected]="!guild.isPublic"
+                  [disabled]="guildService.actionLoading() || !guild.isPublic"
+                  (click)="guildService.setPublic(false)"
+                >
+                  <app-icon name="lock" [size]="18" />Invite only
+                </button>
+              </div>
+              <form class="inline-form" [formGroup]="inviteForm" (ngSubmit)="invite()">
+                <label class="neon-field">
+                  <app-icon name="user-plus" [size]="20" />
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    autocomplete="off"
+                    maxlength="32"
+                    formControlName="username"
+                  />
+                </label>
+                <button type="submit" class="cta" [disabled]="guildService.actionLoading()">Invite</button>
+              </form>
+              <p class="hint">Invitations last 7 days. Only players without a guild can be invited.</p>
+            </section>
+          }
+
+          <button
+            type="button"
+            class="ghost-btn leave"
+            [disabled]="guildService.actionLoading()"
+            (click)="leave(guild.isLeader)"
+          >
+            <app-icon name="logout" [size]="18" />{{
+              guild.isLeader ? 'Leave (disbands the guild)' : 'Leave the guild'
+            }}
+          </button>
+        } @else {
+          @if (overview.invitations.length > 0) {
+            <section class="neon-card">
+              <h3 class="label">Invitations</h3>
+              <ul class="members">
+                @for (invitation of overview.invitations; track invitation.id) {
+                  <li class="invitation">
+                    <a class="text-btn name" [routerLink]="['/', guildRoute, invitation.guildId]">{{
+                      invitation.guildName
+                    }}</a>
+                    <span class="since">
+                      {{ invitation.memberCount }}/{{ invitation.maxMembers }} · until
+                      {{ invitation.expiresAt | date: 'mediumDate' }}
+                    </span>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="cta"
+                        [disabled]="guildService.actionLoading()"
+                        (click)="guildService.accept(invitation.id)"
+                      >
+                        Join
+                      </button>
+                      <button
+                        type="button"
+                        class="icon-btn"
+                        [attr.aria-label]="'Decline ' + invitation.guildName"
+                        [disabled]="guildService.actionLoading()"
+                        (click)="guildService.decline(invitation.id)"
+                      >
+                        <app-icon name="close" [size]="18" />
+                      </button>
+                    </div>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+
+          <section class="neon-card">
+            <h3 class="label">Public guilds</h3>
+            <form class="inline-form" [formGroup]="searchForm" (ngSubmit)="search()">
+              <label class="neon-field">
+                <app-icon name="search" [size]="20" />
+                <input
+                  type="text"
+                  placeholder="Search a guild"
+                  autocomplete="off"
+                  [maxlength]="nameMaxLength"
+                  formControlName="text"
+                />
+              </label>
+              <button type="submit" class="ghost-btn">Search</button>
+            </form>
+            @if (guildService.openGuilds().length === 0) {
+              <p class="hint">
+                {{ guildService.searchLoading() ? 'Searching…' : 'No public guild with free places.' }}
+              </p>
+            } @else {
+              <ul class="members">
+                @for (summary of guildService.openGuilds(); track summary.id) {
+                  <li class="invitation">
+                    <a class="text-btn name" [routerLink]="['/', guildRoute, summary.id]">{{ summary.name }}</a>
+                    <span class="since">
+                      {{ summary.memberCount }}/{{ summary.maxMembers }} · led by {{ summary.leaderUsername }}
+                    </span>
+                    <span class="contribution today-pot">
+                      Today's pot: {{ summary.pot | number }}<app-icon name="money" [size]="14" />
+                    </span>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="cta"
+                        [disabled]="guildService.actionLoading()"
+                        (click)="guildService.join(summary.id)"
+                      >
+                        Join
+                      </button>
+                    </div>
+                  </li>
+                }
+              </ul>
+            }
+          </section>
+
+          <section class="neon-card">
+            <h3 class="label">Create a guild</h3>
+            <p class="hint">You become its leader. The name can't be changed later.</p>
+            <form class="create-form" [formGroup]="createForm" (ngSubmit)="create()">
+              <label
+                class="neon-field"
+                [class.invalid]="createForm.controls.name.touched && createForm.controls.name.invalid"
+              >
+                <app-icon name="shield" [size]="20" />
+                <input
+                  type="text"
+                  placeholder="Guild name (3 to 24 characters)"
+                  autocomplete="off"
+                  [maxlength]="nameMaxLength"
+                  formControlName="name"
+                />
+              </label>
+              <div class="access" role="group" aria-label="Guild access">
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  [class.selected]="createPublic()"
+                  (click)="createPublic.set(true)"
+                >
+                  <app-icon name="friends" [size]="18" />Public
+                </button>
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  [class.selected]="!createPublic()"
+                  (click)="createPublic.set(false)"
+                >
+                  <app-icon name="lock" [size]="18" />Invite only
+                </button>
+              </div>
+              <button type="submit" class="cta cta-pink" [disabled]="guildService.actionLoading()">
+                @if (guildService.actionLoading()) {
+                  <mat-spinner diameter="22"></mat-spinner>
+                } @else {
+                  <app-icon name="plus" [size]="20" />
+                }
+                Create
+              </button>
+            </form>
+          </section>
+        }
+      </div>
+    } @else if (guildService.loadLoading()) {
+      <div class="loading"><mat-spinner diameter="36"></mat-spinner></div>
+    }
+  </ng-container>
+</app-classic-page>

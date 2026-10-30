@@ -22,7 +22,7 @@ export function buildingEffectText(
     case 'nightlyGrowth':
       return `Each night survived: +${value} permanent defense per level.`;
     case 'compoundGrowth':
-      return `Each night survived: +${value} × √(city defense) permanent defense per level. Grows with your defense, but slower.`;
+      return `Each night survived: +${percent(value)} of your defense as permanent defense per level, up to +${rules.vault_max_defense_per_level} per level.`;
     case 'buildDayScaling':
       return (
         `Each level built gives ${value} × the current day in defense.` +
@@ -34,12 +34,15 @@ export function buildingEffectText(
       return `Tonight only: +${value} defense per resource in stock, per level.`;
     case 'randomNightDefense':
       return `Tonight only: random defense between 0 and ${value} per level.`;
-    case 'hordeTrophy':
-      return `Each night survived: +${value} × √(zombies repelled) permanent defense per level. Grows with the horde, but slower.`;
+    case 'survivalTrophy':
+      return (
+        `Each night survived earns a trophy, then gives +${value} permanent defense per level for every ${rules.trophy_nights_per_point} trophies.` +
+        (day ? ` Tonight: +${value * Math.floor(day / rules.trophy_nights_per_point)} per level.` : '')
+      );
     case 'otherBuildDefense':
       return `Each level you build on another building gives +${value} defense per level.`;
     case 'surplusDefense':
-      return `Each night survived: +${value} × √(spare defense) permanent defense per level, spare defense being your defense minus the zombies.`;
+      return `Each night survived: +${value} permanent defense per level for every ${rules.carrion_surplus_step} defense above the zombies, up to +${value * rules.carrion_max_steps} per level.`;
     case 'stockToDefense':
       return `Each night survived: uses ${rules.larder_items_per_level} of your most plentiful resource per level, +${value} permanent defense for each.`;
     case 'digDefense':

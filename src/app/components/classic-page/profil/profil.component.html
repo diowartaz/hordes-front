@@ -6,6 +6,11 @@
           <div class="avatar">{{ profil.username.charAt(0).toUpperCase() }}</div>
         </div>
         <h2 class="username">{{ profil.username }}</h2>
+        @if (profil.guild; as guild) {
+          <a class="neon-chip guild-chip" style="--c: var(--yellow)" [routerLink]="['/', guildRoute, guild.id]">
+            <app-icon name="shield" [size]="14" />{{ guild.name }}
+          </a>
+        }
         <div class="chips">
           <span class="neon-chip" style="--c: var(--violet-pale)">Level {{ level().lvl }}</span>
           <span class="neon-chip" style="--c: var(--yellow)">Rank #{{ profil.rank ?? '—' }}</span>
@@ -46,6 +51,34 @@
           </div>
         </div>
       </div>
+
+      <section class="today">
+        <h3 class="label">Today</h3>
+        <div class="tiles">
+          <div class="stat-tile" style="--c: var(--green)">
+            <div class="icon-tile"><app-icon name="money" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Earned today</span>
+              <span class="stat-value">{{ profil.today.coins | number }}</span>
+            </div>
+          </div>
+          <div class="stat-tile" style="--c: var(--yellow)">
+            <div class="icon-tile"><app-icon name="shield" [size]="22" /></div>
+            <div class="tile-text">
+              <span class="stat-label">Guild pot share</span>
+              <span class="stat-value">+{{ profil.today.contribution | number: '1.0-2' }}</span>
+            </div>
+          </div>
+        </div>
+        <p class="hint">
+          {{ profil.today.games }} {{ profil.today.games === 1 ? 'game' : 'games' }} finished today.
+          @if (profil.guild; as guild) {
+            The share goes to {{ guild.name }}'s pot, paid out after midnight (Paris time).
+          } @else {
+            Without a guild at midnight (Paris time), the share is lost.
+          }
+        </p>
+      </section>
 
       <section class="history">
         <h3 class="label">Match history</h3>

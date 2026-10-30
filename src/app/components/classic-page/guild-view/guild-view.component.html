@@ -1,0 +1,65 @@
+@if (guild(); as guild) {
+  <app-classic-page [title]="guild.name" [subtitle]="'Guild'" [glow]="'var(--yellow)'">
+    <ng-container icon><app-icon name="shield" [size]="28" /></ng-container>
+    <ng-container content>
+      <div class="guild-view">
+        <section class="neon-card">
+          <div class="chips">
+            <span class="neon-chip" style="--c: var(--yellow)">
+              <app-icon [name]="guild.isPublic ? 'friends' : 'lock'" [size]="14" />
+              {{ guild.isPublic ? 'Public' : 'Invite only' }}
+            </span>
+            <span class="neon-chip">{{ guild.memberCount }}/{{ guild.maxMembers }} members</span>
+            <span class="neon-chip" style="--c: var(--violet-pale)">
+              Since {{ guild.createdAt | date: 'mediumDate' }}
+            </span>
+          </div>
+          @if (isOwnGuild()) {
+            <a class="cta" [routerLink]="guildRoute"><app-icon name="shield" [size]="18" />Manage your guild</a>
+          } @else if (canJoin()) {
+            <button type="button" class="cta" [disabled]="guildService.actionLoading()" (click)="join(guild.id)">
+              <app-icon name="user-plus" [size]="18" />Join
+            </button>
+          }
+        </section>
+
+        <section class="neon-card">
+          <h3 class="label">Today's pot</h3>
+          <p class="pot">
+            <strong>{{ guild.pot | number }}</strong
+            ><app-icon name="money" [size]="18" />
+            <span class="hint">per eligible member</span>
+          </p>
+          <p class="hint">
+            Every finished game adds {{ percent(guild.contributionRate) }}% of its coins to the pot. After midnight
+            (Paris time), each member who finished a game that day receives the whole pot.
+          </p>
+        </section>
+
+        <section class="neon-card">
+          <h3 class="label">Members</h3>
+          <ul class="members">
+            @for (member of guild.members; track member.playerId) {
+              <li>
+                <a class="text-btn name" [routerLink]="profilRoute" [queryParams]="{ user_id: member.playerId }">
+                  @if (member.isLeader) {
+                    <app-icon name="crown" [size]="14" />
+                  }
+                  {{ member.username }}
+                </a>
+                <span class="status" [class.eligible]="member.eligible">
+                  {{ member.eligible ? 'Eligible' : 'No game yet' }}
+                </span>
+                <span class="contribution">
+                  +{{ member.contribution | number: '1.0-2' }}<app-icon name="money" [size]="14" />
+                </span>
+              </li>
+            }
+          </ul>
+        </section>
+      </div>
+    </ng-container>
+  </app-classic-page>
+} @else if (loading()) {
+  <div class="loading"><mat-spinner diameter="40"></mat-spinner></div>
+}

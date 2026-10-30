@@ -18,6 +18,9 @@ import {
   LeaderboardPosition,
   ProfilModel,
   ReferralModel,
+  GuildOverviewModel,
+  GuildProfileModel,
+  GuildSummaryModel,
   StatsModel,
 } from 'src/app/models/game';
 import { UserState } from 'src/app/models/router';
@@ -27,6 +30,8 @@ import {
   ApiPlayer,
   ApiProfile,
   ApiReferral,
+  ApiGuildOverview,
+  ApiGuildProfile,
   stateFromCity,
   toBonusReferences,
   toBoosterCards,
@@ -39,6 +44,8 @@ import {
   toLeaderboardPage,
   toProfil,
   toReferral,
+  toGuildOverview,
+  toGuildProfile,
   toStatsModel,
 } from 'src/app/shared/utils/api-mappers';
 import { environment } from 'src/environments/environment';
@@ -216,6 +223,66 @@ export class GameApiService {
 
   regenerateReferralCode(): Observable<ReferralModel> {
     return this.httpClient.post<ApiReferral>(this.API_URL + 'me/referral/code', {}).pipe(map(toReferral));
+  }
+
+  getGuild(): Observable<GuildOverviewModel> {
+    return this.httpClient.get<ApiGuildOverview>(this.API_URL + 'guilds/me').pipe(map(toGuildOverview));
+  }
+
+  // Fiche publique d'une guilde, consultable sans en être membre
+  getGuildProfile(id: string): Observable<GuildProfileModel> {
+    return this.httpClient.get<ApiGuildProfile>(this.API_URL + `guilds/${id}`).pipe(map(toGuildProfile));
+  }
+
+  // Guildes publiques qui ont encore de la place
+  searchGuilds(search: string): Observable<GuildSummaryModel[]> {
+    return this.httpClient
+      .get<Schemas['GuildListResponse']>(this.API_URL + 'guilds', { params: search ? { search } : {} })
+      .pipe(map((response) => response.guilds));
+  }
+
+  createGuild(name: string, isPublic: boolean): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .post<ApiGuildOverview>(this.API_URL + 'guilds', { name, isPublic })
+      .pipe(map(toGuildOverview));
+  }
+
+  setGuildPublic(isPublic: boolean): Observable<GuildOverviewModel> {
+    return this.httpClient.patch<ApiGuildOverview>(this.API_URL + 'guilds/me', { isPublic }).pipe(map(toGuildOverview));
+  }
+
+  joinGuild(guildId: string): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .post<ApiGuildOverview>(this.API_URL + `guilds/${guildId}/join`, {})
+      .pipe(map(toGuildOverview));
+  }
+
+  leaveGuild(): Observable<GuildOverviewModel> {
+    return this.httpClient.post<ApiGuildOverview>(this.API_URL + 'guilds/me/leave', {}).pipe(map(toGuildOverview));
+  }
+
+  kickGuildMember(playerId: string): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .delete<ApiGuildOverview>(this.API_URL + `guilds/me/members/${playerId}`)
+      .pipe(map(toGuildOverview));
+  }
+
+  inviteToGuild(username: string): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .post<ApiGuildOverview>(this.API_URL + 'guilds/me/invitations', { username })
+      .pipe(map(toGuildOverview));
+  }
+
+  acceptGuildInvitation(invitationId: string): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .post<ApiGuildOverview>(this.API_URL + `guilds/invitations/${invitationId}/accept`, {})
+      .pipe(map(toGuildOverview));
+  }
+
+  declineGuildInvitation(invitationId: string): Observable<GuildOverviewModel> {
+    return this.httpClient
+      .delete<ApiGuildOverview>(this.API_URL + `guilds/invitations/${invitationId}`)
+      .pipe(map(toGuildOverview));
   }
 
   // Dernière partie terminée du joueur (écran de fin de partie)

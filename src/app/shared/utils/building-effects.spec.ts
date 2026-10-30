@@ -9,6 +9,18 @@ describe('building effects', () => {
     expect(buildingEffectText({ kind: 'earlierWakeUp', value: 1200 })).toBe('You wake up 20 min earlier per level.');
   });
 
+  it('décrit les effets qui grandissent avec la partie sans formule', () => {
+    expect(buildingEffectText({ kind: 'survivalTrophy', value: 1 }, 7)).toBe(
+      'Each night survived earns a trophy, then gives +1 permanent defense per level for every 2 trophies. Tonight: +3 per level.',
+    );
+    expect(buildingEffectText({ kind: 'surplusDefense', value: 1 })).toBe(
+      'Each night survived: +1 permanent defense per level for every 25 defense above the zombies, up to +8 per level.',
+    );
+    expect(buildingEffectText({ kind: 'compoundGrowth', value: 0.05 })).toBe(
+      'Each night survived: +5% of your defense as permanent defense per level, up to +30 per level.',
+    );
+  });
+
   it('résume ce qu’un bâtiment spécial a fait', () => {
     expect(
       effectReportText({

@@ -25,6 +25,7 @@ npm run api:types  # régénère src/app/models/api.ts depuis ../the-black-hour-
 - `localStorage` uniquement via `shared/utils/storage.ts` (`StorageKey`).
 - Calculs de jeu purs dans `src/app/shared/utils/` ; types dans `src/app/models/game.ts`.
 - Routage piloté par l'état joueur (`UserState`) via `stateGuard` et `data.allowedStates` dans `app.routes.ts`.
+- Page secondaire (écran en `ClassicPageComponent` qui ne dépend pas de l'état de la partie : profil, guilde, réglages…) : ajouter sa route à `STATE_LESS_ROUTES` (`src/app/models/router.ts`). Sinon `ReturnUrlService` la mémorise comme écran d'origine, son bouton retour ne fait rien, et un accès direct ou un rechargement renvoie vers l'écran du jeu.
 - Application **zoneless** et composants en OnPush (défaut d'Angular 22) : tout état modifié de façon asynchrone (callback HTTP, `setTimeout`) doit être un `signal`. Ne jamais muter un objet contenu dans un signal (utiliser `set`/`update`).
 - Écrans chargés à la demande (`loadComponent`) ; templates en control flow `@if`/`@for` ; pas de `CommonModule`, importer `NgClass`/`NgStyle`/`KeyValuePipe` au besoin.
 - Sélecteurs de composants préfixés `app-` ; `any` autorisé par ESLint.

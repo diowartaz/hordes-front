@@ -4,9 +4,11 @@
   <div class="deck-head">
     <app-icon name="cards" [size]="20" />
     <h2>Deck · {{ deckBuildings().length }} plans</h2>
-    @for (entry of deckRarities(); track entry.rarity) {
-      <span class="neon-chip" [style.--c]="entry.rarity | rarityToColor">{{ entry.rarity }} {{ entry.count }}</span>
-    }
+    <div class="deck-rarities">
+      @for (entry of deckRarities(); track entry.rarity) {
+        <span class="neon-chip" [style.--c]="entry.rarity | rarityToColor">{{ entry.rarity }} {{ entry.count }}</span>
+      }
+    </div>
   </div>
   <app-resource-shares [buildings]="deckBuildings()" />
   <button type="button" class="ghost-btn" style="--c: var(--cyan)" (click)="router.navigate([RoutesEnum.DECK])">
