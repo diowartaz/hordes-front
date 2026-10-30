@@ -1,0 +1,278 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="frame"><rect width="512" height="512" rx="0"/></clipPath>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.7 0 0 0 -0.28"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blur6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.75"/>
+    </radialGradient>
+    
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#040208"/><stop offset="0.5" stop-color="#1d0612"/><stop offset="0.78" stop-color="#6a0f1c"/><stop offset="0.9" stop-color="#b8321a"/></linearGradient>
+    <radialGradient id="corona2"><stop offset="0.5" stop-color="#fff1d6"/><stop offset="0.55" stop-color="#ffb46a" stop-opacity="0.9"/><stop offset="0.7" stop-color="#e0303a" stop-opacity="0.45"/><stop offset="1" stop-color="#c4143a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="disk2" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#140a10"/><stop offset="1" stop-color="#020103"/></radialGradient>
+    <filter id="rim2" x="-20%" y="-20%" width="140%" height="140%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.5" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="0.9" result="b"/>
+      <feFlood flood-color="#ff5a3a" flood-opacity="0.4"/>
+      <feComposite in2="b" operator="in" result="rim"/>
+      <feMerge><feMergeNode in="rim"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="mist2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd0b0" stop-opacity="0"/><stop offset="0.6" stop-color="#ffd0b0" stop-opacity="0.12"/><stop offset="1" stop-color="#ffd0b0" stop-opacity="0"/></linearGradient>
+  </defs>
+  <g clip-path="url(#frame)">
+    
+    <rect width="512" height="512" fill="url(#sky2)"/>
+    <circle cx="256" cy="212" r="210" fill="url(#corona2)"/>
+    <g fill="#ffb878" filter="url(#blur2)"><path d="M250 112.2 L256.1 36.1 L262.2 112.2 Z" opacity="0.9"/><path d="M264.2 112.3 L274.1 62.9 L271.9 113.3 Z" opacity="0.5"/><path d="M268.3 112.8 L277.1 84.7 L276.3 114.1 Z" opacity="0.6"/><path d="M273.4 113.5 L283.7 89.9 L282.7 115.6 Z" opacity="0.6"/><path d="M281.6 115.3 L294.5 82.7 L287.5 117.1 Z" opacity="0.6"/><path d="M288.9 117.6 L314.1 59.7 L294.4 119.7 Z" opacity="0.7"/><path d="M295.2 120 L307.8 98.7 L300 122.2 Z" opacity="0.5"/><path d="M303.4 123.9 L331.7 79 L307.5 126.3 Z" opacity="0.7"/><path d="M306.2 125.5 L362.8 51.7 L316.4 132.3 Z" opacity="0.9"/><path d="M314.2 130.7 L356.1 84.1 L320.9 135.9 Z" opacity="0.7"/><path d="M321.5 136.5 L336.9 123.6 L325.5 140.1 Z" opacity="0.5"/><path d="M325.3 139.9 L340.5 128.3 L328.7 143.4 Z" opacity="0.7"/><path d="M329.1 143.8 L360 121.9 L334 149.4 Z" opacity="0.7"/><path d="M335.1 150.8 L377.2 124.3 L338.9 156 Z" opacity="0.5"/><path d="M336.3 152.4 L359.4 143.3 L342.1 161.2 Z" opacity="0.5"/><path d="M339.9 157.6 L424.1 117.2 L345.9 168.3 Z" opacity="0.9"/><path d="M344.7 165.7 L364.8 161.3 L348.4 173.9 Z" opacity="0.7"/><path d="M348.1 173.1 L402.3 157.7 L351.2 181.4 Z" opacity="0.7"/><path d="M349.9 177.6 L391.7 168.8 L352.5 185.9 Z" opacity="0.7"/><path d="M353.2 188.6 L409.6 181.8 L354.8 196.8 Z" opacity="0.7"/><path d="M354.5 194.7 L398.1 194.3 L355.7 204.6 Z" opacity="0.4"/><path d="M355.2 199.6 L388.7 201.7 L356 208.9 Z" opacity="0.6"/><path d="M355.9 208.4 L418.9 212.8 L355.9 216.5 Z" opacity="0.7"/><path d="M356 211.6 L449 223.1 L355.3 223.8 Z" opacity="0.9"/><path d="M355.4 223.1 L397.9 232.5 L354.5 229.4 Z" opacity="0.4"/><path d="M355.3 224.1 L373.3 232.7 L353.4 234.7 Z" opacity="0.7"/><path d="M353.3 235.3 L370.1 244.5 L350.9 243.4 Z" opacity="0.6"/><path d="M350.9 243.6 L409.7 268.4 L348.8 249.3 Z" opacity="0.7"/><path d="M349 248.7 L397.7 274.9 L345.6 256.5 Z" opacity="0.7"/><path d="M347.2 253 L402.6 284.8 L343.8 259.9 Z" opacity="0.6"/><path d="M345.1 257.4 L416.2 306.3 L338.9 267.9 Z" opacity="0.9"/><path d="M341.1 264.6 L383.9 300.3 L335.3 273 Z" opacity="0.6"/><path d="M335.3 273 L381.3 317.1 L329.9 279.4 Z" opacity="0.6"/><path d="M328.9 280.5 L355.6 311.1 L324.8 284.6 Z" opacity="0.6"/><path d="M324.4 284.9 L360.4 329.6 L320.3 288.6 Z" opacity="0.6"/><path d="M320.4 288.5 L344.6 323.2 L316.2 291.9 Z" opacity="0.5"/><path d="M315.1 292.7 L335.6 327.1 L310.7 295.7 Z" opacity="0.4"/><path d="M310.3 296 L318.2 313.6 L306.1 298.5 Z" opacity="0.7"/><path d="M303.8 299.8 L330.4 371.3 L292.7 305 Z" opacity="0.9"/><path d="M299.3 302.1 L310.4 337.3 L292.3 305.2 Z" opacity="0.6"/><path d="M292.9 304.9 L299.6 339.3 L283.8 308.1 Z" opacity="0.6"/><path d="M284.2 307.9 L289.5 350.4 L274.7 310.2 Z" opacity="0.5"/><path d="M277.8 309.6 L279.5 341.3 L270 311 Z" opacity="0.7"/><path d="M274.4 310.3 L273.5 340.4 L264.6 311.6 Z" opacity="0.7"/><path d="M262.3 311.8 L260 349.7 L255.6 312 Z" opacity="0.7"/><path d="M260.8 311.9 L253.6 396.8 L248.6 311.7 Z" opacity="0.9"/><path d="M250 311.8 L241.2 367.5 L243.1 311.2 Z" opacity="0.7"/><path d="M242.5 311.1 L232.8 348.1 L236 310 Z" opacity="0.6"/><path d="M237.7 310.3 L220.6 366.7 L229.7 308.5 Z" opacity="0.7"/><path d="M227.7 307.9 L211.3 345.5 L220.8 305.6 Z" opacity="0.6"/><path d="M221.3 305.8 L200.5 344.1 L213.3 302.4 Z" opacity="0.4"/><path d="M215.9 303.6 L196.2 334.1 L208.3 299.9 Z" opacity="0.7"/><path d="M209.4 300.5 L191.9 326.9 L205.2 298.1 Z" opacity="0.6"/><path d="M205 298 L141.9 379.9 L194.9 291.1 Z" opacity="0.9"/><path d="M197.8 293.3 L177.9 315.8 L194 290.5 Z" opacity="0.6"/><path d="M191.8 288.7 L151.4 325.1 L184.5 281.9 Z" opacity="0.7"/><path d="M187.9 285.2 L141.4 327.9 L183.5 280.9 Z" opacity="0.6"/><path d="M183.5 280.9 L141.9 310.6 L177.3 273.7 Z" opacity="0.6"/><path d="M177.4 273.9 L137.1 297.8 L172.5 267.1 Z" opacity="0.5"/><path d="M172.1 266.4 L136.5 285.3 L169.4 262 Z" opacity="0.6"/><path d="M171.3 265.2 L88.5 303.4 L165.4 254.4 Z" opacity="0.9"/><path d="M167.3 258.1 L111.3 277.5 L162.8 248.2 Z" opacity="0.4"/><path d="M164.6 252.6 L134.1 260.5 L161.7 245.3 Z" opacity="0.5"/><path d="M160.6 242.1 L104.1 253.5 L158.6 234.5 Z" opacity="0.7"/><path d="M160 239.9 L119 244 L157.6 229.6 Z" opacity="0.6"/><path d="M157.7 230.4 L123.8 229.7 L156.3 220 Z" opacity="0.7"/><path d="M156.4 220.7 L138.1 219.2 L156.1 215.4 Z" opacity="0.7"/><path d="M156.3 220.2 L134.3 215.6 L156 209.7 Z" opacity="0.5"/><path d="M156 211.5 L74.5 200 L156.8 199.3 Z" opacity="0.9"/><path d="M156.8 199.7 L106.5 190 L157.4 195.2 Z" opacity="0.5"/><path d="M158 191.9 L137.3 184.7 L159.1 187.3 Z" opacity="0.5"/><path d="M159.2 186.8 L112.3 169.8 L161 180.9 Z" opacity="0.5"/><path d="M160 184 L122.9 167.9 L162.3 177.2 Z" opacity="0.6"/><path d="M162.5 176.7 L114.2 153.2 L164.9 170.8 Z" opacity="0.6"/><path d="M166.8 166.7 L150.8 154.9 L169.5 161.9 Z" opacity="0.6"/><path d="M168.7 163.2 L102.4 113.5 L175.3 153 Z" opacity="0.9"/><path d="M173.8 155.1 L137.3 124.1 L177.6 149.9 Z" opacity="0.4"/><path d="M174.8 153.6 L127.8 110.6 L180.4 146.5 Z" opacity="0.5"/><path d="M180.9 146 L168.1 128.4 L186.3 140.3 Z" opacity="0.5"/><path d="M186.1 140.5 L172.6 118.3 L193.1 134.3 Z" opacity="0.4"/><path d="M188.8 138 L175.3 113.4 L196.8 131.4 Z" opacity="0.4"/><path d="M193.1 134.2 L161.4 81.4 L201.7 128 Z" opacity="0.5"/><path d="M203.3 127 L180.2 82.1 L207.9 124.3 Z" opacity="0.6"/><path d="M204.1 126.5 L166.6 42.2 L214.9 120.8 Z" opacity="0.9"/><path d="M216.6 120.1 L197.6 66.4 L221 118.3 Z" opacity="0.6"/><path d="M218.7 119.2 L217 97.9 L228.7 115.8 Z" opacity="0.5"/><path d="M226 116.6 L220.9 85.7 L232.4 114.8 Z" opacity="0.7"/><path d="M234.7 114.3 L229.9 56.3 L244.2 112.7 Z" opacity="0.6"/><path d="M242.1 113 L242.1 65.3 L251.1 112.1 Z" opacity="0.6"/><path d="M246.3 112.5 L248.7 75.6 L255 112 Z" opacity="0.5"/></g>
+    <g stroke="#fff3dc" stroke-linecap="round" filter="url(#glow)"><line x1="256" y1="100" x2="256" y2="74" stroke-width="6"/><line x1="312" y1="115" x2="318" y2="104.6" stroke-width="4"/><line x1="353" y1="156" x2="363.4" y2="150" stroke-width="4"/><line x1="368" y1="212" x2="380" y2="212" stroke-width="4"/><line x1="353" y1="268" x2="363.4" y2="274" stroke-width="4"/><line x1="312" y1="309" x2="318" y2="319.4" stroke-width="4"/><line x1="256" y1="324" x2="256" y2="336" stroke-width="4"/><line x1="200" y1="309" x2="194" y2="319.4" stroke-width="4"/><line x1="159" y1="268" x2="148.6" y2="274" stroke-width="4"/><line x1="144" y1="212" x2="132" y2="212" stroke-width="4"/><line x1="159" y1="156" x2="148.6" y2="150" stroke-width="4"/><line x1="200" y1="115" x2="194" y2="104.6" stroke-width="4"/></g>
+    <circle cx="256" cy="212" r="104" fill="url(#disk2)"/>
+    <circle cx="256" cy="212" r="105" fill="none" stroke="#ffe6c0" stroke-width="2.5" filter="url(#glow)"/>
+    <circle cx="320" cy="130" r="9" fill="#fff" filter="url(#glow)"/>
+    <circle cx="320" cy="130" r="22" fill="#fff" opacity="0.35" filter="url(#blur6)"/>
+    <g fill="#0a0306"><path transform="translate(118 120) scale(1)" d="M-14 -2 Q-7 -8 0 1 Q7 -8 14 -2 Q7 -4 0 4 Q-7 -4 -14 -2 Z"/><path transform="translate(144 104) scale(0.8)" d="M-14 -2 Q-7 -8 0 1 Q7 -8 14 -2 Q7 -4 0 4 Q-7 -4 -14 -2 Z"/><path transform="translate(402 150) scale(1.1)" d="M-14 -2 Q-7 -8 0 1 Q7 -8 14 -2 Q7 -4 0 4 Q-7 -4 -14 -2 Z"/><path transform="translate(380 128) scale(0.7)" d="M-14 -2 Q-7 -8 0 1 Q7 -8 14 -2 Q7 -4 0 4 Q-7 -4 -14 -2 Z"/><path transform="translate(96 160) scale(0.6)" d="M-14 -2 Q-7 -8 0 1 Q7 -8 14 -2 Q7 -4 0 4 Q-7 -4 -14 -2 Z"/></g>
+    <path d="M0 378.2 L4 378.5 L8 378.8 L12 378.9 L16 379 L20 378.9 L24 378.8 L28 378.5 L32 378.2 L36 377.8 L40 377.3 L44 376.7 L48 376.1 L52 375.4 L56 374.7 L60 374 L64 373.3 L68 372.6 L72 371.9 L76 371.3 L80 370.7 L84 370.2 L88 369.8 L92 369.4 L96 369.2 L100 369 L104 369 L108 369.1 L112 369.2 L116 369.5 L120 369.8 L124 370.2 L128 370.7 L132 371.3 L136 371.9 L140 372.6 L144 373.3 L148 374 L152 374.7 L156 375.4 L160 376.1 L164 376.7 L168 377.3 L172 377.8 L176 378.2 L180 378.6 L184 379 L188 379.7 L192 380.7 L196 382 L200 383.6 L204 385.5 L208 387.6 L212 390.1 L216 392.8 L220 395.9 L224 399.3 L228 403 L232 407.1 L236 411.6 L240 416.5 L244 421.7 L248 427.4 L252 433.5 L256 440 L260 447 L264 454.5 L264 512 L0 512 Z" fill="#33070f"/>
+    <g fill="#33070f" stroke="#33070f" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(8 380.3) rotate(2.4) scale(0.1)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(21.1 380.4) rotate(-0.5) scale(0.1)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(34.5 379.4) rotate(0.7) scale(0.1)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(48.4 377.5) rotate(1.9) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(61.3 375.3) rotate(1) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(76 372.8) rotate(3.2) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(86.9 371.4) rotate(3.7) scale(0.1)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(98.6 370.6) rotate(-0.6) scale(0.1)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(112.7 370.7) rotate(5.2) scale(0.1)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(122.7 371.6) rotate(-2.1) scale(0.1)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(135.9 373.4) rotate(-2.3) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(147.8 375.5) rotate(1.9) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(162.4 378) rotate(3.2) scale(0.1)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(173.2 379.4) rotate(-1.4) scale(0.1)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(185.5 380.7) rotate(4.2) scale(0.1)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(199 384.7) rotate(1.8) scale(0.1)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g></g>
+    <path d="M0 402 L4 402.5 L8 403 L12 403.6 L16 404.2 L20 404.9 L24 405.5 L28 406.1 L32 406.8 L36 407.4 L40 408 L44 408.6 L48 409.1 L52 409.6 L56 410.1 L60 410.6 L64 411.1 L68 411.5 L72 411.9 L76 412.3 L80 412.7 L84 413.1 L88 413.5 L92 413.9 L96 414.3 L100 414.7 L104 415.2 L108 415.7 L112 416.3 L116 416.9 L120 417.5 L124 418.3 L128 419 L132 419.9 L136 420.8 L140 421.8 L144 422.9 L148 424 L152 425.2 L156 426.5 L160 427.8 L164 429.2 L168 430.6 L172 432.1 L176 433.7 L180 435.2 L184 436.9 L188 438.5 L192 440.1 L196 441.8 L200 443.5 L204 445.1 L208 446.8 L212 448.4 L216 450 L220 451.6 L224 453.1 L228 454.6 L232 456.1 L236 457.6 L240 459 L244 458.9 L248 458.7 L252 458.6 L256 458.3 L260 458.1 L264 457.8 L264 512 L0 512 Z" fill="#14040a"/>
+    <rect x="0" y="372" width="512" height="80" fill="url(#mist2)"/>
+    <path d="M284 378 C276 360 292 350 284 334 C278 322 290 312 298 300" fill="none" stroke="#c9a0a0" stroke-opacity="0.22" stroke-width="7" stroke-linecap="round" filter="url(#blur6)"/>
+    <!-- Maisons et tour derrière le rempart : un ton plus clair que lui pour donner de la profondeur -->
+    <g fill="#14050b">
+      <path d="M242 446 L242 400 L266 378 L290 400 L290 446 Z"/>
+      <rect x="279" y="372" width="8" height="18"/>
+      <path d="M282 446 L282 396 L294 374 L318 374 L330 396 L330 446 Z"/>
+      <path d="M322 446 L322 388 L343 358 L364 388 L364 446 Z"/>
+      <path d="M406 446 L406 398 L430 374 L454 398 L454 446 Z"/>
+      <rect x="440" y="374" width="7" height="16"/>
+      <path d="M448 446 L448 404 L474 384 L500 404 L500 446 Z"/>
+      <path d="M494 446 L494 398 L512 386 L512 446 Z"/>
+    </g>
+    <g fill="#0d0407">
+      <path d="M362 446 L370 332 L400 332 L408 446 L402 446 L395 340 L375 340 L368 446 Z"/>
+      <path d="M371 352 L399 404 M399 352 L371 404 M368 404 L402 404" fill="none" stroke="#0d0407" stroke-width="3.5"/>
+      <rect x="360" y="326" width="50" height="7"/>
+      <rect x="362" y="314" width="46" height="13"/>
+      <rect x="362" y="304" width="46" height="12"/>
+      <path d="M354 306 L385 284 L416 306 Z"/>
+      <rect x="383" y="262" width="3" height="24"/>
+    </g>
+    <path d="M386 262 Q396 264 404 262 Q398 268 404 274 Q396 272 386 274 Z" fill="#7a0f1e"/>
+    <g fill="#ffb020" filter="url(#glow)">
+      <rect x="378" y="306" width="14" height="7" fill="#ffd60a"/>
+      <rect x="338" y="392" width="7" height="9"/>
+      <rect x="425" y="400" width="6" height="7" opacity="0.7"/>
+    </g>
+    <path d="M338 396.5 H345 M341.5 392 V401" stroke="#14050b" stroke-width="1.5"/>
+    <g fill="#050205">
+      <path d="M236 458 L236 408.6 L241.5 399.9 L247 408.6 L247 458 Z"/><path d="M245 458 L245 408 L250.5 398.6 L256 408 L256 458 Z"/><path d="M254 458 L254 407.8 L259.5 398.6 L265 407.8 L265 458 Z"/><path d="M263 458 L263 408.7 L268.5 398.9 L274 408.7 L274 458 Z"/><path d="M272 458 L272 409.9 L277.5 401.6 L283 409.9 L283 458 Z"/><path d="M281 458 L281 405.4 L286.5 394.8 L292 405.4 L292 458 Z"/><path d="M290 458 L290 404.5 L295.5 394.1 L301 404.5 L301 458 Z"/><path d="M299 458 L299 406.2 L304.5 396.3 L310 406.2 L310 458 Z"/><path d="M335 458 L335 406.4 L340.5 396 L346 406.4 L346 458 Z"/><path d="M344 458 L344 405.5 L349.5 397.1 L355 405.5 L355 458 Z"/><path d="M353 458 L353 407.3 L358.5 397.4 L364 407.3 L364 458 Z"/><path d="M362 458 L362 404.7 L367.5 393.8 L373 404.7 L373 458 Z"/><path d="M371 458 L371 404.4 L376.5 394.6 L382 404.4 L382 458 Z"/><path d="M380 458 L380 407.6 L385.5 399.1 L391 407.6 L391 458 Z"/><path d="M389 458 L389 409.6 L394.5 398.8 L400 409.6 L400 458 Z"/><path d="M398 458 L398 408.7 L403.5 400.6 L409 408.7 L409 458 Z"/><path d="M407 458 L407 405.3 L412.5 395.5 L418 405.3 L418 458 Z"/><path d="M416 458 L416 405.6 L421.5 396.7 L427 405.6 L427 458 Z"/><path d="M425 458 L425 407 L430.5 398.5 L436 407 L436 458 Z"/><path d="M434 458 L434 404.7 L439.5 395.3 L445 404.7 L445 458 Z"/><path d="M443 458 L443 408.8 L448.5 398 L454 408.8 L454 458 Z"/><path d="M452 458 L452 408.6 L457.5 398.6 L463 408.6 L463 458 Z"/><path d="M461 458 L461 407.3 L466.5 398.2 L472 407.3 L472 458 Z"/><path d="M470 458 L470 404.6 L475.5 395.6 L481 404.6 L481 458 Z"/><path d="M479 458 L479 408 L484.5 398.1 L490 408 L490 458 Z"/><path d="M488 458 L488 410.3 L493.5 402 L499 410.3 L499 458 Z"/><path d="M497 458 L497 405.8 L502.5 397.6 L508 405.8 L508 458 Z"/><path d="M506 458 L506 407.4 L511.5 397.3 L517 407.4 L517 458 Z"/>
+      <path d="M226 458 L226 396 L248 396 L248 458 Z M222 398 L237 384 L252 398 Z"/>
+      <path d="M296 458 L296 388 L304 388 L304 458 Z M330 458 L330 388 L338 388 L338 458 Z"/>
+      <path d="M290 390 L344 390 L344 384 L317 376 L290 384 Z"/>
+      <path d="M304 458 L304 404 L330 404 L330 458 Z"/>
+      <path d="M0 478 Q130 472 230 457 L512 454 L512 512 L0 512 Z"/>
+    </g>
+    <path d="M310.5 406 V450 M317 406 V450 M323.5 406 V450 M306 446 L328 412" stroke="#1a070c" stroke-width="1.2"/>
+    <g fill="none" stroke="#6a0f1c" stroke-opacity="0.7" stroke-width="1.2"><path d="M236 408.6 L241.5 399.9"/><path d="M245 408 L250.5 398.6"/><path d="M254 407.8 L259.5 398.6"/><path d="M263 408.7 L268.5 398.9"/><path d="M272 409.9 L277.5 401.6"/><path d="M281 405.4 L286.5 394.8"/><path d="M290 404.5 L295.5 394.1"/><path d="M299 406.2 L304.5 396.3"/><path d="M335 406.4 L340.5 396"/><path d="M344 405.5 L349.5 397.1"/><path d="M353 407.3 L358.5 397.4"/><path d="M362 404.7 L367.5 393.8"/><path d="M371 404.4 L376.5 394.6"/><path d="M380 407.6 L385.5 399.1"/><path d="M389 409.6 L394.5 398.8"/><path d="M398 408.7 L403.5 400.6"/><path d="M407 405.3 L412.5 395.5"/><path d="M416 405.6 L421.5 396.7"/><path d="M425 407 L430.5 398.5"/><path d="M434 404.7 L439.5 395.3"/><path d="M443 408.8 L448.5 398"/><path d="M452 408.6 L457.5 398.6"/><path d="M461 407.3 L466.5 398.2"/><path d="M470 404.6 L475.5 395.6"/><path d="M479 408 L484.5 398.1"/><path d="M488 410.3 L493.5 402"/><path d="M497 405.8 L502.5 397.6"/><path d="M506 407.4 L511.5 397.3"/></g>
+    <g fill="#0a0306" stroke="#0a0306" stroke-linecap="round" stroke-linejoin="round" filter="url(#rim2)"><g transform="translate(16 402.7) rotate(3) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(34.1 405.6) rotate(3) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(51.1 408) rotate(-0.8) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(70.4 410.2) rotate(1.7) scale(0.2)"><ellipse cx="33" cy="-21" rx="7" ry="7.5" transform="rotate(30 33 -21)"/>
+      <path d="M-40 -5 C-30 -16 0 -25 26 -23 C31 -17 29 -11 22 -8 L-36 0 Z"/>
+      <polyline points="22,-18 36,-11 47,-3 56,0" fill="none" stroke-width="5.5"/><polyline points="12,-12 16,-5 21,0" fill="none" stroke-width="5"/>
+      <polyline points="-36,-3 -50,-2 -60,0" fill="none" stroke-width="6.5"/><polyline points="-32,-6 -46,-9 -56,-5" fill="none" stroke-width="6"/></g><g transform="translate(89 412.1) rotate(3.2) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(106.1 414) rotate(5.1) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(118.9 415.9) rotate(-2.4) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(136.6 419.5) rotate(1.7) scale(0.2)"><ellipse cx="33" cy="-21" rx="7" ry="7.5" transform="rotate(30 33 -21)"/>
+      <path d="M-40 -5 C-30 -16 0 -25 26 -23 C31 -17 29 -11 22 -8 L-36 0 Z"/>
+      <polyline points="22,-18 36,-11 47,-3 56,0" fill="none" stroke-width="5.5"/><polyline points="12,-12 16,-5 21,0" fill="none" stroke-width="5"/>
+      <polyline points="-36,-3 -50,-2 -60,0" fill="none" stroke-width="6.5"/><polyline points="-32,-6 -46,-9 -56,-5" fill="none" stroke-width="6"/></g><g transform="translate(156.4 425.1) rotate(-0.2) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(171.3 430.4) rotate(3.5) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(179.8 433.7) rotate(0.8) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(187.7 436.9) rotate(-1.6) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(196.1 440.3) rotate(3.4) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(206.5 444.7) rotate(-0.7) scale(0.2)"><ellipse cx="33" cy="-21" rx="7" ry="7.5" transform="rotate(30 33 -21)"/>
+      <path d="M-40 -5 C-30 -16 0 -25 26 -23 C31 -17 29 -11 22 -8 L-36 0 Z"/>
+      <polyline points="22,-18 36,-11 47,-3 56,0" fill="none" stroke-width="5.5"/><polyline points="12,-12 16,-5 21,0" fill="none" stroke-width="5"/>
+      <polyline points="-36,-3 -50,-2 -60,0" fill="none" stroke-width="6.5"/><polyline points="-32,-6 -46,-9 -56,-5" fill="none" stroke-width="6"/></g><g transform="translate(215.2 448.2) rotate(0.6) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(10 404.8) rotate(1) scale(0.2)"><ellipse cx="33" cy="-21" rx="7" ry="7.5" transform="rotate(30 33 -21)"/>
+      <path d="M-40 -5 C-30 -16 0 -25 26 -23 C31 -17 29 -11 22 -8 L-36 0 Z"/>
+      <polyline points="22,-18 36,-11 47,-3 56,0" fill="none" stroke-width="5.5"/><polyline points="12,-12 16,-5 21,0" fill="none" stroke-width="5"/>
+      <polyline points="-36,-3 -50,-2 -60,0" fill="none" stroke-width="6.5"/><polyline points="-32,-6 -46,-9 -56,-5" fill="none" stroke-width="6"/></g><g transform="translate(24.4 407.1) rotate(3.8) scale(0.2)"><ellipse cx="33" cy="-21" rx="7" ry="7.5" transform="rotate(30 33 -21)"/>
+      <path d="M-40 -5 C-30 -16 0 -25 26 -23 C31 -17 29 -11 22 -8 L-36 0 Z"/>
+      <polyline points="22,-18 36,-11 47,-3 56,0" fill="none" stroke-width="5.5"/><polyline points="12,-12 16,-5 21,0" fill="none" stroke-width="5"/>
+      <polyline points="-36,-3 -50,-2 -60,0" fill="none" stroke-width="6.5"/><polyline points="-32,-6 -46,-9 -56,-5" fill="none" stroke-width="6"/></g><g transform="translate(43.3 410) rotate(5.3) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(58 411.9) rotate(5.1) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(75.6 413.7) rotate(4) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(90.3 415.2) rotate(2.2) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(104.2 416.7) rotate(0) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(116.3 418.4) rotate(-2) scale(0.2)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(131.5 421.3) rotate(4) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(149.7 426) rotate(4.9) scale(0.2)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(165.9 431.4) rotate(4.9) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(176.1 435.2) rotate(1.6) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(186.9 439.6) rotate(3.6) scale(0.2)"><ellipse cx="-1" cy="-87" rx="7" ry="8.5" transform="rotate(-28 -1 -87)"/>
+      <path d="M-9 -76 C0 -82 12 -78 13 -68 L12 -44 C10 -38 6 -35 4 -34 L-10 -34 C-12 -48 -14 -64 -9 -76 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="-6,-72 -10,-56 -9,-41 -6,-37" fill="none" stroke-width="5.5"/><polyline points="9,-71 22,-60 34,-57 39,-59" fill="none" stroke-width="6"/>
+      <polyline points="4,-36 6,-18 8,0" fill="none" stroke-width="8"/><polyline points="-5,-36 -16,-20 -30,-6 -38,-1" fill="none" stroke-width="7"/>
+      <path d="M3 2 L16 2 L12 -3 Z"/></g><g transform="translate(196.5 443.5) rotate(-1.7) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(206.6 447.7) rotate(3.5) scale(0.2)"><ellipse cx="7" cy="-88" rx="7" ry="8.5" transform="rotate(22 7 -88)"/>
+      <path d="M-8 -77 C2 -84 13 -79 16 -70 L13 -46 C11 -40 8 -36 6 -34 L-9 -34 C-13 -46 -15 -63 -8 -77 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="11,-72 26,-64 40,-61 47,-64" fill="none" stroke-width="6"/><polyline points="3,-70 16,-57 29,-52 35,-54" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -8,-18 -13,0" fill="none" stroke-width="8"/><polyline points="4,-36 11,-18 17,-1" fill="none" stroke-width="7.5"/>
+      <path d="M-18 2 L-6 2 L-9 -3 Z M14 2 L26 2 L20 -3 Z"/></g><g transform="translate(216.8 451.8) rotate(5.5) scale(0.2)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g><g transform="translate(220 453.1) rotate(4) scale(0.2)"><ellipse cx="3" cy="-90" rx="7" ry="8.5" transform="rotate(12 3 -90)"/>
+      <path d="M-9 -80 C-2 -85 8 -85 12 -79 L10 -48 C8 -40 6 -36 5 -34 L-8 -34 C-10 -46 -12 -66 -9 -80 Z"/><path d="M-11 -38 L8 -38 L10 -29 L6 -33 L2 -27 L-2 -32 L-7 -28 L-11 -33 Z"/>
+      <polyline points="9,-77 18,-92 22,-107 19,-114" fill="none" stroke-width="5.5"/><polyline points="-6,-77 -11,-92 -10,-105 -13,-110" fill="none" stroke-width="5.5"/>
+      <polyline points="-3,-36 -5,-18 -7,0" fill="none" stroke-width="8"/><polyline points="4,-36 9,-18 12,0" fill="none" stroke-width="7.5"/>
+      <path d="M-12 2 L0 2 L-3 -3 Z M8 2 L20 2 L16 -3 Z"/></g></g>
+    <rect x="293" y="380" width="3" height="10" fill="#050205"/>
+    <path d="M294.5 371 Q298 377 294.5 380 Q291 377 294.5 371 Z" fill="#ffb020" filter="url(#glow)"/><rect x="341" y="380" width="3" height="10" fill="#050205"/>
+    <path d="M342.5 371 Q346 377 342.5 380 Q339 377 342.5 371 Z" fill="#ffb020" filter="url(#glow)"/>
+  
+    
+  </g>
+</svg>

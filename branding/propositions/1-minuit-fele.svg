@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="frame"><rect width="512" height="512" rx="96"/></clipPath>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.7 0 0 0 -0.28"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blur6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.75"/>
+    </radialGradient>
+    
+    <radialGradient id="bg1" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#22101e"/><stop offset="1" stop-color="#050307"/></radialGradient>
+    <radialGradient id="halo1"><stop offset="0.62" stop-color="#c4143a" stop-opacity="0"/><stop offset="0.8" stop-color="#c4143a" stop-opacity="0.55"/><stop offset="1" stop-color="#c4143a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bezel1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b5236"/><stop offset="0.45" stop-color="#2e2116"/><stop offset="1" stop-color="#0e0906"/></linearGradient>
+    <radialGradient id="dial1" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#2d1b26"/><stop offset="1" stop-color="#0a0509"/></radialGradient>
+    <linearGradient id="bone1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe4c8"/><stop offset="1" stop-color="#9c8c6c"/></linearGradient>
+    <path id="ring1" d="M256 73 a183 183 0 1 1 -0.01 0"/>
+  </defs>
+  <g clip-path="url(#frame)">
+    
+    <rect width="512" height="512" fill="url(#bg1)"/>
+    <circle cx="256" cy="256" r="250" fill="url(#halo1)"/>
+    <circle cx="256" cy="256" r="198" fill="url(#bezel1)" stroke="#050307" stroke-width="6"/>
+    <circle cx="256" cy="256" r="176" fill="#0b0609" stroke="#8a6a44" stroke-width="2" stroke-opacity="0.5"/>
+    <text font-family="Georgia, 'Times New Roman', serif" font-size="14" letter-spacing="6.2" fill="#c9a874" fill-opacity="0.75">
+      <textPath href="#ring1">THE BLACK HOUR ✦ NO ONE SURVIVES THE NIGHT ✦ THE BLACK HOUR ✦ NO ONE SURVIVES ✦</textPath>
+    </text>
+    <circle cx="256" cy="256" r="172" fill="url(#dial1)"/>
+    <g stroke="#7a6650" stroke-width="2"><line x1="272.5" y1="98.9" x2="273.6" y2="88.9"/><line x1="288.9" y1="101.5" x2="290.9" y2="91.7"/><line x1="304.8" y1="105.7" x2="307.9" y2="96.2"/><line x1="320.3" y1="111.7" x2="324.3" y2="102.5"/><line x1="348.9" y1="128.2" x2="354.7" y2="120.1"/><line x1="361.7" y1="138.6" x2="368.4" y2="131.2"/><line x1="373.4" y1="150.3" x2="380.8" y2="143.6"/><line x1="383.8" y1="163.1" x2="391.9" y2="157.3"/><line x1="400.3" y1="191.7" x2="409.5" y2="187.7"/><line x1="406.3" y1="207.2" x2="415.8" y2="204.1"/><line x1="410.5" y1="223.1" x2="420.3" y2="221.1"/><line x1="413.1" y1="239.5" x2="423.1" y2="238.4"/><line x1="413.1" y1="272.5" x2="423.1" y2="273.6"/><line x1="410.5" y1="288.9" x2="420.3" y2="290.9"/><line x1="406.3" y1="304.8" x2="415.8" y2="307.9"/><line x1="400.3" y1="320.3" x2="409.5" y2="324.3"/><line x1="383.8" y1="348.9" x2="391.9" y2="354.7"/><line x1="373.4" y1="361.7" x2="380.8" y2="368.4"/><line x1="361.7" y1="373.4" x2="368.4" y2="380.8"/><line x1="348.9" y1="383.8" x2="354.7" y2="391.9"/><line x1="320.3" y1="400.3" x2="324.3" y2="409.5"/><line x1="304.8" y1="406.3" x2="307.9" y2="415.8"/><line x1="288.9" y1="410.5" x2="290.9" y2="420.3"/><line x1="272.5" y1="413.1" x2="273.6" y2="423.1"/><line x1="239.5" y1="413.1" x2="238.4" y2="423.1"/><line x1="223.1" y1="410.5" x2="221.1" y2="420.3"/><line x1="207.2" y1="406.3" x2="204.1" y2="415.8"/><line x1="191.7" y1="400.3" x2="187.7" y2="409.5"/><line x1="163.1" y1="383.8" x2="157.3" y2="391.9"/><line x1="150.3" y1="373.4" x2="143.6" y2="380.8"/><line x1="138.6" y1="361.7" x2="131.2" y2="368.4"/><line x1="128.2" y1="348.9" x2="120.1" y2="354.7"/><line x1="111.7" y1="320.3" x2="102.5" y2="324.3"/><line x1="105.7" y1="304.8" x2="96.2" y2="307.9"/><line x1="101.5" y1="288.9" x2="91.7" y2="290.9"/><line x1="98.9" y1="272.5" x2="88.9" y2="273.6"/><line x1="98.9" y1="239.5" x2="88.9" y2="238.4"/><line x1="101.5" y1="223.1" x2="91.7" y2="221.1"/><line x1="105.7" y1="207.2" x2="96.2" y2="204.1"/><line x1="111.7" y1="191.7" x2="102.5" y2="187.7"/><line x1="128.2" y1="163.1" x2="120.1" y2="157.3"/><line x1="138.6" y1="150.3" x2="131.2" y2="143.6"/><line x1="150.3" y1="138.6" x2="143.6" y2="131.2"/><line x1="163.1" y1="128.2" x2="157.3" y2="120.1"/><line x1="191.7" y1="111.7" x2="187.7" y2="102.5"/><line x1="207.2" y1="105.7" x2="204.1" y2="96.2"/><line x1="223.1" y1="101.5" x2="221.1" y2="91.7"/><line x1="239.5" y1="98.9" x2="238.4" y2="88.9"/></g>
+    <g stroke="#cdb894" stroke-width="7" stroke-linecap="square"><line x1="326" y1="134.8" x2="340" y2="110.5"/><line x1="377.2" y1="186" x2="401.5" y2="172"/><line x1="396" y1="256" x2="424" y2="256"/><line x1="377.2" y1="326" x2="401.5" y2="340"/><line x1="326" y1="377.2" x2="340" y2="401.5"/><line x1="256" y1="396" x2="256" y2="424"/><line x1="186" y1="377.2" x2="172" y2="401.5"/><line x1="134.8" y1="326" x2="110.5" y2="340"/><line x1="116" y1="256" x2="88" y2="256"/><line x1="134.8" y1="186" x2="110.5" y2="172"/><line x1="186" y1="134.8" x2="172" y2="110.5"/></g>
+    <path d="M246 84 L266 84 L261 130 L251 130 Z" fill="#e01c44" filter="url(#glow)"/>
+    <path d="M253 124 Q251 140 254 146 Q257 140 257 124 Z M258 120 Q258 152 261 160 Q264 150 261 120 Z" fill="#b0102e"/>
+    <g font-family="Georgia, 'Times New Roman', serif" font-weight="bold" text-anchor="middle">
+            <g font-size="26" fill="#a8916c"><text x="370" y="265">III</text><text x="256" y="379">VI</text><text x="142" y="265">IX</text></g>
+    </g>
+    <path d="M256 256 L232 288 L241 305 L214 338 L222 352 L190 392 L196 404 L168 436" fill="none" stroke="#ff2a4e" stroke-width="9" stroke-linejoin="round" filter="url(#blur6)" opacity="0.9"/>
+    <path d="M214 338 L182 344 L164 368 M241 305 L268 322 L276 350 M256 256 L292 236 L300 214 L326 204" fill="none" stroke="#ff2a4e" stroke-width="6" filter="url(#blur6)" opacity="0.7"/>
+    <path d="M256 256 L232 288 L241 305 L214 338 L222 352 L190 392 L196 404 L168 436" fill="none" stroke="#020102" stroke-width="3.5" stroke-linejoin="miter"/>
+    <path d="M214 338 L182 344 L164 368 M241 305 L268 322 L276 350 M256 256 L292 236 L300 214 L326 204" fill="none" stroke="#020102" stroke-width="2"/>
+    <g fill="url(#bone1)" stroke="#120a08" stroke-width="2.5" stroke-linejoin="round">
+      <path transform="rotate(0 256 256)" d="M256 152 L269 181.12 L261.85 278 L250.15 278 L243 181.12 Z"/>
+      <path transform="rotate(-6 256 256)" d="M256 106 L264 148 L259.6 286 L252.4 286 L248 148 Z"/>
+    </g>
+    <circle cx="256" cy="256" r="14" fill="#2a1a12" stroke="#c9a874" stroke-width="2"/>
+    <circle cx="256" cy="256" r="6" fill="#e01c44"/>
+    <g fill="none" stroke-linecap="round">
+      <path d="M330 318 Q372 360 398 438" stroke="#3a0812" stroke-width="16"/><path d="M356 307.6 Q398 354.8 418.8 422.4" stroke="#3a0812" stroke-width="16"/><path d="M382 297.2 Q424 349.6 439.6 406.8" stroke="#3a0812" stroke-width="16"/>
+      <path d="M330 318 Q372 360 398 438" stroke="#c4143a" stroke-width="9"/><path d="M356 307.6 Q398 354.8 418.8 422.4" stroke="#c4143a" stroke-width="9"/><path d="M382 297.2 Q424 349.6 439.6 406.8" stroke="#c4143a" stroke-width="9"/>
+      <path d="M330 318 Q372 360 398 438" stroke="#ff6a84" stroke-width="2" stroke-opacity="0.8"/><path d="M356 307.6 Q398 354.8 418.8 422.4" stroke="#ff6a84" stroke-width="2" stroke-opacity="0.8"/><path d="M382 297.2 Q424 349.6 439.6 406.8" stroke="#ff6a84" stroke-width="2" stroke-opacity="0.8"/>
+    </g>
+    <path d="M402 420 q3 14 0 22 q-3 -8 0 -22 M378 402 q3 18 0 26 q-3 -8 0 -26" fill="#c4143a"/>
+  
+    <rect width="512" height="512" fill="url(#vignette)"/><rect width="512" height="512" filter="url(#grain)" opacity="0.5"/>
+  </g>
+</svg>

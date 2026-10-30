@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="frame"><rect width="512" height="512" rx="112"/></clipPath>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05030a"/><stop offset="0.55" stop-color="#2a0712"/><stop offset="0.85" stop-color="#8c1a1c"/></linearGradient>
+    <radialGradient id="corona"><stop offset="0.6" stop-color="#fff1d6"/><stop offset="0.66" stop-color="#ffb46a" stop-opacity="0.95"/><stop offset="0.82" stop-color="#e0303a" stop-opacity="0.5"/><stop offset="1" stop-color="#c4143a" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="512" height="512" fill="url(#sky)"/>
+    <circle cx="256" cy="230" r="250" fill="url(#corona)"/>
+    <g stroke="#fff3dc" stroke-linecap="round" filter="url(#glow)"><line x1="256" y1="54" x2="256" y2="-2" stroke-width="20"/><line x1="344" y1="78" x2="362" y2="46" stroke-width="14"/><line x1="408" y1="142" x2="440" y2="124" stroke-width="14"/><line x1="432" y1="230" x2="468" y2="230" stroke-width="14"/><line x1="408" y1="318" x2="440" y2="336" stroke-width="14"/><line x1="344" y1="382" x2="362" y2="414" stroke-width="14"/><line x1="256" y1="406" x2="256" y2="442" stroke-width="14"/><line x1="168" y1="382" x2="150" y2="414" stroke-width="14"/><line x1="104" y1="318" x2="72" y2="336" stroke-width="14"/><line x1="80" y1="230" x2="44" y2="230" stroke-width="14"/><line x1="104" y1="142" x2="72" y2="124" stroke-width="14"/><line x1="168" y1="78" x2="150" y2="46" stroke-width="14"/></g>
+    <circle cx="256" cy="230" r="150" fill="#030205"/>
+    <circle cx="256" cy="230" r="151" fill="none" stroke="#ffe6c0" stroke-width="6" filter="url(#glow)"/>
+    <circle cx="348" cy="112" r="16" fill="#fff" filter="url(#glow)"/>
+    <path d="M0 512 L0 452 L0 452 L12 436 L24 452 L24 452 L36 436 L48 452 L48 452 L60 436 L72 452 L72 452 L84 436 L96 452 L96 452 L108 436 L120 452 L120 452 L132 436 L144 452 L144 452 L156 436 L168 452 L168 452 L180 436 L192 452 L192 452 L204 436 L216 452 L216 452 L228 436 L240 452 L240 452 L252 436 L264 452 L264 452 L276 436 L288 452 L288 452 L300 436 L312 452 L312 452 L324 436 L336 452 L336 452 L348 436 L360 452 L360 452 L372 436 L384 452 L384 452 L396 436 L408 452 L408 452 L420 436 L432 452 L432 452 L444 436 L456 452 L456 452 L468 436 L480 452 L480 452 L492 436 L504 452 L504 452 L516 436 L528 452 L512 452 L512 512 Z" fill="#050205"/>
+    <path d="M372 452 L378 372 L370 372 L370 362 L414 362 L414 372 L406 372 L412 452 Z M362 364 L392 336 L422 364 Z" fill="#050205"/>
+    <rect x="384" y="374" width="16" height="10" fill="#ffd60a" filter="url(#glow)"/>
+  </g>
+</svg>
